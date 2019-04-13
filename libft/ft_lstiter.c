@@ -1,25 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_printf.c                                        :+:    :+:            */
+/*   ft_lstiter.c                                       :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2019/03/01 16:56:14 by aholster       #+#    #+#                */
-/*   Updated: 2019/04/13 15:46:37 by aholster      ########   odam.nl         */
+/*   Created: 2019/01/24 13:04:26 by aholster       #+#    #+#                */
+/*   Updated: 2019/02/01 21:28:32 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
-int	ft_printf(char *format, ...)
+void	ft_lstiter(t_list *lst, void (*f)(t_list *elem))
 {
-	va_list ap;
-	char	*str;
-	t_list	*lst;
-
-	va_start(ap, format);
-
-
-	va_end(ap);
+	while (lst != NULL)
+	{
+		f(lst);
+		lst = lst->next;
+	}
 }

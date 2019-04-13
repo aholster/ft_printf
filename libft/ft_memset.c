@@ -1,25 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_printf.c                                        :+:    :+:            */
+/*   ft_memset.c                                        :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2019/03/01 16:56:14 by aholster       #+#    #+#                */
-/*   Updated: 2019/04/13 15:46:37 by aholster      ########   odam.nl         */
+/*   Created: 2019/01/17 15:05:30 by aholster       #+#    #+#                */
+/*   Updated: 2019/02/16 17:59:10 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
-int	ft_printf(char *format, ...)
+void	*ft_memset(void *b, int c, size_t len)
 {
-	va_list ap;
-	char	*str;
-	t_list	*lst;
+	unsigned char	character;
+	size_t			index;
+	char			*output;
 
-	va_start(ap, format);
-
-
-	va_end(ap);
+	character = c;
+	index = 0;
+	output = (char *)b;
+	while (index < len)
+	{
+		output[index] = character;
+		index++;
+	}
+	return (b);
 }

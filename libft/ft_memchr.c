@@ -1,25 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_printf.c                                        :+:    :+:            */
+/*   ft_memchr.c                                        :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2019/03/01 16:56:14 by aholster       #+#    #+#                */
-/*   Updated: 2019/04/13 15:46:37 by aholster      ########   odam.nl         */
+/*   Created: 2019/01/17 17:42:54 by aholster       #+#    #+#                */
+/*   Updated: 2019/02/16 17:59:13 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
-int	ft_printf(char *format, ...)
+void	*ft_memchr(void const *s, int c, size_t n)
 {
-	va_list ap;
-	char	*str;
-	t_list	*lst;
+	unsigned char const	*str;
+	size_t				index;
 
-	va_start(ap, format);
-
-
-	va_end(ap);
+	str = (unsigned char *)s;
+	index = 0;
+	while (index < n)
+	{
+		if (str[index] == (unsigned char)c)
+			return ((void *)&str[index]);
+		index++;
+	}
+	return (NULL);
 }

@@ -1,25 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_printf.c                                        :+:    :+:            */
+/*   ft_swap.c                                          :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2019/03/01 16:56:14 by aholster       #+#    #+#                */
-/*   Updated: 2019/04/13 15:46:37 by aholster      ########   odam.nl         */
+/*   Created: 2019/01/31 22:23:56 by aholster       #+#    #+#                */
+/*   Updated: 2019/02/01 21:25:54 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
-
-int	ft_printf(char *format, ...)
+void	ft_swap(int *a, int *b)
 {
-	va_list ap;
-	char	*str;
-	t_list	*lst;
+	int h;
 
-	va_start(ap, format);
-
-
-	va_end(ap);
+	h = *a;
+	*a = *b;
+	*b = h;
 }

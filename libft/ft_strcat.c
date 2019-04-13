@@ -1,25 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_printf.c                                        :+:    :+:            */
+/*   ft_strcat.c                                        :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2019/03/01 16:56:14 by aholster       #+#    #+#                */
-/*   Updated: 2019/04/13 15:46:37 by aholster      ########   odam.nl         */
+/*   Created: 2019/01/18 18:49:46 by aholster       #+#    #+#                */
+/*   Updated: 2019/01/29 19:30:54 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
-int	ft_printf(char *format, ...)
+char	*ft_strcat(char *s1, char const *s2)
 {
-	va_list ap;
-	char	*str;
-	t_list	*lst;
+	size_t	index;
+	size_t	judex;
 
-	va_start(ap, format);
-
-
-	va_end(ap);
+	index = 0;
+	judex = ft_strlen(s1);
+	while (s2[index] != '\0')
+	{
+		s1[index + judex] = s2[index];
+		index++;
+	}
+	s1[index + judex] = '\0';
+	return (s1);
 }

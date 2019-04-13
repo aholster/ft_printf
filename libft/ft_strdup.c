@@ -1,25 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_printf.c                                        :+:    :+:            */
+/*   ft_strdup.c                                        :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2019/03/01 16:56:14 by aholster       #+#    #+#                */
-/*   Updated: 2019/04/13 15:46:37 by aholster      ########   odam.nl         */
+/*   Created: 2019/01/17 10:35:30 by aholster       #+#    #+#                */
+/*   Updated: 2019/04/04 12:21:13 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
-int	ft_printf(char *format, ...)
+char	*ft_strdup(char const *s1)
 {
-	va_list ap;
-	char	*str;
-	t_list	*lst;
+	char	*output;
 
-	va_start(ap, format);
-
-
-	va_end(ap);
+	output = (char *)malloc(sizeof(char) * (ft_strlen(s1) + 1));
+	if (output == NULL)
+		return (NULL);
+	output = ft_strcpy(output, s1);
+	return (output);
 }

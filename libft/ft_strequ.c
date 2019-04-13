@@ -1,25 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_printf.c                                        :+:    :+:            */
+/*   ft_strequ.c                                        :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2019/03/01 16:56:14 by aholster       #+#    #+#                */
-/*   Updated: 2019/04/13 15:46:37 by aholster      ########   odam.nl         */
+/*   Created: 2019/01/13 15:33:29 by aholster       #+#    #+#                */
+/*   Updated: 2019/01/13 16:01:01 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
-int	ft_printf(char *format, ...)
+int	ft_strequ(char const *s1, char const *s2)
 {
-	va_list ap;
-	char	*str;
-	t_list	*lst;
-
-	va_start(ap, format);
-
-
-	va_end(ap);
+	return (ft_strcmp(s1, s2) == 0);
 }

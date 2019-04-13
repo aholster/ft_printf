@@ -1,25 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_printf.c                                        :+:    :+:            */
+/*   ft_lstmap.c                                        :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2019/03/01 16:56:14 by aholster       #+#    #+#                */
-/*   Updated: 2019/04/13 15:46:37 by aholster      ########   odam.nl         */
+/*   Created: 2019/01/24 13:04:13 by aholster       #+#    #+#                */
+/*   Updated: 2019/02/07 20:26:47 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
-int	ft_printf(char *format, ...)
+t_list	*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem))
 {
-	va_list ap;
-	char	*str;
-	t_list	*lst;
+	t_list	*head;
+	t_list	*new;
 
-	va_start(ap, format);
-
-
-	va_end(ap);
+	head = f(lst);
+	lst = lst->next;
+	while (lst != NULL)
+	{
+		new = f(lst);
+		if (new == NULL)
+			return (NULL);
+		ft_lstaddend(&head, new);
+		lst = lst->next;
+	}
+	return (head);
 }

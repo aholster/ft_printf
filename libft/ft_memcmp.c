@@ -1,25 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_printf.c                                        :+:    :+:            */
+/*   ft_memcmp.c                                        :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2019/03/01 16:56:14 by aholster       #+#    #+#                */
-/*   Updated: 2019/04/13 15:46:37 by aholster      ########   odam.nl         */
+/*   Created: 2019/01/17 18:57:47 by aholster       #+#    #+#                */
+/*   Updated: 2019/02/01 21:26:35 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
-int	ft_printf(char *format, ...)
+int	ft_memcmp(void const *s1, void const *s2, size_t n)
 {
-	va_list ap;
-	char	*str;
-	t_list	*lst;
+	size_t			index;
+	unsigned char	*str1;
+	unsigned char	*str2;
 
-	va_start(ap, format);
-
-
-	va_end(ap);
+	index = 0;
+	str1 = (unsigned char *)s1;
+	str2 = (unsigned char *)s2;
+	while (index < n)
+	{
+		if (str1[index] != str2[index])
+			return (str1[index] - str2[index]);
+		index++;
+	}
+	return (0);
 }

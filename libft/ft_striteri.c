@@ -1,25 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_printf.c                                        :+:    :+:            */
+/*   ft_striteri.c                                      :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2019/03/01 16:56:14 by aholster       #+#    #+#                */
-/*   Updated: 2019/04/13 15:46:37 by aholster      ########   odam.nl         */
+/*   Created: 2019/01/16 21:06:41 by aholster       #+#    #+#                */
+/*   Updated: 2019/02/01 21:20:27 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
-
-int	ft_printf(char *format, ...)
+void	ft_striteri(char *s, void (*f)(unsigned int, char *))
 {
-	va_list ap;
-	char	*str;
-	t_list	*lst;
+	unsigned int	index;
 
-	va_start(ap, format);
-
-
-	va_end(ap);
+	index = 0;
+	while (s[index] != '\0')
+	{
+		((*f)(index, &s[index]));
+		index++;
+	}
 }

@@ -1,25 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_printf.c                                        :+:    :+:            */
+/*   ft_isprime.c                                       :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2019/03/01 16:56:14 by aholster       #+#    #+#                */
-/*   Updated: 2019/04/13 15:46:37 by aholster      ########   odam.nl         */
+/*   Created: 2019/01/31 19:14:10 by aholster       #+#    #+#                */
+/*   Updated: 2019/02/01 21:02:48 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
-
-int	ft_printf(char *format, ...)
+unsigned int	ft_isprime(unsigned int num)
 {
-	va_list ap;
-	char	*str;
-	t_list	*lst;
+	unsigned int	counter;
 
-	va_start(ap, format);
-
-
-	va_end(ap);
+	counter = 2;
+	while (counter <= num / counter)
+	{
+		if (num % counter == 0)
+			return (0);
+		counter++;
+	}
+	return (1);
 }

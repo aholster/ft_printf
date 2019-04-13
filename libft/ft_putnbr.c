@@ -1,25 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_printf.c                                        :+:    :+:            */
+/*   ft_putnbr.c                                        :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2019/03/01 16:56:14 by aholster       #+#    #+#                */
-/*   Updated: 2019/04/13 15:46:37 by aholster      ########   odam.nl         */
+/*   Created: 2019/01/12 18:18:57 by aholster       #+#    #+#                */
+/*   Updated: 2019/01/29 19:29:29 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
-int	ft_printf(char *format, ...)
+void	ft_putnbr(int n)
 {
-	va_list ap;
-	char	*str;
-	t_list	*lst;
-
-	va_start(ap, format);
-
-
-	va_end(ap);
+	if (n == -2147483648)
+	{
+		write(1, "-2", 2);
+		n = 147483648;
+	}
+	else if (n < 0)
+	{
+		write(1, "-", 1);
+		n = (-n);
+	}
+	if (n > 9)
+	{
+		ft_putnbr(n / 10);
+		ft_putchar((n % 10) + '0');
+	}
+	else
+		ft_putchar(n + '0');
 }

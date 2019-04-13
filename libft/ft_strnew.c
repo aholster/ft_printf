@@ -1,25 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_printf.c                                        :+:    :+:            */
+/*   ft_strnew.c                                        :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2019/03/01 16:56:14 by aholster       #+#    #+#                */
-/*   Updated: 2019/04/13 15:46:37 by aholster      ########   odam.nl         */
+/*   Created: 2019/01/17 11:59:15 by aholster       #+#    #+#                */
+/*   Updated: 2019/03/24 18:09:35 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
-int	ft_printf(char *format, ...)
+char	*ft_strnew(size_t size)
 {
-	va_list ap;
 	char	*str;
-	t_list	*lst;
 
-	va_start(ap, format);
-
-
-	va_end(ap);
+	str = (char *)malloc(sizeof(char) * size + 1);
+	if (str == NULL)
+		return (NULL);
+	ft_bzero(str, size + 1);
+	return (str);
 }

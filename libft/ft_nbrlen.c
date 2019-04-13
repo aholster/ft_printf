@@ -1,25 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_printf.c                                        :+:    :+:            */
+/*   ft_nbrlen.c                                        :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2019/03/01 16:56:14 by aholster       #+#    #+#                */
-/*   Updated: 2019/04/13 15:46:37 by aholster      ########   odam.nl         */
+/*   Created: 2019/01/14 13:36:17 by aholster       #+#    #+#                */
+/*   Updated: 2019/02/01 21:14:08 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
-
-int	ft_printf(char *format, ...)
+unsigned int	ft_nbrlen(long long n, unsigned int base)
 {
-	va_list ap;
-	char	*str;
-	t_list	*lst;
+	unsigned int length;
 
-	va_start(ap, format);
-
-
-	va_end(ap);
+	length = 0;
+	if (n == 0)
+		return (1);
+	if (n < 0)
+		length++;
+	while (n != 0)
+	{
+		n = n / base;
+		length++;
+	}
+	return (length);
 }

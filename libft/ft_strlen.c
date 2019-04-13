@@ -1,25 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_printf.c                                        :+:    :+:            */
+/*   ft_strlen.c                                        :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2019/03/01 16:56:14 by aholster       #+#    #+#                */
-/*   Updated: 2019/04/13 15:46:37 by aholster      ########   odam.nl         */
+/*   Created: 2019/01/14 13:39:30 by aholster       #+#    #+#                */
+/*   Updated: 2019/01/30 14:26:04 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
-int	ft_printf(char *format, ...)
+size_t	ft_strlen(char const *s)
 {
-	va_list ap;
-	char	*str;
-	t_list	*lst;
+	size_t index;
 
-	va_start(ap, format);
-
-
-	va_end(ap);
+	index = 0;
+	while (s[index] != '\0')
+		index++;
+	return (index);
 }

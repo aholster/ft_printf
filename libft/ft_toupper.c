@@ -1,25 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_printf.c                                        :+:    :+:            */
+/*   ft_toupper.c                                       :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2019/03/01 16:56:14 by aholster       #+#    #+#                */
-/*   Updated: 2019/04/13 15:46:37 by aholster      ########   odam.nl         */
+/*   Created: 2019/01/13 15:55:12 by aholster       #+#    #+#                */
+/*   Updated: 2019/02/01 21:23:26 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
-
-int	ft_printf(char *format, ...)
+int	ft_toupper(int c)
 {
-	va_list ap;
-	char	*str;
-	t_list	*lst;
-
-	va_start(ap, format);
-
-
-	va_end(ap);
+	if (c >= 'a' && c <= 'z')
+		return (c - 32);
+	return (c);
 }

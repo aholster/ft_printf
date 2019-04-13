@@ -1,25 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_printf.c                                        :+:    :+:            */
+/*   ft_strjoin.c                                       :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2019/03/01 16:56:14 by aholster       #+#    #+#                */
-/*   Updated: 2019/04/13 15:46:37 by aholster      ########   odam.nl         */
+/*   Created: 2019/01/16 18:31:48 by aholster       #+#    #+#                */
+/*   Updated: 2019/04/06 15:02:19 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
-int	ft_printf(char *format, ...)
+char	*ft_strjoin(char const *s1, char const *s2)
 {
-	va_list ap;
+	size_t	index;
+	size_t	judex;
 	char	*str;
-	t_list	*lst;
 
-	va_start(ap, format);
-
-
-	va_end(ap);
+	judex = 0;
+	index = 0;
+	str = (char *)malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
+	if (str == NULL)
+		return (NULL);
+	while (s1[judex] != '\0')
+	{
+		str[judex] = s1[judex];
+		judex++;
+	}
+	while (s2[index] != '\0')
+	{
+		str[judex + index] = s2[index];
+		index++;
+	}
+	str[judex + index] = '\0';
+	return (str);
 }

@@ -1,25 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_printf.c                                        :+:    :+:            */
+/*   ft_stralloc.c                                      :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2019/03/01 16:56:14 by aholster       #+#    #+#                */
-/*   Updated: 2019/04/13 15:46:37 by aholster      ########   odam.nl         */
+/*   Created: 2019/03/24 18:08:35 by aholster       #+#    #+#                */
+/*   Updated: 2019/03/24 18:15:06 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
-int	ft_printf(char *format, ...)
+char	*ft_stralloc(size_t size, char c)
 {
-	va_list ap;
 	char	*str;
-	t_list	*lst;
+	size_t	index;
 
-	va_start(ap, format);
-
-
-	va_end(ap);
+	index = 0;
+	str = (char *)malloc(sizeof(char) * size + 1);
+	if (str == NULL)
+		return (NULL);
+	str[size] = '\0';
+	while (index < size)
+	{
+		str[index] = c;
+		index++;
+	}
+	return (str);
 }

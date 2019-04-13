@@ -1,25 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_printf.c                                        :+:    :+:            */
+/*   ft_striter.c                                       :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2019/03/01 16:56:14 by aholster       #+#    #+#                */
-/*   Updated: 2019/04/13 15:46:37 by aholster      ########   odam.nl         */
+/*   Created: 2019/01/16 21:06:47 by aholster       #+#    #+#                */
+/*   Updated: 2019/02/01 21:27:22 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
-int	ft_printf(char *format, ...)
+void	ft_striter(char *s, void (*f)(char *))
 {
-	va_list ap;
-	char	*str;
-	t_list	*lst;
+	size_t index;
 
-	va_start(ap, format);
-
-
-	va_end(ap);
+	index = 0;
+	while (s[index] != '\0')
+	{
+		((*f)(&s[index]));
+		index++;
+	}
 }

@@ -1,25 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_printf.c                                        :+:    :+:            */
+/*   ft_memcpy.c                                        :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2019/03/01 16:56:14 by aholster       #+#    #+#                */
-/*   Updated: 2019/04/13 15:46:37 by aholster      ########   odam.nl         */
+/*   Created: 2019/01/17 15:42:31 by aholster       #+#    #+#                */
+/*   Updated: 2019/04/11 17:51:04 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
-int	ft_printf(char *format, ...)
+void	*ft_memcpy(void *dst, const void *src, size_t n)
 {
-	va_list ap;
-	char	*str;
-	t_list	*lst;
+	size_t	index;
 
-	va_start(ap, format);
-
-
-	va_end(ap);
+	index = 0;
+	while (n - index >= 8)
+	{
+		((long long *)dst)[index] = ((long long *)src)[index];
+		index += 8;
+	}
+	while (index < n)
+	{
+		((char *)dst)[index] = ((const char *)src)[index];
+		index++;
+	}
+	return (dst);
 }

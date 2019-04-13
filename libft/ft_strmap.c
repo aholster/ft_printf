@@ -1,25 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_printf.c                                        :+:    :+:            */
+/*   ft_strmap.c                                        :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2019/03/01 16:56:14 by aholster       #+#    #+#                */
-/*   Updated: 2019/04/13 15:46:37 by aholster      ########   odam.nl         */
+/*   Created: 2019/01/16 19:57:12 by aholster       #+#    #+#                */
+/*   Updated: 2019/04/01 16:51:38 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
-int	ft_printf(char *format, ...)
+char	*ft_strmap(char const *s, char (*f)(char))
 {
-	va_list ap;
+	size_t	index;
 	char	*str;
-	t_list	*lst;
 
-	va_start(ap, format);
-
-
-	va_end(ap);
+	index = 0;
+	str = (char *)malloc(sizeof(char) * (ft_strlen(s) + 1));
+	if (str == NULL)
+		return (NULL);
+	while (s[index] != '\0')
+	{
+		str[index] = ((*f)(s[index]));
+		index++;
+	}
+	str[index] = '\0';
+	return (str);
 }

@@ -1,25 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_printf.c                                        :+:    :+:            */
+/*   ft_lstaddend.c                                     :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2019/03/01 16:56:14 by aholster       #+#    #+#                */
-/*   Updated: 2019/04/13 15:46:37 by aholster      ########   odam.nl         */
+/*   Created: 2019/01/25 13:07:44 by aholster       #+#    #+#                */
+/*   Updated: 2019/04/06 17:58:34 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
-int	ft_printf(char *format, ...)
+t_list	*ft_lstaddend(t_list **lst, t_list *new)
 {
-	va_list ap;
-	char	*str;
-	t_list	*lst;
+	t_list *internal;
 
-	va_start(ap, format);
-
-
-	va_end(ap);
+	if (*lst == NULL)
+	{
+		*lst = new;
+		return (new);
+	}
+	internal = *lst;
+	while (internal->next != NULL)
+	{
+		internal = internal->next;
+	}
+	internal->next = new;
+	return (new);
 }

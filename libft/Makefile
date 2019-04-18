@@ -6,7 +6,7 @@
 #    By: aholster <aholster@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2019/02/16 15:46:43 by aholster       #+#    #+#                 #
-#    Updated: 2019/04/11 17:51:26 by aholster      ########   odam.nl          #
+#    Updated: 2019/04/18 16:49:24 by aholster      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ CUSOR:= nbrlen del lstaddend itoba iswhitespace isprime power putstrarr\
  putstrarr_fd strarrdel strarrtolst lsttostrarr lstlen min max constrain\
  segdefault factorial count_if range sqrt absneg swap lsttardest memjoin \
  memdup strarrnew textangle stralloc bitprint putmem putmem_fd\
- putmemendl putmemendl_fd lstmemtomem lststrtostr
+ putmemendl putmemendl_fd lstmemtomem lststrtostr iscapital islowercase
 
 
 FILEC = $(ADVOR:%=./ft_%.c) $(BONOR:%=./ft_%.c)\

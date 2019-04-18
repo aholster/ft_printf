@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/01 16:56:13 by aholster       #+#    #+#                */
-/*   Updated: 2019/04/13 15:46:53 by aholster      ########   odam.nl         */
+/*   Updated: 2019/04/18 18:47:43 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,44 @@
 # include "libft.h"
 
 # include <stdlib.h>
+//	include also in libft.h
 
-int	ft_printf(char *format, ...);
+# define VALFLG "hijlz# *.-+L0123456789"
+# define DBLFLG "lh"
+
+/*
+**	VALFLG and DBLFLG handle what constitutes valid characters in flags
+**	to add new conversions, add them into the dispatcher array.
+*/
+
+typedef 				s_statbuf {
+	char				store[60];
+	size_t				cur;
+	size_t				history;
+}						t_statbuf;
+
+typedef					s_flag {
+	unsigned long long	standflags[2];
+	unsigned int		doubleflags[2];	
+	va_list				ap;
+	unsigned long long	actiflags[2];	
+	int					precision;
+	int					spadding;
+	int					npadding;
+}						t_flag;
+
+int						ft_printf(char *format, ...);
+
+int						ft_lstbuffer(va_list ap, char *format,\
+						char **out, size_t *len);
+
+
+void					ft_bufmanager(char input, t_statbuf buffer);
+int						ft_formatstat(va_list ap, char *format);
+
+
+int						ft_dispatcher(char *specifier, int functbl[53],\
+						t_statbuf *buffer, t_flag *flags);
+int						ft_flagharvest(char *format, t_flag *flags);
 
 #endif

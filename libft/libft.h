@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/01/12 18:16:38 by aholster       #+#    #+#                */
-/*   Updated: 2019/04/06 19:11:33 by aholster      ########   odam.nl         */
+/*   Updated: 2019/04/18 16:49:04 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,5 +143,7 @@ int					ft_iswhitespace(int c);
 void				ft_swap(int *a, int *b);
 void				ft_segdefault(void);
 int					ft_count_if(char **tab, int (*f)(char*));
+int					ft_islowercase(int c);
+int					ft_iscapital(int c);
 
 #endif

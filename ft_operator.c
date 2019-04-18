@@ -6,11 +6,11 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/04/18 16:00:54 by aholster       #+#    #+#                */
-/*   Updated: 2019/04/18 17:19:11 by aholster      ########   odam.nl         */
+/*   Updated: 2019/04/18 19:36:34 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_libft.h"
+#include "ft_printf.h"
 
 static int	ft_operator(char conversion)
 {
@@ -34,7 +34,7 @@ int			ft_dispatcher(char *specifier, int functbl[53],\
 	if (index == 52 || functbl[index] == 0)
 	{
 		exception = functbl[52];
-		if (exception((int)(specifier[0]), flags.ap, buffer, flags) == -1)
+		if (exception((int)(specifier[0]), (*flags).ap, buffer, flags) == -1)
 			return (-1);
 	}
 	else

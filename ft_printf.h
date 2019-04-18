@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/01 16:56:13 by aholster       #+#    #+#                */
-/*   Updated: 2019/04/18 18:47:43 by aholster      ########   odam.nl         */
+/*   Updated: 2019/04/18 19:32:26 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,6 @@ typedef					s_flag {
 	int					npadding;
 }						t_flag;
 
-int						ft_printf(char *format, ...);
-
 int						ft_lstbuffer(va_list ap, char *format,\
 						char **out, size_t *len);
 
@@ -51,9 +49,10 @@ int						ft_lstbuffer(va_list ap, char *format,\
 void					ft_bufmanager(char input, t_statbuf buffer);
 int						ft_formatstat(va_list ap, char *format);
 
-
+int						ft_printf(char *format, ...);
 int						ft_dispatcher(char *specifier, int functbl[53],\
 						t_statbuf *buffer, t_flag *flags);
 int						ft_flagharvest(char *format, t_flag *flags);
+void					ft_flinit(va_list ap, t_flag *flags);
 
 #endif

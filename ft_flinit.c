@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   ft_flinit.c                                        :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
+/*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/04/18 17:44:14 by aholster       #+#    #+#                */
-/*   Updated: 2019/04/19 12:43:08 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/04/19 16:42:35 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,14 @@ static void	ft_dblflg(t_flag *flags)
 	}
 }
 
-void		ft_flinit(va_list ap, t_flag *flags)
+void		ft_flinit(const int fd, t_flag *flags)
 {
-	(*flags).ap = ap;
+	(*flags).fd = fd;
 	(*flags).standflags[0] = 0;
 	(*flags).standflags[1] = 0;
 	(*flags).doubleflags[0] = 0;
 	(*flags).doubleflags[1] = 0;
+	(*flags).history = 0;
 	ft_dblflg(flags);
 	ft_valflg(flags);
 }

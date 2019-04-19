@@ -6,13 +6,13 @@
 #    By: aholster <aholster@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2019/02/16 15:46:43 by aholster       #+#    #+#                 #
-#    Updated: 2019/04/18 19:35:25 by aholster      ########   odam.nl          #
+#    Updated: 2019/04/19 16:38:34 by aholster      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
 DATE := $(shell date)
 
-SOURCE := printf operator statbuf lstbuffer flinit flagharvest
+SOURCE := printf dispatcher statbuf lstbuffer flinit flagharvest
 
 FILEC = $(SOURCE:%=./ft_%.c)
 

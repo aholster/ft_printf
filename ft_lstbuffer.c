@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   ft_lstbuffer.c                                     :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: aholster <aholster@student.codam.nl>         +#+                     */
+/*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/04/15 18:53:32 by aholster       #+#    #+#                */
-/*   Updated: 2019/04/17 19:56:56 by aholster      ########   odam.nl         */
+/*   Updated: 2019/04/19 11:08:45 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int ft_lstbuffer(va_list ap, char *format, char **out, size_t *len)
 
 	if (ft_formatlst(ap, format, &lst) == -1)
 		return (-1);
-	
+
 	if (ft_lstmemtomem(out, len, lst) == -1)
 		return (-1);
 	return (1);
@@ -36,5 +36,5 @@ int	ft_formatlst(va_list ap, char *format, t_list **lst)
 		
 		index++;
 	}
-	
+
 }

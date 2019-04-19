@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   ft_flinit.c                                        :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: aholster <aholster@student.codam.nl>         +#+                     */
+/*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/04/18 17:44:14 by aholster       #+#    #+#                */
-/*   Updated: 2019/04/18 19:35:12 by aholster      ########   odam.nl         */
+/*   Updated: 2019/04/19 12:43:08 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,10 @@ static void	ft_dblflg(t_flag *flags)
 	while (DBLFLG[index] != '\0')
 	{
 		if (DBLFLG[index] >= 64)
-			(*flags).standflags[1] |= (1LLU << (DBLFLG[index] - 64));
+			(*flags).doubleflags[1] |= (1LLU << (DBLFLG[index] - 64)); // changed from standflags
+
 		else
-			(*flags).standflags[0] |= (1LLU << DBLFLG[index]);
+			(*flags).doubleflags[0] |= (1LLU << DBLFLG[index]); // changed from standarflags
 		index++;
 	}
 }

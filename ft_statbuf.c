@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   ft_statbuf.c                                       :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: aholster <aholster@student.codam.nl>         +#+                     */
+/*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/04/17 19:57:30 by aholster       #+#    #+#                */
-/*   Updated: 2019/04/18 17:46:12 by aholster      ########   odam.nl         */
+/*   Updated: 2019/04/19 14:36:38 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	ft_bufmanager(char input, t_statbuf buffer)
 	if (buffer.cur == 50)
 	{
 		write(1, &buffer.store, 50);
-		buffer.history += cur;
+		buffer.history += buffer.cur;
 		buffer.cur = 0;
 	}
 }

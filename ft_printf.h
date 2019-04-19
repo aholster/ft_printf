@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   ft_printf.h                                        :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: aholster <aholster@student.codam.nl>         +#+                     */
+/*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/01 16:56:13 by aholster       #+#    #+#                */
-/*   Updated: 2019/04/18 19:32:26 by aholster      ########   odam.nl         */
+/*   Updated: 2019/04/19 11:36:12 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,15 @@
 **	to add new conversions, add them into the dispatcher array.
 */
 
-typedef 				s_statbuf {
+typedef struct 			s_statbuf //corrected
+{
 	char				store[60];
 	size_t				cur;
 	size_t				history;
 }						t_statbuf;
 
-typedef					s_flag {
+typedef	struct			s_flag //corrected
+{
 	unsigned long long	standflags[2];
 	unsigned int		doubleflags[2];	
 	va_list				ap;
@@ -47,7 +49,7 @@ int						ft_lstbuffer(va_list ap, char *format,\
 
 
 void					ft_bufmanager(char input, t_statbuf buffer);
-int						ft_formatstat(va_list ap, char *format);
+int						ft_formatstat(va_list ap, char *format, size_t *len);
 
 int						ft_printf(char *format, ...);
 int						ft_dispatcher(char *specifier, int functbl[53],\

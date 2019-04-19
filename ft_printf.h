@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/01 16:56:13 by aholster       #+#    #+#                */
-/*   Updated: 2019/04/19 19:28:38 by aholster      ########   odam.nl         */
+/*   Updated: 2019/04/19 20:13:26 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ typedef	struct			s_flag //corrected
 	unsigned long long	actiflags[2];
 	unsigned long long	actidoubles[2];
 	int					precision;
-	int					spadding;
-	int					npadding;
+	int					padding;
+//	int					npadding;
 
 	t_list				**lst;
 	size_t				history;

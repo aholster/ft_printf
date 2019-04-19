@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/04/18 17:22:09 by aholster       #+#    #+#                */
-/*   Updated: 2019/04/19 19:51:51 by aholster      ########   odam.nl         */
+/*   Updated: 2019/04/19 20:32:17 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ static void	ft_flagreset(t_flag *flags)
 	(*flags).actidoubles[0] = 0;
 	(*flags).actidoubles[1] = 0;
 	(*flags).precision = 0;
-	(*flags).spadding = 0;
-	(*flags).npadding = 0;
+	(*flags).padding = 0;
+//	(*flags).npadding = 0;
 }
 
 static void	flagflip(unsigned char c, t_flag *flags)
@@ -61,6 +61,8 @@ static void	flagflip(unsigned char c, t_flag *flags)
 			(*flags).doubleflags[flip] ^= (1LLU << (c - (flip * 64)));
 		}
 	}
+	else if (c >= '9' || c <= '0')
+		(*flags).actiflags[flip] |= (1LLU << (c - (flip * 64)));
 }
 
 int			ft_flagharvest(unsigned char *format, t_flag *flags)

@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/01 16:56:14 by aholster       #+#    #+#                */
-/*   Updated: 2019/04/19 16:46:09 by aholster      ########   odam.nl         */
+/*   Updated: 2019/04/19 18:57:08 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,17 @@ void	ft_bufmanager(char *mem, size_t size, t_flag *flags)
 int	ft_printf(char *format, ...)
 {
 	va_list ap;
-	size_t	len;
-
+	int		fd;
+	t_flag flags;
+	
+	fd = 1;
 	va_start(ap, format);
-	if (ft_formatstat(ap, format, &len) == -1)
+	ft_flinit(fd, &flags);
+	flags.lst = NULL;
+
+	flags.print = ft_bufmanager;
+	
+	if (ft_format(ap, format, &flags) == -1)
 		return (-1);
 
 	va_end(ap);

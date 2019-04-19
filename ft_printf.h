@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/01 16:56:13 by aholster       #+#    #+#                */
-/*   Updated: 2019/04/19 16:47:24 by aholster      ########   odam.nl         */
+/*   Updated: 2019/04/19 18:57:30 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@
 typedef	struct			s_flag //corrected
 {
 	unsigned long long	standflags[2];
-	unsigned int		doubleflags[2];	
-	unsigned long long	actiflags[2];	
+	unsigned int		doubleflags[2];
+	unsigned long long	actiflags[2];
 	int					precision;
 	int					spadding;
 	int					npadding;
@@ -47,9 +47,8 @@ int						ft_lstbuffer(va_list ap, char *format,\
 						char **out, size_t *len);
 
 
-void					ft_bufmanager(char *mem, size_t size, t_flag *flags)
-int						ft_formatstat(va_list ap, char *format, size_t *len,\
-						const int fd);
+void					ft_bufmanager(char *mem, size_t size, t_flag *flags);
+int						ft_format(va_list ap, char *format, t_flag *flags);
 
 int						ft_printf(char *format, ...);
 int						ft_dispatcher(va_list ap, char *specifier,\

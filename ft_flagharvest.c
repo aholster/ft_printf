@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/04/18 17:22:09 by aholster       #+#    #+#                */
-/*   Updated: 2019/04/19 20:32:17 by aholster      ########   odam.nl         */
+/*   Updated: 2019/04/19 21:03:52 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ static void	flagflip(unsigned char c, t_flag *flags)
 	}
 	else if (c >= '9' || c <= '0')
 		(*flags).actiflags[flip] |= (1LLU << (c - (flip * 64)));
+	else
+		
 }
 
 int			ft_flagharvest(unsigned char *format, t_flag *flags)

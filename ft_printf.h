@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   ft_printf.h                                        :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
+/*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/01 16:56:13 by aholster       #+#    #+#                */
-/*   Updated: 2019/04/19 11:36:12 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/04/19 15:10:46 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int						ft_lstbuffer(va_list ap, char *format,\
 						char **out, size_t *len);
 
 
-void					ft_bufmanager(char input, t_statbuf buffer);
+void					ft_bufmanager(char input, t_statbuf *buffer);
 int						ft_formatstat(va_list ap, char *format, size_t *len);
 
 int						ft_printf(char *format, ...);

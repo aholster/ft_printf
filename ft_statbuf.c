@@ -3,25 +3,30 @@
 /*                                                        ::::::::            */
 /*   ft_statbuf.c                                       :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
+/*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/04/17 19:57:30 by aholster       #+#    #+#                */
-/*   Updated: 2019/04/19 14:36:38 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/04/19 15:10:45 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	ft_bufmanager(char input, t_statbuf buffer)
+void	ft_bufmanager(char input, t_statbuf *buffer)
 {
-	buffer.store[buffer.cur] = input;
-	buffer.cur += 1;
-	if (buffer.cur == 50)
+	(*buffer).store[buffer.cur] = input;
+	(*buffer).cur += 1;
+	if ((*buffer).cur == 50)
 	{
-		write(1, &buffer.store, 50);
-		buffer.history += buffer.cur;
-		buffer.cur = 0;
+		write(1, &(*buffer).store, 50);
+		(*buffer).history += (*buffer).cur;
+		(*buffer).cur = 0;
 	}
+}
+
+void	ft_flushbuf(t_statbuf *buffer)
+{
+	write(1, &)
 }
 
 int		ft_formatstat(va_list ap, char *format, size_t *len)
@@ -44,7 +49,7 @@ int		ft_formatstat(va_list ap, char *format, size_t *len)
 				return (-1);
 		}
 		else
-			ft_bufmanager(format[index], buffer);
+			ft_bufmanager(format[index], &buffer);
 		index++;
 	}
 	return (1);

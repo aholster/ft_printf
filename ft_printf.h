@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/01 16:56:13 by aholster       #+#    #+#                */
-/*   Updated: 2019/04/19 18:57:30 by aholster      ########   odam.nl         */
+/*   Updated: 2019/04/19 19:28:38 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,18 +21,20 @@
 # define BUFFSIZE	10
 
 # define VALFLG "hijlz# *.-+L0123456789"
-# define DBLFLG "lh"
+# define DBLFLG "hl"
 
 /*
 **	VALFLG and DBLFLG handle what constitutes valid characters in flags
+**	doubleflags MUST be valid normal flags
 **	to add new conversions, add them into the dispatcher array.
 */
 
 typedef	struct			s_flag //corrected
 {
 	unsigned long long	standflags[2];
-	unsigned int		doubleflags[2];
+	unsigned long long	doubleflags[2];
 	unsigned long long	actiflags[2];
+	unsigned long long	actidoubles[2];
 	int					precision;
 	int					spadding;
 	int					npadding;
@@ -53,7 +55,7 @@ int						ft_format(va_list ap, char *format, t_flag *flags);
 int						ft_printf(char *format, ...);
 int						ft_dispatcher(va_list ap, char *specifier,\
 						void *functbl[53], t_flag *flags);
-int						ft_flagharvest(char *format, t_flag *flags);
+int						ft_flagharvest(unsigned char *format, t_flag *flags);
 void					ft_flinit(const int fd, t_flag *flags);
 
 #endif

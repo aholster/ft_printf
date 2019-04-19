@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/04/18 17:44:14 by aholster       #+#    #+#                */
-/*   Updated: 2019/04/19 16:42:35 by aholster      ########   odam.nl         */
+/*   Updated: 2019/04/19 19:27:20 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ static void	ft_dblflg(t_flag *flags)
 	{
 		if (DBLFLG[index] >= 64)
 			(*flags).doubleflags[1] |= (1LLU << (DBLFLG[index] - 64)); // changed from standflags
-
 		else
 			(*flags).doubleflags[0] |= (1LLU << DBLFLG[index]); // changed from standarflags
 		index++;

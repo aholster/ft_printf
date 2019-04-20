@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   ft_printf.c                                        :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: aholster <aholster@student.codam.nl>         +#+                     */
+/*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/01 16:56:14 by aholster       #+#    #+#                */
-/*   Updated: 2019/04/19 18:57:08 by aholster      ########   odam.nl         */
+/*   Updated: 2019/04/20 14:17:39 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void	ft_bufmanager(char *mem, size_t size, t_flag *flags)
 		if (left < temp)
 			temp = left;
 		ft_memcpy(&biffer[(*flags).history % BUFFSIZE], mem, temp);
+		mem += temp;
 		left -= temp;
 		(*flags).history += temp;
 	}
@@ -43,14 +44,14 @@ int	ft_printf(char *format, ...)
 	va_list ap;
 	int		fd;
 	t_flag flags;
-	
+
 	fd = 1;
 	va_start(ap, format);
 	ft_flinit(fd, &flags);
 	flags.lst = NULL;
 
 	flags.print = ft_bufmanager;
-	
+
 	if (ft_format(ap, format, &flags) == -1)
 		return (-1);
 

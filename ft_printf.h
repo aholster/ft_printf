@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   ft_printf.h                                        :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: aholster <aholster@student.codam.nl>         +#+                     */
+/*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/01 16:56:13 by aholster       #+#    #+#                */
-/*   Updated: 2019/04/19 20:13:26 by aholster      ########   odam.nl         */
+/*   Updated: 2019/04/20 14:09:35 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ typedef	struct			s_flag //corrected
 
 	t_list				**lst;
 	size_t				history;
-	const int			fd;
-	int					(*print)(char *mem, size_t size, t_flag *flags);
+	int					fd;
+//	int					(*print)(char *mem, size_t size, t_flag *flags);
 }						t_flag;
 
 int						ft_lstbuffer(va_list ap, char *format,\

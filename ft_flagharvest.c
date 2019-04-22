@@ -6,31 +6,11 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/04/18 17:22:09 by aholster       #+#    #+#                */
-/*   Updated: 2019/04/19 21:03:52 by aholster      ########   odam.nl         */
+/*   Updated: 2019/04/22 22:14:39 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-
-static int	ft_valiflag(unsigned char c, t_flag *flags)
-{
-	if (c >= 128 || c == '\0')
-		return (-1);
-	// else if (c[0] == c[1])
-	// {
-	// 	if (c[0] >= 64 &&\
-	// 		((1LLU << (c[0] - 64)) & (*flags).doubleflags[1] == 1)) //corrected
-	// 		return (1);
-	// 	else if ((1LLU << c[0]) & (*flags).doubleflags[0] == 1) //corrected
-	// 		return (1);
-	// }
-	// possibly no longer necesary/could result in false positive or unnecesary slowdown
-	else if (c >= 64 && (1LLU << (c - 64)) & (*flags).standflags[1] == 1)
-		return (1);
-	else if (((1LLU << c) & (*flags).standflags[0]) == 1)
-		return (1);
-	return (-1);
-}
 
 static void	ft_flagreset(t_flag *flags)
 {
@@ -43,40 +23,61 @@ static void	ft_flagreset(t_flag *flags)
 //	(*flags).npadding = 0;
 }
 
+static int	ft_valiflag(unsigned char c, t_flag *flags)
+{
+	if (c >= 128 || c == '\0')
+		return (-1);
+	// else if (c[0] == c[1])
+	// {
+	// 	if (c[0] >= 64 &&\
+	// 		((1LLU << (c[0] - 64)) & (*flags).statidoubles[1] == 1)) //corrected
+	// 		return (1);
+	// 	else if ((1LLU << c[0]) & (*flags).statidoubles[0] == 1) //corrected
+	// 		return (1);
+	// }
+	// possibly no longer necesary/could result in false positive or unnecesary slowdown
+	else if (c >= 64 && ((1LLU << (c - 64)) & (*flags).statiflags[1]) == 1)
+		return (1);
+	else if (((1LLU << c) & (*flags).statiflags[0]) == 1)
+		return (1);
+	return (-1);
+}
+
 static void	flagflip(unsigned char c, t_flag *flags)
 {
 	int	flip;
 
 	flip = (c >= 64);
-	if ((1LLU << (c - (flip * 64))) & (*flags).doubleflags[flip] == 1)
+	if (((1LLU << (c - (flip * 64))) & (*flags).statidoubles[flip]) == 1)
 	{
-		if ((1LLU << (c - (flip * 64))) & (*flags).actiflags[flip] == 1)
+		if (((1LLU << (c - (flip * 64))) & (*flags).actiflags[flip]) == 1)
 		{
-			(*flags).doubleflags[flip] |= (1LLU << (c - (flip * 64)));
+			(*flags).statidoubles[flip] |= (1LLU << (c - (flip * 64)));
 			(*flags).actiflags[flip] ^= (1LLU << (c - (flip * 64)));
 		}
 		else
 		{
 			(*flags).actiflags[flip] |= (1LLU << (c - (flip * 64)));
-			(*flags).doubleflags[flip] ^= (1LLU << (c - (flip * 64)));
+			(*flags).statidoubles[flip] ^= (1LLU << (c - (flip * 64)));
 		}
 	}
 	else if (c >= '9' || c <= '0')
 		(*flags).actiflags[flip] |= (1LLU << (c - (flip * 64)));
 	else
-		
+		return ;
+		//in progresss
 }
 
-int			ft_flagharvest(unsigned char *format, t_flag *flags)
+int			ft_flagharvest(unsigned char *format, t_print *clipb)
 {
 	size_t	index;
 
 	index = 0;
-	ft_flagreset(flags);
-	while (ft_valiflag(format[index], flags) == 1)
+	ft_flagreset((*clipb).flags);
+	while (ft_valiflag(format[index], (*clipb).flags) == 1)
 	{
-		//for doubleflags, increment index another step to avoid valiflag bugging
-		flagflip(format[index], flags);
+		//for statidoubles, increment index another step to avoid valiflag bugging
+		flagflip(format[index], (*clipb).flags);
 
 		index++;
 	}

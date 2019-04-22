@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/04/18 16:00:54 by aholster       #+#    #+#                */
-/*   Updated: 2019/04/19 18:36:14 by aholster      ########   odam.nl         */
+/*   Updated: 2019/04/22 21:46:18 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,23 +23,23 @@ static int	ft_operator(char conversion)
 }
 
 int			ft_dispatcher(va_list ap, char *specifier, void *functbl[53],\
-			t_flag *flags)
+			t_print *clipb)
 {
 	int		index;
-	int		(*basic)(va_list, t_flag);
-	int		(*exception)(int, va_list, t_flag);
+	int		(*basic)(va_list, t_print*);
+	int		(*exception)(int, va_list, t_print*);
 
 	index = ft_operator(specifier[0]);
-	if (index == 52 || functbl[index] == 0)
+	if (index >= 52 || functbl[index] == 0)
 	{
 		exception = functbl[52];
-		if (exception((int)(specifier[0]), ap, flags) == -1)
+		if (exception((int)(specifier[0]), ap, clipb) == -1)
 			return (-1);
 	}
 	else
 	{
 		basic = functbl[index];
-		if (basic(ap, flags) == -1)
+		if (basic(ap, clipb) == -1)
 			return (-1);
 	}
 	return (1);

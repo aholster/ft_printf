@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/04/18 17:44:14 by aholster       #+#    #+#                */
-/*   Updated: 2019/04/19 19:27:20 by aholster      ########   odam.nl         */
+/*   Updated: 2019/04/22 22:12:28 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ static void	ft_valflg(t_flag *flags)
 	while (VALFLG[index] != '\0')
 	{
 		if (VALFLG[index] >= 64)
-			(*flags).standflags[1] |= (1LLU << (VALFLG[index] - 64));
+			(*flags).statiflags[1] |= (1LLU << (VALFLG[index] - 64));
 		else
-			(*flags).standflags[0] |= (1LLU << VALFLG[index]);
+			(*flags).statiflags[0] |= (1LLU << VALFLG[index]);
 		index++;
 	}
 }
@@ -35,21 +35,20 @@ static void	ft_dblflg(t_flag *flags)
 	while (DBLFLG[index] != '\0')
 	{
 		if (DBLFLG[index] >= 64)
-			(*flags).doubleflags[1] |= (1LLU << (DBLFLG[index] - 64)); // changed from standflags
+			(*flags).statidoubles[1] |= (1LLU << (DBLFLG[index] - 64));
 		else
-			(*flags).doubleflags[0] |= (1LLU << DBLFLG[index]); // changed from standarflags
+			(*flags).statidoubles[0] |= (1LLU << DBLFLG[index]);
 		index++;
 	}
 }
 
-void		ft_flinit(const int fd, t_flag *flags)
+void		ft_flinit(t_print *clipb, t_flag *flags)
 {
-	(*flags).fd = fd;
-	(*flags).standflags[0] = 0;
-	(*flags).standflags[1] = 0;
-	(*flags).doubleflags[0] = 0;
-	(*flags).doubleflags[1] = 0;
-	(*flags).history = 0;
+	(*clipb).flags = flags;
+	(*flags).statiflags[0] = 0;
+	(*flags).statiflags[1] = 0;
+	(*flags).statidoubles[0] = 0;
+	(*flags).statidoubles[1] = 0;
 	ft_dblflg(flags);
 	ft_valflg(flags);
 }

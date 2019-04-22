@@ -3,59 +3,60 @@
 /*                                                        ::::::::            */
 /*   ft_printf.c                                        :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
+/*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/01 16:56:14 by aholster       #+#    #+#                */
-/*   Updated: 2019/04/20 14:17:39 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/04/22 22:16:24 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	ft_bufmanager(char *mem, size_t size, t_flag *flags)
+int	ft_bufmanager(char *mem, size_t size, t_print *clipb)
 {
 	static char	biffer[BUFFSIZE];
 	size_t		temp;
 	size_t		left;
+	size_t		curpos;
 
 	left = size;
+	curpos = (*clipb).history % BUFFSIZE;
 	if (mem == NULL)
 	{
-		write((*flags).fd, biffer, (*flags).history % BUFFSIZE);
-		return ;
+		write((*clipb).fd, biffer, curpos);
+		return (0);
 	}
 	while (left != 0)
 	{
-		if ((*flags).history != 0 && (*flags).history % BUFFSIZE == 0)
-			write((*flags).fd, biffer, BUFFSIZE);
-		temp = BUFFSIZE - ((*flags).history % BUFFSIZE);
+		if ((*clipb).history != 0 && curpos == 0)
+			write((*clipb).fd, biffer, BUFFSIZE);
+		temp = BUFFSIZE - curpos;
 		if (left < temp)
 			temp = left;
-		ft_memcpy(&biffer[(*flags).history % BUFFSIZE], mem, temp);
+		ft_memcpy(&biffer[curpos], mem, temp);
 		mem += temp;
 		left -= temp;
-		(*flags).history += temp;
+		(*clipb).history += temp;
 	}
+	return (0);
 }
 
-
-int	ft_printf(char *format, ...)
+int		ft_printf(char *format, ...)
 {
-	va_list ap;
-	int		fd;
-	t_flag flags;
+	va_list 	ap;
+	t_print 	clipb;
 
-	fd = 1;
 	va_start(ap, format);
-	ft_flinit(fd, &flags);
-	flags.lst = NULL;
-
-	flags.print = ft_bufmanager;
-
-	if (ft_format(ap, format, &flags) == -1)
+	if (ft_clinit(NULL, 1, ft_bufmanager, &clipb) == -1)
 		return (-1);
-
+	if (ft_format(ap, format, &clipb) == -1)
+	{
+		free(clipb.buffer);
+		return (-1);
+	}
+	ft_bufmanager(NULL, 0, &clipb);
 	va_end(ap);
+	return (66666666);
 }
 
 // int	ft_altprintf(char *format, ...)

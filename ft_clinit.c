@@ -1,34 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_statbuf.c                                       :+:    :+:            */
+/*   ft_clinit.c                                        :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2019/04/17 19:57:30 by aholster       #+#    #+#                */
-/*   Updated: 2019/04/19 18:57:04 by aholster      ########   odam.nl         */
+/*   Created: 2019/04/22 20:28:22 by aholster       #+#    #+#                */
+/*   Updated: 2019/04/22 22:16:50 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int		ft_format(va_list ap, char *format, t_flag *flags)
+int	ft_clinit(t_list **lst, int fd,\
+			int (*printer)(char*, size_t, t_print*), t_print *clipb)
 {
-	size_t		index;
-	void		*functbl[53];
-
-	index = 0;
-	while (format[index] != '\0')
-	{
-		if (format[index] == '%')
-		{
-			index += ft_flagharvest(&format[index], flags);
-			if (ft_dispatcher(ap, &format[index], functbl, flags) == -1)
-				return (-1);
-		}
-		else
-			ft_bufmanager(format, sizeof(char), flags);
-		index++;
-	}
+	(*clipb).alst = lst;
+	(*clipb).history = 0;
+	(*clipb).fd = fd;
+	(*clipb).printer = printer;
+	(*clipb).buffer = (char *)malloc(sizeof(char) * BUFFSIZE);
+	if ((*clipb).buffer == NULL)
+		return (-1);
 	return (1);
 }

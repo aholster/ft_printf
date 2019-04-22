@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   ft_printf.h                                        :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
+/*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/01 16:56:13 by aholster       #+#    #+#                */
-/*   Updated: 2019/04/20 14:09:35 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/04/22 22:17:02 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,37 +25,40 @@
 
 /*
 **	VALFLG and DBLFLG handle what constitutes valid characters in flags
-**	doubleflags MUST be valid normal flags
+**	double-lettered-flags MUST be valid normal flags
 **	to add new conversions, add them into the dispatcher array.
 */
 
-typedef	struct			s_flag //corrected
+typedef struct			s_print
 {
-	unsigned long long	standflags[2];
-	unsigned long long	doubleflags[2];
+	char				*buffer;
+	t_list				**alst;
+	size_t				history;
+	// history should be unsigned long long bc of %lln
+	int					fd;
+	int					(*printer)(char*, size_t, struct s_print*);
+	struct s_flag		*flags;
+}						t_print;
+
+typedef	struct			s_flag
+{
+	unsigned long long	statiflags[2];
+	unsigned long long	statidoubles[2];
 	unsigned long long	actiflags[2];
 	unsigned long long	actidoubles[2];
 	int					precision;
 	int					padding;
 //	int					npadding;
-
-	t_list				**lst;
-	size_t				history;
-	int					fd;
-//	int					(*print)(char *mem, size_t size, t_flag *flags);
 }						t_flag;
 
-int						ft_lstbuffer(va_list ap, char *format,\
-						char **out, size_t *len);
-
-
-void					ft_bufmanager(char *mem, size_t size, t_flag *flags);
-int						ft_format(va_list ap, char *format, t_flag *flags);
+int						ft_format(va_list ap, char *format, t_print *clipb);
 
 int						ft_printf(char *format, ...);
 int						ft_dispatcher(va_list ap, char *specifier,\
-						void *functbl[53], t_flag *flags);
-int						ft_flagharvest(unsigned char *format, t_flag *flags);
-void					ft_flinit(const int fd, t_flag *flags);
+						void *functbl[53], t_print *clipb);
+int						ft_flagharvest(unsigned char *format, t_print *clipb);
+void					ft_flinit(t_print *clipb, t_flag *flags);
+int						ft_clinit(t_list **lst, int fd, int \
+						(*printer)(char*, size_t, t_print*), t_print *clipb);
 
 #endif

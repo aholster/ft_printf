@@ -6,13 +6,18 @@
 #    By: aholster <aholster@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2019/02/16 15:46:43 by aholster       #+#    #+#                 #
-#    Updated: 2019/04/22 22:11:57 by aholster      ########   odam.nl          #
+#    Updated: 2019/04/24 16:49:16 by aholster      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
 DATE := $(shell date)
 
-SOURCE := printf dispatcher format flinit flagharvest clinit
+SUBDIR := ./writers/
+
+SUBSOURCE := 
+
+SOURCE := $(SUBSOURCE:%=$(SUBDIR)%) printf dispatcher format flinit \
+			flagharvest clinit
 
 FILEC = $(SOURCE:%=./ft_%.c)
 

@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/01 16:56:13 by aholster       #+#    #+#                */
-/*   Updated: 2019/04/22 22:17:02 by aholster      ########   odam.nl         */
+/*   Updated: 2019/04/24 15:44:50 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 //	include also in libft.h
 
 # define BUFFSIZE	10
+# define FUNCSIZE	53
 
 # define VALFLG "hijlz# *.-+L0123456789"
 # define DBLFLG "hl"
@@ -51,11 +52,11 @@ typedef	struct			s_flag
 //	int					npadding;
 }						t_flag;
 
-int						ft_format(va_list ap, char *format, t_print *clipb);
+int						ft_format(va_list ap, unsigned char *format, t_print *clipb);
 
 int						ft_printf(char *format, ...);
 int						ft_dispatcher(va_list ap, char *specifier,\
-						void *functbl[53], t_print *clipb);
+						void **functbl, t_print *clipb);
 int						ft_flagharvest(unsigned char *format, t_print *clipb);
 void					ft_flinit(t_print *clipb, t_flag *flags);
 int						ft_clinit(t_list **lst, int fd, int \

@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/01 16:56:14 by aholster       #+#    #+#                */
-/*   Updated: 2019/04/22 22:16:24 by aholster      ########   odam.nl         */
+/*   Updated: 2019/04/24 15:44:45 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int		ft_printf(char *format, ...)
 	va_start(ap, format);
 	if (ft_clinit(NULL, 1, ft_bufmanager, &clipb) == -1)
 		return (-1);
-	if (ft_format(ap, format, &clipb) == -1)
+	if (ft_format(ap, (unsigned char *)format, &clipb) == -1)
 	{
 		free(clipb.buffer);
 		return (-1);

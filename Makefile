@@ -6,7 +6,7 @@
 #    By: aholster <aholster@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2019/02/16 15:46:43 by aholster       #+#    #+#                 #
-#    Updated: 2019/04/24 16:49:16 by aholster      ########   odam.nl          #
+#    Updated: 2019/04/24 16:57:33 by aholster      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,12 +14,11 @@ DATE := $(shell date)
 
 SUBDIR := ./writers/
 
-SUBSOURCE := 
+SUBSOURCE := decimal
 
-SOURCE := $(SUBSOURCE:%=$(SUBDIR)%) printf dispatcher format flinit \
-			flagharvest clinit
+SOURCE := printf dispatcher format flinit flagharvest clinit
 
-FILEC = $(SOURCE:%=./ft_%.c)
+FILEC = $(SOURCE:%=./ft_%.c) $(SUBSOURCE:%=$(SUBDIR)ft_%.c)
 
 OBJ =	$(SOURCE:%=./ft_%.o)
 

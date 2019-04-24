@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   ft_printf.h                                        :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: aholster <aholster@student.codam.nl>         +#+                     */
+/*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/01 16:56:13 by aholster       #+#    #+#                */
-/*   Updated: 2019/04/24 15:44:50 by aholster      ########   odam.nl         */
+/*   Updated: 2019/04/24 17:08:35 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ typedef struct			s_print
 	size_t				history;
 	// history should be unsigned long long bc of %lln
 	int					fd;
-	int					(*printer)(char*, size_t, struct s_print*);
+	int					(*printer)(unsigned char*, size_t, struct s_print*);
 	struct s_flag		*flags;
 }						t_print;
 
@@ -55,11 +55,11 @@ typedef	struct			s_flag
 int						ft_format(va_list ap, unsigned char *format, t_print *clipb);
 
 int						ft_printf(char *format, ...);
-int						ft_dispatcher(va_list ap, char *specifier,\
+int						ft_dispatcher(va_list ap, unsigned char *specifier,\
 						void **functbl, t_print *clipb);
 int						ft_flagharvest(unsigned char *format, t_print *clipb);
 void					ft_flinit(t_print *clipb, t_flag *flags);
 int						ft_clinit(t_list **lst, int fd, int \
-						(*printer)(char*, size_t, t_print*), t_print *clipb);
+						(*printer)(unsigned char*, size_t, t_print*), t_print *clipb);
 
 #endif

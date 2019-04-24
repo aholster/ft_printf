@@ -3,16 +3,16 @@
 /*                                                        ::::::::            */
 /*   ft_format.c                                        :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: aholster <aholster@student.codam.nl>         +#+                     */
+/*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/04/17 19:57:30 by aholster       #+#    #+#                */
-/*   Updated: 2019/04/24 16:35:16 by aholster      ########   odam.nl         */
+/*   Updated: 2019/04/24 17:05:22 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int	ft_judex(char *start, size_t *index, t_print *clipb)
+static int	ft_judex(unsigned char *start, size_t *index, t_print *clipb)
 {
 	size_t	judex;
 
@@ -29,7 +29,7 @@ static int	ft_judex(char *start, size_t *index, t_print *clipb)
 
 static int	ft_charskip(unsigned char *c)
 {
-	if (c[0] & 128 == 0)// <= 127
+	if ((c[0] & 128) == 0)// <= 127
 		return (1);
 	else if (c[0] >= 240 && c[0] <= 247)// <= 247
 		return (4);
@@ -53,7 +53,7 @@ int			ft_format(va_list ap, unsigned char *format, t_print *clipb)
 		if (format[index] == '%')
 		{
 			index += ft_flagharvest(&format[index], clipb);
-			if (ft_dispatcher(ap, &format[index], &functbl, clipb) == -1)
+			if (ft_dispatcher(ap, &format[index], &*functbl, clipb) == -1)
 				return (-1);
 		}
 		else if (ft_judex(&format[index], &index, clipb) == -1)

@@ -3,10 +3,10 @@
 #                                                         ::::::::             #
 #    Makefile                                           :+:    :+:             #
 #                                                      +:+                     #
-#    By: aholster <aholster@student.codam.nl>         +#+                      #
+#    By: jesmith <jesmith@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2019/02/16 15:46:43 by aholster       #+#    #+#                 #
-#    Updated: 2019/04/24 16:57:33 by aholster      ########   odam.nl          #
+#    Updated: 2019/04/24 17:10:27 by jesmith       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 

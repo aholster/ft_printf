@@ -3,16 +3,16 @@
 /*                                                        ::::::::            */
 /*   ft_printf.c                                        :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: aholster <aholster@student.codam.nl>         +#+                     */
+/*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/01 16:56:14 by aholster       #+#    #+#                */
-/*   Updated: 2019/04/24 15:44:45 by aholster      ########   odam.nl         */
+/*   Updated: 2019/04/24 17:12:14 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	ft_bufmanager(char *mem, size_t size, t_print *clipb)
+int	ft_bufmanager(unsigned char *mem, size_t size, t_print *clipb)
 {
 	static char	biffer[BUFFSIZE];
 	size_t		temp;

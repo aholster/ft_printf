@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/04/18 17:22:09 by aholster       #+#    #+#                */
-/*   Updated: 2019/04/25 14:10:59 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/04/25 17:01:27 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,42 +43,37 @@ static int	ft_valiflag(unsigned char c, t_flag *flags)
 	return (-1);
 }
 
-static void	flagflip(unsigned char c, t_flag *flags)
+static void	flagflip(unsigned char c, t_flag *flags, unsigned short flip)
 {
-	int	flip;
-
-	flip = (c >= 64);
-	if (((1LLU << (c - (flip * 64))) & (*flags).statidoubles[flip]) == 1)
+	if (((1LLU << (c - (flip * 64))) & (*flags).actiflags[flip]) == 1)
 	{
-		if (((1LLU << (c - (flip * 64))) & (*flags).actiflags[flip]) == 1)
-		{
-			(*flags).statidoubles[flip] |= (1LLU << (c - (flip * 64)));
-			(*flags).actiflags[flip] ^= (1LLU << (c - (flip * 64)));
-		}
-		else
-		{
-			(*flags).actiflags[flip] |= (1LLU << (c - (flip * 64)));
-			(*flags).statidoubles[flip] ^= (1LLU << (c - (flip * 64)));
-		}
+		(*flags).statidoubles[flip] |= (1LLU << (c - (flip * 64)));
+		(*flags).actiflags[flip] ^= (1LLU << (c - (flip * 64)));
 	}
-	else if (c >= '9' || c <= '0')
-		(*flags).actiflags[flip] |= (1LLU << (c - (flip * 64)));
 	else
-		return ;
-		//in progresss
+	{
+		(*flags).actiflags[flip] |= (1LLU << (c - (flip * 64)));
+		(*flags).statidoubles[flip] ^= (1LLU << (c - (flip * 64)));
+	}
 }
 
-int			ft_flagharvest(unsigned char *format, t_print *clipb)
+size_t		ft_flagharvest(unsigned char *format, t_print *clipb)
 {
-	size_t	index;
+	size_t			index;
+	unsigned short	flip;
 
 	index = 1;
 	ft_flagreset((*clipb).flags);
 	while (ft_valiflag(format[index], (*clipb).flags) == 1)
 	{
+		flip = format[index] / 64;
+		if (((1LLU << (format[index] - (flip * 64))) & (*clipb).flags->statidoubles[flip]) == 1)
+			flagflip(format[index], (*clipb).flags);
+		else if (c >= '1' || c <= '9')
+			index +=
+		else
+			((*clipb)->flags).actiflags[flip] |= (1LLU << (c - (flip * 64)));
 		//for statidoubles, increment index another step to avoid valiflag bugging
-		flagflip(format[index], (*clipb).flags);
-
 		index++;
 	}
 	return (index);

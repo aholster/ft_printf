@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/04/24 21:38:26 by jesmith        #+#    #+#                */
-/*   Updated: 2019/04/25 15:35:32 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/04/25 16:31:27 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,37 +34,38 @@
 // }
 
 
-// static int	ft_padmanager(unsigned char *str, int len, t_print *clipb)
-// {
-// 	unsigned char	*pad;
-// 	char			c;
+static int	ft_padmanager(unsigned char *str, int len, t_print *clipb)
+{
+	unsigned char	*pad;
+	char			c;
 
-// 	pad = NULL;
-// 	if ((*clipb).flags->actiflags[0] == 0) // use actiflags better c = ' ' or '0' depending on what actiflags in case flag '0' is activate
-// 		c = 0;
-// 	else
-// 		c = 32;
-// 	if (((*clipb).flags->padding - len) > 0 && (*clipb).flags->actiflags[1] == 1) // ensure '-' flag is off
-// 	{
-// 		while ((*clipb).flags->padding > len) // add c to front of str
-// 		{
-// 			*pad = c;
-// 			pad++;
-// 			(*clipb).flags->padding--;
-// 		}
-// 		ft_strcat((char *)str, (char *)pad);
-// 	}
-// 	if (((*clipb).flags->padding - len) > 0 && (*clipb).flags->actiflags[1] == 0) // ensure '-' flag is off
-// 	{
-// 		while ((*clipb).flags->padding > len) //add pad to back of str;
-// 		{
-// 			str[len] = c;
-// 			len++;
-// 		}
-// 	}
-// 	(*clipb).printer(str, len, clipb);
-// 	return (1);
-// }
+	pad = NULL;
+	if ((*clipb).flags->actiflags[0] == 0) // use actiflags better c = ' ' or '0' depending on what actiflags in case flag '0' is activate
+		c = 0;
+	else
+		c = 32;
+	if (((*clipb).flags->padding - len) > 0 && (*clipb).flags->actiflags[1] == 1) // ensure '-' flag is off
+	{
+		printf("c: %c\n", c);
+		while ((*clipb).flags->padding > len) // add c to front of str
+		{
+			*pad = c;
+			pad++;
+			(*clipb).flags->padding--;
+		}
+		ft_strcat((char *)str, (char *)pad);
+	}
+	if (((*clipb).flags->padding - len) > 0 && (*clipb).flags->actiflags[1] == 0) // ensure '-' flag is off
+	{
+		while ((*clipb).flags->padding > len) //add pad to back of str;
+		{
+			str[len] = c;
+			len++;
+		}
+	}
+	(*clipb).printer(str, len, clipb);
+	return (1);
+}
 
 int			ft_str(va_list ap, t_print *clipb)
 {
@@ -73,20 +74,22 @@ int			ft_str(va_list ap, t_print *clipb)
 
 	// if ((*clipb).flags->precision != 0) 														//if there is precision go to precision manager function
 	// {
-	// 	if (ft_premanager(ap, clipb) == -1)
-	// 		return (-1);
+	// 	if (ft_premanager(ap, clipb) == 1)
+	// 		return (1);
 	// }
 	str = va_arg(ap, unsigned char*);
 	// if (str == NULL)
 	// 	str = "(null)";
 	len = ft_strlen((char const*)str);															// need to check for max len?
-	// if ((*clipb).flags->precision == 0 && ((*clipb).flags->padding - len) > 0)
-	// {
-	// 	if (ft_padmanager(str, len, clipb) == -1)												// padding manager function
-	// 		return (-1);
-	// }
-	printf("str: %s\n", str);
-	printf("len: %zu\n", (size_t)len);
+	printf("padding: %d\n", ((*clipb).flags->padding));
+	if ((*clipb).flags->precision == 0 && ((*clipb).flags->padding - len) > 0)
+	{
+		printf("here\n");
+		if (ft_padmanager(str, len, clipb) == 1)												// padding manager function
+			return (1);
+	}
+	// printf("str: %s\n", str);
+	// printf("len: %d\n", len);
 	(*clipb).printer(str, (size_t)len, clipb);
 	return (1);
 }

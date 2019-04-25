@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/01 16:56:13 by aholster       #+#    #+#                */
-/*   Updated: 2019/04/24 17:08:35 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/04/25 15:47:20 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 //	include also in libft.h
 
 # define BUFFSIZE	10
-# define FUNCSIZE	53
+# define FUNCSIZE	52
 
 # define VALFLG "hijlz# *.-+L0123456789"
 # define DBLFLG "hl"
@@ -35,6 +35,7 @@ typedef struct			s_print
 	char				*buffer;
 	t_list				**alst;
 	size_t				history;
+	size_t				current;
 	// history should be unsigned long long bc of %lln
 	int					fd;
 	int					(*printer)(unsigned char*, size_t, struct s_print*);
@@ -61,5 +62,8 @@ int						ft_flagharvest(unsigned char *format, t_print *clipb);
 void					ft_flinit(t_print *clipb, t_flag *flags);
 int						ft_clinit(t_list **lst, int fd, int \
 						(*printer)(unsigned char*, size_t, t_print*), t_print *clipb);
+void					ft_functblinit(void **functbl);
+
+int						ft_str(va_list ap, t_print *clipb);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/01 16:56:14 by aholster       #+#    #+#                */
-/*   Updated: 2019/04/24 17:12:14 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/04/25 16:13:09 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,29 +15,31 @@
 int	ft_bufmanager(unsigned char *mem, size_t size, t_print *clipb)
 {
 	static char	biffer[BUFFSIZE];
-	size_t		temp;
 	size_t		left;
-	size_t		curpos;
+	size_t		temp;
 
 	left = size;
-	curpos = (*clipb).history % BUFFSIZE;
 	if (mem == NULL)
 	{
-		write((*clipb).fd, biffer, curpos);
+		write((*clipb).fd, biffer, (*clipb).current);
 		return (0);
 	}
 	while (left != 0)
 	{
-		if ((*clipb).history != 0 && curpos == 0)
+		if ((*clipb).current == BUFFSIZE)
+		{
 			write((*clipb).fd, biffer, BUFFSIZE);
-		temp = BUFFSIZE - curpos;
-		if (left < temp)
-			temp = left;
-		ft_memcpy(&biffer[curpos], mem, temp);
-		mem += temp;
+			(*clipb).current = 0;
+		}
+		if (size + (*clipb).current < BUFFSIZE)
+			temp = size;
+		else
+			temp = ft_constrain(size, 0, BUFFSIZE); // ft_constrain(int, int, int) implicit cast
+		ft_memcpy(&biffer[(*clipb).current], mem, temp);
+		(*clipb).current += temp;
 		left -= temp;
-		(*clipb).history += temp;
 	}
+	(*clipb).history += size;
 	return (0);
 }
 
@@ -56,7 +58,7 @@ int		ft_printf(char *format, ...)
 	}
 	ft_bufmanager(NULL, 0, &clipb);
 	va_end(ap);
-	return (66666666);
+	return (clipb.history);
 }
 
 // int	ft_altprintf(char *format, ...)

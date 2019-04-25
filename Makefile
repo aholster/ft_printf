@@ -6,7 +6,7 @@
 #    By: jesmith <jesmith@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2019/02/16 15:46:43 by aholster       #+#    #+#                 #
-#    Updated: 2019/04/24 17:10:27 by jesmith       ########   odam.nl          #
+#    Updated: 2019/04/25 14:36:33 by jesmith       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,13 +14,13 @@ DATE := $(shell date)
 
 SUBDIR := ./writers/
 
-SUBSOURCE := decimal
+SUBSOURCE := decimal str
 
-SOURCE := printf dispatcher format flinit flagharvest clinit
+SOURCE := printf dispatcher format flinit flagharvest clinit functblinit
 
 FILEC = $(SOURCE:%=./ft_%.c) $(SUBSOURCE:%=$(SUBDIR)ft_%.c)
 
-OBJ =	$(SOURCE:%=./ft_%.o)
+OBJ =	$(SOURCE:%=./ft_%.o) $(SUBSOURCE:%=$(SUBDIR)ft_%.o)
 
 HEAD = ft_printf.h
 
@@ -45,7 +45,7 @@ $(NAME):
 	@echo "\033[0;32m$(NAME) successfully assembled!\033[0;00m\n"
 
 %.o: %.c
-	@$(GCCC) -o $@ $< -I ./libft
+	@$(GCCC) -o $@ $< -I ./libft -I ./
 
 clean:
 	@make clean -C ./libft

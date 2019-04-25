@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/04/17 19:57:30 by aholster       #+#    #+#                */
-/*   Updated: 2019/04/25 17:01:45 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/04/25 20:18:08 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int			ft_format(va_list ap, unsigned char *format, t_print *clipb)
 	{
 		if (format[index] == '%')
 		{
-			index += ft_flagharvest(&format[index], clipb);
+			index += ft_flagharvest(&format[index + 1], clipb);
 			if (ft_dispatcher(ap, &format[index], &*functbl, clipb) == -1)
 				return (-1);
 			index += ft_charskip(&format[index]);

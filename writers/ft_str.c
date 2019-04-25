@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/04/24 21:38:26 by jesmith        #+#    #+#                */
-/*   Updated: 2019/04/25 16:31:27 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/04/25 20:15:33 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,11 @@ static int	ft_padmanager(unsigned char *str, int len, t_print *clipb)
 	char			c;
 
 	pad = NULL;
-	if ((*clipb).flags->actiflags[0] == 0) // use actiflags better c = ' ' or '0' depending on what actiflags in case flag '0' is activate
-		c = 0;
+	if ((*clipb).flags->actiflags[0] == 1) // use actiflags better c = ' ' or '0' depending on what actiflags in case flag '0' is activate
+		c = '0';
 	else
-		c = 32;
-	if (((*clipb).flags->padding - len) > 0 && (*clipb).flags->actiflags[1] == 1) // ensure '-' flag is off
+		c = ' ';
+	if (((*clipb).flags->padding - len) > 0) // && (*clipb).flags->actiflags[0] == 1) // ensure '-' flag is off
 	{
 		printf("c: %c\n", c);
 		while ((*clipb).flags->padding > len) // add c to front of str
@@ -53,6 +53,7 @@ static int	ft_padmanager(unsigned char *str, int len, t_print *clipb)
 			pad++;
 			(*clipb).flags->padding--;
 		}
+		printf("pad: %s\n", pad);
 		ft_strcat((char *)str, (char *)pad);
 	}
 	if (((*clipb).flags->padding - len) > 0 && (*clipb).flags->actiflags[1] == 0) // ensure '-' flag is off
@@ -81,7 +82,6 @@ int			ft_str(va_list ap, t_print *clipb)
 	// if (str == NULL)
 	// 	str = "(null)";
 	len = ft_strlen((char const*)str);															// need to check for max len?
-	printf("padding: %d\n", ((*clipb).flags->padding));
 	if ((*clipb).flags->precision == 0 && ((*clipb).flags->padding - len) > 0)
 	{
 		printf("here\n");

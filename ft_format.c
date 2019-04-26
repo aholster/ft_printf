@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/04/17 19:57:30 by aholster       #+#    #+#                */
-/*   Updated: 2019/04/25 20:18:08 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/04/26 19:00:05 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ int			ft_format(va_list ap, unsigned char *format, t_print *clipb)
 	size_t		index;
 	t_flag		flags;
 	void		*functbl[FUNCSIZE];
-
 	index = 0;
 	ft_flinit(clipb, &flags);
 	ft_functblinit(&*functbl);

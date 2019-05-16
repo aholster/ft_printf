@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/01 16:56:14 by aholster       #+#    #+#                */
-/*   Updated: 2019/04/26 17:36:39 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/05/16 19:16:52 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	ft_bufmanager(unsigned char *mem, size_t size, t_print *clipb)
 		write((*clipb).fd, biffer, (*clipb).current);
 		return (0);
 	}
-	while (left != 0)
+	while (left > 0)
 	{
 		if ((*clipb).current == BUFFSIZE)
 		{
@@ -37,6 +37,7 @@ int	ft_bufmanager(unsigned char *mem, size_t size, t_print *clipb)
 			temp = ft_constrain(size, 0, BUFFSIZE); // ft_constrain(int, int, int) implicit cast
 		ft_memcpy(&biffer[(*clipb).current], mem, temp);
 		(*clipb).current += temp;
+		// left = ft_constrain(~0LL, 0, left);
 		left -= temp;
 	}
 	(*clipb).history += size;

@@ -6,7 +6,7 @@
 #    By: jesmith <jesmith@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2019/02/16 15:46:43 by aholster       #+#    #+#                 #
-#    Updated: 2019/04/25 14:36:33 by jesmith       ########   odam.nl          #
+#    Updated: 2019/05/16 18:06:22 by jesmith       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,9 +39,9 @@ assemble: $(OBJ)
 	@ranlib $(NAME)
 
 $(NAME):
-	@make -C ./libft
+	@make -C ./libft -j
 	@echo "\033[0;33mStarting assembly of $(NAME)…\033[0;00m"
-	@time make assemble
+	@time make assemble -j
 	@echo "\033[0;32m$(NAME) successfully assembled!\033[0;00m\n"
 
 %.o: %.c
@@ -62,7 +62,7 @@ fclean: clean
 	\033[0;00m\n"
 
 re: fclean all
-	@make re -C ./libft
+#	@make re -C ./libft
 
 norm:
 	@echo "**+++=====*=====*=====*=====*{\033[0;31mOUT\033[0;00m}\

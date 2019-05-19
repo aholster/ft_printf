@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/04/17 19:57:30 by aholster       #+#    #+#                */
-/*   Updated: 2019/05/16 19:01:05 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/05/19 16:15:08 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,11 @@ int			ft_format(va_list ap, unsigned char *format, t_print *clipb)
 {
 	size_t		index;
 	t_flag		flags;
-	void		*functbl[FUNCSIZE];
+	t_writer	functbl[FUNCSIZE];
+	
 	index = 0;
 	ft_flinit(clipb, &flags);
 	ft_functblinit(&*functbl);
-
 	while (format[index] != '\0')
 	{
 		if (format[index] == '%')
@@ -62,7 +62,6 @@ int			ft_format(va_list ap, unsigned char *format, t_print *clipb)
 		}
 		else if (ft_judex(&format[index], &index, clipb) == -1)
 			return (-1);
-		// index += ft_charskip(&format[index]);
 	}
 	return (1);
 }

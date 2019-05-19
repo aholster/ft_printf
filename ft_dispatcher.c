@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/04/18 16:00:54 by aholster       #+#    #+#                */
-/*   Updated: 2019/04/26 19:08:03 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/05/19 16:11:40 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,19 @@
 
 static int	ft_operator(char conversion)
 {
-
-	if (ft_iscapital(conversion) == 1)
+	if (conversion >= 'A' && conversion <= 'Z')
 		return (conversion - 'A');
-	else if (ft_islowercase(conversion) == 1)
-		return (conversion - ('A' + 6));
+	// if (ft_iscapital(conversion) == 1)
+	// 	return (conversion - 'A');
+	// else if (ft_islowercase(conversion) == 1)
+	// 	return (conversion - ('A' + 6));
 	return (-1);
 }
 
-int			ft_dispatcher(va_list ap, unsigned char *specifier, void **functbl,\
+int			ft_dispatcher(va_list ap, unsigned char *specifier, t_writer *functbl,\
 			t_print *clipb)
 {
 	int		index;
-	int		(*basic)(va_list, t_print*);
 
 	index = ft_operator(specifier[0]);
 	if (index == -1 || functbl[index] == NULL)
@@ -36,8 +36,7 @@ int			ft_dispatcher(va_list ap, unsigned char *specifier, void **functbl,\
 	}
 	else
 	{
-		basic = functbl[index];
-		if (basic(ap, clipb) == -1)
+		if ((functbl[index])(ap, clipb) == -1)
 			return (-1);
 	}
 	return (1);

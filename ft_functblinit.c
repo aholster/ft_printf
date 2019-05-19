@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/04/24 19:14:05 by jesmith        #+#    #+#                */
-/*   Updated: 2019/04/25 15:17:07 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/05/19 16:10:28 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,11 @@
 
 static unsigned short	slider(unsigned char c)
 {
-	return ((c > 'Z') ? c - ('A' + 6) : c - 'A');
+	return (c - 'A');
+	// return ((c > 'Z') ? c - ('A' + 6) : c - 'A');
 }
 
-void					ft_functblinit(void **functbl)
+void					ft_functblinit(t_writer *functbl)
 {
 	// functbl[slider('a')] = ft_lowhexpoint;
 	// functbl[slider('A')] = ft_upprhexpoint;

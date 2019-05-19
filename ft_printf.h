@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/01 16:56:13 by aholster       #+#    #+#                */
-/*   Updated: 2019/05/19 16:14:26 by aholster      ########   odam.nl         */
+/*   Updated: 2019/05/19 16:45:57 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,20 +30,26 @@
 **	to add new conversions, add them into the dispatcher array.
 */
 
-
 typedef struct			s_print
 {
 	char				*buffer;
 	t_list				**alst;
 	size_t				history;
 	size_t				current;
-	// history should be unsigned long long bc of %lln
 	int					fd;
 	int					(*printer)(unsigned char*, size_t, struct s_print*);
 	struct s_flag		*flags;
 }						t_print;
 
-typedef	int		(*t_writer)(va_list, t_print *);
+/*
+** history should be unsigned long long bc of %lln
+*/
+
+typedef	int				(*t_writer)(va_list, t_print*);
+
+/*
+**	change va_list to pointer to circumvent norminette error
+*/
 
 typedef	struct			s_flag
 {
@@ -55,7 +61,8 @@ typedef	struct			s_flag
 	int					padding;
 }						t_flag;
 
-int						ft_format(va_list ap, unsigned char *format, t_print *clipb);
+int						ft_format(va_list ap, unsigned char *format,\
+						t_print *clipb);
 
 int						ft_printf(char *format, ...);
 int						ft_dispatcher(va_list ap, unsigned char *specifier,\
@@ -63,7 +70,8 @@ int						ft_dispatcher(va_list ap, unsigned char *specifier,\
 size_t					ft_flagharvest(unsigned char *format, t_print *clipb);
 void					ft_flinit(t_print *clipb, t_flag *flags);
 int						ft_clinit(t_list **lst, int fd, int \
-						(*printer)(unsigned char*, size_t, t_print*), t_print *clipb);
+						(*printer)(unsigned char*, size_t, t_print*),\
+							t_print *clipb);
 void					ft_functblinit(t_writer *functbl);
 
 int						ft_str(va_list ap, t_print *clipb);

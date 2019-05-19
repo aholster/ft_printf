@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/04/17 19:57:30 by aholster       #+#    #+#                */
-/*   Updated: 2019/05/19 16:15:08 by aholster      ########   odam.nl         */
+/*   Updated: 2019/05/19 16:21:29 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,13 @@ static int	ft_charskip(unsigned char *c)
 {
 	if (c[0] == '\0')
 		return (0);
-	if ((c[0] & 128) == 0)// <= 127
+	if ((c[0] & 128) == 0)
 		return (1);
-	else if (c[0] >= 240 && c[0] <= 247)// <= 247
+	else if (c[0] >= 240 && c[0] <= 247)
 		return (4);
-	else if (c[0] >= 224 && c[0] <= 239)// <= 239
+	else if (c[0] >= 224 && c[0] <= 239)
 		return (3);
-	else if (c[0] >= 192 && c[0] <= 223)// <= 223
+	else if (c[0] >= 192 && c[0] <= 223)
 		return (2);
 	return (1);
 }
@@ -47,7 +47,7 @@ int			ft_format(va_list ap, unsigned char *format, t_print *clipb)
 	size_t		index;
 	t_flag		flags;
 	t_writer	functbl[FUNCSIZE];
-	
+
 	index = 0;
 	ft_flinit(clipb, &flags);
 	ft_functblinit(&*functbl);

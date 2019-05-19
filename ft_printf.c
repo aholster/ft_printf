@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/01 16:56:14 by aholster       #+#    #+#                */
-/*   Updated: 2019/05/16 19:16:52 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/05/19 16:21:55 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,16 +61,3 @@ int		ft_printf(char *format, ...)
 	va_end(ap);
 	return (clipb.history);
 }
-
-// int	ft_altprintf(char *format, ...)
-// {
-// 	va_list ap;
-// 	char	*str;
-// 	size_t	len;
-
-// 	va_start(ap, format);
-// 	if (ft_lstbuffer(ap, format, &str, &len) == -1)
-// 		return (-1);
-
-// 	va_end(ap);
-// }

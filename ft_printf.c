@@ -1,48 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_printfc                                        :+:    :+:            */
+/*   ft_printf.c                                        :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: jesmith <jesmith@studentcodamnl>           +#+                     */
+/*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/01 16:56:14 by aholster       #+#    #+#                */
-/*   Updated: 2019/05/21 17:47:42 by aholster      ########   odamnl         */
+/*   Updated: 2019/05/21 20:31:15 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-
-// int	ft_bufmanager(unsigned char *mem, size_t size, t_print *clipb)
-// {
-// 	static char	biffer[BUFFSIZE];
-// 	size_t		left;
-// 	size_t		temp;
-
-// 	left = size;
-// 	if (mem == NULL)
-// 	{
-// 		write(clipb->fd, biffer, clipb->current);
-// 		return (0);
-// 	}
-// 	while (left > 0)
-// 	{
-// 		if (clipb->current == BUFFSIZE)
-// 		{
-// 			write(clipb->fd, biffer, BUFFSIZE);
-// 			clipb->current = 0;
-// 		}
-// 		if (size + clipb->current < BUFFSIZE)
-// 			temp = size;
-// 		else
-// 			temp = ft_constrain(size, 0, BUFFSIZE); // ft_constrain(int, int, int) implicit cast
-// 		ft_memcpy(&biffer[clipb->current], mem, temp);
-// 		clipb->current += temp;
-// 		// left = ft_constrain(~0LL, 0, left);
-// 		left -= temp;
-// 	}
-// 	clipb->history += size;
-// 	return (0);
-// }
 
 int		ft_bufmanager(unsigned char *mem, size_t size, t_print *clipb)
 {

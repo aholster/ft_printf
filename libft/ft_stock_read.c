@@ -1,29 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_strchr.c                                        :+:    :+:            */
+/*   ft_stock_read.c                                    :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2019/01/18 13:02:35 by aholster       #+#    #+#                */
-/*   Updated: 2019/05/18 15:29:02 by aholster      ########   odam.nl         */
+/*   Created: 2019/04/26 16:44:22 by aholster       #+#    #+#                */
+/*   Updated: 2019/04/26 17:27:58 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strchr(char const *s, int c)
+int		ft_stock_read(const unsigned char *stock, size_t bitnum)
 {
-	size_t			index;
+	unsigned short	segment;
 
-	index = 0;
-	while (s[index] != '\0')
-	{
-		if (s[index] == (unsigned char)c)
-			return ((char *)&s[index]);
-		index++;
-	}
-	if (s[index] == (unsigned char)c)
-		return ((char *)&s[index]);
-	return (NULL);
+	segment = bitnum / 8;
+	if ((stock[segment] & (1 << (bitnum - (segment * 8)))) > 0)
+		return (1);
+	return (0);
 }

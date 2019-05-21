@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/01/22 17:40:24 by aholster       #+#    #+#                */
-/*   Updated: 2019/02/01 21:06:09 by aholster      ########   odam.nl         */
+/*   Updated: 2019/05/18 15:24:45 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,7 @@ void	ft_lstdel(t_list **alst, void (*del)(void *, size_t))
 	current = *alst;
 	while (current != NULL)
 	{
-		if (current->next != NULL)
-			holder = current->next;
-		else
-			holder = NULL;
+		holder = current->next;
 		ft_lstdelone(&current, del);
 		free(current);
 		current = holder;

@@ -6,13 +6,13 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/01/31 22:23:56 by aholster       #+#    #+#                */
-/*   Updated: 2019/02/01 21:25:54 by aholster      ########   odam.nl         */
+/*   Updated: 2019/05/01 18:18:56 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-void	ft_swap(int *a, int *b)
+void	ft_swap(void **a, void **b)
 {
-	int h;
+	void *h;
 
 	h = *a;
 	*a = *b;

@@ -6,14 +6,16 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/01/31 21:31:16 by aholster       #+#    #+#                */
-/*   Updated: 2019/02/01 20:56:26 by aholster      ########   odam.nl         */
+/*   Updated: 2019/05/01 18:28:16 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_count_if(char **tab, int (*f)(char*))
+#include "libft.h"
+
+size_t	ft_count_if(char **tab, int (*f)(char*))
 {
-	int	i;
-	int c;
+	size_t	i;
+	size_t	c;
 
 	i = 0;
 	c = 0;

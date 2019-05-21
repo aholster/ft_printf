@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/02/18 16:02:34 by aholster       #+#    #+#                */
-/*   Updated: 2019/02/18 17:34:27 by aholster      ########   odam.nl         */
+/*   Updated: 2019/04/30 19:06:47 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,6 @@ void	*ft_memdup(void *src, size_t len)
 	ret = (char *)malloc(sizeof(char) * len);
 	if (ret == NULL)
 		return (NULL);
-	while (index < len)
-	{
-		ret[index] = input[index];
-		index++;
-	}
+	ft_memcpy(ret, src, len);
 	return ((void *)ret);
 }

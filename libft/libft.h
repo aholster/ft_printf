@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/01/12 18:16:38 by aholster       #+#    #+#                */
-/*   Updated: 2019/04/18 16:49:04 by aholster      ########   odam.nl         */
+/*   Updated: 2019/05/01 18:20:41 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,12 +127,14 @@ char				*ft_stralloc(size_t size, char c);
 
 # pragma mark mem handling
 
+void				ft_stock_write(unsigned char *stock, size_t bitnum);
+void				ft_stock_write(unsigned char *stock, size_t bitnum);
 void				ft_putmem(char *mem, size_t len);
 void				ft_putmem_fd(char *mem, size_t len, int fd);
 void				ft_putmemendl(char *mem, size_t len);
 void				ft_putmemendl_fd(char *mem, size_t len, int fd);
-void				*ft_memjoin(void *mem1, size_t size1, void *mem2,\
-size_t size2);
+void				*ft_memjoin(const void *mem1, size_t size1, \
+					const void *mem2, size_t size2);
 void				*ft_memdup(void *src, size_t len);
 
 void				ft_bitprint(const void *addr, size_t size);
@@ -140,9 +142,9 @@ void				ft_bitprint(const void *addr, size_t size);
 # pragma mark utility
 
 int					ft_iswhitespace(int c);
-void				ft_swap(int *a, int *b);
+void				ft_swap(void *a, void *b);
 void				ft_segdefault(void);
-int					ft_count_if(char **tab, int (*f)(char*));
+size_t				ft_count_if(char **tab, int (*f)(char*));
 int					ft_islowercase(int c);
 int					ft_iscapital(int c);
 

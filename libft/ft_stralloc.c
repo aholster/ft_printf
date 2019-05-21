@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/24 18:08:35 by aholster       #+#    #+#                */
-/*   Updated: 2019/03/24 18:15:06 by aholster      ########   odam.nl         */
+/*   Updated: 2019/05/01 17:40:21 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,6 @@ char	*ft_stralloc(size_t size, char c)
 	if (str == NULL)
 		return (NULL);
 	str[size] = '\0';
-	while (index < size)
-	{
-		str[index] = c;
-		index++;
-	}
+	ft_memset((void *)str, (int)c, size);
 	return (str);
 }

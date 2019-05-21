@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/01/17 14:56:57 by aholster       #+#    #+#                */
-/*   Updated: 2019/01/29 18:32:34 by aholster      ########   odam.nl         */
+/*   Updated: 2019/04/30 19:05:23 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,6 @@ void	*ft_memalloc(size_t size)
 	output = (void *)malloc(sizeof(void *) * size);
 	if (output == NULL)
 		return (NULL);
-	ft_memset(output, '\0', size);
+	ft_bzero(output, size);
 	return (output);
 }

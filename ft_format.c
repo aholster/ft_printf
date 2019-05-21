@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/04/17 19:57:30 by aholster       #+#    #+#                */
-/*   Updated: 2019/05/19 16:21:29 by aholster      ########   odam.nl         */
+/*   Updated: 2019/05/21 17:50:39 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int	ft_judex(unsigned char *start, size_t *index, t_print *clipb)
 	{
 		judex++;
 	}
-	if ((*clipb).printer(start, judex, clipb) == -1)
+	if (clipb->printer(start, judex, clipb) == -1)
 		return (-1);
 	*index += judex;
 	return (1);
@@ -50,13 +50,13 @@ int			ft_format(va_list ap, unsigned char *format, t_print *clipb)
 
 	index = 0;
 	ft_flinit(clipb, &flags);
-	ft_functblinit(&*functbl);
+	ft_functblinit(functbl);
 	while (format[index] != '\0')
 	{
 		if (format[index] == '%')
 		{
 			index += ft_flagharvest(&format[index + 1], clipb);
-			if (ft_dispatcher(ap, &format[index], &*functbl, clipb) == -1)
+			if (ft_dispatcher(ap, &format[index], functbl, clipb) == -1)
 				return (-1);
 			index += ft_charskip(&format[index]);
 		}

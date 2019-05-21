@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/04/18 16:00:54 by aholster       #+#    #+#                */
-/*   Updated: 2019/05/19 16:20:35 by aholster      ########   odam.nl         */
+/*   Updated: 2019/05/21 17:45:39 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,10 @@ int			ft_dispatcher(va_list ap, unsigned char *specifier,\
 	index = ft_operator(specifier[0]);
 	if (index == -1 || functbl[index] == NULL)
 	{
+		write(1, specifier, 1);
+		clipb->history += 1;
 		// if (exception((int)(specifier[0]), ap, clipb) == -1)
-			return (-1);
+		//	return (-1);
 	}
 	else
 	{

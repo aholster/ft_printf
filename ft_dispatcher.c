@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/04/18 16:00:54 by aholster       #+#    #+#                */
-/*   Updated: 2019/05/21 17:45:39 by aholster      ########   odam.nl         */
+/*   Updated: 2019/05/25 16:44:41 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	ft_operator(char conversion)
 {
-	if (conversion >= 'A' && conversion <= 'Z')
+	if (conversion >= 'A' && conversion <= 'z')
 		return (conversion - 'A');
 	return (-1);
 }

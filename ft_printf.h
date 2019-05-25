@@ -6,11 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/01 16:56:13 by aholster       #+#    #+#                */
-<<<<<<< HEAD
-/*   Updated: 2019/05/21 20:15:42 by aholster      ########   odam.nl         */
-=======
-/*   Updated: 2019/05/21 17:58:47 by aholster      ########   odam.nl         */
->>>>>>> master
+/*   Updated: 2019/05/25 16:33:40 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +37,7 @@ typedef struct			s_print
 	size_t				history;
 	size_t				current;
 	int					fd;
-	int					(*printer)(unsigned char*, size_t, struct s_print*);
+	int					(*printer)(const unsigned char*, size_t, struct s_print*);
 	struct s_flag		*flags;
 }						t_print;
 
@@ -61,23 +57,28 @@ typedef	struct			s_flag
 	unsigned long long	statidoubles[2];
 	unsigned long long	actiflags[2];
 	unsigned long long	actidoubles[2];
-	int					precision;
-	int					padding;
+	unsigned int		precision;
+	unsigned int		padding;
 }						t_flag;
 
 int						ft_format(va_list ap, unsigned char *format,\
 						t_print *clipb);
 
 int						ft_printf(char *format, ...);
+
 int						ft_dispatcher(va_list ap, unsigned char *specifier,\
 						t_writer *functbl, t_print *clipb);
 size_t					ft_flagharvest(unsigned char *format, t_print *clipb);
 void					ft_flinit(t_print *clipb, t_flag *flags);
 int						ft_clinit(t_list **lst, int fd, int \
-						(*printer)(unsigned char*, size_t, t_print*),\
+						(*printer)(const unsigned char*, size_t, t_print*),\
 							t_print *clipb);
 void					ft_functblinit(t_writer *functbl);
 
+int						pad_spaces(size_t amount, t_print *clipb);
+int						pad_zero(size_t amount, t_print *clipb);
+
 int						ft_str(va_list ap, t_print *clipb);
+int						ft_ptraddr(va_list ap, t_print *clipb);
 
 #endif

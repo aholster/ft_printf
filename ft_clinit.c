@@ -6,14 +6,14 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/04/22 20:28:22 by aholster       #+#    #+#                */
-/*   Updated: 2019/05/21 17:49:52 by aholster      ########   odam.nl         */
+/*   Updated: 2019/05/25 16:36:55 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
 int	ft_clinit(t_list **lst, int fd,\
-			int (*printer)(unsigned char*, size_t, t_print*), t_print *clipb)
+		int (*printer)(const unsigned char*, size_t, t_print*), t_print *clipb)
 {
 	clipb->alst = lst;
 	clipb->history = 0;

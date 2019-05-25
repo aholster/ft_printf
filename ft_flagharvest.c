@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/04/18 17:22:09 by aholster       #+#    #+#                */
-/*   Updated: 2019/05/21 17:52:35 by aholster      ########   odam.nl         */
+/*   Updated: 2019/05/25 15:06:39 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ static void		flagflip(unsigned char c, t_flag *flags, unsigned short flip)
 
 static int		ft_valiflag(unsigned char c, t_flag *flags)
 {
-
 	unsigned short	flip;
 
 	if (c >= 128 || c == '\0')

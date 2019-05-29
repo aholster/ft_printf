@@ -6,7 +6,7 @@
 #    By: jesmith <jesmith@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2019/02/16 15:46:43 by aholster       #+#    #+#                 #
-#    Updated: 2019/05/29 14:28:45 by aholster      ########   odam.nl          #
+#    Updated: 2019/05/29 15:14:08 by aholster      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,6 +38,7 @@ AR = ar rcs
 all: $(NAME)
 
 assemble: $(OBJ)
+	@cp ./libft/libft.a ./$(NAME)
 	@$(AR) $(NAME) $(OBJ)
 	@ranlib $(NAME)
 

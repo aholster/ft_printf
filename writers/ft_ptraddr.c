@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/05/25 13:19:52 by aholster       #+#    #+#                */
-/*   Updated: 2019/05/25 17:33:25 by aholster      ########   odam.nl         */
+/*   Updated: 2019/05/29 14:50:47 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,19 +60,29 @@ static unsigned short	unsigned_ll_toa(unsigned char *buffer,\
 static int				ft_ptraddr_prec(unsigned char *buffer,\
 								unsigned short numlen, t_print *clipb)
 {
-	if (flagverif('-', clipb->flags) == -1 && clipb->flags->padding > clipb->flags->precision)
-		if (pad_spaces(clipb->flags->padding - clipb->flags->precision, clipb) == -1)
+	if (flagverif('-', clipb->flags) == -1 && clipb->flags->padding > (clipb->flags->precision + 2))
+	{
+		if (pad_spaces(clipb->flags->padding - (clipb->flags->precision + 2), clipb) == -1)
 			return (-1);
+	}
 	if (clipb->printer((const unsigned char *)"0x", 2, clipb) == -1)
+	{
 		return (-1);
+	}
 	if (flagverif('.', clipb->flags) == 1 && clipb->flags->precision > numlen)
+	{
 		if (pad_zero(clipb->flags->precision - numlen, clipb) == -1)
 			return (-1);
+	}
 	if (clipb->printer(buffer, numlen, clipb) == -1)
+	{
 		return (-1);
-	if (flagverif('-', clipb->flags) == 1 && clipb->flags->padding > clipb->flags->precision)
-		if (pad_spaces(clipb->flags->padding - clipb->flags->precision, clipb) == -1)
+	}
+	if (flagverif('-', clipb->flags) == 1 && clipb->flags->padding > (clipb->flags->precision + 2))
+	{
+		if (pad_spaces(clipb->flags->padding - (clipb->flags->precision + 2), clipb) == -1)
 			return (-1);
+	}
 	return (0);
 }
 

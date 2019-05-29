@@ -6,7 +6,7 @@
 #    By: jesmith <jesmith@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2019/02/16 15:46:43 by aholster       #+#    #+#                 #
-#    Updated: 2019/05/25 16:11:40 by aholster      ########   odam.nl          #
+#    Updated: 2019/05/29 14:28:45 by aholster      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ OBJ =	$(SOURCE:%=./ft_%.o) $(SUBSOURCE:%=$(SUBDIR)ft_%.o)
 
 HEAD = ft_printf.h
 
-NAME = libftprint.a
+NAME = libftprintf.a
 
 NORM = norminette $(FILEC) $(HEAD) | grep -e "Error"  -e "Warning" -B 1
 

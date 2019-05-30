@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/04/18 17:22:09 by aholster       #+#    #+#                */
-/*   Updated: 2019/05/25 15:06:39 by aholster      ########   odam.nl         */
+/*   Updated: 2019/05/29 15:17:54 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,6 @@ static void		ft_flagreset(t_flag *flags)
 	flags->actidoubles[1] = 0;
 	flags->precision = 0;
 	flags->padding = 0;
-//	flags->npadding = 0;
 }
 
 size_t			ft_flagharvest(unsigned char *format, t_print *clipb) // index incrementing problems

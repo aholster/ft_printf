@@ -6,7 +6,7 @@
 #    By: jesmith <jesmith@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2019/02/16 15:46:43 by aholster       #+#    #+#                 #
-#    Updated: 2019/05/29 15:14:08 by aholster      ########   odam.nl          #
+#    Updated: 2019/05/30 18:33:15 by aholster      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,8 +14,7 @@ DATE := $(shell date)
 
 SUBDIR := ./writers/
 
-SUBSOURCE := str ptraddr
-
+SUBSOURCE := str ptraddr 
 #decimal
 
 SOURCE := printf dispatcher format flinit flagharvest clinit functblinit\

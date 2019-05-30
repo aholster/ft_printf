@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/05/25 16:10:49 by aholster       #+#    #+#                */
-/*   Updated: 2019/05/25 16:33:17 by aholster      ########   odam.nl         */
+/*   Updated: 2019/05/30 18:41:17 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 int	pad_spaces(size_t amount, t_print *clipb)
 {
-	static const char	*spaces = "                                                                ";
-	size_t				index;
-	size_t				calc;
+	size_t		index;
+	size_t		calc;
+	const char	*spaces = "                                                                ";
 
 	index = 0;
 	while (index < amount)
@@ -25,7 +25,8 @@ int	pad_spaces(size_t amount, t_print *clipb)
 			calc = amount - index;
 		else
 			calc = sizeof(spaces);
-		clipb->printer((const unsigned char *)spaces, calc, clipb);
+		if (clipb->printer((const unsigned char *)spaces, calc, clipb) == -1)
+			return (-1);
 		index += calc;
 	}
 	return (amount);
@@ -33,9 +34,9 @@ int	pad_spaces(size_t amount, t_print *clipb)
 
 int	pad_zero(size_t amount, t_print *clipb)
 {
-	static const char	*zeroes = "0000000000000000000000000000000000000000000000000000000000000000";
-	size_t				index;
-	size_t				calc;
+	size_t		index;
+	size_t		calc;
+	const char	*zeroes = "0000000000000000000000000000000000000000000000000000000000000000";
 
 	index = 0;
 	while (index < amount)
@@ -44,7 +45,8 @@ int	pad_zero(size_t amount, t_print *clipb)
 			calc = amount - index;
 		else
 			calc = sizeof(zeroes);
-		clipb->printer((const unsigned char *)zeroes, calc, clipb);
+		if (clipb->printer((const unsigned char *)zeroes, calc, clipb) == -1)
+			return (-1);
 		index += calc;
 	}
 	return (amount);

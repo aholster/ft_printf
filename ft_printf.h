@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/01 16:56:13 by aholster       #+#    #+#                */
-/*   Updated: 2019/05/25 16:33:40 by aholster      ########   odam.nl         */
+/*   Updated: 2019/05/30 18:32:26 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,5 +80,6 @@ int						pad_zero(size_t amount, t_print *clipb);
 
 int						ft_str(va_list ap, t_print *clipb);
 int						ft_ptraddr(va_list ap, t_print *clipb);
+int						ft_decimal(va_list ap, t_print *clipb);
 
 #endif

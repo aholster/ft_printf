@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/05/25 13:19:52 by aholster       #+#    #+#                */
-/*   Updated: 2019/05/29 14:50:47 by aholster      ########   odam.nl         */
+/*   Updated: 2019/05/30 19:24:45 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ static int				ft_ptraddr_prec(unsigned char *buffer,\
 		if (pad_spaces(clipb->flags->padding - (clipb->flags->precision + 2), clipb) == -1)
 			return (-1);
 	}
-	return (0);
+	return (1);
 }
 
 int						ft_ptraddr(va_list ap, t_print *clipb)
@@ -92,7 +92,7 @@ int						ft_ptraddr(va_list ap, t_print *clipb)
 	unsigned short		numlen;
 	unsigned char		buffer[16];
 
-	holder = va_arg(ap, unsigned long long);
+	holder = (unsigned long long)va_arg(ap, void*);
 	numlen = unsigned_ll_toa(buffer, holder);
 	if (flagverif('.', clipb->flags) == 1)
 		return (ft_ptraddr_prec(buffer, numlen, clipb));
@@ -106,5 +106,5 @@ int						ft_ptraddr(va_list ap, t_print *clipb)
 	if (flagverif('-', clipb->flags) == 1 && clipb->flags->padding > (numlen + 2))
 		if (pad_spaces(clipb->flags->padding - (numlen + 2), clipb) == -1)
 			return (-1);
-	return (0);
+	return (1);
 }

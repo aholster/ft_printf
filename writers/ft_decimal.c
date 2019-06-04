@@ -6,12 +6,12 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/05/31 12:06:16 by jesmith        #+#    #+#                */
-/*   Updated: 2019/06/04 13:03:18 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/06/04 14:41:19 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-#include <stdio.h>
+
 static int				flagverif(const unsigned char c, const t_flag *flags)
 {
 	unsigned short	flip;
@@ -35,17 +35,8 @@ static int				ft_decimal_pad(unsigned short nb_len, int nb,\
 	{
 		if (diff > nb_len)
 		{
-			if (nb < 0)
-			{
-				if (pad_spaces((diff - (nb_len + 1)), clipb) == -1)
-					return (-1);
-			}
-			if (nb > 0)
-			{
-				nb_len += 1;
-				if (pad_spaces((diff - nb_len), clipb) == -1)
-					return (-1);
-			}
+			if (pad_spaces((diff - nb_len), clipb) == -1)
+				return (-1);
 		}
 	}
 	else if (clipb->flags->padding > clipb->flags->precision)
@@ -76,10 +67,10 @@ static int				ft_decimal_prec(unsigned char *buffer,\
 			if (clipb->printer((const unsigned char*)"-0", 2, clipb) == -1)
 				return (-1);
 		}
-		if (pad_zero((clipb->flags->precision - (nb_len + 1)), clipb) == -1)
+		if (pad_zero((clipb->flags->precision - nb_len), clipb) == -1)
 			return (-1);
 	}
-	if (clipb->printer(buffer, ((size_t)nb_len + 1), clipb) == -1)
+	if (clipb->printer(buffer, (size_t)nb_len, clipb) == -1)
 		return (-1);
 	if (flagverif('-', clipb->flags) == 1)
 	{
@@ -116,7 +107,7 @@ static unsigned short	ft_int_len(unsigned char *buffer, \
 	buffer[cur_len] = base[temp_num];
 	if (nb < 0 && clipb->flags->precision < num_len)
 		buffer[0] = '-';
-	return (num_len);
+	return (num_len + 1);
 }
 
 int						ft_decimal(va_list ap, t_print *clipb)
@@ -129,19 +120,10 @@ int						ft_decimal(va_list ap, t_print *clipb)
 	nb_len = ft_int_len(buffer, nb, clipb);
 	if (flagverif('.', clipb->flags) == 1)
 		return (ft_decimal_prec(buffer, nb_len, nb, clipb));
-	nb_len += 1;
 	if (flagverif('-', clipb->flags) == -1 && clipb->flags->padding > nb_len)
 	{
-		if (nb < 0)
-		{
-			if (pad_spaces(clipb->flags->padding - (clipb->flags->precision + nb_len), clipb) == -1)
-				return (-1);
-		}
-		else
-		{
-			if (pad_spaces(clipb->flags->padding - nb_len, clipb) == -1)
-				return (-1);
-		}
+		if (pad_spaces(clipb->flags->padding - nb_len, clipb) == -1)
+			return (-1);
 	}
 	if (clipb->printer(buffer, (size_t)nb_len, clipb) == -1)
 		return (-1);

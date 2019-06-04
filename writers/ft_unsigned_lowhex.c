@@ -102,10 +102,10 @@ static unsigned short	ft_int_len(unsigned char *buffer, int nb)
 int						ft_unsigned_lowhex(va_list ap, t_print *clipb)
 {
 	unsigned char		buffer[20];
-	unsigned int		nb;
+	unsigned int		nb; // change to unsigned long long and test
 	unsigned short		nb_len;
 
-	nb = (unsigned int)va_arg(ap, int);
+	nb = (unsigned int)va_arg(ap, int); // typecast to unsigned long long and void*
 	nb_len = ft_int_len(buffer, nb);
 	if (flagverif('.', clipb->flags) == 1)
 		return (ft_lowhex_prec(buffer, nb_len, clipb));
@@ -118,13 +118,14 @@ int						ft_unsigned_lowhex(va_list ap, t_print *clipb)
 	{
 		if (clipb->printer((const unsigned char *)"0x", 2, clipb) == -1)
 			return (-1);
+		nb_len += 2; // test if this works.... 
 	}
-	if (clipb->printer(buffer, (size_t)nb_len, clipb) == -1)
+	if (clipb->printer(buffer, (size_t)nb_len, clipb) == -1) // might need to (nb_len - 2)
 		return (-1);
 	if (flagverif('-', clipb->flags) == 1 && clipb->flags->padding > nb_len)
 	{
-		if (flagverif('#', clipb->flags) == 1)
-			nb_len += 2;
+		// if (flagverif('#', clipb->flags) == 1)
+		// 	nb_len += 2;
 		if (pad_spaces(clipb->flags->padding - nb_len, clipb) == -1)
 			return (-1);
 	}

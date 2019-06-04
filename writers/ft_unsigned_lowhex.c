@@ -82,8 +82,8 @@ static unsigned short	ft_int_len(unsigned char *buffer, int nb)
 
 	base = "0123456789abcdef";
 	temp_num = nb;
-	num_len = (unsigned int)ft_nbrlen(nb, 16) - 1;
-	cur_len = num_len;
+	num_len = (unsigned int)ft_nbrlen(nb, 16);
+	cur_len = num_len - 1;
 	if (temp_num > 0)
 	{
 		temp_num *= -1;
@@ -96,7 +96,7 @@ static unsigned short	ft_int_len(unsigned char *buffer, int nb)
 		cur_len--;
 	}
 	buffer[cur_len] = base[temp_num];
-	return (num_len + 1);
+	return (num_len);
 }
 
 int						ft_unsigned_lowhex(va_list ap, t_print *clipb)
@@ -105,7 +105,7 @@ int						ft_unsigned_lowhex(va_list ap, t_print *clipb)
 	unsigned int		nb;
 	unsigned short		nb_len;
 
-	nb = va_arg(ap, int);
+	nb = (unsigned int)va_arg(ap, int);
 	nb_len = ft_int_len(buffer, nb);
 	if (flagverif('.', clipb->flags) == 1)
 		return (ft_lowhex_prec(buffer, nb_len, clipb));

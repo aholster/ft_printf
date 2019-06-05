@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/05/30 19:12:27 by aholster       #+#    #+#                */
-/*   Updated: 2019/05/30 19:29:10 by aholster      ########   odam.nl         */
+/*   Updated: 2019/05/31 15:20:36 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ int		ft_unsigned_dec(va_list ap, t_print	*clipb)
 
 	num = va_arg(ap, unsigned long long);
 	numlen = unsigned_ll_toa(buffer, num);
+	va_end(ap);
 	if (clipb->printer(buffer, numlen, clipb) == -1)
 		return (-1);
 	return (1);

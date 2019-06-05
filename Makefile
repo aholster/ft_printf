@@ -6,7 +6,7 @@
 #    By: jesmith <jesmith@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2019/02/16 15:46:43 by aholster       #+#    #+#                 #
-#    Updated: 2019/05/30 19:25:58 by aholster      ########   odam.nl          #
+#    Updated: 2019/06/05 18:47:25 by jesmith       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,8 +14,7 @@ DATE := $(shell date)
 
 SUBDIR := ./writers/
 
-SUBSOURCE := str ptraddr unsigned_dec
-#decimal
+SUBSOURCE := str ptraddr unsigned_dec decimal char octal lowhex caphex
 
 SOURCE := printf dispatcher format flinit flagharvest clinit functblinit\
  padder

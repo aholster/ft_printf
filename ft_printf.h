@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/01 16:56:13 by aholster       #+#    #+#                */
-/*   Updated: 2019/05/30 19:25:41 by aholster      ########   odam.nl         */
+/*   Updated: 2019/06/04 09:47:54 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,10 +77,15 @@ void					ft_functblinit(t_writer *functbl);
 
 int						pad_spaces(size_t amount, t_print *clipb);
 int						pad_zero(size_t amount, t_print *clipb);
+int						pad_neg_spaces(size_t amount, t_print *clipb);
 
 int						ft_str(va_list ap, t_print *clipb);
 int						ft_ptraddr(va_list ap, t_print *clipb);
 int						ft_decimal(va_list ap, t_print *clipb);
 int						ft_unsigned_dec(va_list ap, t_print	*clipb);
+int						ft_char(va_list ap, t_print *clipb);
+int						ft_octal(va_list ap, t_print *clipb);
+int						ft_unsigned_lowhex(va_list ap, t_print *clipb);
+int						ft_unsigned_caphex(va_list ap, t_print *clipb);
 
 #endif

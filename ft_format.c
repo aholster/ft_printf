@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/04/17 19:57:30 by aholster       #+#    #+#                */
-/*   Updated: 2019/06/05 19:23:20 by aholster      ########   odam.nl         */
+/*   Updated: 2019/06/05 19:26:48 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,27 +42,6 @@ static int		ft_charskip(unsigned char *c)
 	return (1);
 }
 
-static size_t	ft_percent_printer(unsigned char* format, t_print *clipb)
-{
-	unsigned char	*str;
-	size_t			index;
-	size_t			length;
-
-	index = 0;
-	length = 0;
-	while (format[index] == '%')
-	{
-		length++;
-		index++;
-	}
-	length /= 2;
-	if ((length % 2) == 0)
-		return (-1); // !error! -> data argument won't be used then. (how do we handle?)
-	str = (unsigned char*)ft_stralloc(length, '%');
-	clipb->printer(str, length, clipb);
-	return (index);
-}
-
 int				ft_format(va_list ap, unsigned char *format, t_print *clipb)
 {
 	size_t		index;
@@ -76,8 +55,6 @@ int				ft_format(va_list ap, unsigned char *format, t_print *clipb)
 	{
 		if (format[index] == '%')
 		{
-			if (format[index + 1] == '%')
-				index += ft_percent_printer(&format[index + 1], clipb);
 			index += ft_flagharvest(&format[index + 1], clipb);
 			if (ft_dispatcher(ap, &format[index], functbl, clipb) == -1)
 				return (-1);

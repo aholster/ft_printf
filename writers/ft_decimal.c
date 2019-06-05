@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/05/31 12:06:16 by jesmith        #+#    #+#                */
-/*   Updated: 2019/06/04 14:41:19 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/06/05 16:20:24 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static int				ft_decimal_pad(unsigned short nb_len, int nb,\
 				return (-1);
 		}
 	}
-	return (0);
+	return (1);
 }
 
 static int				ft_decimal_prec(unsigned char *buffer,\
@@ -80,54 +80,53 @@ static int				ft_decimal_prec(unsigned char *buffer,\
 	return (1);
 }
 
-static unsigned short	ft_max_min(unsigned char *buffer, unsigned short num_len, t_print *clipb)
+static unsigned short	ft_max_min(unsigned char *buffer, \
+							unsigned short num_len, t_print *clipb)
 {
 	if (clipb->flags->precision < num_len)
-	{
-		ft_strcpy((const char*)buffer, "-2147483648");
-			return (11);
-	}
-	ft_strcpy((const char*)buffer, "2147483648");
-	return (10);
+		ft_strcpy((char*)buffer, "-2147483648");
+	else
+		ft_strcpy((char*)buffer, "2147483648");
+	return (num_len + 1);
 }
 
 static unsigned short	ft_int_len(unsigned char *buffer, \
 							int nb, t_print *clipb)
 {
+	int					temp_num;
 	unsigned short		num_len;
 	unsigned short		cur_len;
 	char				*base;
 
 	base = "0123456789";
-	num_len = (unsigned short)ft_nbrlen(nb, 10);
-	cur_len = num_len - 1;
+	temp_num = nb;
+	num_len = (unsigned short)ft_nbrlen(nb, 10) - 1;
+	cur_len = num_len;
 	if (nb == -2147483648)
 		return (ft_max_min(buffer, num_len, clipb));
 	if (nb < 0)
+		temp_num *= -1;
+	if (nb < 0 && clipb->flags->precision != 0)
+		cur_len--;
+	while (temp_num >= 10)
 	{
-		nb *= -1;
-		if (clipb->flags->precision != 0)
-			cur_len--;
-	}
-	while (nb >= 10)
-	{
-		buffer[cur_len] = base[(nb % 10)];
-		nb /= 10;
+		buffer[cur_len] = base[(temp_num % 10)];
+		temp_num /= 10;
 		cur_len--;
 	}
-	buffer[cur_len] = base[nb];
+	buffer[cur_len] = base[temp_num];
 	if (nb < 0 && clipb->flags->precision < num_len)
 		buffer[0] = '-';
-	return (num_len);
+	return (num_len + 1);
 }
 
 int						ft_decimal(va_list ap, t_print *clipb)
 {
 	unsigned char		buffer[20];
-	int					nb; // change to unsigned long long and test
+	unsigned long long	nb;
 	unsigned short		nb_len;
 
-	nb = va_arg(ap, int); // typecast to unsigned long long and void*
+	nb = (unsigned long long)va_arg(ap, unsigned long long);
 	nb_len = ft_int_len(buffer, nb, clipb);
 	if (flagverif('.', clipb->flags) == 1)
 		return (ft_decimal_prec(buffer, nb_len, nb, clipb));

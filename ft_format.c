@@ -6,13 +6,13 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/04/17 19:57:30 by aholster       #+#    #+#                */
-/*   Updated: 2019/06/01 15:09:56 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/06/05 19:23:20 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int	ft_judex(unsigned char *start, size_t *index, t_print *clipb)
+static int		ft_judex(unsigned char *start, size_t *index, t_print *clipb)
 {
 	size_t	judex;
 
@@ -27,7 +27,7 @@ static int	ft_judex(unsigned char *start, size_t *index, t_print *clipb)
 	return (1);
 }
 
-static int	ft_charskip(unsigned char *c)
+static int		ft_charskip(unsigned char *c)
 {
 	if (c[0] == '\0')
 		return (0);
@@ -63,7 +63,7 @@ static size_t	ft_percent_printer(unsigned char* format, t_print *clipb)
 	return (index);
 }
 
-int			ft_format(va_list ap, unsigned char *format, t_print *clipb)
+int				ft_format(va_list ap, unsigned char *format, t_print *clipb)
 {
 	size_t		index;
 	t_flag		flags;

@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/01 16:56:13 by aholster       #+#    #+#                */
-/*   Updated: 2019/06/05 19:16:54 by aholster      ########   odam.nl         */
+/*   Updated: 2019/06/05 19:22:28 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ typedef struct			s_print
 ** history should be unsigned long long bc of %lln
 */
 
+typedef int				(*wrt_ptr)(const unsigned char*, size_t, struct s_print*);
+
 typedef	int				(*t_writer)(va_list, t_print*);
 
 /*
@@ -70,20 +72,18 @@ int						ft_dispatcher(va_list ap, unsigned char *specifier,\
 						t_writer *functbl, t_print *clipb);
 size_t					ft_flagharvest(unsigned char *format, t_print *clipb);
 void					ft_flinit(t_print *clipb, t_flag *flags);
-int						ft_clinit(t_list **lst, int fd, int \
-						(*printer)(const unsigned char*, size_t, t_print*),\
-							t_print *clipb);
+int						ft_clinit(t_list **lst, int fd, wrt_ptr printer, t_print *clipb);
+
 void					ft_functblinit(t_writer *functbl);
 
 int						pad_spaces(size_t amount, t_print *clipb);
 int						pad_zero(size_t amount, t_print *clipb);
 int						pad_neg_spaces(size_t amount, t_print *clipb);
 
-int						ft_signconv(va_list ap, \
-					unsigned long long *holder, const t_flag *flags);
+int						ft_signconv(va_list ap, unsigned long long *holder,\
+								 const t_flag *flags);
 int						flagverif(const unsigned char c, const t_flag *flags);
-int						doubleverif(const unsigned char c,\
-									const t_flag *flags);
+int						doubleverif(const unsigned char c, const t_flag *flags);
 
 int						ft_str(va_list ap, t_print *clipb);
 int						ft_ptraddr(va_list ap, t_print *clipb);

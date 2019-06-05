@@ -6,22 +6,11 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/04/24 21:38:26 by jesmith        #+#    #+#                */
-/*   Updated: 2019/06/03 10:28:53 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/06/05 18:43:49 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-
-static int		flagverif(const unsigned char c, const t_flag *flags)
-{
-	unsigned short flip;
-
-	flip = c / 64;
-
-	if (((1LLU << (c - (flip * 64))) & flags->actiflags[flip]) > 0)
-		return (1);
-	return (-1);
-}
 
 static int		ft_str_pad(unsigned char *str, t_print *clipb)
 {

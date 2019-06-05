@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/01 16:56:14 by aholster       #+#    #+#                */
-/*   Updated: 2019/05/25 16:20:16 by aholster      ########   odam.nl         */
+/*   Updated: 2019/06/05 17:02:36 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ int		ft_bufmanager(const unsigned char *mem, size_t size, t_print *clipb)
 	if (mem == NULL)
 	{
 		write(clipb->fd, clipb->buffer, clipb->current);
-		// clipb->history += clipb->current;
-		// clipb->current = 0;
+		clipb->history += clipb->current;
+		clipb->current = 0;
 		return (0);
 	}
 	while (size > 0)

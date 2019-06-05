@@ -6,7 +6,7 @@
 #    By: jesmith <jesmith@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2019/02/16 15:46:43 by aholster       #+#    #+#                 #
-#    Updated: 2019/05/30 19:25:58 by aholster      ########   odam.nl          #
+#    Updated: 2019/06/05 18:41:42 by aholster      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ SUBSOURCE := str ptraddr unsigned_dec
 #decimal
 
 SOURCE := printf dispatcher format flinit flagharvest clinit functblinit\
- padder
+ padder flag_verificators
 
 FILEC = $(SOURCE:%=./ft_%.c) $(SUBSOURCE:%=$(SUBDIR)ft_%.c)
 

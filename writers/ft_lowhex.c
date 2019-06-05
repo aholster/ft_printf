@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/03 16:34:02 by jesmith        #+#    #+#                */
-/*   Updated: 2019/06/05 18:59:14 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/06/05 19:16:20 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ static unsigned short	ft_int_len(unsigned char *buffer, unsigned long long nb)
 	return (num_len);
 }
 
-int						ft_unsigned_lowhex(va_list ap, t_print *clipb)// currently over by 2 lines excluding commented out potential solution
+int						ft_lowhex(va_list ap, t_print *clipb)// currently over by 2 lines excluding commented out potential solution
 {
 	unsigned char		buffer[20];
 	unsigned long long	nb;

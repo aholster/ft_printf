@@ -6,21 +6,11 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/05/25 13:19:52 by aholster       #+#    #+#                */
-/*   Updated: 2019/06/03 15:06:53 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/06/05 18:59:14 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-
-static int				flagverif(const unsigned char c, const t_flag *flags)
-{
-	unsigned short	flip;
-
-	flip = c / 64;
-	if (((1LLU << (c - (flip * 64))) & flags->actiflags[flip]) > 0)
-		return (1);
-	return (-1);
-}
 
 static unsigned short	longlen(unsigned long long n)
 {

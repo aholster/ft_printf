@@ -1,27 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_unsigned_lowhex.c                               :+:    :+:            */
+/*   ft_lowhex.c                                        :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/03 16:34:02 by jesmith        #+#    #+#                */
-/*   Updated: 2019/06/05 14:59:38 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/06/05 18:59:14 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-
-static int				flagverif(const unsigned char c, const t_flag *flags)
-{
-	unsigned short	flip;
-
-	flip = c / 64;
-	if (((1LLU << (c - (flip * 64))) & flags->actiflags[flip]) > 0)
-		return (1);
-	return (-1);
-}
-
+#include <stdio.h>
 static int				ft_lowhex_pad(unsigned short nb_len, t_print *clipb)
 {
 	unsigned int diff;

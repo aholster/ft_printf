@@ -1,27 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_unsigned_caphex.c                               :+:    :+:            */
+/*   ft_caphex.c                                        :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/03 18:20:19 by jesmith        #+#    #+#                */
-/*   Updated: 2019/06/05 14:59:27 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/06/05 18:59:14 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-
-static int				flagverif(const unsigned char c, const t_flag *flags)
-{
-	unsigned short	flip;
-
-	flip = c / 64;
-	if (((1LLU << (c - (flip * 64))) & flags->actiflags[flip]) > 0)
-		return (1);
-	return (-1);
-}
-
+#include <stdio.h>
 static int				ft_caphex_pad(unsigned short nb_len, t_print *clipb)
 {
 	unsigned int diff;

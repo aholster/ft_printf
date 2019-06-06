@@ -6,24 +6,23 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/05/31 12:06:16 by jesmith        #+#    #+#                */
-/*   Updated: 2019/06/05 18:43:49 by aholster      ########   odam.nl         */
+/*   Updated: 2019/06/06 18:38:42 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int				ft_decimal_pad(unsigned short nb_len, int nb,\
+static int				ft_decimal_pad(unsigned short nb_len, int neg,\
 							t_print *clipb)
 {
-	unsigned int diff;
+	int diff;
 
-	if (clipb->flags->padding > clipb->flags->precision)
-		diff = clipb->flags->padding - clipb->flags->precision;
-	else
-		diff = clipb->flags->padding;
+	diff = clipb->flags->padding - clipb->flags->precision;
+	if (neg == -1)
+		diff--;
 	if (clipb->flags->precision < 1)
 	{
-		if (diff > nb_len)
+		if (clipb->flags->padding - 1 > nb_len)
 		{
 			if (pad_spaces((diff - nb_len), clipb) == -1)
 				return (-1);
@@ -31,10 +30,8 @@ static int				ft_decimal_pad(unsigned short nb_len, int nb,\
 	}
 	else if (clipb->flags->padding > clipb->flags->precision)
 	{
-		if (diff > nb_len)
+		if (clipb->flags->padding - 1 > nb_len)
 		{
-			if (nb < 0)
-				diff -= 1;
 			if (pad_spaces(diff, clipb) == -1)
 				return (-1);
 		}
@@ -42,21 +39,48 @@ static int				ft_decimal_pad(unsigned short nb_len, int nb,\
 	return (1);
 }
 
-static int				ft_decimal_prec(unsigned char *buffer,\
-							unsigned short nb_len, int nb, t_print *clipb)
+static int				ft_decimal_noprec(unsigned char *buffer, int neg, \ // five parameters
+						unsigned short nb_len, t_print *clipb)
 {
-	if (flagverif('-', clipb->flags) == -1)
+	if (flagverif('-', clipb->flags) == -1 && clipb->flags->padding > nb_len)
 	{
-		if (ft_decimal_pad(nb_len, nb, clipb) == -1)
+		if (ft_decimal_pad(nb_len, neg, clipb) == -1)
+			return (-1);
+	}
+	if (neg == -1)
+	{
+		if (clipb->printer((const unsigned char*)"-", 1, clipb) == -1)
+			return (-1);
+	}
+	if (clipb->printer(buffer, (size_t)nb_len, clipb) == -1)
+		return (-1);
+	if (flagverif('-', clipb->flags) == 1 && clipb->flags->padding > nb_len)
+	{
+		if (neg == -1)
+			nb_len++;
+		if (pad_spaces(clipb->flags->padding - nb_len, clipb) == -1)
+			return (-1);
+	}
+	return (1);
+}
+
+static int				ft_decimal_prec(unsigned char *buffer, int neg, \
+						unsigned long long nb, unsigned short nb_len, t_print *clipb)
+{
+	if (flagverif('-', clipb->flags) == -1 && clipb->flags->padding != 0)
+	{
+		if (ft_decimal_pad(nb_len, neg, clipb) == -1)
+			return (-1);
+	}
+	if (nb == 0 && clipb->flags->precision == 0)
+		ft_strcpy((char*)buffer, " ");
+	if (neg == -1)
+	{
+		if (clipb->printer((const unsigned char*)"-", 1, clipb) == -1)
 			return (-1);
 	}
 	if (clipb->flags->precision > nb_len)
 	{
-		if (nb < 0)
-		{
-			if (clipb->printer((const unsigned char*)"-0", 2, clipb) == -1)
-				return (-1);
-		}
 		if (pad_zero((clipb->flags->precision - nb_len), clipb) == -1)
 			return (-1);
 	}
@@ -64,40 +88,24 @@ static int				ft_decimal_prec(unsigned char *buffer,\
 		return (-1);
 	if (flagverif('-', clipb->flags) == 1)
 	{
-		if (ft_decimal_pad(nb_len, nb, clipb) == -1)
+		if (ft_decimal_pad(nb_len, neg, clipb) == -1)
 			return (-1);
 	}
 	return (1);
 }
 
-static unsigned short	ft_max_min(unsigned char *buffer, \
-							unsigned short num_len, t_print *clipb)
-{
-	if (clipb->flags->precision < num_len)
-		ft_strcpy((char*)buffer, "-2147483648");
-	else
-		ft_strcpy((char*)buffer, "2147483648");
-	return (num_len + 1);
-}
-
 static unsigned short	ft_int_len(unsigned char *buffer, \
-							int nb, t_print *clipb)
+							unsigned long long nb)
 {
-	int					temp_num;
+	unsigned long long	temp_num;
 	unsigned short		num_len;
 	unsigned short		cur_len;
 	char				*base;
 
 	base = "0123456789";
 	temp_num = nb;
-	num_len = (unsigned short)ft_nbrlen(nb, 10) - 1;
-	cur_len = num_len;
-	if (nb == -2147483648)
-		return (ft_max_min(buffer, num_len, clipb));
-	if (nb < 0)
-		temp_num *= -1;
-	if (nb < 0 && clipb->flags->precision != 0)
-		cur_len--;
+	num_len = (unsigned short)ft_nbrlen(nb, 10);
+	cur_len = num_len - 1;
 	while (temp_num >= 10)
 	{
 		buffer[cur_len] = base[(temp_num % 10)];
@@ -105,9 +113,7 @@ static unsigned short	ft_int_len(unsigned char *buffer, \
 		cur_len--;
 	}
 	buffer[cur_len] = base[temp_num];
-	if (nb < 0 && clipb->flags->precision < num_len)
-		buffer[0] = '-';
-	return (num_len + 1);
+	return (num_len);
 }
 
 int						ft_decimal(va_list ap, t_print *clipb)
@@ -115,22 +121,18 @@ int						ft_decimal(va_list ap, t_print *clipb)
 	unsigned char		buffer[20];
 	unsigned long long	nb;
 	unsigned short		nb_len;
+	int					neg;
 
-	nb = (unsigned long long)va_arg(ap, unsigned long long);
-	nb_len = ft_int_len(buffer, nb, clipb);
+	neg = 1;
+	if (ft_signconv(ap, &nb, clipb->flags) == -1)
+		neg *= -1;
+	nb_len = ft_int_len(buffer, nb);
+	if (nb == 0 && clipb->flags->padding == 0 && \
+	flagverif('.', clipb->flags) == 1)
+		return (1);
 	if (flagverif('.', clipb->flags) == 1)
-		return (ft_decimal_prec(buffer, nb_len, nb, clipb));
-	if (flagverif('-', clipb->flags) == -1 && clipb->flags->padding > nb_len)
-	{
-		if (pad_spaces(clipb->flags->padding - nb_len, clipb) == -1)
-			return (-1);
-	}
-	if (clipb->printer(buffer, (size_t)nb_len, clipb) == -1)
-		return (-1);
-	if (flagverif('-', clipb->flags) == 1 && clipb->flags->padding > nb_len)
-	{
-		if (pad_spaces(clipb->flags->padding - nb_len, clipb) == -1)
-			return (-1);
-	}
+		return (ft_decimal_prec(buffer, neg, nb, nb_len, clipb));
+	if (flagverif('.', clipb->flags) == -1)
+		return (ft_decimal_noprec(buffer, neg, nb_len, clipb));
 	return (1);
 }

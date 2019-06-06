@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/03 15:08:26 by jesmith        #+#    #+#                */
-/*   Updated: 2019/06/05 18:59:14 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/06/06 12:17:00 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static int				ft_octal_prec(unsigned char *buffer,\
 						 unsigned long long nb, unsigned short nb_len,\
 						 t_print *clipb)
 {
-	if (flagverif('-', clipb->flags) == -1)
+	if (flagverif('-', clipb->flags) == -1  && clipb->flags->padding != 0)
 	{
 		if (ft_octal_pad(nb_len, clipb) == -1)
 			return (-1);
@@ -52,8 +52,8 @@ static int				ft_octal_prec(unsigned char *buffer,\
 		if (pad_zero(clipb->flags->precision - nb_len, clipb) == -1)
 			return (-1);
 	}
-	if (flagverif('.', clipb->flags) == 1 && flagverif('#', clipb->flags) == -1 && nb == 0)
-			ft_strcpy((char*)buffer, " ");
+	if (flagverif('#', clipb->flags) == -1 && nb == 0 && clipb->flags->precision == 0)
+		ft_strcpy((char*)buffer, " ");
 	if (clipb->printer(buffer, (size_t)nb_len, clipb) == -1)
 			return (-1);
 	if (flagverif('-', clipb->flags) == 1)
@@ -76,9 +76,14 @@ static unsigned short	ft_int_len(unsigned char *buffer, \
 	temp_num = nb;
 	num_len = (unsigned short)ft_nbrlen(nb, 8);
 	cur_len = num_len - 1;
-	if (flagverif('#', clipb->flags) == 1 && clipb->flags->precision < num_len\
-		 && nb != 0)
+	if (flagverif('#', clipb->flags) == 1 && clipb->flags->precision < num_len)
+	{
 		cur_len++;
+		buffer[0] = '0';
+		if (nb == 0)
+			return(num_len);
+		num_len += 1;
+	}
 	while (temp_num >= 8)
 	{
 		buffer[cur_len] = base[(temp_num % 8)];
@@ -86,11 +91,6 @@ static unsigned short	ft_int_len(unsigned char *buffer, \
 		cur_len--;
 	}
 	buffer[cur_len] = base[temp_num];
-	if (flagverif('#', clipb->flags) == 1 && clipb->flags->precision < num_len)
-	{
-			buffer[0] = '0';
-			num_len += 1;
-	}
 	return (num_len);
 }
 
@@ -102,8 +102,6 @@ int						ft_octal(va_list ap, t_print *clipb)
 
 	nb = (unsigned long long)va_arg(ap, void*);
 	nb_len = ft_int_len(buffer, nb, clipb);
-	//if (flagverif('#', clipb->flags) == -1 && nb == 0 && clipb->flags->padding == 0 && clipb->flags->precision == 0) // make seperate function for Zero
-	//	return (ft_zeroval(buffer, nb, clip));
 	if (flagverif('#', clipb->flags) == -1 && nb == 0\
 	 && clipb->flags->padding == 0 && clipb->flags->precision == 0)
 		return (1);
@@ -114,8 +112,6 @@ int						ft_octal(va_list ap, t_print *clipb)
 		if (pad_spaces(clipb->flags->padding - nb_len, clipb) == -1)
 			return (-1);
 	}
-	if (flagverif('.', clipb->flags) == 1 && flagverif('#', clipb->flags) == -1 && nb == 0)
-			ft_strcpy((char*)buffer, " ");
 	if (clipb->printer(buffer, (size_t)nb_len, clipb) == -1)
 		return (-1);
 	if (flagverif('-', clipb->flags) == 1 && clipb->flags->padding > nb_len)

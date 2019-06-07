@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/03 18:20:19 by jesmith        #+#    #+#                */
-/*   Updated: 2019/06/06 18:26:44 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/06/07 16:56:37 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,8 +125,11 @@ int						ft_caphex(va_list ap, t_print *clipb)
 	unsigned char		buffer[20];
 	unsigned long long	nb;
 	unsigned short		nb_len;
+	int					neg;
 
-	nb = (unsigned long long)va_arg(ap, void*);
+	neg = 1;
+	if (ft_signconv(ap, &nb, clipb->flags) == -1)
+		neg = -1;
 	nb_len = ft_int_len(buffer, nb);
 	if (nb == 0 && clipb->flags->padding == 0 && flagverif('.', clipb->flags) == 1)
 		return (1);

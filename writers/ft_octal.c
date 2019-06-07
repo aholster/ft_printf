@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/03 15:08:26 by jesmith        #+#    #+#                */
-/*   Updated: 2019/06/07 15:48:36 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/06/07 16:55:55 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,8 +132,11 @@ int						ft_octal(va_list ap, t_print *clipb)
 	unsigned char		buffer[20];
 	unsigned long long	nb;
 	unsigned short		nb_len;
+	int					neg;
 
-	nb = (unsigned long long)va_arg(ap, void*);
+	neg = 1;
+	if (ft_signconv(ap, &nb, clipb->flags) == -1)
+		neg = -1;
 	nb_len = ft_int_len(buffer, nb, clipb);
 	if (flagverif('#', clipb->flags) == -1 && nb == 0\
 	 && clipb->flags->padding == 0 && clipb->flags->precision == 0)

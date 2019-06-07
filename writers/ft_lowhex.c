@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/03 16:34:02 by jesmith        #+#    #+#                */
-/*   Updated: 2019/06/07 16:36:05 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/06/07 19:28:54 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,7 @@ static int				ft_no_precision(unsigned char *buffer, \
 		if (pad_spaces(clipb->flags->padding - nb_len, clipb) == -1)
 			return (-1);
 	}
-	if (flagverif('#', clipb->flags) == 1 && /*clipb->flags->padding > nb_len \
-	&& */nb != 0)
+	if (flagverif('#', clipb->flags) == 1 && /*clipb->flags->padding > nb_len \&& */nb != 0)
 	{
 		if (clipb->printer((const unsigned char *)"0x", 2, clipb) == -1)
 			return (-1);
@@ -127,7 +126,6 @@ static unsigned short	ft_int_len(unsigned char *buffer, \
 		cur_len--;
 	}
 	buffer[cur_len] = base[temp_num];
-	printf("buffer: %s\n", buffer);
 	return (num_len);
 }
 
@@ -136,10 +134,12 @@ int						ft_lowhex(va_list ap, t_print *clipb)
 	unsigned char		buffer[20];
 	unsigned long long	nb;
 	unsigned short		nb_len;
+	int					neg;
 
-	if (ft_signconv(ap, &nb, clipb->flags) == -1)
-		nb = -nb;
-	printf("nb : %llu", nb);
+	neg = 1;
+	if (ft_unsignconv(ap, &nb, clipb->flags) == -1)
+		return (-1); 
+	printf("nb; %llu", nb);
 	nb_len = ft_int_len(buffer, nb);
 	if (flagverif('#', clipb->flags) == 1)
 		clipb->flags->padding -=2;

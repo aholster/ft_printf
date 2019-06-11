@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/01 16:56:13 by aholster       #+#    #+#                */
-/*   Updated: 2019/06/07 20:09:50 by aholster      ########   odam.nl         */
+/*   Updated: 2019/06/11 19:23:09 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,19 @@
 **	to add new conversions, add them into the dispatcher array.
 */
 
+typedef union			u_nptrs
+{
+	char				*hh;
+	short				*h;
+	int					*i;
+	long				*l;
+	long long			*ll;
+}						t_nptrs;
+
 struct s_print;
 
-typedef int				(*t_wrt_ptr)(const unsigned char*, size_t, struct s_print*);
+typedef int				(*t_wrt_ptr)(const unsigned char*, size_t, \
+							struct s_print*);
 
 typedef	int				(*t_writer)(va_list, struct s_print*);
 
@@ -67,6 +77,7 @@ int						ft_format(va_list ap, unsigned char *format,\
 int						ft_printf(char *format, ...);
 int						ft_dprintf(const int fd, char *format, ...);
 int						ft_asprintf(char **ret, char *format, ...);
+int						ft_vprintf(char *format, va_list ap);
 
 int						ft_dispatcher(va_list ap, unsigned char *specifier,\
 								t_writer *functbl, t_print *clipb);
@@ -81,9 +92,9 @@ int						pad_spaces(size_t amount, t_print *clipb);
 int						pad_zero(size_t amount, t_print *clipb);
 int						pad_neg_spaces(size_t amount, t_print *clipb);
 
-int						ft_signconv(va_list ap, unsigned long long *holder,\
-								 const t_flag *flags);
-int						ft_unsignconv(va_list ap, unsigned long long *holder,\
+int						ft_signconv(va_list ap, unsigned long long *holder, \
+								const t_flag *flags);
+int						ft_unsignconv(va_list ap, unsigned long long *holder, \
 								const t_flag *flags);
 int						flagverif(const unsigned char c, const t_flag *flags);
 int						doubleverif(const unsigned char c, const t_flag *flags);
@@ -96,5 +107,7 @@ int						ft_char(va_list ap, t_print *clipb);
 int						ft_octal(va_list ap, t_print *clipb);
 int						ft_lowhex(va_list ap, t_print *clipb);
 int						ft_caphex(va_list ap, t_print *clipb);
+
+int						ft_n(va_list ap, t_print *clipb);
 
 #endif

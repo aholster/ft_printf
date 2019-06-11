@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/04/18 17:22:09 by aholster       #+#    #+#                */
-/*   Updated: 2019/06/11 18:12:22 by aholster      ########   odam.nl         */
+/*   Updated: 2019/06/11 18:49:03 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,21 +30,21 @@ static size_t	ft_num_extract(const unsigned char *format, unsigned int *destinat
 	return (index);
 }
 
-static void		flagflip(unsigned char c, t_flag *flags, unsigned short flip)
+static void		flagflip(const unsigned char c, t_flag *flags, const unsigned short flip)
 {
 	if (((1LLU << (c - (flip * 64))) & flags->actiflags[flip]) == 1)
 	{
-		flags->statidoubles[flip] |= (1LLU << (c - (flip * 64)));
+		flags->actidoubles[flip] |= (1LLU << (c - (flip * 64)));
 		flags->actiflags[flip] ^= (1LLU << (c - (flip * 64)));
 	}
 	else
 	{
 		flags->actiflags[flip] |= (1LLU << (c - (flip * 64)));
-		flags->statidoubles[flip] ^= (1LLU << (c - (flip * 64)));
+		flags->actidoubles[flip] ^= (1LLU << (c - (flip * 64)));
 	}
 }
 
-static int		ft_valiflag(unsigned char c, t_flag *flags)
+static int		ft_valiflag(const unsigned char c, const t_flag *flags)
 {
 	unsigned short	flip;
 
@@ -76,15 +76,12 @@ size_t			ft_flagharvest(unsigned char *format, t_print *clipb) // index incremen
 	while (ft_valiflag(format[index], clipb->flags) > 0)
 	{
 		flip = format[index] / 64;
-		if (((1LLU << (format[index] - (flip * 64))) & clipb->flags->statidoubles[flip]) == 0)
-			flagflip(format[index], clipb->flags, flip);
-		else if (format[index] >= '1' && format[index] <= '9')
+		if (format[index] >= '1' && format[index] <= '9')
 			index += ft_num_extract(format + index, &clipb->flags->padding);
 		else if (format[index] == '.')
-		{
-			clipb->flags->actiflags[flip] |= (1LLU << (format[index] - (flip * 64)));
 			index += ft_num_extract(format + index + 1, &clipb->flags->precision);
-		}
+		if (((1LLU << (format[index] - (flip * 64))) & clipb->flags->statidoubles[flip]) == 1)
+			flagflip(format[index], clipb->flags, flip);
 		else
 		{
 			clipb->flags->actiflags[flip] |= (1LLU << (format[index] - (flip * 64)));

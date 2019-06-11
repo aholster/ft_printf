@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/01 16:56:14 by aholster       #+#    #+#                */
-/*   Updated: 2019/06/07 18:46:40 by aholster      ########   odam.nl         */
+/*   Updated: 2019/06/11 19:22:55 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,23 @@ int			ft_dprintf(const int fd, char *format, ...)
 
 	va_start(ap, format);
 	if (ft_clinit(NULL, fd, ft_bufmanager, &clipb) == -1)
+		return (-1);
+	if (ft_format(ap, (unsigned char *)format, &clipb) == -1)
+	{
+		free(clipb.buffer);
+		return (-1);
+	}
+	ft_bufmanager(NULL, 0, &clipb);
+	free(clipb.buffer);
+	va_end(ap);
+	return (clipb.history);
+}
+
+int			ft_vprintf(char *format, va_list ap)
+{
+	t_print		clipb;
+
+	if (ft_clinit(NULL, 1, ft_bufmanager, &clipb) == -1)
 		return (-1);
 	if (ft_format(ap, (unsigned char *)format, &clipb) == -1)
 	{

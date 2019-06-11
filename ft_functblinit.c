@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/04/24 19:14:05 by jesmith        #+#    #+#                */
-/*   Updated: 2019/06/05 19:17:07 by aholster      ########   odam.nl         */
+/*   Updated: 2019/06/11 19:03:39 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void					ft_functblinit(t_writer *functbl)
 	// functbl[slider('g')] = ft_lowshrthd;
 	// functbl[slider('G')] = ft_upprshrthd;
 	functbl[slider('i')] = ft_decimal;
-	// functbl[slider('n')] = ft_n;
+	functbl[slider('n')] = ft_n;
 	functbl[slider('o')] = ft_octal;
 	functbl[slider('p')] = ft_ptraddr;
 //	functbl[slider('s')] = ft_str;

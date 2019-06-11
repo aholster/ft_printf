@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/05 19:47:52 by aholster       #+#    #+#                */
-/*   Updated: 2019/06/07 19:38:56 by aholster      ########   odam.nl         */
+/*   Updated: 2019/06/11 18:53:54 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,16 @@ static int	ft_lstbufmanager(const unsigned char *mem, size_t size,\
 
 	if (mem == NULL)
 	{
-		if (ft_lstcreator((const unsigned char *)clipb->buffer, clipb->current, clipb) == -1)
+		if (ft_lstcreator((const unsigned char *)clipb->buffer, \
+				clipb->current, clipb) == -1)
 			return (-1);
 	}
 	else
 		while (size > 0)
 		{
 			if (clipb->current == BUFFSIZE)
-				if (ft_lstcreator((const unsigned char *)clipb->buffer, BUFFSIZE, clipb) == -1)
+				if (ft_lstcreator((const unsigned char *)clipb->buffer, \
+						BUFFSIZE, clipb) == -1)
 					return (-1);
 			if (size + clipb->current <= BUFFSIZE)
 				block = size;

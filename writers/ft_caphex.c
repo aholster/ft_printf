@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/03 18:20:19 by jesmith        #+#    #+#                */
-/*   Updated: 2019/06/11 16:07:24 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/06/11 16:46:44 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static int				ft_caphex_noprec(unsigned char *buffer, \
 	}
 	if (flagverif('#', clipb->flags) == 1 && nb != 0)
 	{
-		if (clipb->printer((const unsigned char *)"0x", 2, clipb) == -1)
+		if (clipb->printer((const unsigned char *)"0X", 2, clipb) == -1)
 			return (-1);
 	}
 	if (flagverif('0', clipb->flags) == 1 && \
@@ -80,7 +80,7 @@ static int				ft_caphex_prec(unsigned char *buffer, \
 		ft_strcpy((char*)buffer, " ");
 	if (flagverif('#', clipb->flags) == 1 && nb != 0)
 	{
-		if (clipb->printer((const unsigned char *)"0x", 2, clipb) == -1)
+		if (clipb->printer((const unsigned char *)"0X", 2, clipb) == -1)
 			return (-1);
 	}
 	if (clipb->flags->precision > nb_len)
@@ -106,7 +106,7 @@ static unsigned short	ft_int_len(unsigned char *buffer, \
 	unsigned short		cur_len;
 	char				*base;
 
-	base = "0123456789abcdef";
+	base = "0123456789ABCDEF";
 	temp_num = nb;
 	num_len = (unsigned short)ft_nbrlen(nb, 16);
 	cur_len = num_len - 1;

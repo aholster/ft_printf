@@ -6,13 +6,13 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/04/24 21:38:26 by jesmith        #+#    #+#                */
-/*   Updated: 2019/06/05 18:59:14 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/06/11 16:16:32 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int		ft_str_pad(unsigned char *str, t_print *clipb)
+static int		ft_str_pad(unsigned char *str, size_t len, t_print *clipb)
 {
 	unsigned int diff;
 

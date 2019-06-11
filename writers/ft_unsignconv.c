@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/07 18:48:26 by jesmith        #+#    #+#                */
-/*   Updated: 2019/06/07 18:54:18 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/06/11 11:20:58 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static int	va_short(va_list ap, unsigned long long *holder)
 	short	num;
 
 	num = (short)va_arg(ap, int);
-	if (num < 0)
+	if (num >= 0)
 	{
 		*holder = (unsigned long long)num;
 		return (1);
@@ -30,9 +30,9 @@ static int	va_char(va_list ap, unsigned long long *holder)
 	char	num;
 
 	num = (char)va_arg(ap, int);
-	if (num < 0)
+	if (num >= 0)
 	{
-		*holder = (unsigned long long)num);
+		*holder = (unsigned long long)num;
 		return (1);
 	}
 	return (-1);
@@ -43,7 +43,7 @@ static int	va_long(va_list ap, unsigned long long *holder)
 	long	num;
 
 	num = (long)va_arg(ap, long);
-	if (num < 0)
+	if (num >= 0)
 	{
 		*holder = (unsigned long long)num;
 		return (1);
@@ -56,15 +56,15 @@ static int	va_int(va_list ap, unsigned long long *holder)
 	int	num;
 
 	num = va_arg(ap, int);
-	if (num < 0)
+	if (num >= 0)
 	{
 		*holder = (unsigned long long)num;
-		return (-1);
+		return (1);
 	}
 	return (-1);
 }
 
-int			ft_signconv(va_list ap,
+int			ft_unsignconv(va_list ap, \
 		unsigned long long *holder, const t_flag *flags)
 {
 	long long	num;
@@ -78,7 +78,7 @@ int			ft_signconv(va_list ap,
 	else if (doubleverif('l', flags) == 1 || flagverif('L', flags) == 1)
 	{
 		num = va_arg(ap, long long);
-		if (num < 0)
+		if (num >= 0)
 		{
 			*holder = (unsigned long long)num;
 			return (1);

@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/01 16:56:13 by aholster       #+#    #+#                */
-/*   Updated: 2019/06/05 19:22:28 by aholster      ########   odam.nl         */
+/*   Updated: 2019/06/11 10:46:45 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,8 @@ int						pad_zero(size_t amount, t_print *clipb);
 int						pad_neg_spaces(size_t amount, t_print *clipb);
 
 int						ft_signconv(va_list ap, unsigned long long *holder,\
+								 const t_flag *flags);
+int						ft_unsignconv(va_list ap, unsigned long long *holder,\
 								 const t_flag *flags);
 int						flagverif(const unsigned char c, const t_flag *flags);
 int						doubleverif(const unsigned char c, const t_flag *flags);

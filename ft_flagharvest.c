@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/04/18 17:22:09 by aholster       #+#    #+#                */
-/*   Updated: 2019/06/07 14:40:30 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/06/11 16:36:24 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,13 @@ static void		flagflip(unsigned char c, t_flag *flags, unsigned short flip)
 {
 	if (((1LLU << (c - (flip * 64))) & flags->actiflags[flip]) == 1)
 	{
-		flags->statidoubles[flip] |= (1LLU << (c - (flip * 64)));
+		flags->actidoubles[flip] |= (1LLU << (c - (flip * 64)));
 		flags->actiflags[flip] ^= (1LLU << (c - (flip * 64)));
 	}
 	else
 	{
 		flags->actiflags[flip] |= (1LLU << (c - (flip * 64)));
-		flags->statidoubles[flip] ^= (1LLU << (c - (flip * 64)));
+		flags->actidoubles[flip] ^= (1LLU << (c - (flip * 64)));
 	}
 }
 
@@ -100,8 +100,10 @@ size_t			ft_flagharvest(unsigned char *format, t_print *clipb) // index incremen
 	while (ft_valiflag(format[index], clipb->flags) > 0)
 	{
 		flip = format[index] / 64;
-		if (((1LLU << (format[index] - (flip * 64))) & clipb->flags->statidoubles[flip]) == 0)
+		if (((1LLU << (format[index] - (flip * 64))) & clipb->flags->statidoubles[flip]) == 1)
 			flagflip(format[index], clipb->flags, flip);
+		else
+			clipb->flags->actiflags[flip] |= (1LLU << (format[index] - (flip * 64)));
 		if (format[index] >= '1' && format[index] <= '9')
 			index += ft_pad_extract(&format[index], clipb);
 		else if (format[index] == '.')

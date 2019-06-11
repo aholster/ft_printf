@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/07 18:48:26 by jesmith        #+#    #+#                */
-/*   Updated: 2019/06/11 11:20:58 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/06/11 17:58:35 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static int	va_int(va_list ap, unsigned long long *holder)
 	return (-1);
 }
 
-int			ft_unsignconv(va_list ap, \
+int			ft_unsignconv(va_list ap,\
 		unsigned long long *holder, const t_flag *flags)
 {
 	long long	num;

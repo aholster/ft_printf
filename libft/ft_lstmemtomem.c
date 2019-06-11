@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/04/06 15:14:09 by aholster       #+#    #+#                */
-/*   Updated: 2019/04/06 15:17:50 by aholster      ########   odam.nl         */
+/*   Updated: 2019/06/07 19:45:29 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int	ft_lstmemtomem(char **feed, size_t *totallen, t_list *lst)
 		index += lst->content_size;
 		lst = lst->next;
 	}
-	*totallen = len;
+	if (totallen != NULL)
+		*totallen = len;
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/03 14:19:45 by jesmith        #+#    #+#                */
-/*   Updated: 2019/06/11 15:03:40 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/06/11 17:59:02 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,13 @@ int				ft_char(va_list ap, t_print *clipb)
 	c = va_arg(ap, unsigned int);
 	// if (c == NULL)
 	// 	c = (unsigned char*)ft_strdup("^@");
-	if (clipb->flags->padding > 0)
-		return (ft_char_pad(c, clipb));
-	if (clipb->printer(&c, 1, clipb) == -1)
-		return (-1);
+	if (clipb->flags->padding > 1)
+	{
+		if (flagverif('-', clipb->flags) == -1)
+			return (ft_char_pad(c, clipb));
+		if (flagverif('-', clipb->flags) == 1)
+			return (ft_char_pad(c, clipb));
+	}
+	clipb->printer(&c, 1, clipb);
 	return (1);
 }

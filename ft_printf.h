@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/01 16:56:13 by aholster       #+#    #+#                */
-/*   Updated: 2019/06/11 10:46:45 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/06/11 17:58:04 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,12 @@
 **	to add new conversions, add them into the dispatcher array.
 */
 
+struct s_print;
+
+typedef int				(*t_wrt_ptr)(const unsigned char*, size_t, struct s_print*);
+
+typedef	int				(*t_writer)(va_list, struct s_print*);
+
 typedef struct			s_print
 {
 	char				*buffer;
@@ -37,20 +43,12 @@ typedef struct			s_print
 	size_t				history;
 	size_t				current;
 	int					fd;
-	int					(*printer)(const unsigned char*, size_t, struct s_print*);
+	t_wrt_ptr			printer;
 	struct s_flag		*flags;
 }						t_print;
 
 /*
 ** history should be unsigned long long bc of %lln
-*/
-
-typedef int				(*wrt_ptr)(const unsigned char*, size_t, struct s_print*);
-
-typedef	int				(*t_writer)(va_list, t_print*);
-
-/*
-**	change va_list to pointer to circumvent norminette error
 */
 
 typedef	struct			s_flag
@@ -67,12 +65,15 @@ int						ft_format(va_list ap, unsigned char *format,\
 						t_print *clipb);
 
 int						ft_printf(char *format, ...);
+int						ft_dprintf(const int fd, char *format, ...);
+int						ft_asprintf(char **ret, char *format, ...);
 
 int						ft_dispatcher(va_list ap, unsigned char *specifier,\
-						t_writer *functbl, t_print *clipb);
+								t_writer *functbl, t_print *clipb);
 size_t					ft_flagharvest(unsigned char *format, t_print *clipb);
 void					ft_flinit(t_print *clipb, t_flag *flags);
-int						ft_clinit(t_list **lst, int fd, wrt_ptr printer, t_print *clipb);
+int						ft_clinit(t_list **alst, int fd, t_wrt_ptr printer,\
+								t_print *clipb);
 
 void					ft_functblinit(t_writer *functbl);
 

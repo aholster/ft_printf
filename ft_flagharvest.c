@@ -6,37 +6,27 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/04/18 17:22:09 by aholster       #+#    #+#                */
-/*   Updated: 2019/06/07 14:40:30 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/06/11 18:12:22 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static size_t	ft_prec_extract(unsigned char *format, t_print *clipb)
+static size_t	ft_num_extract(const unsigned char *format, unsigned int *destination)
 {
-	char	*sub;
-	size_t	index;
-
-	index = 1;
-	while (format[index] <= '9' && format[index] >= '0')
-		index++;
-	sub = ft_strsub((const char*)format, 1, (index - 1));
-	clipb->flags->precision = ft_atoi(sub);
-	free(sub);
-	return (index);
-}
-
-static size_t	ft_pad_extract(unsigned char *format, t_print *clipb)
-{
-	char	*sub;
-	size_t	index;
+	size_t			index;
+	unsigned int	num;
 
 	index = 0;
-	while (format[index] <= '9' && format[index] >= '0')
+	num = 0;
+	while (ft_isdigit(format[index]) == 1)
+	{
+		num = (format[index] - '0') + num;
+		if (ft_isdigit(format[index + 1]) == 1)
+			num = (num * 10);
 		index++;
-	sub = ft_strsub((const char*)format, 0, index);
-	clipb->flags->padding = ft_atoi(sub);
-	free(sub);
+	}
+	*destination = num;
 	return (index);
 }
 
@@ -58,25 +48,11 @@ static int		ft_valiflag(unsigned char c, t_flag *flags)
 {
 	unsigned short	flip;
 
-	if (c >= 128 || c == '\0')
+	if (c >= 128)
 		return (-1);
-	// else if (c[0] == c[1])
-	// {
-	// 	if (c[0] >= 64 &&\
-	// 		((1LLU << (c[0] - 64)) & flags->statidoubles[1] == 1)) //corrected
-	// 		return (1);
-	// 	else if ((1LLU << c[0]) & flags->statidoubles[0] == 1) //corrected
-	// 		return (1);
-	// }
-	// possibly no longer necesary/could result in false positive or unnecesary slowdown
 	flip = c / 64;
 	if (((1LLU << (c - (flip * 64))) & flags->statiflags[flip]) > 0)
 		return (1);
-//	if (c >= 64 && ((1LLU << (c - 64)) & flags->statiflags[1]) == 0)
-//		return (1);
-	// (((1LLU << c) & flags->statiflags[0])) ? printf("True\n") : printf("False\n");
-//	if (((1LLU << c) & flags->statiflags[0]) > 0)
-//		return (1);
 	return (-1);
 }
 
@@ -102,17 +78,19 @@ size_t			ft_flagharvest(unsigned char *format, t_print *clipb) // index incremen
 		flip = format[index] / 64;
 		if (((1LLU << (format[index] - (flip * 64))) & clipb->flags->statidoubles[flip]) == 0)
 			flagflip(format[index], clipb->flags, flip);
-		if (format[index] >= '1' && format[index] <= '9')
-			index += ft_pad_extract(&format[index], clipb);
+		else if (format[index] >= '1' && format[index] <= '9')
+			index += ft_num_extract(format + index, &clipb->flags->padding);
 		else if (format[index] == '.')
-			index += ft_prec_extract(&format[index], clipb);
+		{
+			clipb->flags->actiflags[flip] |= (1LLU << (format[index] - (flip * 64)));
+			index += ft_num_extract(format + index + 1, &clipb->flags->precision);
+		}
 		else
 		{
 			clipb->flags->actiflags[flip] |= (1LLU << (format[index] - (flip * 64)));
 			index++;
 		}
-		// index++;
 	}
-	index++; //here 
+	index++;
 	return (index);
 }

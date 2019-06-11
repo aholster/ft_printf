@@ -33,7 +33,7 @@ void					ft_functblinit(t_writer *functbl)
 	// functbl[slider('n')] = ft_n;
 	functbl[slider('o')] = ft_octal;
 	functbl[slider('p')] = ft_ptraddr;
-//	functbl[slider('s')] = ft_str;
+	functbl[slider('s')] = ft_str;
 	functbl[slider('u')] = ft_unsigned_dec;
 	functbl[slider('x')] = ft_lowhex;
 	functbl[slider('X')] = ft_caphex;

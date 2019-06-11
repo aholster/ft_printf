@@ -11,34 +11,30 @@
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-
+#include <stdio.h>
 static int		ft_str_pad(unsigned char *str, size_t len, t_print *clipb)
 {
 	unsigned int diff;
 
-	diff = clipb->flags->padding - clipb->flags->precision;
+	if (clipb->flags->padding  > len)
+		diff = clipb->flags->padding - len;
 	if (flagverif('-', clipb->flags) == -1)
 	{
-		if (flagverif('0', clipb->flags) == 1)// do we want to impliment this?
+		if (flagverif('0', clipb->flags) == 1)
 		{
 			if (pad_zero(diff, clipb) == -1)
 				return (-1);
 		}
-		if (pad_spaces(diff, clipb) == -1)
+		else if (pad_spaces(diff, clipb) == -1)
 			return (-1);
 	}
 	if (clipb->printer(str, len, clipb) == -1)
 		return (-1);
 	if (flagverif('-', clipb->flags) == 1)
 	{
-		if (flagverif('0', clipb->flags) == 1)// do we want to impliment this?
+		if (flagverif('0', clipb->flags) == 1)
 		{
 			if (pad_zero(diff, clipb) == -1)
-				return (-1);
-		}
-		if (clipb->flags->padding > (len - 1))
-		{
-			if (pad_spaces((clipb->flags->padding - len), clipb) == -1)
 				return (-1);
 		}
 		else if (pad_spaces(diff, clipb) == -1)
@@ -47,11 +43,8 @@ static int		ft_str_pad(unsigned char *str, size_t len, t_print *clipb)
 	return (1);
 }
 
-static int		ft_str_prec(unsigned char *str, t_print *clipb)
+static int		ft_str_prec(unsigned char *str, size_t len, t_print *clipb)
 {
-	size_t			len;
-
-	len = ft_strlen((char const*)str);
 	if (len > clipb->flags->precision)
 		len = clipb->flags->precision;
 	if (len < clipb->flags->precision)
@@ -71,9 +64,11 @@ int				ft_str(va_list ap, t_print *clipb)
 	str = va_arg(ap, unsigned char*);
 	if (str == NULL)
 		str = (unsigned char*)ft_strdup("(null)");
-	if (flagverif('-', clipb->flags) == 1)
-		return (ft_str_prec(str, clipb));
 	len = ft_strlen((char const*)str);
+	if (flagverif('.', clipb->flags) == 1)
+		return (ft_str_prec(str, len, clipb));
+	if (flagverif('.', clipb->flags) == -1 && clipb->flags->padding > len)
+		return (ft_str_pad(str, len, clipb));
 	if (clipb->printer(str, len, clipb) == -1)
 		return (-1);
 	return (1);

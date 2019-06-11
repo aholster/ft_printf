@@ -6,12 +6,12 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/03 15:08:26 by jesmith        #+#    #+#                */
-/*   Updated: 2019/06/11 15:44:37 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/06/11 18:51:00 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-#include <stdio.h>
+
 static int				ft_octal_pad(unsigned short nb_len, t_print *clipb)
 {
 	int diff;

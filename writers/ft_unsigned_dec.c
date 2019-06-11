@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/05/30 19:12:27 by aholster       #+#    #+#                */
-/*   Updated: 2019/05/31 15:20:36 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/06/11 18:52:34 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static unsigned short	unsigned_ll_toa(unsigned char *buffer,\
 	return (len + 1);
 }
 
-int		ft_unsigned_dec(va_list ap, t_print	*clipb)
+int						ft_unsigned_dec(va_list ap, t_print *clipb)
 {
 	unsigned char		buffer[20];
 	unsigned long long	num;

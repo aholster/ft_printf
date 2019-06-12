@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/05/31 12:06:16 by jesmith        #+#    #+#                */
-/*   Updated: 2019/06/11 14:30:05 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/06/12 18:23:57 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,8 @@ static int				ft_decimal_noprec(unsigned char *buffer, int neg, \
 static int				ft_decimal_prec(unsigned char *buffer, int neg, \
 					unsigned short nb_len, t_print *clipb)
 {
-	if (flagverif('-', clipb->flags) == -1 && clipb->flags->padding != 0)
+	if (flagverif('-', clipb->flags) == -1 && clipb->flags->padding != 0 \
+	&& clipb->flags->precision < nb_len)
 	{
 		if (ft_decimal_pad(nb_len, clipb) == -1)
 			return (-1);
@@ -89,7 +90,7 @@ static int				ft_decimal_prec(unsigned char *buffer, int neg, \
 	}
 	if (clipb->printer(buffer, (size_t)nb_len, clipb) == -1)
 		return (-1);
-	if (flagverif('-', clipb->flags) == 1)
+	if (flagverif('-', clipb->flags) == 1 && clipb->flags->padding > nb_len)
 	{
 		if (ft_decimal_pad(nb_len, clipb) == -1)
 			return (-1);
@@ -125,7 +126,7 @@ int						ft_decimal(va_list ap, t_print *clipb)
 	unsigned long long	nb;
 	unsigned short		nb_len;
 	int					neg;
-
+	
 	neg = 1;
 	if (ft_signconv(ap, &nb, clipb->flags) == -1)
 		neg = -1;

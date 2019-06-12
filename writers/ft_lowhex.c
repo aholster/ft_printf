@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/03 16:34:02 by jesmith        #+#    #+#                */
-/*   Updated: 2019/06/11 14:06:27 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/06/12 15:45:52 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,9 @@ int						ft_lowhex(va_list ap, t_print *clipb)
 		return (1);
 	if (flagverif('.', clipb->flags) == 1)
 		return (ft_lowhex_prec(buffer, nb, nb_len, clipb));
-	if (ft_lowhex_noprec(buffer, nb, nb_len, clipb) == -1)
-		return (-1);
+	else 
+		return (ft_lowhex_noprec(buffer, nb, nb_len, clipb));
+	// if (ft_lowhex_noprec(buffer, nb, nb_len, clipb) == -1)
+	// 	return (-1);
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/04/18 17:22:09 by aholster       #+#    #+#                */
-/*   Updated: 2019/06/12 17:29:54 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/06/14 16:08:34 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static size_t	ft_num_extract(const unsigned char *format, unsigned int *destinat
 		index++;
 	}
 	*destination = num;
-	return (index);
+	return ((index == 0) ? 0 : index - 1);
 }
 
 static void		flagflip(const unsigned char c, t_flag *flags, const unsigned short flip)
@@ -66,7 +66,7 @@ static void		ft_flagreset(t_flag *flags)
 	flags->padding = 0;
 }
 
-size_t			ft_flagharvest(unsigned char *format, t_print *clipb) // index incrementing problems
+size_t			ft_flagharvest(unsigned char *format, t_print *clipb)
 {
 	size_t			index;
 	unsigned short	flip;
@@ -83,24 +83,20 @@ size_t			ft_flagharvest(unsigned char *format, t_print *clipb) // index incremen
 			index += ft_num_extract(format + index, &clipb->flags->padding);
 			printf("format[index] %c\n", format[index]);
 		}
-		else if (format[index] == '.')
-		{
-			printf("precision extract\n");
-			index += ft_num_extract(format + index + 1, &clipb->flags->precision);
-		}
-		if (((1LLU << (format[index] - (flip * 64))) & clipb->flags->statidoubles[flip]) == 1)
-		{
-			printf("stati flags\n");
-			flagflip(format[index], clipb->flags, flip);
-		}
 		else
 		{
-			printf("acti flags\n");
-			clipb->flags->actiflags[flip] |= (1LLU << (format[index] - (flip * 64)));
-			index++;
+			flagflip(format[index], clipb->flags, flip);
+			if (format[index] == '.')
+			{
+				printf("precision extract\n");
+				index += ft_num_extract(format + index + 1, &clipb->flags->precision);
+				printf("format[index] %c\n", format[index]);
+			}
 		}
+		index++;
 	}
-	index++; // incrementing one too many
+	index++;
+	printf("index at: %c\n", format[index]);
 	printf("pad: %u\n", clipb->flags->padding);
 	printf("prec: %u\n", clipb->flags->precision);
 	return (index);

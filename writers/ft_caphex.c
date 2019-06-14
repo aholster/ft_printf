@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/03 18:20:19 by jesmith        #+#    #+#                */
-/*   Updated: 2019/06/12 18:24:22 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/06/14 15:46:54 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,7 @@ int						ft_caphex(va_list ap, t_print *clipb)
 	if (flagverif('.', clipb->flags) == 1)
 		return (ft_caphex_prec(buffer, nb, nb_len, clipb));
 	else 
-		return (ft_caphex_noprec(buffer, nb, nb_len, clipb);
+		return (ft_caphex_noprec(buffer, nb, nb_len, clipb));
 	// if (ft_caphex_noprec(buffer, nb, nb_len, clipb) == -1)
 	// 	return (-1);
 	return (1);

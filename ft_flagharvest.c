@@ -6,12 +6,12 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/04/18 17:22:09 by aholster       #+#    #+#                */
-/*   Updated: 2019/06/14 16:08:34 by aholster      ########   odam.nl         */
+/*   Updated: 2019/06/18 13:03:48 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-#include <stdio.h>
+
 static size_t	ft_num_extract(const unsigned char *format, unsigned int *destination)
 {
 	size_t			index;
@@ -27,21 +27,26 @@ static size_t	ft_num_extract(const unsigned char *format, unsigned int *destinat
 		index++;
 	}
 	*destination = num;
-	return ((index == 0) ? 0 : index - 1);
+	return (index);
 }
 
 static void		flagflip(const unsigned char c, t_flag *flags, const unsigned short flip)
 {
-	if (((1LLU << (c - (flip * 64))) & flags->actiflags[flip]) == 1)
+	if ((((1LLU << (c - (flip * 64))) & flags->statidoubles[flip]) > 0))
 	{
-		flags->actidoubles[flip] |= (1LLU << (c - (flip * 64)));
-		flags->actiflags[flip] ^= (1LLU << (c - (flip * 64)));
+		if (((1LLU << (c - (flip * 64))) & flags->actiflags[flip]) > 0)
+		{
+			flags->actidoubles[flip] |= (1LLU << (c - (flip * 64)));
+			flags->actiflags[flip] ^= (1LLU << (c - (flip * 64)));
+		}
+		else
+		{
+			flags->actiflags[flip] |= (1LLU << (c - (flip * 64)));
+			flags->actidoubles[flip] ^= (1LLU << (c - (flip * 64)));
+		}
 	}
 	else
-	{
 		flags->actiflags[flip] |= (1LLU << (c - (flip * 64)));
-		flags->actidoubles[flip] ^= (1LLU << (c - (flip * 64)));
-	}
 }
 
 static int		ft_valiflag(const unsigned char c, const t_flag *flags)
@@ -66,7 +71,7 @@ static void		ft_flagreset(t_flag *flags)
 	flags->padding = 0;
 }
 
-size_t			ft_flagharvest(unsigned char *format, t_print *clipb)
+size_t			ft_flagharvest(const unsigned char *format, t_print *clipb)
 {
 	size_t			index;
 	unsigned short	flip;
@@ -75,29 +80,55 @@ size_t			ft_flagharvest(unsigned char *format, t_print *clipb)
 	ft_flagreset(clipb->flags);
 	while (ft_valiflag(format[index], clipb->flags) > 0)
 	{
-		printf("format[index] %c\n", format[index]);
 		flip = format[index] / 64;
+		flagflip(format[index], clipb->flags, flip);
 		if (format[index] >= '1' && format[index] <= '9')
 		{
-			printf("pad extract\n");
 			index += ft_num_extract(format + index, &clipb->flags->padding);
-			printf("format[index] %c\n", format[index]);
+		}
+		else if (format[index] == '.')
+		{
+			index += ft_num_extract(format + index + 1, &clipb->flags->precision);
 		}
 		else
-		{
-			flagflip(format[index], clipb->flags, flip);
-			if (format[index] == '.')
-			{
-				printf("precision extract\n");
-				index += ft_num_extract(format + index + 1, &clipb->flags->precision);
-				printf("format[index] %c\n", format[index]);
-			}
-		}
-		index++;
+			index++;
 	}
-	index++;
-	printf("index at: %c\n", format[index]);
-	printf("pad: %u\n", clipb->flags->padding);
-	printf("prec: %u\n", clipb->flags->precision);
-	return (index);
+	return (index + 1);
 }
+
+
+// size_t			ft_flagharvest(unsigned char *format, t_print *clipb)
+// {
+// 	size_t			index;
+// 	unsigned short	flip;
+
+// 	index = 0;
+// 	ft_flagreset(clipb->flags);
+// 	while (ft_valiflag(format[index], clipb->flags) > 0)
+// 	{
+// 		printf("format[index] %c\n", format[index]);
+// 		flip = format[index] / 64;
+// 		if (format[index] >= '1' && format[index] <= '9')
+// 		{
+// 			printf("pad extract\n");
+// 			index += ft_num_extract(format + index, &clipb->flags->padding);
+// 			printf("format[index] %c\n", format[index]);
+// 		}
+// 		else
+// 		{
+// 			flagflip(format[index], clipb->flags, flip);
+// 			if (format[index] == '.')
+// 			{
+// 				printf("precision extract\n");
+// 				index += ft_num_extract(format + index + 1, &clipb->flags->precision);
+// 				printf("format[index] %c\n", format[index]);
+// 			}
+// 		}
+// 		index++;
+// 	}
+// 	index++;
+// 	printf("index at: %c\n", format[index]);
+// 	printf("pad: %u\n", clipb->flags->padding);
+// 	printf("prec: %u\n", clipb->flags->precision);
+// 	return (index);
+// }

@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/01 16:56:13 by aholster       #+#    #+#                */
-/*   Updated: 2019/06/14 15:43:37 by aholster      ########   odam.nl         */
+/*   Updated: 2019/06/14 16:37:19 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int						ft_vprintf(char *format, va_list ap);
 
 int						ft_dispatcher(va_list ap, unsigned char *specifier,\
 								t_writer *functbl, t_print *clipb);
-size_t					ft_flagharvest(unsigned char *format, t_print *clipb);
+size_t					ft_flagharvest(const unsigned char *format, t_print *clipb);
 void					ft_flinit(t_print *clipb, t_flag *flags);
 int						ft_clinit(t_list **alst, int fd, t_wrt_ptr printer,\
 								t_print *clipb);

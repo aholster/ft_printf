@@ -6,64 +6,33 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/03 16:34:02 by jesmith        #+#    #+#                */
-/*   Updated: 2019/06/12 15:45:52 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/06/18 21:03:29 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int				ft_lowhex_pad(unsigned short nb_len, t_print *clipb)
-{
-	int diff;
-
-	if (clipb->flags->precision < nb_len && clipb->flags->precision != 0)
-		diff = clipb->flags->padding - nb_len;
-	else if (clipb->flags->padding > clipb->flags->precision)
-		diff = clipb->flags->padding - clipb->flags->precision;
-	if (clipb->flags->padding > nb_len && clipb->flags->precision < 1)
-	{
-		if (diff > nb_len)
-		{
-			if (pad_spaces((diff - nb_len), clipb) == -1)
-				return (-1);
-		}
-	}
-	else if (clipb->flags->padding > clipb->flags->precision \
-	&& clipb->flags->padding > nb_len)
-	{
-		if (pad_spaces(diff, clipb) == -1)
-			return (-1);
-	}
-	return (1);
-}
-
 static int				ft_lowhex_noprec(unsigned char *buffer, \
-				unsigned long long nb, unsigned short nb_len, t_print *clipb)
+					unsigned long long nb, unsigned short nb_len, \
+					t_print *clipb)
 {
-	if (flagverif('-', clipb->flags) == -1 && flagverif('0', clipb->flags) == -1)
-	{
-		if (ft_lowhex_pad(nb_len, clipb) == -1)
+	int minus;
+
+	minus = flagverif('-', clipb->flags);
+	if (minus == -1 && flagverif('0', clipb->flags) == -1)
+		if (ft_space_padder(nb_len, clipb) == -1)
 			return (-1);
-	}
 	if (flagverif('#', clipb->flags) == 1 && nb != 0)
-	{
 		if (clipb->printer((const unsigned char *)"0x", 2, clipb) == -1)
 			return (-1);
-	}
-	if (flagverif('0', clipb->flags) == 1 && \
-	(clipb->flags->padding - clipb->flags->precision) > nb_len)
-	{
-		if (pad_zero((clipb->flags->padding - clipb->flags->precision \
-		- nb_len), clipb) == -1)
+	if (flagverif('0', clipb->flags) == 1 && minus == -1)
+		if (ft_zero_padder(nb_len, clipb) == -1)
 			return (-1);
-	}
 	if (clipb->printer(buffer, ((size_t)nb_len), clipb) == -1)
 		return (-1);
-	if (flagverif('-', clipb->flags) == 1 && clipb->flags->padding > nb_len)
-	{
-		if (ft_lowhex_pad(nb_len, clipb) == -1)
+	if (minus == 1 && clipb->flags->padding > nb_len)
+		if (ft_space_padder(nb_len, clipb) == -1)
 			return (-1);
-	}
 	return (1);
 }
 
@@ -71,30 +40,23 @@ static int				ft_lowhex_prec(unsigned char *buffer, \
 					unsigned long long nb, unsigned short nb_len, \
 					t_print *clipb)
 {
-	if (flagverif('-', clipb->flags) == -1 && clipb->flags->padding > 0)
-	{
-		if (ft_lowhex_pad(nb_len, clipb) == -1)
+	int minus;
+
+	minus = flagverif('-', clipb->flags);
+	if (minus == -1 && clipb->flags->padding > nb_len)
+		if (ft_space_padder(nb_len, clipb) == -1)
 			return (-1);
-	}
-	if (nb == 0 && clipb->flags->precision == 0)
-		ft_strcpy((char*)buffer, " ");
 	if (flagverif('#', clipb->flags) == 1 && nb != 0)
-	{
 		if (clipb->printer((const unsigned char *)"0x", 2, clipb) == -1)
 			return (-1);
-	}
 	if (clipb->flags->precision > nb_len)
-	{
-		if (pad_zero((clipb->flags->precision - nb_len), clipb) == -1)
+		if (ft_zero_padder(nb_len, clipb) == -1)
 			return (-1);
-	}
 	if (clipb->printer(buffer, (size_t)nb_len, clipb) == -1)
 		return (-1);
-	if (flagverif('-', clipb->flags) == 1)
-	{
-		if (ft_lowhex_pad(nb_len, clipb) == -1)
+	if (minus == 1 && clipb->flags->padding > nb_len)
+		if (ft_space_padder(nb_len, clipb) == -1)
 			return (-1);
-	}
 	return (1);
 }
 
@@ -130,20 +92,21 @@ int						ft_lowhex(va_list ap, t_print *clipb)
 	unsigned char		buffer[20];
 	unsigned long long	nb;
 	unsigned short		nb_len;
+	int					precision;
 
+	precision = flagverif('.', clipb->flags);
 	if (ft_unsignconv(ap, &nb, clipb->flags) == -1)
 		return (-1);
 	nb_len = ft_int_len(buffer, nb);
-	if (flagverif('#', clipb->flags) == 1 && nb != 0)
+	if (flagverif('#', clipb->flags) == 1 && nb != 0 && clipb->flags->padding >= 2)
 		clipb->flags->padding -= 2;
-	if (nb == 0 && clipb->flags->padding == 0 \
-	&& flagverif('.', clipb->flags) == 1)
+	if (nb == 0 && clipb->flags->padding == 0 && precision == 1)
 		return (1);
-	if (flagverif('.', clipb->flags) == 1)
+	if (nb == 0 && clipb->flags->precision == 0 && precision == 1)
+		ft_strcpy((char*)buffer, " ");
+	if (precision == 1)
 		return (ft_lowhex_prec(buffer, nb, nb_len, clipb));
 	else 
 		return (ft_lowhex_noprec(buffer, nb, nb_len, clipb));
-	// if (ft_lowhex_noprec(buffer, nb, nb_len, clipb) == -1)
-	// 	return (-1);
 	return (1);
 }

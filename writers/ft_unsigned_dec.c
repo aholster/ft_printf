@@ -6,57 +6,98 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/05/30 19:12:27 by aholster       #+#    #+#                */
-/*   Updated: 2019/06/11 18:52:34 by aholster      ########   odam.nl         */
+/*   Updated: 2019/06/18 21:02:17 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static unsigned short	longlen(unsigned long long n)
-{
-	unsigned short	length;
 
-	length = 0;
-	if (n == 0)
-		return (1);
-	while (n != 0)
+static int				ft_unsigned_dec_noprec(unsigned char *buffer, \
+					unsigned short nb_len, t_print *clipb)
+{
+	int minus;
+
+	minus = flagverif('-', clipb->flags);
+	if (minus == -1 && flagverif('0', clipb->flags) == -1)
+		if (ft_space_padder(nb_len, clipb) == -1)
+			return (-1);
+	if (flagverif('0', clipb->flags) == 1 && minus == -1)
 	{
-		n = n / 10;
-		length++;
+		if ((clipb->flags->padding - clipb->flags->precision) > nb_len)
+		{
+			if (ft_zero_padder(nb_len, clipb) == -1)
+				return (-1);
+		}
 	}
-	return (length);
+	if (clipb->printer(buffer, (size_t)nb_len, clipb) == -1)
+		return (-1);
+	if (minus == 1 && clipb->flags->padding > nb_len)
+		if (ft_space_padder(nb_len, clipb) == -1)
+			return (-1);
+	return (1);
 }
 
-static unsigned short	unsigned_ll_toa(unsigned char *buffer,\
-									unsigned long long holder)
+static int				ft_unsigned_dec_prec(unsigned char *buffer, \
+					unsigned short nb_len, t_print *clipb)
 {
-	unsigned short	len;
-	unsigned short	curlen;
-	char			*base;
+	int minus;
+
+	minus = flagverif('-', clipb->flags);
+	if (minus == -1 && clipb->flags->padding > nb_len)
+		if (ft_space_padder(nb_len, clipb) == -1)
+			return (-1);
+	if (clipb->flags->precision > nb_len)
+		if (ft_zero_padder(nb_len, clipb) == -1)
+			return (-1);
+	if (clipb->printer(buffer, (size_t)nb_len, clipb) == -1)
+		return (-1);
+	if (minus == 1 && clipb->flags->padding > nb_len)
+		if (ft_space_padder(nb_len, clipb) == -1)
+			return (-1);
+	return (1);
+}
+
+static unsigned short	ft_int_len(unsigned char *buffer, \
+					unsigned long long nb)
+{
+	unsigned long long	temp_num;
+	unsigned short		num_len;
+	unsigned short		cur_len;
+	char				*base;
 
 	base = "0123456789";
-	len = longlen(holder) - 1;
-	curlen = len;
-	while (holder >= 10)
+	temp_num = nb;
+	num_len = (unsigned short)ft_nbrlen(nb, 10);
+	cur_len = num_len - 1;
+	while (temp_num >= 10)
 	{
-		buffer[curlen] = base[(holder % 10)];
-		holder /= 10;
-		curlen--;
+		buffer[cur_len] = base[(temp_num % 10)];
+		temp_num /= 10;
+		cur_len--;
 	}
-	buffer[curlen] = base[holder];
-	return (len + 1);
+	buffer[cur_len] = base[temp_num];
+	return (num_len);
 }
 
 int						ft_unsigned_dec(va_list ap, t_print *clipb)
 {
 	unsigned char		buffer[20];
-	unsigned long long	num;
-	unsigned short		numlen;
+	unsigned long long	nb;
+	unsigned short		nb_len;
+	int					precision;
 
-	num = va_arg(ap, unsigned long long);
-	numlen = unsigned_ll_toa(buffer, num);
-	va_end(ap);
-	if (clipb->printer(buffer, numlen, clipb) == -1)
+	precision = flagverif('.', clipb->flags);
+	if (ft_unsignconv(ap, &nb, clipb->flags) == -1)
 		return (-1);
+	nb_len = ft_int_len(buffer, nb);
+	if (nb == 0 && clipb->flags->padding == 0 && precision == 1)
+		return (1);
+	if (nb == 0 && clipb->flags->precision < nb_len && precision == 1)
+		ft_strcpy((char*)buffer, " ");
+	if (precision == 1)
+		return (ft_unsigned_dec_prec(buffer, nb_len, clipb));
+	if (precision == -1)
+		return (ft_unsigned_dec_noprec(buffer, nb_len, clipb));
 	return (1);
 }

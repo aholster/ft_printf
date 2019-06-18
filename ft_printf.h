@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/01 16:56:13 by aholster       #+#    #+#                */
-/*   Updated: 2019/06/14 16:37:19 by aholster      ########   odam.nl         */
+/*   Updated: 2019/06/18 16:31:41 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,9 +88,10 @@ int						ft_clinit(t_list **alst, int fd, t_wrt_ptr printer,\
 
 void					ft_functblinit(t_writer *functbl);
 
+int						ft_zero_padder(unsigned short len, t_print *clipb);
+int						ft_space_padder(unsigned short len, t_print *clipb);
 int						pad_spaces(size_t amount, t_print *clipb);
 int						pad_zero(size_t amount, t_print *clipb);
-int						pad_neg_spaces(size_t amount, t_print *clipb);
 
 int						ft_signconv(va_list ap, unsigned long long *holder, \
 								const t_flag *flags);

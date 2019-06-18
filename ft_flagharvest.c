@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/04/18 17:22:09 by aholster       #+#    #+#                */
-/*   Updated: 2019/06/18 13:03:48 by aholster      ########   odam.nl         */
+/*   Updated: 2019/06/18 19:41:39 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ size_t			ft_flagharvest(const unsigned char *format, t_print *clipb)
 		}
 		else if (format[index] == '.')
 		{
-			index += ft_num_extract(format + index + 1, &clipb->flags->precision);
+			index += ft_num_extract(format + index + 1, &clipb->flags->precision) + 1;
 		}
 		else
 			index++;

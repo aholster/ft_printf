@@ -6,89 +6,54 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/03 15:08:26 by jesmith        #+#    #+#                */
-/*   Updated: 2019/06/11 18:51:00 by aholster      ########   odam.nl         */
+/*   Updated: 2019/06/18 21:05:04 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int				ft_octal_pad(unsigned short nb_len, t_print *clipb)
-{
-	int diff;
-
-	if (clipb->flags->precision < nb_len && clipb->flags->precision != 0)
-		diff = clipb->flags->padding - nb_len;
-	else if (clipb->flags->padding > clipb->flags->precision)
-		diff = clipb->flags->padding - clipb->flags->precision;
-	if (clipb->flags->padding > nb_len && clipb->flags->precision < 1)
-	{
-		if (diff > nb_len)
-		{
-			if (pad_spaces((diff - nb_len), clipb) == -1)
-				return (-1);
-		}
-	}
-	else if (clipb->flags->padding > clipb->flags->precision \
-	&& clipb->flags->padding > nb_len)
-	{
-		if (pad_spaces(diff, clipb) == -1)
-			return (-1);
-	}
-	return (1);
-}
-
 static int				ft_octal_noprec(unsigned char *buffer, \
 					unsigned short nb_len, t_print *clipb)
 {
-	if (flagverif('-', clipb->flags) == -1 && \
-	flagverif('0', clipb->flags) == -1 && clipb->flags->padding > 0)
-	{
-		if (ft_octal_pad(nb_len, clipb) == -1)
+	int minus;
+
+	minus = flagverif('-', clipb->flags);
+	if (minus == -1 && flagverif('0', clipb->flags) == -1 && clipb->flags->padding > 0)
+		if (ft_space_padder(nb_len, clipb) == -1)
 			return (-1);
-	}
-	if (flagverif('0', clipb->flags) == 1)
+	if (flagverif('0', clipb->flags) == 1 && minus == -1)
 	{
 		if ((clipb->flags->padding - clipb->flags->precision) > nb_len)
 		{
-			if (pad_zero((clipb->flags->padding - clipb->flags->precision \
-			- nb_len), clipb) == -1)
+			if (ft_zero_padder(nb_len, clipb) == -1)
 				return (-1);
 		}
 	}
 	if (clipb->printer(buffer, (size_t)nb_len, clipb) == -1)
 		return (-1);
-	if (flagverif('-', clipb->flags) == 1 && clipb->flags->padding > nb_len)
-	{
-		if (pad_spaces(clipb->flags->padding - nb_len, clipb) == -1)
+	if (minus == 1 && clipb->flags->padding > nb_len)
+		if (ft_space_padder(nb_len, clipb) == -1)
 			return (-1);
-	}
 	return (1);
 }
 
 static int				ft_octal_prec(unsigned char *buffer, \
-					unsigned long long nb, unsigned short nb_len, \
-					t_print *clipb)
+					unsigned short nb_len, t_print *clipb)
 {
-	if (flagverif('-', clipb->flags) == -1 && clipb->flags->padding != 0)
-	{
-		if (ft_octal_pad(nb_len, clipb) == -1)
+	int minus;
+
+	minus = flagverif('-', clipb->flags);
+	if (minus == -1 && clipb->flags->padding > nb_len)
+		if (ft_space_padder(nb_len, clipb) == -1)
 			return (-1);
-	}
 	if (clipb->flags->precision > nb_len)
-	{
-		if (pad_zero(clipb->flags->precision - nb_len, clipb) == -1)
+		if (ft_zero_padder(nb_len, clipb) == -1)
 			return (-1);
-	}
-	if (flagverif('#', clipb->flags) == -1 && nb == 0 && \
-	clipb->flags->precision == 0)
-		ft_strcpy((char*)buffer, " ");
 	if (clipb->printer(buffer, (size_t)nb_len, clipb) == -1)
 		return (-1);
-	if (flagverif('-', clipb->flags) == 1)
-	{
-		if (ft_octal_pad(nb_len, clipb) == -1)
+	if (minus == 1 && clipb->flags->padding > nb_len)
+		if (ft_space_padder(nb_len, clipb) == -1)
 			return (-1);
-	}
 	return (1);
 }
 
@@ -125,16 +90,21 @@ int						ft_octal(va_list ap, t_print *clipb)
 	unsigned char		buffer[20];
 	unsigned long long	nb;
 	unsigned short		nb_len;
+	int					prec;
+	int					exten;
 
+	prec = flagverif('.', clipb->flags);
+	exten = flagverif('#', clipb->flags);
 	if (ft_unsignconv(ap, &nb, clipb->flags) == -1)
 		return (-1);
 	nb_len = ft_int_len(buffer, nb, clipb);
-	if (flagverif('#', clipb->flags) == -1 && nb == 0 && \
-	clipb->flags->padding == 0 && flagverif('.', clipb->flags) == 1)
+	if (exten == -1 && prec == 1 && nb == 0 && clipb->flags->padding == 0)
 		return (1);
-	if (flagverif('.', clipb->flags) == 1)
-		return (ft_octal_prec(buffer, nb, nb_len, clipb));
-	if (flagverif('.', clipb->flags) == -1)
+	if (exten == -1 && prec == 1 && nb == 0 && clipb->flags->precision == 0)
+		ft_strcpy((char*)buffer, " ");
+	if (prec == 1)
+		return (ft_octal_prec(buffer, nb_len, clipb));
+	if (prec == -1)
 		return (ft_octal_noprec(buffer, nb_len, clipb));
 	return (1);
 }

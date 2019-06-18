@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/03 14:19:45 by jesmith        #+#    #+#                */
-/*   Updated: 2019/06/12 12:07:42 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/06/18 16:31:30 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int		ft_char_pad(unsigned char c, t_print *clipb)
 			if (pad_zero(clipb->flags->padding - 1, clipb) == -1)
 				return (-1);
 		}
-		else if (pad_spaces(clipb->flags->padding - 1, clipb) == -1)
+		else if (pad_spaces((clipb->flags->padding - 1), clipb) == -1)
 			return (-1);
 	}
 	if (clipb->printer((const unsigned char*)&c, 1, clipb) == -1)
@@ -33,7 +33,7 @@ static int		ft_char_pad(unsigned char c, t_print *clipb)
 			if (pad_zero(clipb->flags->padding - 1, clipb) == -1)
 				return (-1);
 		}
-		else if (pad_spaces(clipb->flags->padding - 1, clipb) == -1)
+		else if (pad_spaces((clipb->flags->padding - 1), clipb) == -1)
 			return (-1);
 	}
 	return (1);

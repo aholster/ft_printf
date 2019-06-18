@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/05/25 16:10:49 by aholster       #+#    #+#                */
-/*   Updated: 2019/06/05 19:27:53 by aholster      ########   odam.nl         */
+/*   Updated: 2019/06/18 19:41:19 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,4 +50,54 @@ int	pad_zero(size_t amount, t_print *clipb)
 		index += calc;
 	}
 	return (amount);
+}
+
+int	ft_space_padder(unsigned short len, t_print *clipb)
+{
+	size_t 			diff;
+	size_t 			temp;
+	unsigned int	padding;
+	unsigned int	precision;
+
+	padding = clipb->flags->padding;
+	precision = clipb->flags->precision;
+	temp = padding - precision;
+	if (padding < 1 && precision < 1)
+		return (1);
+	if (padding > precision && precision >len)
+		diff = temp;
+	else if (padding > precision && padding > len)
+		diff = padding - len;
+	else
+		return (1);
+	if (pad_spaces(diff, clipb) == -1)
+		return (-1);
+	return (1);
+}
+
+int	ft_zero_padder(unsigned short len, t_print *clipb)
+{
+	size_t 			diff;
+	size_t 			temp;
+	unsigned int	padding;
+	unsigned int	precision;
+
+	padding = clipb->flags->padding;
+	precision = clipb->flags->precision;
+	temp = padding - precision;
+	if (padding < 1 && precision < 1)
+		return (1);
+	else if (temp > len && flagverif('.', clipb->flags) == -1)
+		diff = temp - len;
+	else if (precision > len && flagverif('.', clipb->flags) == 1)
+		diff = precision - len;
+	else if (padding > precision && precision > len)
+		diff = temp;
+	else if (padding > precision && padding > len)
+		diff = padding - len;
+	else
+		return (1);
+	if (pad_zero(diff, clipb) == -1)
+		return (-1);
+	return (1);
 }

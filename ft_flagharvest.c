@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/04/18 17:22:09 by aholster       #+#    #+#                */
-/*   Updated: 2019/06/18 19:41:39 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/06/19 15:15:18 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ size_t			ft_flagharvest(const unsigned char *format, t_print *clipb)
 	size_t			index;
 	unsigned short	flip;
 
-	index = 0;
+	index = 1;
 	ft_flagreset(clipb->flags);
 	while (ft_valiflag(format[index], clipb->flags) > 0)
 	{
@@ -93,11 +93,11 @@ size_t			ft_flagharvest(const unsigned char *format, t_print *clipb)
 		else
 			index++;
 	}
-	return (index + 1);
+	return (index);
 }
 
 
-// size_t			ft_flagharvest(unsigned char *format, t_print *clipb)
+// size_t			ft_flagharvest(unsigned const char *format, t_print *clipb)
 // {
 // 	size_t			index;
 // 	unsigned short	flip;

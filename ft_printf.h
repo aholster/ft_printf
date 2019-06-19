@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/01 16:56:13 by aholster       #+#    #+#                */
-/*   Updated: 2019/06/18 16:31:41 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/06/19 15:28:02 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ typedef struct			s_print
 	size_t				history;
 	size_t				current;
 	int					fd;
+	va_list				origin_args;
+	va_list				args;
 	t_wrt_ptr			printer;
 	struct s_flag		*flags;
 }						t_print;
@@ -71,20 +73,22 @@ typedef	struct			s_flag
 	unsigned int		padding;
 }						t_flag;
 
-int						ft_format(va_list ap, unsigned char *format,\
+int						ft_format(unsigned const char *format,\
 						t_print *clipb);
 
-int						ft_printf(char *format, ...);
-int						ft_dprintf(const int fd, char *format, ...);
-int						ft_asprintf(char **ret, char *format, ...);
-int						ft_vprintf(char *format, va_list ap);
+int						ft_printf(const char *format, ...);
+int						ft_dprintf(const int fd, const char *format, ...);
+int						ft_asprintf(char **ret, const char *format, ...);
 
-int						ft_dispatcher(va_list ap, unsigned char *specifier,\
+int						ft_vprintf(const char *format, va_list args);
+int						ft_vdprintf(const int fd, const char *format, va_list args);
+
+int						ft_dispatcher(const unsigned char *specifier,\
 								t_writer *functbl, t_print *clipb);
 size_t					ft_flagharvest(const unsigned char *format, t_print *clipb);
 void					ft_flinit(t_print *clipb, t_flag *flags);
-int						ft_clinit(t_list **alst, int fd, t_wrt_ptr printer,\
-								t_print *clipb);
+//int						ft_clinit(t_list **alst, const int fd, t_wrt_ptr printer,\
+//								t_print *clipb);
 
 void					ft_functblinit(t_writer *functbl);
 
@@ -93,22 +97,22 @@ int						ft_space_padder(unsigned short len, t_print *clipb);
 int						pad_spaces(size_t amount, t_print *clipb);
 int						pad_zero(size_t amount, t_print *clipb);
 
-int						ft_signconv(va_list ap, unsigned long long *holder, \
+int						ft_signconv(va_list args, unsigned long long *holder, \
 								const t_flag *flags);
-int						ft_unsignconv(va_list ap, unsigned long long *holder, \
+int						ft_unsignconv(va_list args, unsigned long long *holder, \
 								const t_flag *flags);
 int						flagverif(const unsigned char c, const t_flag *flags);
 int						doubleverif(const unsigned char c, const t_flag *flags);
 
-int						ft_str(va_list ap, t_print *clipb);
-int						ft_ptraddr(va_list ap, t_print *clipb);
-int						ft_decimal(va_list ap, t_print *clipb);
-int						ft_unsigned_dec(va_list ap, t_print	*clipb);
-int						ft_char(va_list ap, t_print *clipb);
-int						ft_octal(va_list ap, t_print *clipb);
-int						ft_lowhex(va_list ap, t_print *clipb);
-int						ft_caphex(va_list ap, t_print *clipb);
+int						ft_str(va_list args, t_print *clipb);
+int						ft_ptraddr(va_list args, t_print *clipb);
+int						ft_decimal(va_list args, t_print *clipb);
+int						ft_unsigned_dec(va_list args, t_print	*clipb);
+int						ft_char(va_list args, t_print *clipb);
+int						ft_octal(va_list args, t_print *clipb);
+int						ft_lowhex(va_list args, t_print *clipb);
+int						ft_caphex(va_list args, t_print *clipb);
 
-int						ft_n(va_list ap, t_print *clipb);
+int						ft_n(va_list args, t_print *clipb);
 
 #endif

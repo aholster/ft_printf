@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/05/25 13:19:52 by aholster       #+#    #+#                */
-/*   Updated: 2019/06/06 14:06:08 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/06/19 15:10:11 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,13 +76,13 @@ static int				ft_ptraddr_prec(unsigned char *buffer,\
 	return (1);
 }
 
-int						ft_ptraddr(va_list ap, t_print *clipb)
+int						ft_ptraddr(va_list args, t_print *clipb)
 {
 	unsigned long long	holder;
 	unsigned short		numlen;
 	unsigned char		buffer[16];
 
-	holder = (unsigned long long)va_arg(ap, void*);
+	holder = (unsigned long long)va_arg(args, void*);
 	numlen = unsigned_ll_toa(buffer, holder);
 	if (flagverif('.', clipb->flags) == 1)
 		return (ft_ptraddr_prec(buffer, numlen, clipb));

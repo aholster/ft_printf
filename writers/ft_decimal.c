@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/05/31 12:06:16 by jesmith        #+#    #+#                */
-/*   Updated: 2019/06/18 21:06:45 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/06/19 15:22:12 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ static unsigned short	ft_int_len(unsigned char *buffer, \
 	return (num_len);
 }
 
-int						ft_decimal(va_list ap, t_print *clipb)
+int						ft_decimal(va_list args, t_print *clipb)
 {
 	unsigned char		buffer[20];
 	unsigned long long	nb;
@@ -110,7 +110,7 @@ int						ft_decimal(va_list ap, t_print *clipb)
 
 	precision = flagverif('.', clipb->flags);
 	neg = 1;
-	if (ft_signconv(ap, &nb, clipb->flags) == -1)
+	if (ft_signconv(args, &nb, clipb->flags) == -1)
 		neg = -1;
 	nb_len = ft_int_len(buffer, nb);
 	if (nb == 0 && precision == 1 && clipb->flags->padding == 0)

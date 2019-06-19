@@ -1,49 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_asprintf.c                                      :+:    :+:            */
+/*   ft_vdprintf.c                                      :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: aholster <aholster@student.codam.nl>         +#+                     */
+/*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2019/06/05 19:47:52 by aholster       #+#    #+#                */
-/*   Updated: 2019/06/19 15:33:08 by jesmith       ########   odam.nl         */
+/*   Created: 2019/06/19 14:43:08 by jesmith        #+#    #+#                */
+/*   Updated: 2019/06/19 15:33:18 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int	ft_lstcreator(const unsigned char *mem, const size_t size,\
-							t_print *clipb)
+static void	ft_write_history(const unsigned char *mem, const size_t size,\
+								t_print *clipb)
 {
-	t_list	*cur;
-
-	cur = ft_lstnew(mem, size);
-	if (cur == NULL)
-		return (-1);
-	ft_lstaddend(clipb->alst, cur);
-	clipb->history += clipb->current;
+	write(clipb->fd, mem, size);
+	clipb->history += size;
 	clipb->current = 0;
-	return (0);
 }
 
-static int	ft_lstbufmanager(const unsigned char *mem, size_t size,\
-								t_print *clipb)
+static int	ft_bufmanager(const unsigned char *mem, size_t size, t_print *clipb)
 {
 	size_t	block;
 
 	if (mem == NULL)
-	{
-		if (ft_lstcreator((const unsigned char *)clipb->buffer, \
-				clipb->current, clipb) == -1)
-			return (-1);
-	}
+		ft_write_history((const unsigned char *)clipb->buffer, clipb->current, clipb);
 	else
 		while (size > 0)
 		{
 			if (clipb->current == BUFFSIZE)
-				if (ft_lstcreator((const unsigned char *)clipb->buffer, \
-						BUFFSIZE, clipb) == -1)
-					return (-1);
+				ft_write_history((const unsigned char *)clipb->buffer, BUFFSIZE, clipb);
 			if (size + clipb->current <= BUFFSIZE)
 				block = size;
 			else
@@ -56,14 +43,14 @@ static int	ft_lstbufmanager(const unsigned char *mem, size_t size,\
 	return (0);
 }
 
-static int	ft_as_clipb_init(va_list args, t_list **alst, t_wrt_ptr printer, t_print *clipb)
+static int	ft_vd_clipb_init(va_list args, const int fd, t_wrt_ptr printer, t_print *clipb)
 {
-	clipb->alst = alst;
+	clipb->alst = NULL;
 	va_copy(clipb->origin_args, args);
 	va_copy(clipb->args, args);
 	clipb->history = 0;
 	clipb->current = 0;
-	clipb->fd = -1;
+	clipb->fd = fd;
 	clipb->printer = printer;
 	clipb->buffer = (char *)malloc(sizeof(char) * BUFFSIZE);
 	if (clipb->buffer == NULL)
@@ -71,29 +58,19 @@ static int	ft_as_clipb_init(va_list args, t_list **alst, t_wrt_ptr printer, t_pr
 	return (1);
 }
 
-
-int			ft_asprintf(char **ret, const char *format, ...)
+int			ft_vdprintf(const int fd, const char *format, va_list args)
 {
-	va_list		args;
 	t_print		clipb;
-	t_list		*buflst;
 
-	buflst = NULL;
-	va_start(args, format);
-	if (ft_as_clipb_init(args, &buflst, ft_lstbufmanager, &clipb) == -1)
+	if (ft_vd_clipb_init(args, fd, ft_bufmanager, &clipb) == -1)
 		return (-1);
 	if (ft_format((unsigned char *)format, &clipb) == -1)
 	{
 		free(clipb.buffer);
 		return (-1);
 	}
-	if (ft_lstbufmanager(NULL, 0, &clipb) == -1)
-		return (-1);
-	if (ft_lstmemtomem(ret, NULL, buflst) == -1)
-		return (-1);
-	ft_lstdel(&buflst, ft_del);
+	ft_bufmanager(NULL, 0, &clipb);
 	free(clipb.buffer);
-	va_end(args);
 	va_end(clipb.origin_args);
 	va_end(clipb.args);
 	return (clipb.history);

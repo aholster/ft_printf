@@ -6,13 +6,13 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/04/17 19:57:30 by aholster       #+#    #+#                */
-/*   Updated: 2019/06/18 18:49:33 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/06/19 15:16:18 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int		ft_judex(unsigned char *start, size_t *index, t_print *clipb)
+static int		ft_judex(const unsigned char *start, size_t *index, t_print *clipb)
 {
 	size_t	judex;
 
@@ -42,7 +42,7 @@ static int		ft_charskip(unsigned char *c)
 	return (1);
 }
 
-int				ft_format(va_list ap, unsigned char *format, t_print *clipb)
+int				ft_format(unsigned const char *format, t_print *clipb)
 {
 	size_t		index;
 	t_flag		flags;
@@ -55,10 +55,10 @@ int				ft_format(va_list ap, unsigned char *format, t_print *clipb)
 	{
 		if (format[index] == '%')
 		{
-			index += ft_flagharvest(&format[index + 1], clipb);
-			if (ft_dispatcher(ap, &format[index], functbl, clipb) == -1)
+			index += ft_flagharvest(&format[index], clipb);
+			if (ft_dispatcher(&format[index], functbl, clipb) == -1)
 				return (-1);
-			index += ft_charskip(&format[index]);
+			index += ft_charskip((unsigned char *)&format[index]);
 		}
 		else if (ft_judex(&format[index], &index, clipb) == -1)
 			return (-1);

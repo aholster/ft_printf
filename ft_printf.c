@@ -6,94 +6,38 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/01 16:56:14 by aholster       #+#    #+#                */
-/*   Updated: 2019/06/11 19:22:55 by aholster      ########   odam.nl         */
+/*   Updated: 2019/06/19 15:35:01 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static void	ft_write_history(const unsigned char *mem, const size_t size,\
-								t_print *clipb)
+int			ft_printf(const char *format, ...)
 {
-	write(clipb->fd, mem, size);
-	clipb->history += size;
-	clipb->current = 0;
+	va_list		args;
+	int			ret;
+
+	va_start(args, format);
+	ret = ft_vdprintf(1, format, args);
+	va_end(args);
+	return (ret);
 }
 
-static int	ft_bufmanager(const unsigned char *mem, size_t size, t_print *clipb)
+int			ft_dprintf(const int fd, const char *format, ...)
 {
-	size_t	block;
+	va_list		args;
+	int			ret;
 
-	if (mem == NULL)
-		ft_write_history((const unsigned char *)clipb->buffer, clipb->current, clipb);
-	else
-		while (size > 0)
-		{
-			if (clipb->current == BUFFSIZE)
-				ft_write_history((const unsigned char *)clipb->buffer, BUFFSIZE, clipb);
-			if (size + clipb->current <= BUFFSIZE)
-				block = size;
-			else
-				block = (BUFFSIZE - clipb->current);
-			ft_memcpy(clipb->buffer + clipb->current, mem, block);
-			clipb->current += block;
-			mem += block;
-			size -= block;
-		}
-	return (0);
+	va_start(args, format);
+	ret = ft_vdprintf(fd, format, args);
+	va_end(args);
+	return (ret);
 }
 
-int			ft_printf(char *format, ...)
+int			ft_vprintf(const char *format, va_list args)
 {
-	va_list		ap;
-	t_print		clipb;
+	int			ret;
 
-	va_start(ap, format);
-	if (ft_clinit(NULL, 1, ft_bufmanager, &clipb) == -1)
-		return (-1);
-	if (ft_format(ap, (unsigned char *)format, &clipb) == -1)
-	{
-		free(clipb.buffer);
-		return (-1);
-	}
-	ft_bufmanager(NULL, 0, &clipb);
-	free(clipb.buffer);
-	va_end(ap);
-	return (clipb.history);
-}
-
-int			ft_dprintf(const int fd, char *format, ...)
-{
-	va_list		ap;
-	t_print		clipb;
-
-	va_start(ap, format);
-	if (ft_clinit(NULL, fd, ft_bufmanager, &clipb) == -1)
-		return (-1);
-	if (ft_format(ap, (unsigned char *)format, &clipb) == -1)
-	{
-		free(clipb.buffer);
-		return (-1);
-	}
-	ft_bufmanager(NULL, 0, &clipb);
-	free(clipb.buffer);
-	va_end(ap);
-	return (clipb.history);
-}
-
-int			ft_vprintf(char *format, va_list ap)
-{
-	t_print		clipb;
-
-	if (ft_clinit(NULL, 1, ft_bufmanager, &clipb) == -1)
-		return (-1);
-	if (ft_format(ap, (unsigned char *)format, &clipb) == -1)
-	{
-		free(clipb.buffer);
-		return (-1);
-	}
-	ft_bufmanager(NULL, 0, &clipb);
-	free(clipb.buffer);
-	va_end(ap);
-	return (clipb.history);
+	ret = ft_vdprintf(1, format, args);
+	return (ret);
 }

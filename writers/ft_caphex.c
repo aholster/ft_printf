@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/03 18:20:19 by jesmith        #+#    #+#                */
-/*   Updated: 2019/06/18 20:57:51 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/06/19 15:03:55 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ static unsigned short	ft_int_len(unsigned char *buffer, \
 	return (num_len);
 }
 
-int						ft_caphex(va_list ap, t_print *clipb)
+int						ft_caphex(va_list args, t_print *clipb)
 {
 	unsigned char		buffer[20];
 	unsigned long long	nb;
@@ -94,7 +94,7 @@ int						ft_caphex(va_list ap, t_print *clipb)
 	int					precision;
 
 	precision = flagverif('.', clipb->flags);
-	if (ft_unsignconv(ap, &nb, clipb->flags) == -1)
+	if (ft_unsignconv(args, &nb, clipb->flags) == -1)
 		return (-1);
 	nb_len = ft_int_len(buffer, nb);
 	if (flagverif('#', clipb->flags) == 1 && nb != 0 && clipb->flags->padding >= 2)

@@ -6,17 +6,17 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/05 17:03:23 by aholster       #+#    #+#                */
-/*   Updated: 2019/06/12 14:28:05 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/06/19 15:12:36 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int	va_short(va_list ap, unsigned long long *holder)
+static int	va_short(va_list args, unsigned long long *holder)
 {
 	short	num;
 
-	num = (short)va_arg(ap, int);
+	num = (short)va_arg(args, int);
 	if (num < 0)
 	{
 		*holder = (unsigned long long)(-num);
@@ -29,11 +29,11 @@ static int	va_short(va_list ap, unsigned long long *holder)
 	}
 }
 
-static int	va_char(va_list ap, unsigned long long *holder)
+static int	va_char(va_list args, unsigned long long *holder)
 {
 	char	num;
 
-	num = (char)va_arg(ap, int);
+	num = (char)va_arg(args, int);
 	if (num < 0)
 	{
 		*holder = (unsigned long long)(-num);
@@ -46,11 +46,11 @@ static int	va_char(va_list ap, unsigned long long *holder)
 	}
 }
 
-static int	va_long(va_list ap, unsigned long long *holder)
+static int	va_long(va_list args, unsigned long long *holder)
 {
 	long	num;
 
-	num = (long)va_arg(ap, long);
+	num = (long)va_arg(args, long);
 	if (num < 0)
 	{
 		*holder = (unsigned long long)(-num);
@@ -63,11 +63,11 @@ static int	va_long(va_list ap, unsigned long long *holder)
 	}
 }
 
-static int	va_int(va_list ap, unsigned long long *holder)
+static int	va_int(va_list args, unsigned long long *holder)
 {
 	int	num;
 
-	num = va_arg(ap, int);
+	num = va_arg(args, int);
 	if (num < 0)
 	{
 		*holder = (unsigned long long)(-num);
@@ -80,20 +80,20 @@ static int	va_int(va_list ap, unsigned long long *holder)
 	}
 }
 
-int			ft_signconv(va_list ap,
+int			ft_signconv(va_list args,
 		unsigned long long *holder, const t_flag *flags)
 {
 	long long	num;
 
 	if (flagverif('h', flags) == 1)
-		return (va_short(ap, holder));
+		return (va_short(args, holder));
 	else if (doubleverif('h', flags) == 1)
-		return (va_char(ap, holder));
+		return (va_char(args, holder));
 	else if (flagverif('l', flags) == 1)
-		return (va_long(ap, holder));
+		return (va_long(args, holder));
 	else if (doubleverif('l', flags) == 1 || flagverif('L', flags) == 1)
 	{
-		num = va_arg(ap, long long);
+		num = va_arg(args, long long);
 		if (num < 0)
 		{
 			*holder = (unsigned long long)(-num);
@@ -103,5 +103,5 @@ int			ft_signconv(va_list ap,
 		return (0);
 	}
 	else
-		return (va_int(ap, holder));
+		return (va_int(args, holder));
 }

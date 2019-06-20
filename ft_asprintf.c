@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/05 19:47:52 by aholster       #+#    #+#                */
-/*   Updated: 2019/06/19 15:33:08 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/06/20 14:10:42 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,8 @@ static int	ft_lstbufmanager(const unsigned char *mem, size_t size,\
 	return (0);
 }
 
-static int	ft_as_clipb_init(va_list args, t_list **alst, t_wrt_ptr printer, t_print *clipb)
+static int	ft_as_clipb_init(va_list args, t_list **alst, \
+							t_wrt_ptr printer, t_print *clipb)
 {
 	clipb->alst = alst;
 	va_copy(clipb->origin_args, args);
@@ -70,7 +71,6 @@ static int	ft_as_clipb_init(va_list args, t_list **alst, t_wrt_ptr printer, t_pr
 		return (-1);
 	return (1);
 }
-
 
 int			ft_asprintf(char **ret, const char *format, ...)
 {

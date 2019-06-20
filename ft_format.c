@@ -6,13 +6,14 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/04/17 19:57:30 by aholster       #+#    #+#                */
-/*   Updated: 2019/06/19 15:16:18 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/06/20 14:15:42 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int		ft_judex(const unsigned char *start, size_t *index, t_print *clipb)
+static int		ft_judex(const unsigned char *start, size_t *index, \
+						t_print *clipb)
 {
 	size_t	judex;
 

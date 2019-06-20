@@ -6,12 +6,11 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/05/30 19:12:27 by aholster       #+#    #+#                */
-/*   Updated: 2019/06/19 15:11:41 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/06/20 13:53:28 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-
 
 static int				ft_unsigned_dec_noprec(unsigned char *buffer, \
 					unsigned short nb_len, t_print *clipb)

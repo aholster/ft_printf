@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/19 14:43:08 by jesmith        #+#    #+#                */
-/*   Updated: 2019/06/19 15:33:18 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/06/20 14:18:15 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,14 @@ static int	ft_bufmanager(const unsigned char *mem, size_t size, t_print *clipb)
 	size_t	block;
 
 	if (mem == NULL)
-		ft_write_history((const unsigned char *)clipb->buffer, clipb->current, clipb);
+		ft_write_history((const unsigned char *)clipb->buffer,
+						clipb->current, clipb);
 	else
 		while (size > 0)
 		{
 			if (clipb->current == BUFFSIZE)
-				ft_write_history((const unsigned char *)clipb->buffer, BUFFSIZE, clipb);
+				ft_write_history((const unsigned char *)clipb->buffer,
+								BUFFSIZE, clipb);
 			if (size + clipb->current <= BUFFSIZE)
 				block = size;
 			else
@@ -43,7 +45,8 @@ static int	ft_bufmanager(const unsigned char *mem, size_t size, t_print *clipb)
 	return (0);
 }
 
-static int	ft_vd_clipb_init(va_list args, const int fd, t_wrt_ptr printer, t_print *clipb)
+static int	ft_vd_clipb_init(va_list args, const int fd, \
+							t_wrt_ptr printer, t_print *clipb)
 {
 	clipb->alst = NULL;
 	va_copy(clipb->origin_args, args);

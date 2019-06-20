@@ -6,37 +6,66 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/05/25 13:19:52 by aholster       #+#    #+#                */
-/*   Updated: 2019/06/19 15:10:11 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/06/20 13:54:35 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static unsigned short	longlen(unsigned long long n)
+static int				ft_ptraddr_noprec(unsigned char *buffer, \
+					unsigned short num_len, t_print *clipb)
 {
-	unsigned short	length;
+	int minus;
 
-	length = 0;
-	if (n == 0)
-		return (1);
-	while (n != 0)
-	{
-		n = n / 16;
-		length++;
-	}
-	return (length);
+	minus = flagverif('-', clipb->flags);
+	if (minus == -1 && flagverif('0', clipb->flags) == -1)
+		if (ft_space_padder(num_len, clipb) == -1)
+			return (-1);
+	if (clipb->printer((const unsigned char *)"0x", 2, clipb) == -1)
+		return (-1);
+	if (flagverif('0', clipb->flags) == 1 && minus == -1)
+		if (ft_zero_padder(num_len, clipb) == -1)
+			return (-1);
+	if (clipb->printer(buffer, num_len, clipb) == -1)
+		return (-1);
+	if (minus == 1 && clipb->flags->padding > num_len)
+		if (ft_space_padder(num_len, clipb) == -1)
+			return (-1);
+	return (1);
+}
+
+static int				ft_ptraddr_prec(unsigned char *buffer,\
+								unsigned short num_len, t_print *clipb)
+{
+	int minus;
+
+	minus = flagverif('-', clipb->flags);
+	if (minus == -1 && clipb->flags->padding > num_len)
+		if (ft_space_padder(num_len, clipb) == -1)
+			return (-1);
+	if (clipb->printer((const unsigned char *)"0x", 2, clipb) == -1)
+		return (-1);
+	if (flagverif('.', clipb->flags) == 1 && clipb->flags->precision > num_len)
+		if (ft_zero_padder(num_len, clipb) == -1)
+			return (-1);
+	if (clipb->printer(buffer, num_len, clipb) == -1)
+		return (-1);
+	if (minus == 1 && clipb->flags->padding > num_len)
+		if (ft_space_padder(num_len, clipb) == -1)
+			return (-1);
+	return (1);
 }
 
 static unsigned short	unsigned_ll_toa(unsigned char *buffer,\
 									unsigned long long holder)
 {
-	unsigned short	len;
+	unsigned short	num_len;
 	unsigned short	curlen;
 	char			*base;
 
 	base = "0123456789abcdef";
-	len = longlen(holder) - 1;
-	curlen = len;
+	num_len = (unsigned short)ft_nbrlen(holder, 16);
+	curlen = num_len - 1;
 	while (holder >= 16)
 	{
 		buffer[curlen] = base[(holder % 16)];
@@ -44,57 +73,28 @@ static unsigned short	unsigned_ll_toa(unsigned char *buffer,\
 		curlen--;
 	}
 	buffer[curlen] = base[holder];
-	return (len + 1);
-}
-
-static int				ft_ptraddr_prec(unsigned char *buffer,\
-								unsigned short numlen, t_print *clipb)
-{
-	if (flagverif('-', clipb->flags) == -1 && clipb->flags->padding > (clipb->flags->precision + 2))
-	{
-		if (pad_spaces(clipb->flags->padding - (clipb->flags->precision + 2), clipb) == -1)
-			return (-1);
-	}
-	if (clipb->printer((const unsigned char *)"0x", 2, clipb) == -1)
-	{
-		return (-1);
-	}
-	if (flagverif('.', clipb->flags) == 1 && clipb->flags->precision > numlen)
-	{
-		if (pad_zero(clipb->flags->precision - numlen, clipb) == -1)
-			return (-1);
-	}
-	if (clipb->printer(buffer, numlen, clipb) == -1)
-	{
-		return (-1);
-	}
-	if (flagverif('-', clipb->flags) == 1 && clipb->flags->padding > (clipb->flags->precision + 2))
-	{
-		if (pad_spaces(clipb->flags->padding - (clipb->flags->precision + 2), clipb) == -1)
-			return (-1);
-	}
-	return (1);
+	return (num_len);
 }
 
 int						ft_ptraddr(va_list args, t_print *clipb)
 {
 	unsigned long long	holder;
-	unsigned short		numlen;
-	unsigned char		buffer[16];
+	unsigned short		num_len;
+	unsigned char		buffer[20];
 
 	holder = (unsigned long long)va_arg(args, void*);
-	numlen = unsigned_ll_toa(buffer, holder);
+	num_len = unsigned_ll_toa(buffer, holder);
 	if (flagverif('.', clipb->flags) == 1)
-		return (ft_ptraddr_prec(buffer, numlen, clipb));
-	if (flagverif('-', clipb->flags) == -1 && clipb->flags->padding > (numlen + 2))
-		if (pad_spaces(clipb->flags->padding - (numlen + 2), clipb) == -1)
-			return (-1);
-	if (clipb->printer((const unsigned char *)"0x", 2, clipb) == -1)
-		return (-1);
-	if (clipb->printer(buffer, numlen, clipb) == -1)
-		return (-1);
-	if (flagverif('-', clipb->flags) == 1 && clipb->flags->padding > (numlen + 2))
-		if (pad_spaces(clipb->flags->padding - (numlen + 2), clipb) == -1)
-			return (-1);
+	{
+		if (clipb->flags->padding >= 2)
+			clipb->flags->padding -= 2;
+		return (ft_ptraddr_prec(buffer, num_len, clipb));
+	}
+	if (flagverif('.', clipb->flags) == -1)
+	{
+		if (clipb->flags->padding >= 2)
+			clipb->flags->padding -= 2;
+		return (ft_ptraddr_noprec(buffer, num_len, clipb));
+	}
 	return (1);
 }

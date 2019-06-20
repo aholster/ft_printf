@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/04/24 21:38:26 by jesmith        #+#    #+#                */
-/*   Updated: 2019/06/19 15:22:03 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/06/20 13:52:53 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static unsigned short	ft_str_prec(unsigned short len, t_print *clipb)
 
 int						ft_str(va_list args, t_print *clipb)
 {
-	unsigned char		*str;
+	unsigned char	*str;
 	unsigned short	len;
 
 	str = va_arg(args, unsigned char*);

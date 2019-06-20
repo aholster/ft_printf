@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/05/25 16:10:49 by aholster       #+#    #+#                */
-/*   Updated: 2019/06/18 19:41:19 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/06/20 14:17:03 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,8 @@ int	pad_zero(size_t amount, t_print *clipb)
 
 int	ft_space_padder(unsigned short len, t_print *clipb)
 {
-	size_t 			diff;
-	size_t 			temp;
+	size_t			diff;
+	size_t			temp;
 	unsigned int	padding;
 	unsigned int	precision;
 
@@ -64,7 +64,7 @@ int	ft_space_padder(unsigned short len, t_print *clipb)
 	temp = padding - precision;
 	if (padding < 1 && precision < 1)
 		return (1);
-	if (padding > precision && precision >len)
+	if (padding > precision && precision > len)
 		diff = temp;
 	else if (padding > precision && padding > len)
 		diff = padding - len;
@@ -77,8 +77,8 @@ int	ft_space_padder(unsigned short len, t_print *clipb)
 
 int	ft_zero_padder(unsigned short len, t_print *clipb)
 {
-	size_t 			diff;
-	size_t 			temp;
+	size_t			diff;
+	size_t			temp;
 	unsigned int	padding;
 	unsigned int	precision;
 

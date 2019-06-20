@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/05/31 12:06:16 by jesmith        #+#    #+#                */
-/*   Updated: 2019/06/19 15:22:12 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/06/20 13:51:03 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,15 @@ static int				ft_signhand(int neg, t_print *clipb)
 			if (clipb->printer((const unsigned char*)" ", 1, clipb) == -1)
 				return (-1);
 	}
-	else
-		if (clipb->printer((const unsigned char*)"-", 1, clipb) == -1)
-			return (-1);
+	else if (clipb->printer((const unsigned char*)"-", 1, clipb) == -1)
+		return (-1);
 	return (1);
 }
 
 static int				ft_decimal_noprec(unsigned char *buffer, int neg, \
 					unsigned short nb_len, t_print *clipb)
 {
-	int minus; 
+	int minus;
 
 	minus = flagverif('-', clipb->flags);
 	if (minus == -1 && flagverif('0', clipb->flags) == -1)
@@ -59,7 +58,7 @@ static int				ft_decimal_noprec(unsigned char *buffer, int neg, \
 static int				ft_decimal_prec(unsigned char *buffer, int neg, \
 					unsigned short nb_len, t_print *clipb)
 {
-	int minus; 
+	int minus;
 
 	minus = flagverif('-', clipb->flags);
 	if (minus == -1 && clipb->flags->padding > nb_len)
@@ -117,7 +116,7 @@ int						ft_decimal(va_list args, t_print *clipb)
 		return (1);
 	if (nb == 0 && precision == 1 && clipb->flags->precision < nb_len)
 		ft_strcpy((char*)buffer, " ");
-	if (clipb->flags->padding != 0 && (neg == -1|| \
+	if (clipb->flags->padding != 0 && (neg == -1 || \
 	flagverif('+', clipb->flags) == 1 || flagverif(' ', clipb->flags) == 1))
 		clipb->flags->padding -= 1;
 	if (precision == 1)

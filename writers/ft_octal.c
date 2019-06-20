@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/03 15:08:26 by jesmith        #+#    #+#                */
-/*   Updated: 2019/06/19 15:09:50 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/06/20 13:52:26 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ static int				ft_octal_noprec(unsigned char *buffer, \
 	int minus;
 
 	minus = flagverif('-', clipb->flags);
-	if (minus == -1 && flagverif('0', clipb->flags) == -1 && clipb->flags->padding > 0)
+	if (minus == -1 && flagverif('0', clipb->flags) == -1 \
+	&& clipb->flags->padding > 0)
 		if (ft_space_padder(nb_len, clipb) == -1)
 			return (-1);
 	if (flagverif('0', clipb->flags) == 1 && minus == -1)

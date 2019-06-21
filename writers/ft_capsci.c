@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_decimal.c                                       :+:    :+:            */
+/*   ft_capsci.c                                        :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2019/05/31 12:06:16 by jesmith        #+#    #+#                */
-/*   Updated: 2019/06/21 13:07:27 by jesmith       ########   odam.nl         */
+/*   Created: 2019/06/21 11:16:26 by jesmith        #+#    #+#                */
+/*   Updated: 2019/06/21 13:07:47 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static int				ft_signhand(int neg, t_print *clipb)
 	return (1);
 }
 
-static int				ft_decimal_noprec(unsigned char *buffer, int neg, \
+static int				ft_capsci_noprec(unsigned char *buffer, int neg, \
 					unsigned short nb_len, t_print *clipb)
 {
 	int minus;
@@ -40,22 +40,21 @@ static int				ft_decimal_noprec(unsigned char *buffer, int neg, \
 	if (ft_signhand(neg, clipb) == -1)
 		return (-1);
 	if (flagverif('0', clipb->flags) == 1 && minus == -1)
-	{
-		if ((clipb->flags->padding - clipb->flags->precision) > nb_len)
-		{
-			if (ft_zero_padder(nb_len, clipb) == -1)
-				return (-1);
-		}
-	}
+		if (ft_zero_padder(nb_len, clipb) == -1)
+			return (-1);
 	if (clipb->printer(buffer, (size_t)nb_len, clipb) == -1)
 		return (-1);
+	if (clipb->printer((const char *)"E+", 2, clipb) == -1)
+		return (-1);
+//	if (clipb->printer((const char *), 2, clipb) == -1) // print exponent number
+//		return (-1);
 	if (minus == 1 && clipb->flags->padding > nb_len)
 		if (ft_space_padder(nb_len, clipb) == -1)
 			return (-1);
 	return (1);
 }
 
-static int				ft_decimal_prec(unsigned char *buffer, int neg, \
+static int				ft_capsci_prec(unsigned char *buffer, int neg, \
 					unsigned short nb_len, t_print *clipb)
 {
 	int minus;
@@ -71,6 +70,10 @@ static int				ft_decimal_prec(unsigned char *buffer, int neg, \
 			return (-1);
 	if (clipb->printer(buffer, (size_t)nb_len, clipb) == -1)
 		return (-1);
+	if (clipb->printer((const char *)"E+", 2, clipb) == -1)
+		return (-1);
+//	if (clipb->printer((const char *), 2, clipb) == -1) // print exponent number
+//		return (-1);
 	if (minus == 1 && clipb->flags->padding > nb_len)
 		if (ft_space_padder(nb_len, clipb) == -1)
 			return (-1);
@@ -89,17 +92,22 @@ static unsigned short	ft_int_len(unsigned char *buffer, \
 	temp_num = nb;
 	num_len = (unsigned short)ft_nbrlen(nb, 10);
 	cur_len = num_len - 1;
-	while (temp_num >= 10)
+	if (nb == 0)
 	{
-		buffer[cur_len] = base[(temp_num % 10)];
-		temp_num /= 10;
+		buffer[0] = '0';
+		return (num_len);
+	}
+	while (temp_num >= 16)
+	{
+		buffer[cur_len] = base[(temp_num % 16)];
+		temp_num /= 16;
 		cur_len--;
 	}
 	buffer[cur_len] = base[temp_num];
 	return (num_len);
 }
 
-int						ft_decimal(va_list args, t_print *clipb)
+int						ft_capsci(va_list args, t_print *clipb)
 {
 	unsigned char		buffer[20];
 	unsigned long long	nb;
@@ -112,16 +120,12 @@ int						ft_decimal(va_list args, t_print *clipb)
 	if (ft_signconv(args, &nb, clipb->flags) == -1)
 		neg = -1;
 	nb_len = ft_int_len(buffer, nb);
-	if (nb == 0 && precision == 1 && clipb->flags->padding == 0)
-		return (1);
-	if (nb == 0 && precision == 1 && clipb->flags->precision < nb_len)
-		ft_strcpy((char*)buffer, " ");
 	if (clipb->flags->padding != 0 && (neg == -1 || \
 	flagverif('+', clipb->flags) == 1 || flagverif(' ', clipb->flags) == 1))
 		clipb->flags->padding -= 1;
 	if (precision == 1)
-		return (ft_decimal_prec(buffer, neg, nb_len, clipb));
+		return (ft_capsci_prec(buffer, neg, nb_len, clipb));
 	if (precision == -1)
-		return (ft_decimal_noprec(buffer, neg, nb_len, clipb));
+		return (ft_capsci_noprec(buffer, neg, nb_len, clipb));
 	return (1);
 }

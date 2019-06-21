@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/03 18:20:19 by jesmith        #+#    #+#                */
-/*   Updated: 2019/06/20 14:18:52 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/06/21 12:54:05 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,8 +97,8 @@ int						ft_caphex(va_list args, t_print *clipb)
 	if (ft_unsignconv(args, &nb, clipb->flags) == -1)
 		return (-1);
 	nb_len = ft_int_len(buffer, nb);
-	if (flagverif('#', clipb->flags) == 1 && nb != 0 \
-	&& clipb->flags->padding >= 2)
+	if (flagverif('#', clipb->flags) == 1 && nb != 0 && \
+	clipb->flags->padding >= 2)
 		clipb->flags->padding -= 2;
 	if (nb == 0 && clipb->flags->padding == 0 && precision == 1)
 		return (1);

@@ -6,28 +6,29 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/04/18 17:22:09 by aholster       #+#    #+#                */
-/*   Updated: 2019/06/19 15:15:18 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/06/19 19:56:53 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static size_t	ft_num_extract(const unsigned char *format, unsigned int *destination)
+static void	ft_num_extract(const unsigned char *format, size_t *index, unsigned int *destination)
 {
-	size_t			index;
+	size_t			subdex;
 	unsigned int	num;
 
-	index = 0;
+	subdex = *index;
 	num = 0;
-	while (ft_isdigit(format[index]) == 1)
+	while (ft_isdigit(format[subdex]) == 1)
 	{
-		num = (format[index] - '0') + num;
-		if (ft_isdigit(format[index + 1]) == 1)
+		num = (format[subdex] - '0') + num;
+		if (ft_isdigit(format[subdex + 1]) == 1)
 			num = (num * 10);
-		index++;
+		subdex++;
 	}
 	*destination = num;
-	return (index);
+	*index = subdex;
+//	return (index);
 }
 
 static void		flagflip(const unsigned char c, t_flag *flags, const unsigned short flip)
@@ -84,51 +85,17 @@ size_t			ft_flagharvest(const unsigned char *format, t_print *clipb)
 		flagflip(format[index], clipb->flags, flip);
 		if (format[index] >= '1' && format[index] <= '9')
 		{
-			index += ft_num_extract(format + index, &clipb->flags->padding);
+//			index += ft_num_extract(format + index, &clipb->flags->padding);
+			ft_num_extract(format, &index, &clipb->flags->padding);
 		}
 		else if (format[index] == '.')
 		{
-			index += ft_num_extract(format + index + 1, &clipb->flags->precision) + 1;
+//			index += ft_num_extract(format + index + 1, &clipb->flags->precision) + 1;
+			index++;
+			ft_num_extract(format, &index, &clipb->flags->precision);
 		}
 		else
 			index++;
 	}
 	return (index);
 }
-
-
-// size_t			ft_flagharvest(unsigned const char *format, t_print *clipb)
-// {
-// 	size_t			index;
-// 	unsigned short	flip;
-
-// 	index = 0;
-// 	ft_flagreset(clipb->flags);
-// 	while (ft_valiflag(format[index], clipb->flags) > 0)
-// 	{
-// 		printf("format[index] %c\n", format[index]);
-// 		flip = format[index] / 64;
-// 		if (format[index] >= '1' && format[index] <= '9')
-// 		{
-// 			printf("pad extract\n");
-// 			index += ft_num_extract(format + index, &clipb->flags->padding);
-// 			printf("format[index] %c\n", format[index]);
-// 		}
-// 		else
-// 		{
-// 			flagflip(format[index], clipb->flags, flip);
-// 			if (format[index] == '.')
-// 			{
-// 				printf("precision extract\n");
-// 				index += ft_num_extract(format + index + 1, &clipb->flags->precision);
-// 				printf("format[index] %c\n", format[index]);
-// 			}
-// 		}
-// 		index++;
-// 	}
-// 	index++;
-// 	printf("index at: %c\n", format[index]);
-// 	printf("pad: %u\n", clipb->flags->padding);
-// 	printf("prec: %u\n", clipb->flags->precision);
-// 	return (index);
-// }

@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/01 16:56:13 by aholster       #+#    #+#                */
-/*   Updated: 2019/06/19 15:28:02 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/06/26 12:00:43 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ int						ft_signconv(va_list args, unsigned long long *holder, \
 								const t_flag *flags);
 int						ft_unsignconv(va_list args, unsigned long long *holder, \
 								const t_flag *flags);
+int						ft_floatconv(va_list args, long double *holder, const t_flag *flags);
 int						flagverif(const unsigned char c, const t_flag *flags);
 int						doubleverif(const unsigned char c, const t_flag *flags);
 
@@ -112,7 +113,7 @@ int						ft_char(va_list args, t_print *clipb);
 int						ft_octal(va_list args, t_print *clipb);
 int						ft_lowhex(va_list args, t_print *clipb);
 int						ft_caphex(va_list args, t_print *clipb);
-
+int						ft_lowsci(va_list args, t_print *clipb);
 int						ft_n(va_list args, t_print *clipb);
 
 #endif

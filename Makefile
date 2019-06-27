@@ -6,7 +6,7 @@
 #    By: jesmith <jesmith@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2019/02/16 15:46:43 by aholster       #+#    #+#                 #
-#    Updated: 2019/06/19 15:29:49 by jesmith       ########   odam.nl          #
+#    Updated: 2019/06/25 15:13:09 by jesmith       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ DATE := $(shell date)
 SUBDIR := ./writers/
 
 SUBSOURCE := ptraddr decimal char octal caphex lowhex unsigned_dec\
- signconv unsignconv str n
+ signconv unsignconv str n lowsci floatconv
 
 SOURCE := printf asprintf vdprintf dispatcher format flinit flagharvest functblinit\
  padder flag_verificators

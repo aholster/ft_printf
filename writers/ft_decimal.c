@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/05/31 12:06:16 by jesmith        #+#    #+#                */
-/*   Updated: 2019/06/21 13:07:27 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/06/25 11:03:38 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,11 @@ static int				ft_signhand(int neg, t_print *clipb)
 		if (flagverif('+', clipb->flags) == 1)
 			if (clipb->printer((const unsigned char*)"+", 1, clipb) == -1)
 				return (-1);
-		else if (flagverif(' ', clipb->flags) == 1)
+		if (flagverif(' ', clipb->flags) == 1 && flagverif('+', clipb->flags) == -1)
+		{
 			if (clipb->printer((const unsigned char*)" ", 1, clipb) == -1)
 				return (-1);
+		}
 	}
 	else if (clipb->printer((const unsigned char*)"-", 1, clipb) == -1)
 		return (-1);

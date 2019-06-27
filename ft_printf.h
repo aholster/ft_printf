@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/01 16:56:13 by aholster       #+#    #+#                */
-/*   Updated: 2019/06/26 12:00:43 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/06/27 12:28:31 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,9 @@ int						ft_octal(va_list args, t_print *clipb);
 int						ft_lowhex(va_list args, t_print *clipb);
 int						ft_caphex(va_list args, t_print *clipb);
 int						ft_lowsci(va_list args, t_print *clipb);
+int						ft_capsci(va_list args, t_print *clipb);
+int						ft_lowshrthd(va_list args, t_print *clipb);
+int						ft_capshrthd(va_list args, t_print *clipb);
 int						ft_n(va_list args, t_print *clipb);
 
 #endif

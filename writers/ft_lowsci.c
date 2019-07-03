@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/05 11:15:26 by jesmith        #+#    #+#                */
-/*   Updated: 2019/06/27 09:53:24 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/07/03 16:11:31 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,7 +207,7 @@ static int				ft_isinfnan(float f, t_print *clipb)
 
 int						ft_lowsci(va_list args, t_print *clipb)
 {
-	unsigned char		buffer[2000];
+	unsigned char		buffer[200000];
 	long double			nb;
 	unsigned long long	nb_len;
 	int					neg;

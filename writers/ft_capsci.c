@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/21 11:16:26 by jesmith        #+#    #+#                */
-/*   Updated: 2019/06/27 09:54:01 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/07/03 16:11:22 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static int				ft_printnum(int neg, t_print *clipb, \
 	return (1);
 }
 
-static int				ft_lowsci_neg(unsigned char *buffer, int neg, \
+static int				ft_capsci_neg(unsigned char *buffer, int neg, \
 					unsigned short nb_len, t_print *clipb)
 {
 	const unsigned char	*num;
@@ -70,7 +70,7 @@ static int				ft_lowsci_neg(unsigned char *buffer, int neg, \
 	return (1);
 }
 
-static int				ft_lowsci_pos(unsigned char *buffer, int neg, \
+static int				ft_capsci_pos(unsigned char *buffer, int neg, \
 					unsigned short nb_len, t_print *clipb)
 {
 	const unsigned char	*num;
@@ -205,9 +205,9 @@ static int				ft_isinfnan(float f, t_print *clipb)
 	return (0);
 }
 
-int						ft_lowsci(va_list args, t_print *clipb)
+int						ft_capsci(va_list args, t_print *clipb)
 {
-	unsigned char		buffer[2000];
+	unsigned char		buffer[200000];
 	long double			nb;
 	unsigned long long	nb_len;
 	int					neg;
@@ -224,8 +224,8 @@ int						ft_lowsci(va_list args, t_print *clipb)
 	flagverif('+', clipb->flags) == 1 || flagverif(' ', clipb->flags) == 1))
 		clipb->flags->padding -= 1;
 	if (nb >= 0)
-		return (ft_lowsci_pos(buffer, neg, nb_len, clipb));
+		return (ft_capsci_pos(buffer, neg, nb_len, clipb));
 	if (nb < 0)
-		return (ft_lowsci_neg(buffer, neg, nb_len, clipb));
+		return (ft_capsci_neg(buffer, neg, nb_len, clipb));
 	return (1);
 }

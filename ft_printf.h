@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/01 16:56:13 by aholster       #+#    #+#                */
-/*   Updated: 2019/06/27 12:28:31 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/07/03 17:37:49 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ int						ft_zero_padder(unsigned short len, t_print *clipb);
 int						ft_space_padder(unsigned short len, t_print *clipb);
 int						pad_spaces(size_t amount, t_print *clipb);
 int						pad_zero(size_t amount, t_print *clipb);
+void					ft_shortprec(unsigned char *buffer, unsigned short nb_len, t_print *clipb);
 
 int						ft_signconv(va_list args, unsigned long long *holder, \
 								const t_flag *flags);

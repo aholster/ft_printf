@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/04/18 17:22:09 by aholster       #+#    #+#                */
-/*   Updated: 2019/06/19 19:56:53 by aholster      ########   odam.nl         */
+/*   Updated: 2019/06/25 10:56:04 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void	ft_num_extract(const unsigned char *format, size_t *index, unsigned 
 	}
 	*destination = num;
 	*index = subdex;
-//	return (index);
+	// return (index);
 }
 
 static void		flagflip(const unsigned char c, t_flag *flags, const unsigned short flip)
@@ -85,12 +85,12 @@ size_t			ft_flagharvest(const unsigned char *format, t_print *clipb)
 		flagflip(format[index], clipb->flags, flip);
 		if (format[index] >= '1' && format[index] <= '9')
 		{
-//			index += ft_num_extract(format + index, &clipb->flags->padding);
+			// index += ft_num_extract(format + index, &clipb->flags->padding);
 			ft_num_extract(format, &index, &clipb->flags->padding);
 		}
 		else if (format[index] == '.')
 		{
-//			index += ft_num_extract(format + index + 1, &clipb->flags->precision) + 1;
+			// index += ft_num_extract(format + index + 1, &clipb->flags->precision) + 1;
 			index++;
 			ft_num_extract(format, &index, &clipb->flags->precision);
 		}

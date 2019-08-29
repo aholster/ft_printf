@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/14 18:12:30 by aholster       #+#    #+#                */
-/*   Updated: 2019/06/24 15:18:02 by aholster      ########   odam.nl         */
+/*   Updated: 2019/06/27 09:41:21 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,14 +101,14 @@ static unsigned long long	printfloat(unsigned long long longcast, unsigned int p
 	return (longcast);
 }
 
-int	floatwrap(int precision, double num)
+int	floatwrap(int precision, long double num)
 {
 	char				buf[2000];
 	unsigned long long	longcast;
 
 	if (num != num)
 		dprintf(1, "NAN\n");
-	else if (ft_isinf(num) != 0)
+	else if (ft_isinf((float)num) != 0)
 		return (0);
 	else
 	{

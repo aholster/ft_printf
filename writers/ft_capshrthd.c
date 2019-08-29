@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/27 11:34:23 by jesmith        #+#    #+#                */
-/*   Updated: 2019/07/03 18:03:57 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/08/28 16:23:19 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ static int					ft_lowshrthd_noprec(unsigned char *buffer, \
 	unsigned int		calc;
 
 	num = (const unsigned char *)ft_itoa(nb_len - 1);
-	calc = ft_strlen((const char *)num) + clipb->flags->precision + 2;
+	calc = ft_strlen((const char *)num) + clipb->flags->precision; // + 2;
 	if (flagverif('-', clipb->flags) == -1 && \
 	flagverif('0', clipb->flags) == -1)
 		if (ft_space_padder(calc, clipb) == -1)
@@ -96,7 +96,7 @@ static int					ft_lowshrthd_prec(unsigned char *buffer, int neg, \
 	unsigned int		calc;
 
 	num = (const unsigned char *)ft_itoa(nb_len - 1);
-	calc = clipb->flags->precision + ft_strlen((const char *)num) + 2;
+	calc = clipb->flags->precision + ft_strlen((const char *)num); // + 2;
 	if (flagverif('-', clipb->flags) == -1 && \
 	flagverif('0', clipb->flags) == -1)
 		if (ft_space_padder(calc, clipb) == -1)
@@ -110,7 +110,8 @@ static int					ft_lowshrthd_prec(unsigned char *buffer, int neg, \
 	if (clipb->flags->precision != 0)
 		if (clipb->printer((const unsigned char *)".", 1, clipb) == -1)
 			return (-1);
-	if (clipb->printer(&buffer[nb_len], clipb->flags->precision, clipb) == -1)
+	if (clipb->printer(&buffer[nb_len], \
+		 clipb->flags->precision - nb_len, clipb) == -1)
 		return (-1);
 	if (flagverif('-', clipb->flags) == 1 && clipb->flags->padding > calc)
 		if (ft_space_padder(calc, clipb) == -1)
@@ -175,7 +176,7 @@ static unsigned short		ft_int_len(unsigned char *buffer, \
 	return (prec_len);
 }
 
-int							ft_lowshrthd(va_list args, t_print *clipb)
+int							ft_capshrthd(va_list args, t_print *clipb)
 {
 	unsigned char		buffer[200000];
 	long double			nb;

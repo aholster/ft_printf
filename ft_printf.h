@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/01 16:56:13 by aholster       #+#    #+#                */
-/*   Updated: 2019/07/03 17:37:49 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/08/29 18:32:29 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,15 @@ typedef union			u_nptrs
 	long				*l;
 	long long			*ll;
 }						t_nptrs;
+
+typedef union		u_float
+{
+	long double		ld;
+	unsigned short	shrt[5];
+	unsigned\
+	long long		llu;
+	unsigned short	expo[5];
+}					t_float;
 
 struct s_print;
 
@@ -118,6 +127,7 @@ int						ft_lowsci(va_list args, t_print *clipb);
 int						ft_capsci(va_list args, t_print *clipb);
 int						ft_lowshrthd(va_list args, t_print *clipb);
 int						ft_capshrthd(va_list args, t_print *clipb);
+int						ft_lowhexpoint(va_list args, t_print *clipb);
 int						ft_n(va_list args, t_print *clipb);
 
 #endif

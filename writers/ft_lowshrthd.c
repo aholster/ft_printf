@@ -6,15 +6,14 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/21 12:57:35 by jesmith        #+#    #+#                */
-/*   Updated: 2019/07/03 18:04:29 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/08/28 16:28:13 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-#include <stdio.h>
+
 static int						rounder(size_t index, unsigned char *buf)
 {
-		printf("buf: %s\n", buf);
 	if (index > 0)
 		index--;
 	else
@@ -26,11 +25,8 @@ static int						rounder(size_t index, unsigned char *buf)
 	}
 	if (buf[index] != '9')
 	{
-		printf("buf: %c\n", buf[index]);
-		printf("buf: %c\n", buf[index + 1]); // rounding problem with .450 rounding to 46
 		if (buf[index + 1] > 5)
 		{
-			printf("boom\n");
 			buf[index]++;
 			buf[index + 1] = '0';
 		}
@@ -71,12 +67,12 @@ static int					ft_lowshrthd_noprec(unsigned char *buffer, \
 	unsigned int		calc;
 
 	num = (const unsigned char *)ft_itoa(nb_len - 1);
-	calc = ft_strlen((const char *)num) + clipb->flags->precision + 2;
+	calc = ft_strlen((const char *)num) + clipb->flags->precision;// + 2;
 	if (flagverif('-', clipb->flags) == -1 && \
 	flagverif('0', clipb->flags) == -1)
 		if (ft_space_padder(calc, clipb) == -1)
 			return (-1);
-	if (ft_printnum(neg, clipb, nb_len) == -1)
+	if (ft_printnum(neg, clipb, calc) == -1)
 		return (-1);
 	if (clipb->printer(buffer, nb_len, clipb) == -1)
 		return (-1);
@@ -84,8 +80,9 @@ static int					ft_lowshrthd_noprec(unsigned char *buffer, \
 		if (clipb->printer((const unsigned char *)".", 1, clipb) == -1)
 			return (-1);
 	rounder((size_t)clipb->flags->precision - 1, &buffer[1]);
-	ft_shortprec(buffer, nb_len, clipb);
-	if (clipb->printer(&buffer[nb_len], clipb->flags->precision, clipb) == -1)
+	ft_shortprec(buffer, calc, clipb);
+	if (clipb->printer(&buffer[nb_len], \
+		clipb->flags->precision - nb_len, clipb) == -1)
 		return (-1);
 	if (flagverif('-', clipb->flags) == 1 && clipb->flags->padding > calc)
 		if (ft_space_padder(calc, clipb) == -1)
@@ -100,7 +97,7 @@ static int					ft_lowshrthd_prec(unsigned char *buffer, int neg, \
 	unsigned int		calc;
 
 	num = (const unsigned char *)ft_itoa(nb_len - 1);
-	calc = clipb->flags->precision + ft_strlen((const char *)num) + 2;
+	calc = clipb->flags->precision + ft_strlen((const char *)num); //+2
 	if (flagverif('-', clipb->flags) == -1 && \
 	flagverif('0', clipb->flags) == -1)
 		if (ft_space_padder(calc, clipb) == -1)
@@ -121,7 +118,6 @@ static int					ft_lowshrthd_prec(unsigned char *buffer, int neg, \
 			return (-1);
 	return (1);
 }
-
 
 static unsigned long long	printfloat(long double num, \
 						unsigned char *buffer, t_print *clipb)

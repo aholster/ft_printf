@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/01 16:56:13 by aholster       #+#    #+#                */
-/*   Updated: 2019/08/29 18:32:29 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/08/30 11:21:35 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ typedef union		u_float
 	unsigned short	shrt[5];
 	unsigned\
 	long long		llu;
-	unsigned short	expo[5];
 }					t_float;
 
 struct s_print;

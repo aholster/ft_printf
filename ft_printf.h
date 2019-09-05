@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/01 16:56:13 by aholster       #+#    #+#                */
-/*   Updated: 2019/08/30 11:21:35 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/09/04 17:09:29 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ typedef union			u_nptrs
 typedef union		u_float
 {
 	long double		ld;
-	unsigned short	shrt[5];
+	short			shrt[5];
 	unsigned\
 	long long		llu;
 }					t_float;

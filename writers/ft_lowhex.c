@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/03 16:34:02 by jesmith        #+#    #+#                */
-/*   Updated: 2019/08/28 17:59:24 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/09/02 17:05:32 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ static unsigned short	ft_int_len(unsigned char *buffer, \
 		buffer[0] = '0';
 		return (num_len);
 	}
-	while (temp_num >= 16)
+	while (temp_num > 16)
 	{
 		buffer[cur_len] = base[(temp_num % 16)];
 		temp_num /= 16;

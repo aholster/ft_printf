@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/08/28 14:42:40 by jesmith        #+#    #+#                */
-/*   Updated: 2019/08/30 18:11:07 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/09/05 17:10:50 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,91 +32,128 @@ static int				ft_signhand(int neg, t_print *clipb)
 	return (1);
 }
 
-static int				exponentbuffer(t_print *clipb, unsigned short expon, long double nb)
+static int				exponentbuffer(t_print *clipb, short expon)
 {
 	unsigned char	buffer[8];
 	size_t			index;
+	int				neg;
 
-	index = 1;
-	buffer[0] = 'p';
-	if (nb < 1)
-		buffer[index] = '-';
-	else
-		buffer[index] = '+';
-	index++;
-	if (expon == 0)
+	neg = expon;
+	index = (size_t)ft_nbrlen((long long)expon, 10);
+	if (expon < 0)
+		expon *= -1;
+	while (index > 1)
 	{
-		buffer[index] = '0';
-		index++;
-	}
-	while (expon > 0)
-	{
-		buffer[index] = ((expon % 10) + '0');
+		buffer[index] = (expon % 10) + '0';
+		index--;
 		expon /= 10;
-		index++;
 	}
-	buffer[index] = expon;
-	if (clipb->printer(buffer, (size_t)index, clipb) == -1)
+	if (neg < 0)
+		buffer[1] = '-';
+	else
+		buffer[1] = '+';
+	buffer[0] = 'p';
+	if (clipb->printer(buffer, index + 2, clipb) == -1)
 		return (-1);
 	return (1);
- }
+}
 
-static int				ft_lowshrthd_prec(unsigned char *buffer, int neg, \
-					unsigned short expon, t_print *clipb, long double nb)
+static int 				ft_lowshrthd_pad(unsigned char *buffer, int neg, \
+					short expon, t_print *clipb, unsigned short str_len)
 {
-	unsigned short nb_len;
+	unsigned short	nb_len;
 
-	nb_len = ft_strlen((const char *)buffer);
+	nb_len = ft_nbrlen((long long)expon, 10);
 	if (flagverif('-', clipb->flags) == -1 && flagverif('0', clipb->flags) == -1)
-		if (ft_space_padder(nb_len, clipb) == -1)
+		if (ft_space_padder(str_len + 2 + nb_len, clipb) == -1)
 			return (-1);
 	if (ft_signhand(neg, clipb) == -1)
 		return (-1);
-	if (clipb->printer((const unsigned char *)"0x", 4, clipb) == -1)
+	if (clipb->printer((const unsigned char *)"0x", 2, clipb) == -1)
 		return (-1);
 	if (flagverif('-', clipb->flags) == -1 && flagverif('0', clipb->flags) == 1)
-		if (ft_zero_padder(nb_len, clipb) == -1)
+		if (ft_zero_padder(str_len, clipb) == -1)
 			return (-1);
-	if (clipb->printer(buffer, nb_len, clipb) == -1)
+	if (clipb->printer(buffer, str_len, clipb) == -1)
 		return (-1);
-	if (clipb->flags->precision > nb_len && flagverif('.', clipb->flags) == 1)
-		if (ft_zero_padder(clipb->flags->precision - nb_len, clipb) == -1)
+	if (clipb->flags->precision > str_len && flagverif('.', clipb->flags) == 1)
+		if (ft_zero_padder(str_len - 2, clipb) == -1)
 			return (-1);
-	if (exponentbuffer(clipb, expon, nb) == -1)
+	if (exponentbuffer(clipb, expon) == -1)
 		return (-1);
-	if (flagverif('-', clipb->flags) == 1 && clipb->flags->padding > nb_len) // this is for no prec see if works here 
-		if (ft_space_padder(nb_len, clipb) == -1)
-			return (-1);
-	if (flagverif('-', clipb->flags) == -1 && flagverif('0', clipb->flags) == 1)
-		if (ft_zero_padder(nb_len, clipb) == -1)
+	if (flagverif('-', clipb->flags) == 1 && clipb->flags->padding > str_len)
+		if (ft_space_padder(str_len + 2 + nb_len, clipb) == -1)
 			return (-1);
 	return (1);
 }
 
-static void				ft_man_to_buffer(t_float conversion, unsigned char *buffer)
+static int				ft_lowshrthd_prec(unsigned char *buffer, int neg, \
+					short expon, t_print *clipb)
+{
+	unsigned short	str_len;
+	size_t			dec_len;
+	size_t			index;
+
+	index = 0;
+	dec_len = 0;
+	str_len = ft_strlen((const char *)buffer);
+	if (flagverif(' ', clipb->flags) == 1)
+		str_len++;
+	while (buffer[index] != '\0')
+	{
+		if (buffer[index] == '.')
+		{
+			index++;
+			while (buffer[index] != '\0')
+			{
+				dec_len++;
+				index++;
+			}
+		}
+		index++;
+	}
+	if (flagverif('.', clipb->flags) == 1)
+		if (dec_len > clipb->flags->precision && dec_len < str_len)
+			str_len = (str_len - dec_len) + clipb->flags->precision;
+	if (ft_lowshrthd_pad(buffer, neg, expon, clipb, str_len) == -1)
+		return (-1);
+	return (1);
+}
+
+static void			ft_man_to_buffer(unsigned long long mantissa, \
+				unsigned char *buffer, t_print *clipb)
 {
 	char				*base;
-	unsigned long long	temp;
-	unsigned short		nb_len;
 	unsigned short		cur_len;
+	size_t				yes;
+	unsigned long long	temp;
 
 	base = "0123456789abcdef";
-	nb_len = (unsigned short)ft_nbrlen(conversion.llu, 16);
-	cur_len = nb_len - 1;
-	temp = conversion.llu;
-	// if (mantissa == 0)
-	// {
-	// 	buffer[0] = '0';
-	// 	return (2);
-	// }
-	//conversion.shrt[cur_len] = (temp % 16) + '0';
-	while (temp > 16)
+	yes = 0;
+	temp = mantissa;
+	cur_len = 0;
+	while (temp != 0)
 	{
-		buffer[cur_len] = base[(temp % 16)];
 		temp /= 16;
+		cur_len++;
+	}
+	while (mantissa > 16)
+	{
+		if ((base[(mantissa % 16)] == '0' && yes != 0) ||\
+			base[(mantissa % 16)] != '0')
+		{
+			buffer[cur_len] = base[(mantissa % 16)];
+			yes++;
+		}
+		if (cur_len == 2 && (buffer[cur_len + 1] != '\0'|| flagverif('.', clipb->flags) == 1))
+		{
+			cur_len--;
+			buffer[cur_len] = '.';
+		}
+		mantissa /= 16;
 		cur_len--;
 	}
-	buffer[cur_len] = base[temp];
+	buffer[cur_len] = base[mantissa];
 }
 
 // static unsigned long long			ft_extraction(t_float extract)
@@ -148,24 +185,21 @@ static void				ft_man_to_buffer(t_float conversion, unsigned char *buffer)
 
 int						ft_lowhexpoint(va_list args, t_print *clipb)
 {
-	unsigned char		buffer[16];
+	unsigned char		buffer[20];
 	t_float				conversion;
 	long double			nb;
 	int					neg;
-	unsigned short		expon;
-
+	short				expon;
 
 	neg = ft_floatconv(args, &nb, clipb->flags);
 	conversion.ld = nb;
-	// conversion.llu <<= 1;
-	expon = (conversion.shrt[4] & 0x7FFF) - 16383;
-	//conversion.llu = ft_extraction(conversion);
-	ft_man_to_buffer(conversion, buffer);
-	if (ft_lowshrthd_prec(buffer, neg, expon, clipb, nb) == -1)
+	ft_man_to_buffer(conversion.llu, buffer, clipb);
+	expon = (conversion.shrt[4] & 0x7FFF) - 16386;
+	if (ft_lowshrthd_prec(buffer, neg, expon, clipb) == -1)
 		return (-1);
 	// if (flagverif('.', clipb->flags) == 1)
-	// 	return (ft_lowshrthd_prec(buffer, neg, nb_len, clipb));
+	// 	return (ft_lowshrthd_prec(buffer, neg, str_len, clipb));
 	// if (flagverif('.', clipb->flags) == -1)
-	// 	return (ft_lowshrthd_noprec(buffer, neg, nb_len, clipb));
+	// 	return (ft_lowshrthd_noprec(buffer, neg, str_len, clipb));
 	return (1);
 }

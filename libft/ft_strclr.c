@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/01/17 10:55:10 by aholster       #+#    #+#                */
-/*   Updated: 2019/02/01 21:27:15 by aholster      ########   odam.nl         */
+/*   Updated: 2019/09/06 05:33:13 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,8 @@
 
 void	ft_strclr(char *s)
 {
-	size_t	index;
+	size_t	len;
 
-	index = 0;
-	while (s[index] != '\0')
-	{
-		s[index] = '\0';
-		index++;
-	}
+	len = ft_strlen(s);
+	ft_bzero(s, len);
 }

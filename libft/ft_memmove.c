@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/01/17 16:54:50 by aholster       #+#    #+#                */
-/*   Updated: 2019/05/18 16:00:48 by aholster      ########   odam.nl         */
+/*   Updated: 2019/09/03 20:45:50 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,17 @@ void	*ft_memmove(void *dst, void const *src, size_t len)
 		{
 			while (len != 0)
 			{
-				len--;
-				((char *)dst)[len] = ((char const *)src)[len];
+				if (len > 8)
+				{
+					len -= 8;
+					*((unsigned long long *)(dst + len)) =\
+					*((const unsigned long long *)(src + len));
+				}
+				else
+				{
+					len--;
+					((char *)dst)[len] = ((char const *)src)[len];
+				}
 			}
 			return (dst);
 		}

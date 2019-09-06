@@ -6,13 +6,13 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/01/13 12:05:42 by aholster       #+#    #+#                */
-/*   Updated: 2019/05/08 18:46:57 by aholster      ########   odam.nl         */
+/*   Updated: 2019/05/22 17:57:01 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_putnbr_fd(int n, int fd)
+void	ft_putnbr_fd(int n, const int fd)
 {
 	char	buf[11];
 	size_t	curlen;

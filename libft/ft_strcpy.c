@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/01/17 11:12:58 by aholster       #+#    #+#                */
-/*   Updated: 2019/02/01 21:26:41 by aholster      ########   odam.nl         */
+/*   Updated: 2019/09/06 05:30:56 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,9 @@
 
 char	*ft_strcpy(char *dst, const char *src)
 {
-	size_t index;
+	size_t	len;
 
-	index = 0;
-	while (src[index] != '\0')
-	{
-		dst[index] = src[index];
-		index++;
-	}
-	dst[index] = '\0';
+	len = ft_strlen(src);
+	ft_memcpy(dst, src, len + 1);
 	return (dst);
 }

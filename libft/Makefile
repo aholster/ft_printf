@@ -6,7 +6,7 @@
 #    By: aholster <aholster@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2019/02/16 15:46:43 by aholster       #+#    #+#                 #
-#    Updated: 2019/04/26 17:29:10 by aholster      ########   odam.nl          #
+#    Updated: 2019/05/22 18:01:11 by aholster      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ CUSOR:= nbrlen del lstaddend itoba iswhitespace isprime power putstrarr\
  segdefault factorial count_if range sqrt absneg swap lsttardest memjoin \
  memdup strarrnew textangle stralloc bitprint putmem putmem_fd\
  putmemendl putmemendl_fd lstmemtomem lststrtostr iscapital islowercase\
- stock_read stock_write
+ stock_read stock_write putcaret putcaret_fd
 
 
 FILEC = $(ADVOR:%=./ft_%.c) $(BONOR:%=./ft_%.c)\

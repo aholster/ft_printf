@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/01/12 18:16:38 by aholster       #+#    #+#                */
-/*   Updated: 2019/05/01 18:20:41 by aholster      ########   odam.nl         */
+/*   Updated: 2019/05/22 18:11:38 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,13 @@ void				ft_memdel(void **ap);
 void				*ft_memmove(void *dst, void const *src, size_t len);
 void				*ft_memset(void *b, int c, size_t len);
 void				ft_putchar(char c);
-void				ft_putchar_fd(char c, int fd);
+void				ft_putchar_fd(char c, const int fd);
 void				ft_putendl(char const *s);
-void				ft_putendl_fd(char const *s, int fd);
-void				ft_putnbr_fd(int n, int fd);
+void				ft_putendl_fd(char const *s, const int fd);
+void				ft_putnbr_fd(int n, const int fd);
 void				ft_putnbr(int n);
 void				ft_putstr(char const *s);
-void				ft_putstr_fd(char const *s, int fd);
+void				ft_putstr_fd(char const *s, const int fd);
 char				*ft_strcat(char *s1, char const *s2);
 char				*ft_strchr(char const *s, int c);
 void				ft_strclr(char *s);
@@ -119,20 +119,23 @@ int					ft_lststrtostr(char **feed, t_list *lst);
 # pragma mark str handling
 
 void				ft_putstrarr(char **strarr);
-void				ft_putstrarr_fd(char **strarr, int fd);
+void				ft_putstrarr_fd(char **strarr, const int fd);
 void				ft_strarrdel(char ***ap);
 char				**ft_strarrnew(size_t size);
 char				**ft_textangle(size_t x, size_t y, char c);
 char				*ft_stralloc(size_t size, char c);
 
+void				ft_putcaret(int c);
+void				ft_putcaret_fd(int c, const int fd);
+
 # pragma mark mem handling
 
 void				ft_stock_write(unsigned char *stock, size_t bitnum);
-void				ft_stock_write(unsigned char *stock, size_t bitnum);
+int					ft_stock_read(const unsigned char *stock, size_t bitnum);
 void				ft_putmem(char *mem, size_t len);
-void				ft_putmem_fd(char *mem, size_t len, int fd);
+void				ft_putmem_fd(char *mem, size_t len, const int fd);
 void				ft_putmemendl(char *mem, size_t len);
-void				ft_putmemendl_fd(char *mem, size_t len, int fd);
+void				ft_putmemendl_fd(char *mem, size_t len, const int fd);
 void				*ft_memjoin(const void *mem1, size_t size1, \
 					const void *mem2, size_t size2);
 void				*ft_memdup(void *src, size_t len);

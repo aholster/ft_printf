@@ -6,29 +6,11 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/05/31 12:06:16 by jesmith        #+#    #+#                */
-/*   Updated: 2019/06/25 11:03:38 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/09/06 10:47:55 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-
-static int				ft_signhand(int neg, t_print *clipb)
-{
-	if (neg != -1)
-	{
-		if (flagverif('+', clipb->flags) == 1)
-			if (clipb->printer((const unsigned char*)"+", 1, clipb) == -1)
-				return (-1);
-		if (flagverif(' ', clipb->flags) == 1 && flagverif('+', clipb->flags) == -1)
-		{
-			if (clipb->printer((const unsigned char*)" ", 1, clipb) == -1)
-				return (-1);
-		}
-	}
-	else if (clipb->printer((const unsigned char*)"-", 1, clipb) == -1)
-		return (-1);
-	return (1);
-}
 
 static int				ft_decimal_noprec(unsigned char *buffer, int neg, \
 					unsigned short nb_len, t_print *clipb)
@@ -39,7 +21,7 @@ static int				ft_decimal_noprec(unsigned char *buffer, int neg, \
 	if (minus == -1 && flagverif('0', clipb->flags) == -1)
 		if (ft_space_padder(nb_len, clipb) == -1)
 			return (-1);
-	if (ft_signhand(neg, clipb) == -1)
+	if (ft_prefix(neg, clipb) == -1)
 		return (-1);
 	if (flagverif('0', clipb->flags) == 1 && minus == -1)
 	{
@@ -66,7 +48,7 @@ static int				ft_decimal_prec(unsigned char *buffer, int neg, \
 	if (minus == -1 && clipb->flags->padding > nb_len)
 		if (ft_space_padder(nb_len, clipb) == -1)
 			return (-1);
-	if (ft_signhand(neg, clipb) == -1)
+	if (ft_prefix(neg, clipb) == -1)
 		return (-1);
 	if (clipb->flags->precision > nb_len)
 		if (ft_zero_padder(nb_len, clipb) == -1)

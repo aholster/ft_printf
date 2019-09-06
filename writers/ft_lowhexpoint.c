@@ -6,31 +6,12 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/08/28 14:42:40 by jesmith        #+#    #+#                */
-/*   Updated: 2019/09/05 17:10:50 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/09/06 10:47:59 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include <stdio.h>
-
-static int				ft_signhand(int neg, t_print *clipb)
-{
-	if (neg != -1)
-	{
-		if (flagverif('+', clipb->flags) == 1)
-			if (clipb->printer((const unsigned char*)"+", 1, clipb) == -1)
-				return (-1);
-		if (flagverif(' ', clipb->flags) == 1 && \
-		flagverif('+', clipb->flags) == -1)
-		{
-			if (clipb->printer((const unsigned char*)" ", 1, clipb) == -1)
-				return (-1);
-		}
-	}
-	else if (clipb->printer((const unsigned char*)"-", 1, clipb) == -1)
-		return (-1);
-	return (1);
-}
 
 static int				exponentbuffer(t_print *clipb, short expon)
 {
@@ -58,16 +39,17 @@ static int				exponentbuffer(t_print *clipb, short expon)
 	return (1);
 }
 
-static int 				ft_lowshrthd_pad(unsigned char *buffer, int neg, \
+static int				ft_lowshrthd_pad(unsigned char *buffer, \
 					short expon, t_print *clipb, unsigned short str_len)
 {
 	unsigned short	nb_len;
 
 	nb_len = ft_nbrlen((long long)expon, 10);
-	if (flagverif('-', clipb->flags) == -1 && flagverif('0', clipb->flags) == -1)
+	if (flagverif('-', clipb->flags) == -1 && \
+	flagverif('0', clipb->flags) == -1)
 		if (ft_space_padder(str_len + 2 + nb_len, clipb) == -1)
 			return (-1);
-	if (ft_signhand(neg, clipb) == -1)
+	if (ft_prefix((int)str_len, clipb) == -1)
 		return (-1);
 	if (clipb->printer((const unsigned char *)"0x", 2, clipb) == -1)
 		return (-1);
@@ -87,8 +69,7 @@ static int 				ft_lowshrthd_pad(unsigned char *buffer, int neg, \
 	return (1);
 }
 
-static int				ft_lowshrthd_prec(unsigned char *buffer, int neg, \
-					short expon, t_print *clipb)
+static int				ft_lowshrthd_prec(unsigned char *buffer, t_print *clipb)
 {
 	unsigned short	str_len;
 	size_t			dec_len;
@@ -103,7 +84,6 @@ static int				ft_lowshrthd_prec(unsigned char *buffer, int neg, \
 	{
 		if (buffer[index] == '.')
 		{
-			index++;
 			while (buffer[index] != '\0')
 			{
 				dec_len++;
@@ -114,10 +94,8 @@ static int				ft_lowshrthd_prec(unsigned char *buffer, int neg, \
 	}
 	if (flagverif('.', clipb->flags) == 1)
 		if (dec_len > clipb->flags->precision && dec_len < str_len)
-			str_len = (str_len - dec_len) + clipb->flags->precision;
-	if (ft_lowshrthd_pad(buffer, neg, expon, clipb, str_len) == -1)
-		return (-1);
-	return (1);
+			str_len = (str_len - dec_len - 1) + clipb->flags->precision;
+	return (str_len);
 }
 
 static void			ft_man_to_buffer(unsigned long long mantissa, \
@@ -139,8 +117,7 @@ static void			ft_man_to_buffer(unsigned long long mantissa, \
 	}
 	while (mantissa > 16)
 	{
-		if ((base[(mantissa % 16)] == '0' && yes != 0) ||\
-			base[(mantissa % 16)] != '0')
+		if ((base[(mantissa % 16)] == '0' && yes != 0) || base[(mantissa % 16)] != '0')
 		{
 			buffer[cur_len] = base[(mantissa % 16)];
 			yes++;
@@ -188,18 +165,15 @@ int						ft_lowhexpoint(va_list args, t_print *clipb)
 	unsigned char		buffer[20];
 	t_float				conversion;
 	long double			nb;
-	int					neg;
+	unsigned short		str_len;
 	short				expon;
 
-	neg = ft_floatconv(args, &nb, clipb->flags);
+	str_len = ft_floatconv(args, &nb, clipb->flags);
 	conversion.ld = nb;
 	ft_man_to_buffer(conversion.llu, buffer, clipb);
 	expon = (conversion.shrt[4] & 0x7FFF) - 16386;
-	if (ft_lowshrthd_prec(buffer, neg, expon, clipb) == -1)
+	str_len *= ft_lowshrthd_prec(buffer, clipb);
+	if (ft_lowshrthd_pad(buffer, expon, clipb, str_len) == -1)
 		return (-1);
-	// if (flagverif('.', clipb->flags) == 1)
-	// 	return (ft_lowshrthd_prec(buffer, neg, str_len, clipb));
-	// if (flagverif('.', clipb->flags) == -1)
-	// 	return (ft_lowshrthd_noprec(buffer, neg, str_len, clipb));
 	return (1);
 }

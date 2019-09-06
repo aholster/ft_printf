@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/06 10:44:11 by jesmith        #+#    #+#                */
-/*   Updated: 2019/09/06 12:54:11 by aholster      ########   odam.nl         */
+/*   Updated: 2019/09/06 14:44:20 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,4 +52,19 @@ int				ft_prefix(int neg, t_print *clipb)
 	else if (clipb->printer((const unsigned char*)"-", 1, clipb) == -1)
 		return (-1);
 	return (1);
+}
+
+unsigned short	ft_ull_len(unsigned long long num, int base)
+{
+	unsigned short length;
+
+	length = 0;
+	if (num == 0)
+		return (1);
+	while (num != 0)
+	{
+		num /= base;
+		length++;
+	}
+	return (length);
 }

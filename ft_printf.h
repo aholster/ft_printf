@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/01 16:56:13 by aholster       #+#    #+#                */
-/*   Updated: 2019/09/06 13:06:29 by aholster      ########   odam.nl         */
+/*   Updated: 2019/09/06 19:18:13 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,13 @@ typedef union			u_nptrs
 	long long			*ll;
 }						t_nptrs;
 
-// typedef union		u_float
-// {
-// 	long double		ld;
-// 	short			shrt[5];
-// 	unsigned\
-// 	long long		llu;
-// }					t_float;
+typedef union		u_float
+{
+	long double		ld;
+	unsigned short	byte[5];
+	unsigned\
+	long long		llu;
+}					t_float;
 
 struct s_print;
 
@@ -105,10 +105,12 @@ int						ft_zero_padder(unsigned short len, t_print *clipb);
 int						ft_space_padder(unsigned short len, t_print *clipb);
 int						pad_spaces(size_t amount, t_print *clipb);
 int						pad_zero(size_t amount, t_print *clipb);
+int						ft_float_precision(unsigned short len, t_print *clipb);
 
 
 void					ft_shortprec(unsigned char *buffer, unsigned short nb_len, t_print *clipb);
 int						ft_prefix(int neg, t_print *clipb);
+unsigned short			ft_ull_len(unsigned long long num, int base);
 
 int						ft_signconv(va_list args, unsigned long long *holder, \
 								const t_flag *flags);

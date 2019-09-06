@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/05/30 19:12:27 by aholster       #+#    #+#                */
-/*   Updated: 2019/06/20 13:53:28 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/09/06 14:35:55 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ static unsigned short	ft_int_len(unsigned char *buffer, \
 
 	base = "0123456789";
 	temp_num = nb;
-	num_len = (unsigned short)ft_nbrlen(nb, 10);
+	num_len = ft_ull_len(nb, 10);
 	cur_len = num_len - 1;
 	while (temp_num >= 10)
 	{

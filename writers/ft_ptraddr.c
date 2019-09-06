@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/05/25 13:19:52 by aholster       #+#    #+#                */
-/*   Updated: 2019/06/20 13:54:35 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/09/06 14:35:55 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static unsigned short	unsigned_ll_toa(unsigned char *buffer,\
 	char			*base;
 
 	base = "0123456789abcdef";
-	num_len = (unsigned short)ft_nbrlen(holder, 16);
+	num_len = ft_ull_len(holder, 16);
 	curlen = num_len - 1;
 	while (holder >= 16)
 	{

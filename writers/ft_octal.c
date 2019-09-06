@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/03 15:08:26 by jesmith        #+#    #+#                */
-/*   Updated: 2019/06/21 12:59:23 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/09/06 14:35:55 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ static unsigned short	ft_int_len(unsigned char *buffer, \
 
 	base = "01234567";
 	temp_num = nb;
-	num_len = (unsigned short)ft_nbrlen(nb, 8);
+	num_len = ft_ull_len(nb, 8);
 	cur_len = num_len - 1;
 	if (flagverif('#', clipb->flags) == 1 && nb != 0)
 	{

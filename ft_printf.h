@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/01 16:56:13 by aholster       #+#    #+#                */
-/*   Updated: 2019/09/06 10:47:37 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/09/06 13:06:29 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define FT_PRINTF_H
 # include <stdarg.h>
 # include "./libft/libft.h"
+//# include "./float_tech/float_tech.h"
 
 # include <stdlib.h>
 //	include also in libft.h
@@ -39,13 +40,13 @@ typedef union			u_nptrs
 	long long			*ll;
 }						t_nptrs;
 
-typedef union		u_float
-{
-	long double		ld;
-	short			shrt[5];
-	unsigned\
-	long long		llu;
-}					t_float;
+// typedef union		u_float
+// {
+// 	long double		ld;
+// 	short			shrt[5];
+// 	unsigned\
+// 	long long		llu;
+// }					t_float;
 
 struct s_print;
 

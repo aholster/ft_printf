@@ -3,58 +3,54 @@
 #                                                         ::::::::             #
 #    Makefile                                           :+:    :+:             #
 #                                                      +:+                     #
-#    By: jesmith <jesmith@student.codam.nl>           +#+                      #
+#    By: aholster <aholster@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2019/02/16 15:46:43 by aholster       #+#    #+#                 #
-#    Updated: 2019/09/06 13:25:39 by aholster      ########   odam.nl          #
+#    Updated: 2019/09/06 13:24:55 by aholster      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
 DATE := $(shell date)
 
-SUBDIR := ./writers/
+SOURCE := custom_ld_to_text numlst_del numlst_to_txt\
+ numlst_newnode  numlst_fwlen numlst_bwlen numlst_postfix numlst_prefix\
+ lst_math_halve lst_math_mul lst_math_add numlst_dec_init numlst_minsize\
+ numlst_up_magni mantissa_to_numlst numlst_inline_copy
 
-SUBSOURCE := ptraddr decimal char octal caphex lowhex unsigned_dec\
- signconv unsignconv str n lowsci capsci lowshrthd capshrthd floatconv\
- lowhexpoint capshort
+FILEC := $(SOURCE:%=./ft_%.c)
 
-SOURCE := printf asprintf vdprintf dispatcher format flinit flagharvest functblinit padder flag_verificators handling
+OBJ := $(SOURCE:%=./ft_%.o)
 
-FILEC = $(SOURCE:%=./ft_%.c) $(SUBSOURCE:%=$(SUBDIR)ft_%.c)
+HEAD := float_tech.h
 
-OBJ =	$(SOURCE:%=./ft_%.o) $(SUBSOURCE:%=$(SUBDIR)ft_%.o)
+NAME := float_tech.a
 
-HEAD = ft_printf.h
+NORM := norminette $(FILEC) $(HEAD) | grep -e "Error"  -e "Warning" -B 1
 
-NAME = libftprintf.a
-
-NORM = norminette $(FILEC) $(HEAD) | grep -e "Error"  -e "Warning" -B 1
-
-GCCC = ${CC} -c
-CC = gcc -Wall -Werror -Wextra
-AR = ar rcs
+GCCC := ${CC} -c
+CC := gcc -Wall -Werror -Wextra -L ./libft/ -lft
+AR := ar rcs
 
 all: $(NAME)
 
 assemble: $(OBJ)
-#	@cp ./libft/libft.a ./$(NAME)
-	@cp ./float_tech/float_tech.a ./$(NAME)
+	@cp ./../libft/libft.a $(NAME)
 	@$(AR) $(NAME) $(OBJ)
 	@ranlib $(NAME)
 
+exec:
+	@$(CC) -o test $(FILEC) main.c
+	@echo "\033[0;32m test successfully assembled!\033[0;00m\n"
+
 $(NAME):
-	@make -C ./libft -j
-	@make -C ./float_tech -j
 	@echo "\033[0;33mStarting assembly of $(NAME)…\033[0;00m"
-	@time make assemble -j
+	@time make assemble
 	@echo "\033[0;32m$(NAME) successfully assembled!\033[0;00m\n"
 
 %.o: %.c
-	@$(GCCC) -o $@ $< -I ./
+	@$(GCCC) -o $@ $<
 
 clean:
-	@make clean -C ./libft
-	@make clean -C ./float_tech
 	@echo "\033[0;33mInitializing Summary Deletions...\033[0;00m"
 	@rm -rf $(OBJ)
 	@find "./" -type f \( -name '*~' -o -name '\#*\#' -o -name '.DS_Store' \)\
@@ -62,14 +58,11 @@ clean:
 	@echo "\033[0;31m	Executed!\033[0;00m\n"
 
 fclean: clean
-	@make fclean -C ./libft
-	@make fclean -C ./libft
 	@rm -rf $(NAME)
 	@echo "\033[0;31mObituary of $(NAME): Deceased on $(shell date).\
 	\033[0;00m\n"
 
 re: fclean all
-#	@make re -C ./libft
 
 norm:
 	@echo "**+++=====*=====*=====*=====*{\033[0;31mOUT\033[0;00m}\

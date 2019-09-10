@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/04/17 19:57:30 by aholster       #+#    #+#                */
-/*   Updated: 2019/06/20 14:15:42 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/09/10 16:40:28 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static int		ft_judex(const unsigned char *start, size_t *index, \
 	return (1);
 }
 
-static int		ft_charskip(unsigned char *c)
+static int		ft_charskip(unsigned const char *c)
 {
 	if (c[0] == '\0')
 		return (0);
@@ -59,7 +59,7 @@ int				ft_format(unsigned const char *format, t_print *clipb)
 			index += ft_flagharvest(&format[index], clipb);
 			if (ft_dispatcher(&format[index], functbl, clipb) == -1)
 				return (-1);
-			index += ft_charskip((unsigned char *)&format[index]);
+			index += ft_charskip(format + index);
 		}
 		else if (ft_judex(&format[index], &index, clipb) == -1)
 			return (-1);

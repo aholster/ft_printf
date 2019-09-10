@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/01 16:56:13 by aholster       #+#    #+#                */
-/*   Updated: 2019/09/06 19:18:13 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/09/10 18:45:58 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define FT_PRINTF_H
 # include <stdarg.h>
 # include "./libft/libft.h"
-//# include "./float_tech/float_tech.h"
+# include "./float_tech/float_tech.h"
 
 # include <stdlib.h>
 //	include also in libft.h
@@ -22,11 +22,11 @@
 # define BUFFSIZE	10
 # define FUNCSIZE	58
 
-# define VALFLG "hjlz# *.-+L0123456789"
-# define DBLFLG "hl"
+# define VALID_FLG "hjlz# *.-+L0123456789"
+# define VALID_D_FLG "hl"
 
 /*
-**	VALFLG and DBLFLG handle what constitutes valid characters in flags
+**	VALID_FLG and VALID_D_FLG handle what constitutes valid characters in flags
 **	double-lettered-flags MUST be valid normal flags
 **	to add new conversions, add them into the dispatcher array.
 */
@@ -40,20 +40,19 @@ typedef union			u_nptrs
 	long long			*ll;
 }						t_nptrs;
 
-typedef union		u_float
+typedef union			u_float
 {
-	long double		ld;
-	unsigned short	byte[5];
-	unsigned\
-	long long		llu;
-}					t_float;
+	long double			ld;
+	unsigned short		byte[5];
+	unsigned long long	llu;
+}						t_float;
 
 struct s_print;
 
 typedef int				(*t_wrt_ptr)(const unsigned char*, size_t, \
 							struct s_print*);
 
-typedef	int				(*t_writer)(va_list, struct s_print*);
+typedef	int				(*t_writer)(va_list args, struct s_print*);
 
 typedef struct			s_print
 {
@@ -90,14 +89,14 @@ int						ft_dprintf(const int fd, const char *format, ...);
 int						ft_asprintf(char **ret, const char *format, ...);
 
 int						ft_vprintf(const char *format, va_list args);
-int						ft_vdprintf(const int fd, const char *format, va_list args);
+int						ft_vdprintf(const int fd, const char *format,\
+						va_list args);
 
 int						ft_dispatcher(const unsigned char *specifier,\
 								t_writer *functbl, t_print *clipb);
-size_t					ft_flagharvest(const unsigned char *format, t_print *clipb);
+size_t					ft_flagharvest(const unsigned char *format,\
+						t_print *clipb);
 void					ft_flinit(t_print *clipb, t_flag *flags);
-//int						ft_clinit(t_list **alst, const int fd, t_wrt_ptr printer,\
-//								t_print *clipb);
 
 void					ft_functblinit(t_writer *functbl);
 
@@ -107,23 +106,25 @@ int						pad_spaces(size_t amount, t_print *clipb);
 int						pad_zero(size_t amount, t_print *clipb);
 int						ft_float_precision(unsigned short len, t_print *clipb);
 
-
-void					ft_shortprec(unsigned char *buffer, unsigned short nb_len, t_print *clipb);
+void					ft_shortprec(unsigned char *buffer,\
+						unsigned short nb_len, t_print *clipb);
 int						ft_prefix(int neg, t_print *clipb);
 unsigned short			ft_ull_len(unsigned long long num, int base);
 
-int						ft_signconv(va_list args, unsigned long long *holder, \
-								const t_flag *flags);
-int						ft_unsignconv(va_list args, unsigned long long *holder, \
-								const t_flag *flags);
-int						ft_floatconv(va_list args, long double *holder, const t_flag *flags);
+int						ft_signconv(va_list args,\
+						unsigned long long *holder, const t_flag *flags);
+int						ft_unsignconv(va_list args,\
+						unsigned long long *holder, const t_flag *flags);
+int						ft_floatconv(va_list args, long double *holder,\
+						const t_flag *flags);
 int						flagverif(const unsigned char c, const t_flag *flags);
-int						doubleverif(const unsigned char c, const t_flag *flags);
+int						doubleverif(const unsigned char c,\
+						const t_flag *flags);
 
 int						ft_str(va_list args, t_print *clipb);
 int						ft_ptraddr(va_list args, t_print *clipb);
 int						ft_decimal(va_list args, t_print *clipb);
-int						ft_unsigned_dec(va_list args, t_print	*clipb);
+int						ft_unsigned_dec(va_list args, t_print *clipb);
 int						ft_char(va_list args, t_print *clipb);
 int						ft_octal(va_list args, t_print *clipb);
 int						ft_lowhex(va_list args, t_print *clipb);

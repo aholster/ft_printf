@@ -6,13 +6,13 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/06 10:44:11 by jesmith        #+#    #+#                */
-/*   Updated: 2019/09/06 14:44:20 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/09/10 16:40:59 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	ft_shortprec(unsigned char *buffer, unsigned short nb_len, \
+void			ft_shortprec(unsigned char *buffer, unsigned short nb_len, \
 	t_print *clipb)
 {
 	size_t index;
@@ -35,7 +35,7 @@ void	ft_shortprec(unsigned char *buffer, unsigned short nb_len, \
 		clipb->flags->precision = index - holder;
 }
 
-int				ft_prefix(int neg, t_print *clipb)
+int				ft_prefix(const int neg, t_print *clipb)
 {
 	if (neg != -1)
 	{

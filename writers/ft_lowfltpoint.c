@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/09 13:45:41 by jesmith        #+#    #+#                */
-/*   Updated: 2019/09/11 13:03:24 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/09/11 14:53:15 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,18 +122,20 @@
 
 int						ft_lowfltpoint(va_list args, t_print *clipb)
 {
-	unsigned char		buffer[20];
+	char				*buffer;
 	t_float				conversion;
 	long double			nb;
 	size_t				nb_len;
 	int					neg;
+	int					status;
 
 	neg = ft_longdouble_conv(args, &nb, clipb->flags);
 	conversion.ld = nb;
 	nb_len = ft_ull_len(conversion.llu, 10);
 	printf("nb_len: %zu\n", nb_len);
-	printf("buffer: |%s|\n", buffer);
-	if (ft_custom_ld_to_text(nb, clipb->flags->precision, (char**)&buffer, &nb_len) == -1)
+//	printf("buffer: |%s|\n", buffer);
+	status = ft_custom_ld_to_text(nb, clipb->flags->precision, &buffer, &nb_len); // not going into function
+	if (status == -1)
 		return (-1);
 	printf("buffer: |%s|\n", buffer);
 	// if (flagverif('.', clipb->flags) == -1)

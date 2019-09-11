@@ -6,14 +6,14 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/06 10:44:11 by jesmith        #+#    #+#                */
-/*   Updated: 2019/09/10 16:40:59 by aholster      ########   odam.nl         */
+/*   Updated: 2019/09/11 10:33:33 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void			ft_shortprec(unsigned char *buffer, unsigned short nb_len, \
-	t_print *clipb)
+void				ft_shorthand_prec(unsigned char *buffer, \
+				unsigned short nb_len, t_print *clipb)
 {
 	size_t index;
 	size_t holder;
@@ -35,9 +35,35 @@ void			ft_shortprec(unsigned char *buffer, unsigned short nb_len, \
 		clipb->flags->precision = index - holder;
 }
 
-int				ft_prefix(const int neg, t_print *clipb)
+unsigned short		ft_lowhexpoint_prec(unsigned char *buffer, t_print *clipb)
 {
-	if (neg != -1)
+	size_t			dec_len;
+	unsigned short	index;
+
+	index = 0;
+	dec_len = 0;
+	while (buffer[index] != '\0')
+	{
+		if (buffer[index] == '.')
+			dec_len = index;
+		index++;
+	}
+	dec_len = index - dec_len - 1;
+	if (flagverif('.', clipb->flags) == 1)
+	{
+		if (clipb->flags->precision == 0)
+			index++;
+		if (dec_len > clipb->flags->precision && dec_len < index)
+			index = (index - dec_len) + clipb->flags->precision;
+		else if (dec_len < clipb->flags->precision)
+			clipb->flags->precision -= dec_len;
+	}
+	return (index);
+}
+
+int					ft_prefix(int neg, t_print *clipb)
+{
+	if (neg >= 0)
 	{
 		if (flagverif('+', clipb->flags) == 1)
 			if (clipb->printer((const unsigned char*)"+", 1, clipb) == -1)
@@ -54,7 +80,7 @@ int				ft_prefix(const int neg, t_print *clipb)
 	return (1);
 }
 
-unsigned short	ft_ull_len(unsigned long long num, int base)
+unsigned short		ft_ull_len(unsigned long long num, int base)
 {
 	unsigned short length;
 
@@ -67,4 +93,19 @@ unsigned short	ft_ull_len(unsigned long long num, int base)
 		length++;
 	}
 	return (length);
+}
+
+void				ft_exceptions(unsigned char *buffer, long double nb, \
+				short *expon, t_print *clipb)
+{
+	if (nb == 0.0)
+	{
+		expon = 0;
+		buffer[0] = '0';
+		if (clipb->flags->precision != 0)
+		{
+			buffer[1] = '.';
+			buffer[2] = '0';
+		}
+	}
 }

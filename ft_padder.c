@@ -6,12 +6,12 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/05/25 16:10:49 by aholster       #+#    #+#                */
-/*   Updated: 2019/09/06 19:23:43 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/09/10 13:57:51 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-
+#include <stdio.h>
 int	pad_spaces(size_t amount, t_print *clipb)
 {
 	size_t		index;
@@ -102,23 +102,33 @@ int	ft_zero_padder(unsigned short len, t_print *clipb)
 	return (1);
 }
 
-int	ft_float_precision(unsigned short len, t_print *clipb)
+int	ft_float_pad(unsigned short len, unsigned short dec, t_print *clipb)
 {
-	unsigned int	padding;
-	unsigned int	precision;
-
-	padding = clipb->flags->padding;
-	precision = clipb->flags->precision;
-	if (padding < 1 && precision < 1)
-		return (1);
-	if (precision > len)
-		if (pad_zero(precision, clipb) == -1)
-			return (-1);
-	if (padding == 0 && precision > len)
-		if (pad_zero(precision, clipb) == -1)
-			return (-1);
-	if (padding > precision)
-		if (pad_zero(padding - len, clipb) == -1)
-			return (-1);
+	if (clipb->flags->precision > len)
+	{
+		if (clipb->flags->precision > clipb->flags->padding)
+		{
+			if (pad_zero(clipb->flags->precision, clipb) == -1)
+				return (-1);
+		}
+		else if (flagverif(' ', clipb->flags) == 1)
+			if (pad_spaces(clipb->flags->precision, clipb) == -1)
+				return (-1);
+	}
+	if (clipb->flags->padding > len)
+	{
+		if (len + dec <= len + clipb->flags->precision)
+			len += clipb->flags->precision;
+		// if (flagverif('.', clipb->flags) == 1 && clipb->flags->precision == 0)
+		// 	len--;
+		if (flagverif('0', clipb->flags) == 1)
+		{
+			if (pad_zero(clipb->flags->padding - len, clipb) == -1)
+				return (-1);
+		}
+		else if (clipb->flags->padding > len)
+			if (pad_spaces(clipb->flags->padding - len, clipb) == -1)
+				return (-1);
+	}
 	return (1);
 }

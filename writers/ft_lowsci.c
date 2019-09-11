@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/05 11:15:26 by jesmith        #+#    #+#                */
-/*   Updated: 2019/09/06 14:35:55 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/09/11 09:32:12 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ static int	rounder(size_t index, unsigned char *buf)
 	return (0);
 }
 
-static unsigned long long	printfloat(long double num, unsigned char *buffer, t_print *clipb)
+static unsigned long long	ft_float_buffer(long double num, unsigned char *buffer, t_print *clipb)
 {
 	unsigned char subnum;
 	size_t	index;
@@ -175,7 +175,7 @@ static unsigned short	ft_int_len(unsigned char *buffer, \
 		cur_len--;
 	}
 	buffer[cur_len] = base[temp_num];
-	printfloat(nb, buffer, clipb);
+	ft_float_buffer(nb, buffer, clipb);
 	return (prec_len);
 }
 
@@ -212,9 +212,7 @@ int						ft_lowsci(va_list args, t_print *clipb)
 	unsigned long long	nb_len;
 	int					neg;
 
-	neg = 1;
-	if (ft_floatconv(args, &nb, clipb->flags) == -1)
-		neg = -1;
+	neg = ft_longdouble_conv(args, &nb, clipb->flags);
 	if (ft_isinfnan((float)nb, clipb) == -1)
 		return (-1);
 	if (flagverif('.', clipb->flags) == -1)

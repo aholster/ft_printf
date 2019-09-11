@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/04/24 19:14:05 by jesmith        #+#    #+#                */
-/*   Updated: 2019/08/29 13:23:07 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/09/11 09:40:44 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,12 @@ static unsigned short	slider(unsigned char c)
 void					ft_functblinit(t_writer *functbl)
 {
 	functbl[slider('a')] = ft_lowhexpoint;
-	// functbl[slider('A')] = ft_upprhexpoint;
+	functbl[slider('A')] = ft_caphexpoint;
 	functbl[slider('c')] = ft_char;
 	functbl[slider('d')] = ft_decimal;
 	functbl[slider('e')] = ft_lowsci;
 	functbl[slider('E')] = ft_capsci;
-	// functbl[slider('f')] = ft_lowfltpoint;
+	functbl[slider('f')] = ft_lowfltpoint;
 	// functbl[slider('F')] = ft_upprfltpoint;
 	functbl[slider('g')] = ft_lowshrthd;
 	functbl[slider('G')] = ft_capshrthd;

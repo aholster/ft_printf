@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/01 16:56:13 by aholster       #+#    #+#                */
-/*   Updated: 2019/09/10 18:45:58 by aholster      ########   odam.nl         */
+/*   Updated: 2019/09/11 10:42:44 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,12 @@ typedef union			u_nptrs
 	long long			*ll;
 }						t_nptrs;
 
-typedef union			u_float
-{
-	long double			ld;
-	unsigned short		byte[5];
-	unsigned long long	llu;
-}						t_float;
+// typedef union			u_float
+// {
+// 	long double			ld;
+// 	unsigned short		byte[5];
+// 	unsigned long long	llu;
+// }						t_float;
 
 struct s_print;
 
@@ -104,18 +104,22 @@ int						ft_zero_padder(unsigned short len, t_print *clipb);
 int						ft_space_padder(unsigned short len, t_print *clipb);
 int						pad_spaces(size_t amount, t_print *clipb);
 int						pad_zero(size_t amount, t_print *clipb);
-int						ft_float_precision(unsigned short len, t_print *clipb);
+int						ft_float_pad(unsigned short len, unsigned short dec, \
+						t_print *clipb);
 
-void					ft_shortprec(unsigned char *buffer,\
+void					ft_shorthand_prec(unsigned char *buffer, \
 						unsigned short nb_len, t_print *clipb);
+unsigned short			ft_lowhexpoint_prec(unsigned char *buffer, t_print *clipb);
 int						ft_prefix(int neg, t_print *clipb);
 unsigned short			ft_ull_len(unsigned long long num, int base);
+void					ft_exceptions(unsigned char *buffer, long double nb, \
+						short *expon, t_print *clipb);
 
 int						ft_signconv(va_list args,\
 						unsigned long long *holder, const t_flag *flags);
 int						ft_unsignconv(va_list args,\
 						unsigned long long *holder, const t_flag *flags);
-int						ft_floatconv(va_list args, long double *holder,\
+int						ft_longdouble_conv(va_list args, long double *holder,\
 						const t_flag *flags);
 int						flagverif(const unsigned char c, const t_flag *flags);
 int						doubleverif(const unsigned char c,\
@@ -134,6 +138,8 @@ int						ft_capsci(va_list args, t_print *clipb);
 int						ft_lowshrthd(va_list args, t_print *clipb);
 int						ft_capshrthd(va_list args, t_print *clipb);
 int						ft_lowhexpoint(va_list args, t_print *clipb);
+int						ft_caphexpoint(va_list args, t_print *clipb);
+int						ft_lowfltpoint(va_list args, t_print *clipb);
 int						ft_n(va_list args, t_print *clipb);
 
 #endif

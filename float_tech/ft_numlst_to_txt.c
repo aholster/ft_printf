@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/07/26 21:33:22 by aholster       #+#    #+#                */
-/*   Updated: 2019/09/06 07:14:43 by aholster      ########   odam.nl         */
+/*   Updated: 2019/09/12 18:15:15 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ static size_t	leng_calc(const t_numlst *lst, const unsigned prec)
 	leng += from_dec;
 	if (from_dec < prec)
 		leng += prec - from_dec;
-//	printf("end of list is %zu characters from 0.0, prec %u, lst:%p\n", from_dec, prec, lst);
 	return (leng);
 }
 
@@ -88,12 +87,10 @@ int				ft_numlst_to_txt(const t_numlst *lst,\
 		}
 	}
 	leng = leng_calc(lst, precision) - index;
-//	printf("proceeding to malloc: %zu bytes\n", leng + 1);
 	*amem = (char *)malloc(sizeof(char) * leng + 1);
 	if (*amem == NULL)
 		return (-1);
 	(*amem)[0] = 'X';
 	*asize = copy_into_str(*amem + 1, lst, index, leng) + 1;
-//	printf("float internal text:|%s| %zu characters\n", *amem, *asize);
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/07/23 14:47:32 by aholster       #+#    #+#                */
-/*   Updated: 2019/09/06 13:20:56 by aholster      ########   odam.nl         */
+/*   Updated: 2019/09/12 18:30:23 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 
 # include "./../libft/libft.h"
 
-# include <stdio.h>
 # include <float.h>
+
 typedef union		u_float
 {
 	long double		ld;

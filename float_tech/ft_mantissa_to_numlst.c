@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/08/28 18:10:51 by aholster       #+#    #+#                */
-/*   Updated: 2019/09/06 08:18:33 by aholster      ########   odam.nl         */
+/*   Updated: 2019/09/12 18:36:31 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,47 +31,21 @@ static unsigned long long	ft_llurev(unsigned long long numa)
 	return (reverse_num);
 }
 
-static int					ft_mant_to_lst(t_numlst *lstrav,\
-							unsigned long long mantissa)
+int							ft_mantissa_write(unsigned long long mantissa,\
+							t_numlst *lst, t_numlst **acur_mant_bit)
 {
-	size_t		index;
-
-	index = 0;
-	while (mantissa > 0)
-	{
-		if (index == 0)
-		{
-			if (ft_numlst_prefix(lstrav, 1) == -1)
-				return (-1);
-			lstrav = lstrav->prev;
-			index = lstrav->mem_size - 1;
-		}
-		else
-			index--;
-		lstrav->mem[index] = (mantissa % 10) + '0';
-		mantissa /= 10;
-	}
-	return (1);
-}
-
-static int					ft_mantissa_div(t_numlst **lst,\
-							unsigned long long mantissa)
-{
-	size_t		count;
-
-	count = 0;
-	mantissa ^= 1;
 	while (mantissa != 0)
 	{
-		mantissa ^= 1;
-		mantissa >>= 1;
-		count++;
-	}
-	while (count > 1)
-	{
-		count--;
-		if (ft_lst_math_halve(lst) == -1)
+		if ((mantissa & 1) == 1)
+		{
+			if (ft_lst_math_add(lst, *acur_mant_bit) == -1)
+				return (-1);
+		}
+		if (ft_lst_math_halve(acur_mant_bit) == -1)
+		{
 			return (-1);
+		}
+		mantissa >>= 1;
 	}
 	return (1);
 }
@@ -79,21 +53,24 @@ static int					ft_mantissa_div(t_numlst **lst,\
 t_numlst					*ft_mantissa_to_numlst(unsigned long long mantissa)
 {
 	t_numlst	*lst;
+	t_numlst	*cur_mant_bit;
 
 	mantissa = ft_llurev(mantissa);
 	lst = ft_numlst_dec_init();
-	if (lst == NULL)
-		return (NULL);
-	lst->mem[0] = (mantissa % 10) + '0';
-	if (ft_mant_to_lst(lst, mantissa / 10) == -1)
+	cur_mant_bit = ft_numlst_dec_init();
+	if (lst == NULL || cur_mant_bit == NULL)
 	{
 		ft_numlst_del(&lst);
+		ft_numlst_del(&cur_mant_bit);
 		return (NULL);
 	}
-	if (ft_mantissa_div(&lst, mantissa) == -1)
+	cur_mant_bit->mem[0] = '1';
+	if (ft_mantissa_write(mantissa, lst, &cur_mant_bit) == -1)
 	{
 		ft_numlst_del(&lst);
+		ft_numlst_del(&cur_mant_bit);
 		return (NULL);
 	}
+	ft_numlst_del(&cur_mant_bit);
 	return (lst);
 }

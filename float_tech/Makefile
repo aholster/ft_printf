@@ -6,7 +6,7 @@
 #    By: aholster <aholster@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2019/02/16 15:46:43 by aholster       #+#    #+#                 #
-#    Updated: 2019/09/06 13:24:55 by aholster      ########   odam.nl          #
+#    Updated: 2019/09/12 18:29:58 by aholster      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,21 +28,23 @@ NAME := float_tech.a
 NORM := norminette $(FILEC) $(HEAD) | grep -e "Error"  -e "Warning" -B 1
 
 GCCC := ${CC} -c
-CC := gcc -Wall -Werror -Wextra -L ./libft/ -lft
+CC := gcc -Wall -Werror -Wextra -L ./../libft/ -lft
 AR := ar rcs
 
 all: $(NAME)
 
 assemble: $(OBJ)
-	@cp ./../libft/libft.a $(NAME)
+	@cp ./../libft/libft.a ./float_tech.a
 	@$(AR) $(NAME) $(OBJ)
 	@ranlib $(NAME)
 
 exec:
+	@rm -f test
 	@$(CC) -o test $(FILEC) main.c
 	@echo "\033[0;32m test successfully assembled!\033[0;00m\n"
 
 $(NAME):
+#	@make -C ./../libft/
 	@echo "\033[0;33mStarting assembly of $(NAME)…\033[0;00m"
 	@time make assemble
 	@echo "\033[0;32m$(NAME) successfully assembled!\033[0;00m\n"
@@ -51,6 +53,7 @@ $(NAME):
 	@$(GCCC) -o $@ $<
 
 clean:
+#	@make clean -C ./../libft/
 	@echo "\033[0;33mInitializing Summary Deletions...\033[0;00m"
 	@rm -rf $(OBJ)
 	@find "./" -type f \( -name '*~' -o -name '\#*\#' -o -name '.DS_Store' \)\
@@ -58,6 +61,7 @@ clean:
 	@echo "\033[0;31m	Executed!\033[0;00m\n"
 
 fclean: clean
+#	@make fclean -C ./../libft/
 	@rm -rf $(NAME)
 	@echo "\033[0;31mObituary of $(NAME): Deceased on $(shell date).\
 	\033[0;00m\n"

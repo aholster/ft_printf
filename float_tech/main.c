@@ -6,11 +6,12 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/07/23 14:45:22 by aholster       #+#    #+#                */
-/*   Updated: 2019/09/06 09:08:15 by aholster      ########   odam.nl         */
+/*   Updated: 2019/09/12 18:16:31 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "float_tech.h"
+#include <stdio.h>
 
 static void	put_annotation(unsigned short mexponent, long double input)
 {
@@ -26,11 +27,11 @@ static void	put_annotation(unsigned short mexponent, long double input)
 	printf(" Float:\t%Le\n", input);
 	printf(" Raw exponent: %hu, Bias adjusted exponent: %d\n",\
 	mexponent, mexponent - 16383);
-	precision = 10;
+	precision = 14;
 	status = ft_custom_ld_to_text(input, precision, &floatret, &size);
 	printf("return:%d, size: %zu\n", status, size);
 	printf(" Our Float:\t|%.*s|%n\n", (int)size, floatret, &ruler);
-	printf(" Norm Float:\t%.*Lf%n\n", precision, input, &lenhold);
+	printf(" Norm Float:\t|%+.*Lf|%n\n", precision, input, &lenhold);
 	printf("\n");
 	free(floatret);
 }
@@ -103,7 +104,10 @@ int			main(void)
 	longdouble_analyse(num);
 	num = 1.0 / 0.0;
 	longdouble_analyse(num);
-	num = -1.0 / 0.0;
+	// num = -1.0 / 0.0;
+	// longdouble_analyse(num);
+
+	num = 2.99;
 	longdouble_analyse(num);
 
 	// num = 256.0;

@@ -6,7 +6,7 @@
 #    By: jesmith <jesmith@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2019/02/16 15:46:43 by aholster       #+#    #+#                 #
-#    Updated: 2019/09/06 13:25:39 by aholster      ########   odam.nl          #
+#    Updated: 2019/09/12 18:33:24 by aholster      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,7 @@ NAME = libftprintf.a
 NORM = norminette $(FILEC) $(HEAD) | grep -e "Error"  -e "Warning" -B 1
 
 GCCC = ${CC} -c
-CC = gcc -Wall -Werror -Wextra
+CC = gcc -g -Wall -Werror -Wextra
 AR = ar rcs
 
 all: $(NAME)
@@ -63,7 +63,7 @@ clean:
 
 fclean: clean
 	@make fclean -C ./libft
-	@make fclean -C ./libft
+	@make fclean -C ./float_tech
 	@rm -rf $(NAME)
 	@echo "\033[0;31mObituary of $(NAME): Deceased on $(shell date).\
 	\033[0;00m\n"

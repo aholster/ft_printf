@@ -6,7 +6,7 @@
 #    By: jesmith <jesmith@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2019/02/16 15:46:43 by aholster       #+#    #+#                 #
-#    Updated: 2019/09/13 17:30:31 by aholster      ########   odam.nl          #
+#    Updated: 2019/09/13 18:51:14 by aholster      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,9 +19,9 @@ SUBSOURCE := ptraddr decimal char octal caphex lowhex unsigned_dec\
  lowhexpoint capshort
 
 SOURCE := printf vprintf dprintf vdprintf asprintf vasprintf\
+sprintf vsprintf snprintf vsnprintf\
 dispatcher format flinit flagharvest functblinit padder\
 flag_verificators handling
-#sprintf vsprintf snprintf vsnprintf\
 
 FILEC = $(SOURCE:%=./ft_%.c) $(SUBSOURCE:%=$(SUBDIR)ft_%.c)
 

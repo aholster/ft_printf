@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/01 16:56:13 by aholster       #+#    #+#                */
-/*   Updated: 2019/09/13 18:24:31 by aholster      ########   odam.nl         */
+/*   Updated: 2019/09/13 18:50:38 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 
 # define BUFFSIZE	10
 # define FUNCSIZE	58
+
+# define MAX_INT	2147483647
 
 # define VALID_FLG "hjlz# *.-+L0123456789"
 # define VALID_D_FLG "hl"
@@ -70,6 +72,13 @@ typedef struct			s_print
 /*
 ** history should be unsigned long long bc of %lln
 */
+
+typedef enum			e_errc
+{
+	ERROR,
+	LIMIT,
+	PASS,
+}						t_errc;
 
 typedef	struct			s_flag
 {

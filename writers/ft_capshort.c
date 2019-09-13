@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/21 13:13:51 by jesmith        #+#    #+#                */
-/*   Updated: 2019/09/06 14:35:55 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/09/09 10:21:10 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,9 +92,7 @@ int						ft_capshort(va_list args, t_print *clipb)
 	int					precision;
 
 	precision = flagverif('.', clipb->flags);
-	neg = 1;
-	if (ft_signconv(args, &nb, clipb->flags) == -1)
-		neg = -1;
+	neg = ft_signconv(args, &nb, clipb->flags);
 	nb_len = ft_int_len(buffer, nb);
 	if (nb == 0 && precision == 1 && clipb->flags->padding == 0)
 		return (1);

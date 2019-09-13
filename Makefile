@@ -6,7 +6,7 @@
 #    By: jesmith <jesmith@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2019/02/16 15:46:43 by aholster       #+#    #+#                 #
-#    Updated: 2019/09/12 18:33:24 by aholster      ########   odam.nl          #
+#    Updated: 2019/09/13 10:25:24 by jesmith       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,10 +15,10 @@ DATE := $(shell date)
 SUBDIR := ./writers/
 
 SUBSOURCE := ptraddr decimal char octal caphex lowhex unsigned_dec\
- signconv unsignconv str n lowsci capsci lowshrthd capshrthd floatconv\
- lowhexpoint capshort
+ signconv unsignconv str n lowsci capsci lowshrthd capshrthd \
+ longdouble_conv lowhexpoint caphexpoint capshort lowfltpoint
 
-SOURCE := printf asprintf vdprintf dispatcher format flinit flagharvest functblinit padder flag_verificators handling
+SOURCE := printf asprintf vdprintf dispatcher format flinit flagharvest functblinit rounder padder flag_verificators handling
 
 FILEC = $(SOURCE:%=./ft_%.c) $(SUBSOURCE:%=$(SUBDIR)ft_%.c)
 

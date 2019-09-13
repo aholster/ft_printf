@@ -6,12 +6,12 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/05/25 16:10:49 by aholster       #+#    #+#                */
-/*   Updated: 2019/09/10 13:57:51 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/09/13 16:32:17 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-#include <stdio.h>
+
 int	pad_spaces(size_t amount, t_print *clipb)
 {
 	size_t		index;
@@ -102,7 +102,8 @@ int	ft_zero_padder(unsigned short len, t_print *clipb)
 	return (1);
 }
 
-int	ft_float_pad(unsigned short len, unsigned short dec, t_print *clipb)
+int	ft_float_padder(unsigned short len, unsigned short dec, \
+	t_print *clipb)
 {
 	if (clipb->flags->precision > len)
 	{
@@ -119,8 +120,6 @@ int	ft_float_pad(unsigned short len, unsigned short dec, t_print *clipb)
 	{
 		if (len + dec <= len + clipb->flags->precision)
 			len += clipb->flags->precision;
-		// if (flagverif('.', clipb->flags) == 1 && clipb->flags->precision == 0)
-		// 	len--;
 		if (flagverif('0', clipb->flags) == 1)
 		{
 			if (pad_zero(clipb->flags->padding - len, clipb) == -1)

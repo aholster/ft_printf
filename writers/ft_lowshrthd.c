@@ -6,12 +6,12 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/21 12:57:35 by jesmith        #+#    #+#                */
-/*   Updated: 2019/09/11 09:32:12 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/09/13 14:07:26 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-
+#include <stdio.h>
 static int						rounder(size_t index, unsigned char *buf)
 {
 	if (index > 0)
@@ -90,111 +90,119 @@ static int					ft_lowshrthd_noprec(unsigned char *buffer, \
 	return (1);
 }
 
-static int					ft_lowshrthd_prec(unsigned char *buffer, int neg, \
-						unsigned short nb_len, t_print *clipb)
-{
-	const unsigned char	*num;
-	unsigned int		calc;
+// static int					ft_lowshrthd_prec(unsigned char *buffer, int neg, \
+// 						unsigned short nb_len, t_print *clipb)
+// {
+// 	const unsigned char	*num;
+// 	unsigned int		calc;
 
-	num = (const unsigned char *)ft_itoa(nb_len - 1);
-	calc = clipb->flags->precision + ft_strlen((const char *)num); //+2
-	if (flagverif('-', clipb->flags) == -1 && \
-	flagverif('0', clipb->flags) == -1)
-		if (ft_space_padder(calc, clipb) == -1)
-			return (-1);
-	rounder((size_t)clipb->flags->precision - 1, &buffer[1]);
-	ft_shorthand_prec(buffer, nb_len, clipb);
-	if (ft_printnum(neg, clipb, calc) == -1)
-		return (-1);
-	if (clipb->printer(buffer, nb_len, clipb) == -1)
-		return (-1);
-	if (clipb->flags->precision != 0)
-		if (clipb->printer((const unsigned char *)".", 1, clipb) == -1)
-			return (-1);
-	if (clipb->printer(&buffer[nb_len], clipb->flags->precision, clipb) == -1)
-		return (-1);
-	if (flagverif('-', clipb->flags) == 1 && clipb->flags->padding > calc)
-		if (ft_space_padder(calc, clipb) == -1)
-			return (-1);
-	return (1);
-}
+// 	num = (const unsigned char *)ft_itoa(nb_len - 1);
+// 	calc = clipb->flags->precision + ft_strlen((const char *)num); //+2
+// 	if (flagverif('-', clipb->flags) == -1 && \
+// 	flagverif('0', clipb->flags) == -1)
+// 		if (ft_space_padder(calc, clipb) == -1)
+// 			return (-1);
+// 	rounder((size_t)clipb->flags->precision - 1, &buffer[1]);
+// 	ft_shorthand_prec(buffer, nb_len, clipb);
+// 	if (ft_printnum(neg, clipb, calc) == -1)
+// 		return (-1);
+// 	if (clipb->printer(buffer, nb_len, clipb) == -1)
+// 		return (-1);
+// 	if (clipb->flags->precision != 0)
+// 		if (clipb->printer((const unsigned char *)".", 1, clipb) == -1)
+// 			return (-1);
+// 	if (clipb->printer(&buffer[nb_len], clipb->flags->precision, clipb) == -1)
+// 		return (-1);
+// 	if (flagverif('-', clipb->flags) == 1 && clipb->flags->padding > calc)
+// 		if (ft_space_padder(calc, clipb) == -1)
+// 			return (-1);
+// 	return (1);
+// }
 
-static unsigned long long	ft_float_buffer(long double num, \
-						unsigned char *buffer, t_print *clipb)
-{
-	unsigned char		subnum;
-	size_t				index;
-	unsigned long long	longcast;
+// static unsigned long long	ft_float_buffer(long double num, \
+// 						unsigned char *buffer, t_print *clipb)
+// {
+// 	unsigned char		subnum;
+// 	size_t				index;
+// 	unsigned long long	longcast;
 
-	index = ft_strlen((const char *)buffer);
-	longcast = (unsigned long long)num;
-	num -= longcast;
-	while (clipb->flags->precision >= index)
-	{
-		num *= 10;
-		subnum = (unsigned char)num;
-		buffer[index] = subnum + '0';
-		num -= subnum;
-		index++;
-	}
-	num *= 10;
-	if (num > 5)
-		return (longcast += rounder(index, buffer));
-	else if (num == 5)
-	{
-		if ((longcast & 1) == 1)
-			return (longcast + 1);
-	}
-	return (longcast);
-}
+// 	index = ft_strlen((const char *)buffer);
+// 	longcast = (unsigned long long)num;
+// 	num -= longcast;
+// 	while (clipb->flags->precision >= index)
+// 	{
+// 		num *= 10;
+// 		subnum = (unsigned char)num;
+// 		buffer[index] = subnum + '0';
+// 		num -= subnum;
+// 		index++;
+// 	}
+// 	num *= 10;
+// 	if (num > 5)
+// 		return (longcast += rounder(index, buffer));
+// 	else if (num == 5)
+// 	{
+// 		if ((longcast & 1) == 1)
+// 			return (longcast + 1);
+// 	}
+// 	return (longcast);
+// }
 
-static unsigned short		ft_int_len(unsigned char *buffer, \
-						long double nb, t_print *clipb)
-{
-	unsigned long long	temp_num;
-	unsigned short		prec_len;
-	unsigned short		cur_len;
-	char				*base;
+// static unsigned short		ft_int_len(unsigned char *buffer, \
+// 						long double nb, t_print *clipb)
+// {
+// 	unsigned long long	temp_num;
+// 	unsigned short		prec_len;
+// 	unsigned short		cur_len;
+// 	char				*base;
 
-	base = "0123456789";
-	temp_num = nb;
-	prec_len = ft_ull_len(nb, 10);
-	cur_len = prec_len - 1;
-	if (nb == 0)
-	{
-		ft_strcpy((char *)buffer, "0000000");
-		return (1);
-	}
-	while (temp_num >= 10)
-	{
-		buffer[cur_len] = base[(temp_num % 10)];
-		temp_num /= 10;
-		cur_len--;
-	}
-	buffer[cur_len] = base[temp_num];
-	ft_float_buffer(nb, buffer, clipb);
-	return (prec_len);
-}
+// 	base = "0123456789";
+// 	temp_num = nb;
+// 	prec_len = ft_ull_len(nb, 10);
+// 	cur_len = prec_len - 1;
+// 	if (nb == 0)
+// 	{
+// 		ft_strcpy((char *)buffer, "0000000");
+// 		return (1);
+// 	}
+// 	while (temp_num >= 10)
+// 	{
+// 		buffer[cur_len] = base[(temp_num % 10)];
+// 		temp_num /= 10;
+// 		cur_len--;
+// 	}
+// 	buffer[cur_len] = base[temp_num];
+// 	ft_float_buffer(nb, buffer, clipb);
+// 	return (prec_len);
+// }
 
 int							ft_lowshrthd(va_list args, t_print *clipb)
 {
-	unsigned char		buffer[20];
+	
+ 	char				*buffer;
+	t_float				conversion;
 	long double			nb;
-	unsigned long long	nb_len;
+	size_t				nb_len;
 	int					neg;
 
 	neg = ft_longdouble_conv(args, &nb, clipb->flags);
+	conversion.ld = nb;
 	if (flagverif('.', clipb->flags) == -1)
 		clipb->flags->precision = 6;
-	else if (clipb->flags->precision == 0)
-		clipb->flags->precision = 1;
-	nb_len = ft_int_len(buffer, nb, clipb);
+	// else if (clipb->flags->precision == 0)
+	// 	clipb->flags->precision = 1;
+	//nb_len = ft_int_len(buffer, nb, clipb);
+	nb_len = ft_ull_len(conversion.llu, 10);
+	if (ft_custom_ld_to_text(nb, \
+	clipb->flags->precision, &buffer, &nb_len) == -1)
+		return (-1);
+	printf("buffer: |%s|\n", buffer);
 	if (clipb->flags->padding != 0 && (neg == -1 || \
 	flagverif('+', clipb->flags) == 1 || flagverif(' ', clipb->flags) == 1))
 		clipb->flags->padding -= 1;
-	if (flagverif('.', clipb->flags) == 1)
-		return (ft_lowshrthd_prec(buffer, neg, nb_len, clipb));
+	// if (flagverif('.', clipb->flags) == 1)
+	// 	return (ft_lowshrthd_prec(buffer, neg, nb_len, clipb));
 	if (flagverif('.', clipb->flags) == -1)
-		return (ft_lowshrthd_noprec(buffer, neg, nb_len, clipb));
+		return (ft_lowshrthd_noprec((unsigned char*)buffer, neg, nb_len, clipb));
 	return (1);
 }

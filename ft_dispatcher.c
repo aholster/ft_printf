@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/04/18 16:00:54 by aholster       #+#    #+#                */
-/*   Updated: 2019/09/13 17:29:40 by aholster      ########   odam.nl         */
+/*   Updated: 2019/09/13 18:20:57 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static int	ft_operator(char conversion)
 	return (-1);
 }
 
-static int	ft_exception(const char * restrict specifier, t_print *clipb)
+static int	ft_exception(const char *restrict specifier, t_print *clipb)
 {
 	if (flagverif('-', clipb->flags) == -1)
 	{
@@ -47,7 +47,7 @@ static int	ft_exception(const char * restrict specifier, t_print *clipb)
 	return (1);
 }
 
-int			ft_dispatcher(const char * restrict specifier,\
+int			ft_dispatcher(const char *restrict specifier,\
 				t_writer *functbl, t_print *clipb)
 {
 	int				index;

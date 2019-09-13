@@ -6,13 +6,13 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/04/17 19:57:30 by aholster       #+#    #+#                */
-/*   Updated: 2019/09/13 17:28:47 by aholster      ########   odam.nl         */
+/*   Updated: 2019/09/13 18:20:57 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int		ft_judex(const char * restrict start, size_t *index, \
+static int		ft_judex(const char *restrict start, size_t *index, \
 						t_print *clipb)
 {
 	size_t	judex;
@@ -43,7 +43,7 @@ static int		ft_charskip(const char *c)
 	return (1);
 }
 
-int				ft_format(const char * restrict format, t_print *clipb)
+int				ft_format(const char *restrict format, t_print *clipb)
 {
 	size_t		index;
 	t_flag		flags;

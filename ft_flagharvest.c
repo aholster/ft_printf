@@ -6,13 +6,13 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/04/18 17:22:09 by aholster       #+#    #+#                */
-/*   Updated: 2019/09/13 17:39:51 by aholster      ########   odam.nl         */
+/*   Updated: 2019/09/13 18:20:57 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static void		ft_num_extract(const char * restrict format, size_t *index,\
+static void		ft_num_extract(const char *restrict format, size_t *index,\
 								unsigned int *destination)
 {
 	size_t			subdex;

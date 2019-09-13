@@ -6,13 +6,13 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/13 15:19:40 by aholster       #+#    #+#                */
-/*   Updated: 2019/09/13 17:27:22 by aholster      ########   odam.nl         */
+/*   Updated: 2019/09/13 18:28:52 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int	ft_lstcreator(const char * restrict mem, const size_t size,\
+static int	ft_lstcreator(const char *restrict mem, const size_t size,\
 							t_print *clipb)
 {
 	t_list	*cur;
@@ -26,7 +26,7 @@ static int	ft_lstcreator(const char * restrict mem, const size_t size,\
 	return (0);
 }
 
-static int	ft_lst_bufmanager(const char * restrict mem, size_t size,\
+static int	ft_lst_bufmanager(const char *restrict mem, size_t size,\
 								t_print *clipb)
 {
 	size_t	block;
@@ -70,7 +70,7 @@ static int	ft_vas_clipb_init(va_list args, t_list **alst, \
 	return (1);
 }
 
-int			ft_vasprintf(char **ret, const char * restrict format, va_list args)
+int			ft_vasprintf(char **ret, const char *restrict format, va_list args)
 {
 	t_print		clipb;
 	t_list		*buflst;
@@ -81,15 +81,24 @@ int			ft_vasprintf(char **ret, const char * restrict format, va_list args)
 	if (ft_format(format, &clipb) == -1)
 	{
 		free(clipb.buffer);
+		ft_lstdel(clipb.alst, &ft_del);
 		return (-1);
 	}
 	if (ft_lst_bufmanager(NULL, 0, &clipb) == -1)
+	{
+		free(clipb.buffer);
+		ft_lstdel(clipb.alst, &ft_del);
 		return (-1);
+	}
 	if (ft_lstmemtomem(ret, NULL, buflst) == -1)
+	{
+		free(clipb.buffer);
+		ft_lstdel(clipb.alst, &ft_del);
 		return (-1);
+	}
 	ft_lstdel(&buflst, ft_del);
 	free(clipb.buffer);
-	va_end(args);
+	va_copy(args, clipb.args);
 	va_end(clipb.origin_args);
 	va_end(clipb.args);
 	return (clipb.history);

@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/01 16:56:13 by aholster       #+#    #+#                */
-/*   Updated: 2019/09/13 17:53:37 by aholster      ########   odam.nl         */
+/*   Updated: 2019/09/13 18:24:31 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ typedef union			u_nptrs
 
 struct s_print;
 
-typedef int				(*t_wrt_ptr)(const char * restrict, size_t, \
+typedef int				(*t_wrt_ptr)(const char *restrict, size_t, \
 							struct s_print*);
 
 typedef	int				(*t_writer)(va_list args, struct s_print*);
@@ -81,31 +81,33 @@ typedef	struct			s_flag
 	unsigned int		padding;
 }						t_flag;
 
-int						ft_printf(const char * restrict format, ...);
-int						ft_vprintf(const char * restrict format, va_list args);
+int						ft_printf(const char *restrict format, ...);
+int						ft_vprintf(const char *restrict format, va_list args);
 
-int						ft_asprintf(char **ret, const char * restrict format, ...);
-int						ft_vasprintf(char **ret, const char * restrict format,\
+int						ft_asprintf(char **ret,\
+						const char *restrict format, ...);
+int						ft_vasprintf(char **ret, const char *restrict format,\
 						va_list args);
 
-int						ft_dprintf(const int fd, const char * restrict format, ...);
-int						ft_vdprintf(const int fd, const char * restrict format,\
+int						ft_dprintf(const int fd, const char *restrict format,\
+						...);
+int						ft_vdprintf(const int fd, const char *restrict format,\
 						va_list args);
 
-// int						ft_sprintf(char *str, const char * restrict format, ...);
-// int						ft_vsprintf(char *str, const char * restrict format, va_list arg);
+// int						ft_sprintf(char *str, const char *restrict format, ...);
+// int						ft_vsprintf(char *str, const char *restrict format, va_list arg);
 
 // int						ft_snprintf(char *str, size_t size,\
-// 						const char * restrict format, ...);
+// 						const char *restrict format, ...);
 // int						ft_vsnprintf(char *str, size_t size,\
-// 						const char * restrict format, va_list args);
+// 						const char *restrict format, va_list args);
 
-int						ft_format(const char * restrict format,\
+int						ft_format(const char *restrict format,\
 						t_print *clipb);
 
-int						ft_dispatcher(const char * restrict specifier,\
+int						ft_dispatcher(const char *restrict specifier,\
 								t_writer *functbl, t_print *clipb);
-size_t					ft_flagharvest(const char * restrict format,\
+size_t					ft_flagharvest(const char *restrict format,\
 						t_print *clipb);
 void					ft_flinit(t_print *clipb, t_flag *flags);
 
@@ -115,7 +117,7 @@ int						ft_zero_padder(unsigned short len, t_print *clipb);
 int						ft_space_padder(unsigned short len, t_print *clipb);
 int						pad_spaces(size_t amount, t_print *clipb);
 int						pad_zero(size_t amount, t_print *clipb);
-int						ft_float_pad(unsigned short len, unsigned short dec, \
+int						ft_float_pad(unsigned short len, unsigned short dec,\
 						t_print *clipb);
 
 void					ft_shorthand_prec(char *buffer, \

@@ -1,24 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_asprintf.c                                      :+:    :+:            */
+/*   ft_vprintf.c                                       :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2019/06/05 19:47:52 by aholster       #+#    #+#                */
+/*   Created: 2019/09/13 15:19:31 by aholster       #+#    #+#                */
 /*   Updated: 2019/09/13 17:24:36 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int			ft_asprintf(char **ret, const char * restrict format, ...)
+int			ft_vprintf(const char * restrict format, va_list args)
 {
-	va_list		args;
-	int			holder;
+	int		holder;
 
-	va_start(args, format);
-	holder = ft_vasprintf(ret, format, args);
-	va_end(args);
+	holder = ft_vdprintf(1, format, args);
 	return (holder);
 }

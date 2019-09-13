@@ -6,13 +6,13 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/05/31 12:06:16 by jesmith        #+#    #+#                */
-/*   Updated: 2019/09/09 10:21:43 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/09/13 17:47:31 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int				ft_decimal_noprec(unsigned char *buffer, int neg, \
+static int				ft_decimal_noprec(char *buffer, int neg, \
 					unsigned short nb_len, t_print *clipb)
 {
 	int minus;
@@ -39,7 +39,7 @@ static int				ft_decimal_noprec(unsigned char *buffer, int neg, \
 	return (1);
 }
 
-static int				ft_decimal_prec(unsigned char *buffer, int neg, \
+static int				ft_decimal_prec(char *buffer, int neg, \
 					unsigned short nb_len, t_print *clipb)
 {
 	int minus;
@@ -61,7 +61,7 @@ static int				ft_decimal_prec(unsigned char *buffer, int neg, \
 	return (1);
 }
 
-static unsigned short	ft_int_len(unsigned char *buffer, \
+static unsigned short	ft_int_len(char *buffer, \
 					unsigned long long nb)
 {
 	unsigned long long	temp_num;
@@ -85,7 +85,7 @@ static unsigned short	ft_int_len(unsigned char *buffer, \
 
 int						ft_decimal(va_list args, t_print *clipb)
 {
-	unsigned char		buffer[20];
+	char				buffer[20];
 	unsigned long long	nb;
 	unsigned short		nb_len;
 	int					neg;

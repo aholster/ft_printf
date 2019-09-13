@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/09 13:45:41 by jesmith        #+#    #+#                */
-/*   Updated: 2019/09/11 14:53:15 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/09/13 17:55:08 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,14 @@
 // 	if (neg != -1)
 // 	{
 // 		if (flagverif('+', clipb->flags) == 1)
-// 			if (clipb->printer((const unsigned char*)"+", 1, clipb) == -1)
+// 			if (clipb->printer("+", 1, clipb) == -1)
 // 				return (-1);
 // 		if (flagverif(' ', clipb->flags) == 1 && \
 // 			flagverif('+', clipb->flags) == -1)
-// 			if (clipb->printer((const unsigned char*)" ", 1, clipb) == -1)
+// 			if (clipb->printer(" ", 1, clipb) == -1)
 // 				return (-1);
 // 	}
-// 	else if (clipb->printer((const unsigned char*)"-", 1, clipb) == -1)
+// 	else if (clipb->printer("-", 1, clipb) == -1)
 // 		return (-1);
 // 	if (flagverif('0', clipb->flags) == 1 && flagverif('-', clipb->flags) == -1)
 // 		if (ft_zero_padder(nb_len, clipb) == -1)

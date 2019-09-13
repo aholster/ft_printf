@@ -6,13 +6,13 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/04/17 19:57:30 by aholster       #+#    #+#                */
-/*   Updated: 2019/09/10 16:40:28 by aholster      ########   odam.nl         */
+/*   Updated: 2019/09/13 17:28:47 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int		ft_judex(const unsigned char *start, size_t *index, \
+static int		ft_judex(const char * restrict start, size_t *index, \
 						t_print *clipb)
 {
 	size_t	judex;
@@ -28,22 +28,22 @@ static int		ft_judex(const unsigned char *start, size_t *index, \
 	return (1);
 }
 
-static int		ft_charskip(unsigned const char *c)
+static int		ft_charskip(const char *c)
 {
 	if (c[0] == '\0')
 		return (0);
-	if ((c[0] & 128) == 0)
-		return (1);
-	else if (c[0] >= 240 && c[0] <= 247)
-		return (4);
-	else if (c[0] >= 224 && c[0] <= 239)
-		return (3);
-	else if (c[0] >= 192 && c[0] <= 223)
-		return (2);
+	// if ((c[0] & 128) == 0)
+	// 	return (1);
+	// else if (c[0] >= 240 && c[0] <= 247)
+	// 	return (4);
+	// else if (c[0] >= 224 && c[0] <= 239)
+	// 	return (3);
+	// else if (c[0] >= 192 && c[0] <= 223)
+	// 	return (2);
 	return (1);
 }
 
-int				ft_format(unsigned const char *format, t_print *clipb)
+int				ft_format(const char * restrict format, t_print *clipb)
 {
 	size_t		index;
 	t_flag		flags;

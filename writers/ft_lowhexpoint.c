@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/08/28 14:42:40 by jesmith        #+#    #+#                */
-/*   Updated: 2019/09/11 10:41:02 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/09/13 17:55:58 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int					exponentbuffer(t_print *clipb, short expon)
 {
-	unsigned char	buffer[8];
+	char	buffer[8];
 	size_t			index;
 	int				neg;
 	size_t			backup_index;
@@ -60,7 +60,7 @@ static int					ft_end_pad(t_print *clipb, short expon, \
 	return (1);
 }
 
-static int					ft_front_pad(unsigned char *buffer, \
+static int					ft_front_pad(char *buffer, \
 					short expon, t_print *clipb, int neg)
 {
 	unsigned short	nb_len;
@@ -80,7 +80,7 @@ static int					ft_front_pad(unsigned char *buffer, \
 			return (-1);
 	if (ft_prefix(neg, clipb) == -1)
 		return (-1);
-	if (clipb->printer((const unsigned char *)"0x", 2, clipb) == -1)
+	if (clipb->printer("0x", 2, clipb) == -1)
 		return (-1);
 	// if (flagverif('-', clipb->flags) == -1 && clipb->flags->padding != 0)
 	// 	if (ft_float_pad(nb_len + str_len, str_len, clipb) == -1)
@@ -93,7 +93,7 @@ static int					ft_front_pad(unsigned char *buffer, \
 }
 
 static void					ft_man_to_buffer(unsigned long long mantissa, \
-				unsigned char *buffer, t_print *clipb)
+				char *buffer, t_print *clipb)
 {
 	char				*base;
 	unsigned short		cur_len;
@@ -124,7 +124,7 @@ static void					ft_man_to_buffer(unsigned long long mantissa, \
 
 int							ft_lowhexpoint(va_list args, t_print *clipb)
 {
-	unsigned char		buffer[20];
+	char			buffer[20];
 	t_float			conversion;
 	long double			nb;
 	int					neg;

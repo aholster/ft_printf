@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/05/25 16:10:49 by aholster       #+#    #+#                */
-/*   Updated: 2019/09/10 13:57:51 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/09/13 17:30:55 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	pad_spaces(size_t amount, t_print *clipb)
 			calc = amount - index;
 		else
 			calc = sizeof(spaces);
-		if (clipb->printer((const unsigned char *)spaces, calc, clipb) == -1)
+		if (clipb->printer(spaces, calc, clipb) == -1)
 			return (-1);
 		index += calc;
 	}
@@ -45,7 +45,7 @@ int	pad_zero(size_t amount, t_print *clipb)
 			calc = amount - index;
 		else
 			calc = sizeof(zeroes);
-		if (clipb->printer((const unsigned char *)zeroes, calc, clipb) == -1)
+		if (clipb->printer(zeroes, calc, clipb) == -1)
 			return (-1);
 		index += calc;
 	}

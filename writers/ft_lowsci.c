@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/05 11:15:26 by jesmith        #+#    #+#                */
-/*   Updated: 2019/09/13 18:10:49 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/09/13 18:12:56 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,20 +127,6 @@ static int				ft_isinfnan(long double f, t_print *clipb)
 	return (0);
 }
 
-unsigned long long		ft_divide(long double *nb)
-{
-	unsigned long long index;
-
-	index = 0;
-	while (nb > (long double)10)
-	{
-		nb = nb / 10;
-		index++;
-	}
-	printf("nb: %Lf\n", (int)nb);
-	return (index);
-}
-
 int						ft_lowsci(va_list args, t_print *clipb)
 {
 	char				*buffer;
@@ -153,7 +139,7 @@ int						ft_lowsci(va_list args, t_print *clipb)
 	neg = ft_longdouble_conv(args, &nb, clipb->flags);
 	if (ft_isinfnan(nb, clipb) == -1)
 		return (-1);
-	expon = ft_divide(&nb);
+		// need to move decimal point
 	conversion.ld = nb;
 	nb_len = (size_t)ft_ull_len(conversion.llu, 10);
 	if (flagverif('.', clipb->flags) == -1)
@@ -163,8 +149,7 @@ int						ft_lowsci(va_list args, t_print *clipb)
 		return (-1);
 	ft_rounder(conversion, buffer, clipb, nb_len);
 	ft_x_handler((unsigned char*)buffer);
-	// to divide 
-	
+
 	/* 
 	nb_len = ft_int_len(buffer, nb, clipb);
 	if (clipb->flags->padding != 0 && (neg == -1 || \

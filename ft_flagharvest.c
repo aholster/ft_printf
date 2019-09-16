@@ -6,13 +6,13 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/04/18 17:22:09 by aholster       #+#    #+#                */
-/*   Updated: 2019/09/10 18:38:55 by aholster      ########   odam.nl         */
+/*   Updated: 2019/09/13 18:20:57 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static void		ft_num_extract(const unsigned char *format, size_t *index,\
+static void		ft_num_extract(const char *restrict format, size_t *index,\
 								unsigned int *destination)
 {
 	size_t			subdex;
@@ -73,7 +73,7 @@ static void		ft_flagreset(t_flag *flags)
 	flags->padding = 0;
 }
 
-size_t			ft_flagharvest(const unsigned char *format, t_print *clipb)
+size_t			ft_flagharvest(const char *restrict format, t_print *clipb)
 {
 	size_t			index;
 	unsigned short	flip;

@@ -6,13 +6,13 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/21 13:13:51 by jesmith        #+#    #+#                */
-/*   Updated: 2019/09/09 10:21:10 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/09/13 17:56:26 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int				ft_capshort_noprec(unsigned char *buffer, int neg, \
+static int				ft_capshort_noprec(char *buffer, int neg, \
 					unsigned short nb_len, t_print *clipb)
 {
 	int minus;
@@ -39,7 +39,7 @@ static int				ft_capshort_noprec(unsigned char *buffer, int neg, \
 	return (1);
 }
 
-static int				ft_capshort_prec(unsigned char *buffer, int neg, \
+static int				ft_capshort_prec(char *buffer, int neg, \
 					unsigned short nb_len, t_print *clipb)
 {
 	int minus;
@@ -61,7 +61,7 @@ static int				ft_capshort_prec(unsigned char *buffer, int neg, \
 	return (1);
 }
 
-static unsigned short	ft_int_len(unsigned char *buffer, \
+static unsigned short	ft_int_len(char *buffer, \
 					unsigned long long nb)
 {
 	unsigned long long	temp_num;
@@ -85,7 +85,7 @@ static unsigned short	ft_int_len(unsigned char *buffer, \
 
 int						ft_capshort(va_list args, t_print *clipb)
 {
-	unsigned char		buffer[20];
+	char				buffer[20];
 	unsigned long long	nb;
 	unsigned short		nb_len;
 	int					neg;
@@ -97,7 +97,7 @@ int						ft_capshort(va_list args, t_print *clipb)
 	if (nb == 0 && precision == 1 && clipb->flags->padding == 0)
 		return (1);
 	if (nb == 0 && precision == 1 && clipb->flags->precision < nb_len)
-		ft_strcpy((char*)buffer, " ");
+		ft_strcpy(buffer, " ");
 	if (clipb->flags->padding != 0 && (neg == -1 || \
 	flagverif('+', clipb->flags) == 1 || flagverif(' ', clipb->flags) == 1))
 		clipb->flags->padding -= 1;

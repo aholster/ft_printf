@@ -1,24 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_printf.c                                        :+:    :+:            */
+/*   ft_vsprintf.c                                      :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
+/*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2019/03/01 16:56:14 by aholster       #+#    #+#                */
-/*   Updated: 2019/09/13 18:20:57 by aholster      ########   odam.nl         */
+/*   Created: 2019/09/13 15:19:34 by aholster       #+#    #+#                */
+/*   Updated: 2019/09/13 18:47:38 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int			ft_printf(const char *restrict format, ...)
+int		ft_vsprintf(char *str, const char *restrict format, va_list args)
 {
-	va_list		args;
-	int			holder;
+	int	holder;
 
-	va_start(args, format);
-	holder = ft_vdprintf(1, format, args);
-	va_end(args);
+	holder = ft_vsnprintf(str, MAX_INT + 1, format, args);
 	return (holder);
 }

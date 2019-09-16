@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/05 11:15:26 by jesmith        #+#    #+#                */
-/*   Updated: 2019/09/13 18:12:56 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/09/13 17:53:21 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void	ft_x_handler(unsigned char *buffer)
 }
 
 static int				ft_printnum(int neg, t_print *clipb, \
-							unsigned char *buffer, unsigned int nb_len)
+							char *buffer, unsigned int nb_len)
 {
 	if (ft_prefix(neg, clipb) == -1)
 		return (-1);
@@ -39,12 +39,12 @@ static int				ft_printnum(int neg, t_print *clipb, \
 	return (1);
 }
 
-static int				ft_lowsci_neg(unsigned char *buffer, int neg, \
+static int				ft_lowsci_neg(char *buffer, int neg, \
 					size_t nb_len, t_print *clipb)
 {
-	const unsigned char	*num;
+	const char	*num;
 
-	num = (const unsigned char *)ft_itoa(nb_len - 1);
+	num = ft_itoa(nb_len - 1);
 	// if (nb_len - 1 < 10)
 	// 	nb_len++;
 	if (flagverif('-', clipb->flags) == -1 && \
@@ -53,13 +53,13 @@ static int				ft_lowsci_neg(unsigned char *buffer, int neg, \
 			return (-1);
 	if (ft_printnum(neg, clipb, buffer, nb_len) == -1)
 		return (-1);
-	if (clipb->printer((const unsigned char *)"e-", 2, clipb) == -1)
+	if (clipb->printer("e-", 2, clipb) == -1)
 		return (-1);
 	if (nb_len - 1 < 10)
-		if (clipb->printer((const unsigned char *)"0", 1, clipb) == -1)
+		if (clipb->printer("0", 1, clipb) == -1)
 			return (-1);
-	if (clipb->printer((const unsigned char *)num, \
-	ft_strlen((const char *)num), clipb) == -1)
+	if (clipb->printer(num, \
+	ft_strlen(num), clipb) == -1)
 		return (-1);
 	if (flagverif('-', clipb->flags) == 1 && clipb->flags->padding > nb_len)
 		if (ft_space_padder(nb_len, clipb) == -1)
@@ -67,7 +67,7 @@ static int				ft_lowsci_neg(unsigned char *buffer, int neg, \
 	return (1);
 }
 
-static int				ft_lowsci_pos(unsigned char *buffer, int neg, \
+static int				ft_lowsci_pos(char *buffer, int neg, \
 					size_t nb_len, t_print *clipb)
 {
 	nb_len--;
@@ -85,10 +85,10 @@ static int				ft_lowsci_pos(unsigned char *buffer, int neg, \
 		nb_len--;
 	if (ft_printnum(neg, clipb, buffer, nb_len) == -1)
 		return (-1);
-	if (clipb->printer((const unsigned char *)"e+", 2, clipb) == -1)
+	if (clipb->printer("e+", 2, clipb) == -1)
 		return (-1);
 	if (nb_len - 1 < 10)
-		if (clipb->printer((const unsigned char *)"0", 1, clipb) == -1)
+		if (clipb->printer("0", 1, clipb) == -1)
 			return (-1);
 	if (clipb->printer(buffer, nb_len, clipb) == -1) // don't want to print this buffer just need something for now to print
 		return (-1);
@@ -100,7 +100,6 @@ static int				ft_lowsci_pos(unsigned char *buffer, int neg, \
 	return (1);
 }
 
-
 static int				ft_isinfnan(long double f, t_print *clipb)
 {
 	long l;
@@ -108,19 +107,19 @@ static int				ft_isinfnan(long double f, t_print *clipb)
 	l = *((long double *)&f);
 	if (f != f)
 	{
-		if (clipb->printer((const unsigned char *)"nan", 3, clipb) == -1)
+		if (clipb->printer("nan", 3, clipb) == -1)
 			return (-1);
 		return (1);
 	}
 	if (l == 0x7F800000)
 	{
-		if (clipb->printer((const unsigned char *)"inf", 3, clipb) == -1)
+		if (clipb->printer("inf", 3, clipb) == -1)
 			return (-1);
 		return (1);
 	}
 	if (l == 0xFF800000)
 	{
-		if (clipb->printer((const unsigned char *)"-inf", 4, clipb) == -1)
+		if (clipb->printer("-inf", 4, clipb) == -1)
 			return (-1);
 		return (1);
 	}

@@ -6,13 +6,13 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/08/28 14:42:40 by jesmith        #+#    #+#                */
-/*   Updated: 2019/09/13 17:12:55 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/09/13 17:55:58 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int					ft_exponbuff(unsigned char *buffer, short expon)
+static int					ft_exponbuff(char *buffer, short expon)
 {
 	unsigned short	index;
 	int				neg;
@@ -61,7 +61,7 @@ static int					ft_end_pad(t_print *clipb, short expon, \
 	return (1);
 }
 
-static int					ft_front_pad(unsigned char *buffer, \
+static int					ft_front_pad(char *buffer, \
 					short expon, t_print *clipb, int neg)
 {
 	unsigned short	nb_len;
@@ -81,7 +81,7 @@ static int					ft_front_pad(unsigned char *buffer, \
 			return (-1);
 	if (ft_prefix(neg, clipb) == -1)
 		return (-1);
-	if (clipb->printer((const unsigned char *)"0x", 2, clipb) == -1)
+	if (clipb->printer("0x", 2, clipb) == -1)
 		return (-1);
 	if (clipb->printer(buffer, str_len, clipb) == -1)
 		return (-1);
@@ -90,8 +90,8 @@ static int					ft_front_pad(unsigned char *buffer, \
 	return (1);
 }
 
-static void					ft_man_to_buffer(unsigned long long mantissa, \
-						unsigned char *buffer, t_print *clipb)
+static void					ft_man_to_buffer(unsigned long long mantissa,\
+				char *buffer, t_print *clipb)
 {
 	char				*base;
 	unsigned short		cur_len;
@@ -122,8 +122,9 @@ static void					ft_man_to_buffer(unsigned long long mantissa, \
 
 int							ft_lowhexpoint(va_list args, t_print *clipb)
 {
-	unsigned char		buffer[20];
-	t_float				conversion;
+	char			buffer[20];
+	t_float			conversion;
+
 	long double			nb;
 	int					neg;
 	short				expon;

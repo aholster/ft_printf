@@ -6,13 +6,13 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/05/30 19:12:27 by aholster       #+#    #+#                */
-/*   Updated: 2019/09/06 14:35:55 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/09/13 17:43:26 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int				ft_unsigned_dec_noprec(unsigned char *buffer, \
+static int				ft_unsigned_dec_noprec(char *buffer, \
 					unsigned short nb_len, t_print *clipb)
 {
 	int minus;
@@ -37,7 +37,7 @@ static int				ft_unsigned_dec_noprec(unsigned char *buffer, \
 	return (1);
 }
 
-static int				ft_unsigned_dec_prec(unsigned char *buffer, \
+static int				ft_unsigned_dec_prec(char *buffer, \
 					unsigned short nb_len, t_print *clipb)
 {
 	int minus;
@@ -57,7 +57,7 @@ static int				ft_unsigned_dec_prec(unsigned char *buffer, \
 	return (1);
 }
 
-static unsigned short	ft_int_len(unsigned char *buffer, \
+static unsigned short	ft_int_len(char *buffer, \
 					unsigned long long nb)
 {
 	unsigned long long	temp_num;
@@ -81,7 +81,7 @@ static unsigned short	ft_int_len(unsigned char *buffer, \
 
 int						ft_unsigned_dec(va_list args, t_print *clipb)
 {
-	unsigned char		buffer[20];
+	char				buffer[20];
 	unsigned long long	nb;
 	unsigned short		nb_len;
 	int					precision;

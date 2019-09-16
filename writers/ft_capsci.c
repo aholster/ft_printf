@@ -6,26 +6,26 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/21 11:16:26 by jesmith        #+#    #+#                */
-/*   Updated: 2019/09/11 09:32:12 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/09/13 17:55:48 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
 static int				ft_printnum(int neg, t_print *clipb, \
-							unsigned char *buffer, unsigned int nb_len)
+							char *buffer, unsigned int nb_len)
 {
 	if (neg != -1)
 	{
 		if (flagverif('+', clipb->flags) == 1)
-			if (clipb->printer((const unsigned char*)"+", 1, clipb) == -1)
+			if (clipb->printer("+", 1, clipb) == -1)
 				return (-1);
 		if (flagverif(' ', clipb->flags) == 1 && \
 			flagverif('+', clipb->flags) == -1)
-			if (clipb->printer((const unsigned char*)" ", 1, clipb) == -1)
+			if (clipb->printer(" ", 1, clipb) == -1)
 				return (-1);
 	}
-	else if (clipb->printer((const unsigned char*)"-", 1, clipb) == -1)
+	else if (clipb->printer("-", 1, clipb) == -1)
 		return (-1);
 	if (flagverif('0', clipb->flags) == 1 && flagverif('-', clipb->flags) == -1)
 		if (ft_zero_padder(nb_len, clipb) == -1)
@@ -33,21 +33,21 @@ static int				ft_printnum(int neg, t_print *clipb, \
 	if (clipb->printer(buffer, 1, clipb) == -1)
 		return (-1);
 	if (clipb->flags->precision != 0)
-		if (clipb->printer((const unsigned char *)".", 1, clipb) == -1)
+		if (clipb->printer(".", 1, clipb) == -1)
 			return (-1);
 	if (clipb->printer(&buffer[1], clipb->flags->precision, clipb) == -1)
 		return (-1);
 	return (1);
 }
 
-static int				ft_capsci_neg(unsigned char *buffer, int neg, \
+static int				ft_capsci_neg(char *buffer, int neg, \
 					unsigned short nb_len, t_print *clipb)
 {
-	const unsigned char	*num;
+	const char			*num;
 	unsigned int		calc;
 
-	num = (const unsigned char *)ft_itoa(nb_len - 1);
-	calc = clipb->flags->precision + 4 + ft_strlen((const char *)num);
+	num = ft_itoa(nb_len - 1);
+	calc = clipb->flags->precision + 4 + ft_strlen(num);
 	if (nb_len - 1 < 10)
 		calc++;
 	if (flagverif('-', clipb->flags) == -1 && \
@@ -56,13 +56,13 @@ static int				ft_capsci_neg(unsigned char *buffer, int neg, \
 			return (-1);
 	if (ft_printnum(neg, clipb, buffer, calc) == -1)
 		return (-1);
-	if (clipb->printer((const unsigned char *)"E-", 2, clipb) == -1)
+	if (clipb->printer("E-", 2, clipb) == -1)
 		return (-1);
 	if (nb_len - 1 < 10)
-		if (clipb->printer((const unsigned char *)"0", 1, clipb) == -1)
+		if (clipb->printer("0", 1, clipb) == -1)
 			return (-1);
-	if (clipb->printer((const unsigned char *)num, \
-	ft_strlen((const char *)num), clipb) == -1)
+	if (clipb->printer(num, \
+	ft_strlen(num), clipb) == -1)
 		return (-1);
 	if (flagverif('-', clipb->flags) == 1 && clipb->flags->padding > calc)
 		if (ft_space_padder(calc, clipb) == -1)
@@ -70,14 +70,14 @@ static int				ft_capsci_neg(unsigned char *buffer, int neg, \
 	return (1);
 }
 
-static int				ft_capsci_pos(unsigned char *buffer, int neg, \
+static int				ft_capsci_pos(char *buffer, int neg, \
 					unsigned short nb_len, t_print *clipb)
 {
-	const unsigned char	*num;
+	const char			*num;
 	unsigned int		calc;
 
-	num = (const unsigned char *)ft_itoa(nb_len - 1);
-	calc = clipb->flags->precision + 4 + ft_strlen((const char *)num);
+	num = ft_itoa(nb_len - 1);
+	calc = clipb->flags->precision + 4 + ft_strlen(num);
 	if (nb_len - 1 < 10)
 		calc++;
 	if (flagverif('-', clipb->flags) == -1 && \
@@ -86,13 +86,13 @@ static int				ft_capsci_pos(unsigned char *buffer, int neg, \
 			return (-1);
 	if (ft_printnum(neg, clipb, buffer, calc) == -1)
 		return (-1);
-	if (clipb->printer((const unsigned char *)"E+", 2, clipb) == -1)
+	if (clipb->printer("E+", 2, clipb) == -1)
 		return (-1);
 	if (nb_len - 1 < 10)
-		if (clipb->printer((const unsigned char *)"0", 1, clipb) == -1)
+		if (clipb->printer("0", 1, clipb) == -1)
 			return (-1);
-	if (clipb->printer((const unsigned char *)num, \
-	ft_strlen((const char *)num), clipb) == -1)
+	if (clipb->printer(num, \
+	ft_strlen(num), clipb) == -1)
 		return (-1);
 	if (flagverif('-', clipb->flags) == 1 && clipb->flags->padding > calc)
 		if (ft_space_padder(calc, clipb) == -1)
@@ -100,7 +100,7 @@ static int				ft_capsci_pos(unsigned char *buffer, int neg, \
 	return (1);
 }
 
-static int	rounder(size_t index, unsigned char *buf)
+static int	rounder(size_t index, char *buf)
 {
 	if (index > 0)
 		index--;
@@ -121,13 +121,13 @@ static int	rounder(size_t index, unsigned char *buf)
 	return (0);
 }
 
-static unsigned long long	ft_float_buffer(long double num, unsigned char *buffer, t_print *clipb)
+static unsigned long long	ft_float_buffer(long double num, char *buffer, t_print *clipb)
 {
 	unsigned char subnum;
 	size_t	index;
 	unsigned long long longcast;
 
-	index = ft_strlen((const char *)buffer);
+	index = ft_strlen(buffer);
 	longcast = (unsigned long long)num;
 	num -= longcast;
 	while (clipb->flags->precision >= index)
@@ -151,7 +151,7 @@ static unsigned long long	ft_float_buffer(long double num, unsigned char *buffer
 	return (longcast);
 }
 
-static unsigned short	ft_int_len(unsigned char *buffer, \
+static unsigned short	ft_int_len(char *buffer, \
 					long double nb, t_print *clipb)
 {
 	unsigned long long	temp_num;
@@ -186,19 +186,19 @@ static int				ft_isinfnan(float f, t_print *clipb)
 	l = *((long *)&f);
 	if (f != f)
 	{
-		if (clipb->printer((const unsigned char *)"NAN", 3, clipb) == -1)
+		if (clipb->printer("NAN", 3, clipb) == -1)
 			return (-1);
 		return (1);
 	}
 	if (l == 0x7F800000)
 	{
-		if (clipb->printer((const unsigned char *)"INF", 3, clipb) == -1)
+		if (clipb->printer("INF", 3, clipb) == -1)
 			return (-1);
 		return (1);
 	}
 	if (l == 0xFF800000)
 	{
-		if (clipb->printer((const unsigned char *)"-INF", 4, clipb) == -1)
+		if (clipb->printer("-INF", 4, clipb) == -1)
 			return (-1);
 		return (1);
 	}
@@ -207,7 +207,7 @@ static int				ft_isinfnan(float f, t_print *clipb)
 
 int						ft_capsci(va_list args, t_print *clipb)
 {
-	unsigned char		buffer[200000];
+	char				buffer[200000];
 	long double			nb;
 	unsigned long long	nb_len;
 	int					neg;

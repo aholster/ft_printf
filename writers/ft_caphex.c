@@ -6,13 +6,13 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/03 18:20:19 by jesmith        #+#    #+#                */
-/*   Updated: 2019/09/06 14:35:55 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/09/13 17:43:42 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int				ft_caphex_noprec(unsigned char *buffer, \
+static int				ft_caphex_noprec(char *buffer, \
 				unsigned long long nb, unsigned short nb_len, t_print *clipb)
 {
 	int minus;
@@ -22,7 +22,7 @@ static int				ft_caphex_noprec(unsigned char *buffer, \
 		if (ft_space_padder(nb_len, clipb) == -1)
 			return (-1);
 	if (flagverif('#', clipb->flags) == 1 && nb != 0)
-		if (clipb->printer((const unsigned char *)"0X", 2, clipb) == -1)
+		if (clipb->printer("0X", 2, clipb) == -1)
 			return (-1);
 	if (flagverif('0', clipb->flags) == 1 && minus == -1)
 		if (ft_zero_padder(nb_len, clipb) == -1)
@@ -35,7 +35,7 @@ static int				ft_caphex_noprec(unsigned char *buffer, \
 	return (1);
 }
 
-static int				ft_caphex_prec(unsigned char *buffer, \
+static int				ft_caphex_prec(char *buffer, \
 					unsigned long long nb, unsigned short nb_len, \
 					t_print *clipb)
 {
@@ -46,7 +46,7 @@ static int				ft_caphex_prec(unsigned char *buffer, \
 		if (ft_space_padder(nb_len, clipb) == -1)
 			return (-1);
 	if (flagverif('#', clipb->flags) == 1 && nb != 0)
-		if (clipb->printer((const unsigned char *)"0X", 2, clipb) == -1)
+		if (clipb->printer("0X", 2, clipb) == -1)
 			return (-1);
 	if (clipb->flags->precision > nb_len)
 		if (ft_zero_padder(nb_len, clipb) == -1)
@@ -59,7 +59,7 @@ static int				ft_caphex_prec(unsigned char *buffer, \
 	return (1);
 }
 
-static unsigned short	ft_int_len(unsigned char *buffer, \
+static unsigned short	ft_int_len(char *buffer, \
 					unsigned long long nb)
 {
 	unsigned long long	temp_num;
@@ -88,7 +88,7 @@ static unsigned short	ft_int_len(unsigned char *buffer, \
 
 int						ft_caphex(va_list args, t_print *clipb)
 {
-	unsigned char		buffer[20];
+	char				buffer[20];
 	unsigned long long	nb;
 	unsigned short		nb_len;
 	int					precision;

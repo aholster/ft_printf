@@ -6,13 +6,13 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/06 10:44:11 by jesmith        #+#    #+#                */
-/*   Updated: 2019/09/13 16:29:30 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/09/13 17:54:39 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void				ft_shorthand_prec(unsigned char *buffer, \
+void				ft_shorthand_prec(char *buffer, \
 				unsigned short nb_len, t_print *clipb)
 {
 	size_t index;
@@ -35,7 +35,7 @@ void				ft_shorthand_prec(unsigned char *buffer, \
 		clipb->flags->precision = index - holder;
 }
 
-unsigned short		ft_lowhexpoint_prec(unsigned char *buffer, t_print *clipb)
+unsigned short		ft_lowhexpoint_prec(char *buffer, t_print *clipb)
 {
 	size_t			dec_len;
 	unsigned short	index;
@@ -66,16 +66,16 @@ int					ft_prefix(int neg, t_print *clipb)
 	if (neg >= 0)
 	{
 		if (flagverif('+', clipb->flags) == 1)
-			if (clipb->printer((const unsigned char*)"+", 1, clipb) == -1)
+			if (clipb->printer("+", 1, clipb) == -1)
 				return (-1);
 		if (flagverif(' ', clipb->flags) == 1 && \
 		flagverif('+', clipb->flags) == -1)
 		{
-			if (clipb->printer((const unsigned char*)" ", 1, clipb) == -1)
+			if (clipb->printer(" ", 1, clipb) == -1)
 				return (-1);
 		}
 	}
-	else if (clipb->printer((const unsigned char*)"-", 1, clipb) == -1)
+	else if (clipb->printer("-", 1, clipb) == -1)
 		return (-1);
 	return (1);
 }
@@ -95,7 +95,7 @@ unsigned short		ft_ull_len(unsigned long long num, int base)
 	return (length);
 }
 
-void				ft_float_exceptions(unsigned char *buffer, long double nb, \
+void				ft_exceptions(char *buffer, long double nb, \
 				short *expon, t_print *clipb)
 {
 	if (nb == 0.0)

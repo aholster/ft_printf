@@ -6,13 +6,70 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/09 13:45:41 by jesmith        #+#    #+#                */
-/*   Updated: 2019/09/13 17:33:06 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/09/13 17:55:08 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../ft_printf.h"
 
-static void	ft_x_handler(unsigned char *buffer)
+// static int					ft_printnum(int neg, t_print *clipb, \
+// 						unsigned int nb_len)
+// {
+// 	if (neg != -1)
+// 	{
+// 		if (flagverif('+', clipb->flags) == 1)
+// 			if (clipb->printer("+", 1, clipb) == -1)
+// 				return (-1);
+// 		if (flagverif(' ', clipb->flags) == 1 && \
+// 			flagverif('+', clipb->flags) == -1)
+// 			if (clipb->printer(" ", 1, clipb) == -1)
+// 				return (-1);
+// 	}
+// 	else if (clipb->printer("-", 1, clipb) == -1)
+// 		return (-1);
+// 	if (flagverif('0', clipb->flags) == 1 && flagverif('-', clipb->flags) == -1)
+// 		if (ft_zero_padder(nb_len, clipb) == -1)
+// 			return (-1);
+// 	return (1);
+// }
+
+// static int					ft_flt_padding(unsigned char *buffer, \
+// 						int neg, unsigned short nb_len, t_print *clipb)
+// {
+// 	const unsigned char	*num;
+// 	unsigned int		calc;
+
+// 	num = (const unsigned char *)ft_itoa(nb_len - 1);
+// 	calc = ft_strlen((const char *)num) + clipb->flags->precision;// + 2;
+// 	if (flagverif('-', clipb->flags) == -1 && \
+// 	flagverif('0', clipb->flags) == -1)
+// 		if (ft_space_padder(calc, clipb) == -1)
+// 			return (-1);
+// 	if (ft_printnum(neg, clipb, calc) == -1)
+// 		return (-1);
+// 	if (clipb->printer(buffer, nb_len, clipb) == -1)
+// 		return (-1);
+// 	if (clipb->flags->precision != 0)
+// 		if (clipb->printer((const unsigned char *)".", 1, clipb) == -1)
+// 			return (-1);
+// 	rounder((size_t)clipb->flags->precision - 1, &buffer[1]);
+// 	ft_shorthand_prec(buffer, calc, clipb);
+// 	if (clipb->printer(&buffer[nb_len], \
+// 		clipb->flags->precision - nb_len, clipb) == -1)
+// 		return (-1);
+// 	if (flagverif('-', clipb->flags) == 1 && clipb->flags->padding > calc)
+// 		if (ft_space_padder(calc, clipb) == -1)
+// 			return (-1);
+// 	return (1);
+// }
+
+// static int					ft_lowshrthd_prec(unsigned char *buffer, int neg, \
+// 						unsigned short nb_len, t_print *clipb)
+// {
+// 	const unsigned char	*num;
+// 	unsigned int		calc;
+
+static void	ft_x_handler(char *buffer)
 {
 	size_t index;
 

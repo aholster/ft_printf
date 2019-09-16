@@ -6,13 +6,13 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/04/24 21:38:26 by jesmith        #+#    #+#                */
-/*   Updated: 2019/06/20 13:52:53 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/09/13 18:20:57 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int				ft_str_padding(unsigned char *str, \
+static int				ft_str_padding(const char *restrict str, \
 					unsigned short len, t_print *clipb)
 {
 	int minus;
@@ -46,13 +46,13 @@ static unsigned short	ft_str_prec(unsigned short len, t_print *clipb)
 
 int						ft_str(va_list args, t_print *clipb)
 {
-	unsigned char	*str;
-	unsigned short	len;
+	const char *restrict	str;
+	unsigned short			len;
 
-	str = va_arg(args, unsigned char*);
+	str = va_arg(args, char*);
 	if (str == NULL)
-		str = (unsigned char*)ft_strdup("(null)");
-	len = ft_strlen((char const*)str);
+		str = ft_strdup("(null)");
+	len = ft_strlen(str);
 	if (flagverif('.', clipb->flags) == 1)
 		len = ft_str_prec(len, clipb);
 	if (ft_str_padding(str, len, clipb) == -1)

@@ -6,13 +6,13 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/05 11:15:26 by jesmith        #+#    #+#                */
-/*   Updated: 2019/09/16 15:59:32 by aholster      ########   odam.nl         */
+/*   Updated: 2019/09/16 16:12:48 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include <stdio.h>
-static void	ft_x_handler(unsigned char *buffer)
+static void	ft_x_handler(char *buffer)
 {
 	size_t index;
 
@@ -133,7 +133,7 @@ int						ft_lowsci(va_list args, t_print *clipb)
 	long double			nb;
 	size_t				nb_len;
 	int					neg;
-	unsigned long long	expon;
+//	unsigned long long	expon;
 
 	neg = ft_longdouble_conv(args, &nb, clipb->flags);
 	if (ft_isinfnan(nb, clipb) == -1)
@@ -147,7 +147,7 @@ int						ft_lowsci(va_list args, t_print *clipb)
 	clipb->flags->precision, &buffer, &nb_len) == -1)
 		return (-1);
 	ft_rounder(conversion, buffer, clipb, nb_len);
-	ft_x_handler((unsigned char*)buffer);
+	ft_x_handler(buffer);
 
 	/* 
 	nb_len = ft_int_len(buffer, nb, clipb);
@@ -155,8 +155,8 @@ int						ft_lowsci(va_list args, t_print *clipb)
 	flagverif('+', clipb->flags) == 1 || flagverif(' ', clipb->flags) == 1))
 		clipb->flags->padding -= 1;*/
 	if (nb >= 0)
-		return (ft_lowsci_pos((unsigned char*)buffer, neg, nb_len, clipb));
+		return (ft_lowsci_pos(buffer, neg, nb_len, clipb));
 	if (nb < 0)
-		return (ft_lowsci_neg((unsigned char*)buffer, neg, nb_len, clipb));
+		return (ft_lowsci_neg(buffer, neg, nb_len, clipb));
 	return (1);
 }

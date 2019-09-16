@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/08/28 14:42:40 by jesmith        #+#    #+#                */
-/*   Updated: 2019/09/16 15:59:33 by aholster      ########   odam.nl         */
+/*   Updated: 2019/09/16 16:18:49 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static int					ft_end_pad(t_print *clipb, short expon, \
 						unsigned short nb_len, unsigned short str_len)
 {
 	unsigned short	expon_len;
-	unsigned char	buffer[8];
+	char			buffer[8];
 
 	if (flagverif('.', clipb->flags) == 1 && \
 	clipb->flags->precision != (str_len - 2))

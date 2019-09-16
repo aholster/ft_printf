@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/06 10:44:11 by jesmith        #+#    #+#                */
-/*   Updated: 2019/09/13 17:54:39 by aholster      ########   odam.nl         */
+/*   Updated: 2019/09/16 16:20:53 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ unsigned short		ft_ull_len(unsigned long long num, int base)
 	return (length);
 }
 
-void				ft_exceptions(char *buffer, long double nb, \
+void				ft_float_exceptions(char *buffer, long double nb, \
 				short *expon, t_print *clipb)
 {
 	if (nb == 0.0)

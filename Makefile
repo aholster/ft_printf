@@ -6,7 +6,7 @@
 #    By: jesmith <jesmith@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2019/02/16 15:46:43 by aholster       #+#    #+#                 #
-#    Updated: 2019/09/13 18:51:14 by aholster      ########   odam.nl          #
+#    Updated: 2019/09/16 16:09:47 by aholster      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,13 +19,10 @@ SUBSOURCE := ptraddr decimal char octal caphex lowhex unsigned_dec\
  longdouble_conv lowhexpoint caphexpoint capshort lowfltpoint
 
 SOURCE := printf vprintf dprintf vdprintf asprintf vasprintf\
-sprintf vsprintf snprintf vsnprintf\
-<<<<<<< HEAD
 dispatcher format flinit flagharvest functblinit padder\
-=======
-dispatcher format flinit flagharvest functblinit rounder padder\
->>>>>>> 07ef200b4ead9fd77994c264bfb9c2a80f4f0ddf
 flag_verificators handling
+#rounder
+#sprintf vsprintf snprintf vsnprintf\
 
 FILEC = $(SOURCE:%=./ft_%.c) $(SUBSOURCE:%=$(SUBDIR)ft_%.c)
 

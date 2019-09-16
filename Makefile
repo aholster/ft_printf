@@ -6,7 +6,7 @@
 #    By: jesmith <jesmith@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2019/02/16 15:46:43 by aholster       #+#    #+#                 #
-#    Updated: 2019/09/16 16:09:47 by aholster      ########   odam.nl          #
+#    Updated: 2019/09/16 17:45:42 by jesmith       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,8 +20,7 @@ SUBSOURCE := ptraddr decimal char octal caphex lowhex unsigned_dec\
 
 SOURCE := printf vprintf dprintf vdprintf asprintf vasprintf\
 dispatcher format flinit flagharvest functblinit padder\
-flag_verificators handling
-#rounder
+flag_verificators handling rounder
 #sprintf vsprintf snprintf vsnprintf\
 
 FILEC = $(SOURCE:%=./ft_%.c) $(SUBSOURCE:%=$(SUBDIR)ft_%.c)

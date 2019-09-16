@@ -15,12 +15,12 @@ DATE := $(shell date)
 SUBDIR := ./writers/
 
 SUBSOURCE := ptraddr decimal char octal caphex lowhex unsigned_dec\
- signconv unsignconv str n lowsci capsci lowshrthd capshrthd floatconv\
- lowhexpoint capshort
+ signconv unsignconv str n lowsci capsci lowshrthd capshrthd \
+ longdouble_conv lowhexpoint caphexpoint capshort lowfltpoint
 
 SOURCE := printf vprintf dprintf vdprintf asprintf vasprintf\
 sprintf vsprintf snprintf vsnprintf\
-dispatcher format flinit flagharvest functblinit padder\
+dispatcher format flinit flagharvest functblinit rounder padder\
 flag_verificators handling
 
 FILEC = $(SOURCE:%=./ft_%.c) $(SUBSOURCE:%=$(SUBDIR)ft_%.c)

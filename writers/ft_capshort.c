@@ -92,9 +92,7 @@ int						ft_capshort(va_list args, t_print *clipb)
 	int					precision;
 
 	precision = flagverif('.', clipb->flags);
-	neg = 1;
-	if (ft_signconv(args, &nb, clipb->flags) == -1)
-		neg = -1;
+	neg = ft_signconv(args, &nb, clipb->flags);
 	nb_len = ft_int_len(buffer, nb);
 	if (nb == 0 && precision == 1 && clipb->flags->padding == 0)
 		return (1);

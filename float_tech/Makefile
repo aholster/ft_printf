@@ -6,7 +6,7 @@
 #    By: aholster <aholster@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2019/02/16 15:46:43 by aholster       #+#    #+#                 #
-#    Updated: 2019/09/12 18:29:58 by aholster      ########   odam.nl          #
+#    Updated: 2019/09/16 20:47:38 by aholster      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,11 +37,6 @@ assemble: $(OBJ)
 	@cp ./../libft/libft.a ./float_tech.a
 	@$(AR) $(NAME) $(OBJ)
 	@ranlib $(NAME)
-
-exec:
-	@rm -f test
-	@$(CC) -o test $(FILEC) main.c
-	@echo "\033[0;32m test successfully assembled!\033[0;00m\n"
 
 $(NAME):
 #	@make -C ./../libft/

@@ -6,13 +6,13 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/13 15:19:36 by aholster       #+#    #+#                */
-/*   Updated: 2019/09/13 18:47:42 by aholster      ########   odam.nl         */
+/*   Updated: 2019/09/16 19:04:50 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int	ft_write_to_str(const char *restrict mem, size_t size, t_print *clipb)
+static int	ft_write_to_str(const char *restrict mem, size_t size, t_print *const clipb)
 {
 	size_t	block;
 
@@ -20,7 +20,7 @@ static int	ft_write_to_str(const char *restrict mem, size_t size, t_print *clipb
 	return (1);
 }
 
-static void	ft_vsn_clipb_init(va_list args, char *str, t_wrt_ptr printer, t_print *clipb)
+static void	ft_vsn_clipb_init(va_list args, char *str, t_wrt_ptr printer, t_print *const clipb)
 {
 	clipb->alst = NULL;
 	va_copy(clipb->origin_args, args);

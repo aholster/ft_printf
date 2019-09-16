@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/07/23 14:47:32 by aholster       #+#    #+#                */
-/*   Updated: 2019/09/12 18:30:23 by aholster      ########   odam.nl         */
+/*   Updated: 2019/09/16 21:57:25 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 # define FLOAT_TECH_H
 
 # include "./../libft/libft.h"
-
-# include <float.h>
 
 typedef union		u_float
 {

@@ -6,11 +6,11 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/03 14:19:45 by jesmith        #+#    #+#                */
-/*   Updated: 2019/09/13 17:45:26 by aholster      ########   odam.nl         */
+/*   Updated: 2019/09/16 16:25:19 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "./../ft_printf.h"
 
 static int		ft_char_pad(const char c, t_print *clipb)
 {

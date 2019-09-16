@@ -6,11 +6,11 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/21 13:13:51 by jesmith        #+#    #+#                */
-/*   Updated: 2019/09/13 17:56:26 by aholster      ########   odam.nl         */
+/*   Updated: 2019/09/16 16:25:19 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "./../ft_printf.h"
 
 static int				ft_capshort_noprec(char *buffer, int neg, \
 					unsigned short nb_len, t_print *clipb)

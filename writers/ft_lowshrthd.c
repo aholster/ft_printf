@@ -6,11 +6,11 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/21 12:57:35 by jesmith        #+#    #+#                */
-/*   Updated: 2019/09/16 16:00:03 by aholster      ########   odam.nl         */
+/*   Updated: 2019/09/16 16:25:19 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "./../ft_printf.h"
 
 #include <stdio.h>
 static int						rounder(size_t index, char *buf)

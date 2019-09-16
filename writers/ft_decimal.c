@@ -6,11 +6,11 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/05/31 12:06:16 by jesmith        #+#    #+#                */
-/*   Updated: 2019/09/13 17:47:31 by aholster      ########   odam.nl         */
+/*   Updated: 2019/09/16 16:25:19 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "./../ft_printf.h"
 
 static int				ft_decimal_noprec(char *buffer, int neg, \
 					unsigned short nb_len, t_print *clipb)

@@ -6,14 +6,14 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/05/30 19:12:27 by aholster       #+#    #+#                */
-/*   Updated: 2019/09/16 16:25:19 by aholster      ########   odam.nl         */
+/*   Updated: 2019/09/16 20:32:04 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../ft_printf.h"
 
 static int				ft_unsigned_dec_noprec(char *buffer, \
-					unsigned short nb_len, t_print *clipb)
+					unsigned short nb_len, t_print *const clipb)
 {
 	int minus;
 
@@ -38,7 +38,7 @@ static int				ft_unsigned_dec_noprec(char *buffer, \
 }
 
 static int				ft_unsigned_dec_prec(char *buffer, \
-					unsigned short nb_len, t_print *clipb)
+					unsigned short nb_len, t_print *const clipb)
 {
 	int minus;
 
@@ -79,7 +79,7 @@ static unsigned short	ft_int_len(char *buffer, \
 	return (num_len);
 }
 
-int						ft_unsigned_dec(va_list args, t_print *clipb)
+int						ft_unsigned_dec(va_list args, t_print *const clipb)
 {
 	char				buffer[20];
 	unsigned long long	nb;
@@ -87,16 +87,15 @@ int						ft_unsigned_dec(va_list args, t_print *clipb)
 	int					precision;
 
 	precision = flagverif('.', clipb->flags);
-	if (ft_unsignconv(args, &nb, clipb->flags) == -1)
-		return (-1);
+	ft_unsignconv(args, &nb, clipb->flags);
 	nb_len = ft_int_len(buffer, nb);
 	if (nb == 0 && clipb->flags->padding == 0 && precision == 1)
 		return (1);
 	if (nb == 0 && clipb->flags->precision < nb_len && precision == 1)
-		ft_strcpy((char*)buffer, " ");
+		ft_strcpy(buffer, " ");
 	if (precision == 1)
 		return (ft_unsigned_dec_prec(buffer, nb_len, clipb));
-	if (precision == -1)
+	else
 		return (ft_unsigned_dec_noprec(buffer, nb_len, clipb));
 	return (1);
 }

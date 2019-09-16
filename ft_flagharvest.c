@@ -6,14 +6,14 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/04/18 17:22:09 by aholster       #+#    #+#                */
-/*   Updated: 2019/09/13 18:20:57 by aholster      ########   odam.nl         */
+/*   Updated: 2019/09/16 21:29:00 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static void		ft_num_extract(const char *restrict format, size_t *index,\
-								unsigned int *destination)
+static void		ft_num_extract(const char *restrict format,\
+				size_t * const index, unsigned int * const destination)
 {
 	size_t			subdex;
 	unsigned int	num;
@@ -31,9 +31,30 @@ static void		ft_num_extract(const char *restrict format, size_t *index,\
 	*index = subdex;
 }
 
-static void		flagflip(const unsigned char c, t_flag *flags,\
-						const unsigned short flip)
+static int		ft_num_arg_extract(va_list args, size_t * const subdex,\
+				unsigned int * const destination)
 {
+	int				num;
+
+	num = va_arg(args, int);
+	*subdex += 1;
+	if (num < 0)
+	{
+		*destination = (-num);
+		return (-1);	
+	}
+	else
+	{
+		*destination = num;
+		return (1);
+	}
+}
+
+static void		flagflip(const unsigned char c, t_flag * const flags)
+{
+	unsigned short	flip;
+
+	flip = c / 64;
 	if ((((1LLU << (c - (flip * 64))) & flags->statidoubles[flip]) > 0))
 	{
 		if (((1LLU << (c - (flip * 64))) & flags->actiflags[flip]) > 0)
@@ -51,7 +72,7 @@ static void		flagflip(const unsigned char c, t_flag *flags,\
 		flags->actiflags[flip] |= (1LLU << (c - (flip * 64)));
 }
 
-static int		ft_valiflag(const unsigned char c, const t_flag *flags)
+static int		ft_valiflag(const unsigned char c, const t_flag * const flags)
 {
 	unsigned short	flip;
 
@@ -63,7 +84,7 @@ static int		ft_valiflag(const unsigned char c, const t_flag *flags)
 	return (-1);
 }
 
-static void		ft_flagreset(t_flag *flags)
+static void		ft_flagreset(t_flag * const flags)
 {
 	flags->actiflags[0] = 0;
 	flags->actiflags[1] = 0;
@@ -73,28 +94,33 @@ static void		ft_flagreset(t_flag *flags)
 	flags->padding = 0;
 }
 
-size_t			ft_flagharvest(const char *restrict format, t_print *clipb)
+void			ft_flagharvest(const char *restrict format,\
+								size_t *const aindex, t_print *const clipb)
 {
-	size_t			index;
-	unsigned short	flip;
+	size_t			subdex;
 
-	index = 1;
+	subdex = *aindex;
 	ft_flagreset(clipb->flags);
-	while (ft_valiflag(format[index], clipb->flags) > 0)
+	while (ft_valiflag(format[subdex], clipb->flags) > 0)
 	{
-		flip = format[index] / 64;
-		flagflip(format[index], clipb->flags, flip);
-		if (format[index] >= '1' && format[index] <= '9')
+		flagflip(format[subdex], clipb->flags);
+		if (format[subdex] >= '1' && format[subdex] <= '9')
+			ft_num_extract(format, &subdex, &clipb->flags->padding);
+		else if (format[subdex] == '.')
 		{
-			ft_num_extract(format, &index, &clipb->flags->padding);
+			subdex++;
+			if (format[subdex] == '*')
+				ft_num_arg_extract(clipb->args, &subdex, &clipb->flags->precision);
+			else
+				ft_num_extract(format, &subdex, &clipb->flags->precision);
 		}
-		else if (format[index] == '.')
+		else if (format[subdex] == '*')
 		{
-			index++;
-			ft_num_extract(format, &index, &clipb->flags->precision);
+			if (ft_num_arg_extract(clipb->args, &subdex, &clipb->flags->padding) == -1)
+				flagflip('-', clipb->flags);
 		}
 		else
-			index++;
+			subdex++;
 	}
-	return (index);
+	*aindex = subdex;
 }

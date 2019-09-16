@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/05 17:03:23 by aholster       #+#    #+#                */
-/*   Updated: 2019/09/16 16:25:19 by aholster      ########   odam.nl         */
+/*   Updated: 2019/09/16 21:08:53 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@ static int	va_short(va_list args, unsigned long long *holder)
 	num = (short)va_arg(args, int);
 	if (num < 0)
 	{
-		*holder = (unsigned long long)(-num);
+		*holder = ((-num) & 0xFFFF);
 		return (-1);
 	}
 	else
 	{
-		*holder = (unsigned long long)num;
+		*holder = num;
 		return (0);
 	}
 }
@@ -36,12 +36,12 @@ static int	va_char(va_list args, unsigned long long *holder)
 	num = (char)va_arg(args, int);
 	if (num < 0)
 	{
-		*holder = (unsigned long long)(-num);
+		*holder = ((-num) & 0xFF);
 		return (-1);
 	}
 	else
 	{
-		*holder = (unsigned long long)num;
+		*holder = num;
 		return (0);
 	}
 }
@@ -53,12 +53,12 @@ static int	va_long(va_list args, unsigned long long *holder)
 	num = (long)va_arg(args, long);
 	if (num < 0)
 	{
-		*holder = (unsigned long long)(-num);
+		*holder = ((-num) & 0xFFFFFFFF);
 		return (-1);
 	}
 	else
 	{
-		*holder = (unsigned long long)num;
+		*holder = num;
 		return (0);
 	}
 }
@@ -70,18 +70,18 @@ static int	va_int(va_list args, unsigned long long *holder)
 	num = va_arg(args, int);
 	if (num < 0)
 	{
-		*holder = (unsigned long long)(-num);
+		*holder = ((-num) & 0xFFFFFFFF);
 		return (-1);
 	}
 	else
 	{
-		*holder = (unsigned long long)num;
+		*holder = num;
 		return (0);
 	}
 }
 
 int			ft_signconv(va_list args,
-		unsigned long long *holder, const t_flag *flags)
+		unsigned long long *const holder, const t_flag *const flags)
 {
 	long long	num;
 
@@ -96,10 +96,10 @@ int			ft_signconv(va_list args,
 		num = va_arg(args, long long);
 		if (num < 0)
 		{
-			*holder = (unsigned long long)(-num);
+			*holder = ((-num) & 0xFFFFFFFFFFFFFFFF);
 			return (-1);
 		}
-		*holder = (unsigned long long)num;
+		*holder = num;
 		return (0);
 	}
 	else

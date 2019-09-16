@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/13 10:14:39 by jesmith        #+#    #+#                */
-/*   Updated: 2019/09/13 16:28:36 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/09/16 19:04:50 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static void			ft_rounder_exception(char *buffer, size_t len)
 		buffer[len] = (buffer[len] - '0') + '1';
 }
 
-void				ft_rounder(t_float conversion, char *buffer, t_print *clipb, \
+void				ft_rounder(t_float conversion, char *buffer, t_print *const clipb, \
 				size_t nb_len)
 {
 	unsigned int		precision;

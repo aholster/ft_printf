@@ -6,21 +6,21 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/19 14:43:08 by jesmith        #+#    #+#                */
-/*   Updated: 2019/09/13 18:28:59 by aholster      ########   odam.nl         */
+/*   Updated: 2019/09/16 19:04:50 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
 static void	ft_write_history(const char *restrict mem, const size_t size,\
-								t_print *clipb)
+								t_print *const clipb)
 {
 	write(clipb->fd, mem, size);
 	clipb->history += size;
 	clipb->current = 0;
 }
 
-static int	ft_bufmanager(const char *restrict mem, size_t size, t_print *clipb)
+static int	ft_bufmanager(const char *restrict mem, size_t size, t_print *const clipb)
 {
 	size_t	block;
 
@@ -44,7 +44,7 @@ static int	ft_bufmanager(const char *restrict mem, size_t size, t_print *clipb)
 }
 
 static int	ft_vd_clipb_init(va_list args, const int fd, \
-							t_wrt_ptr printer, t_print *clipb)
+							t_wrt_ptr printer, t_print *const clipb)
 {
 	clipb->alst = NULL;
 	va_copy(clipb->origin_args, args);

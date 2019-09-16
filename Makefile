@@ -6,7 +6,7 @@
 #    By: jesmith <jesmith@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2019/02/16 15:46:43 by aholster       #+#    #+#                 #
-#    Updated: 2019/09/16 17:45:42 by jesmith       ########   odam.nl          #
+#    Updated: 2019/09/16 21:01:56 by aholster      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ flag_verificators handling rounder
 
 FILEC = $(SOURCE:%=./ft_%.c) $(SUBSOURCE:%=$(SUBDIR)ft_%.c)
 
-OBJ =	$(SOURCE:%=./ft_%.o) $(SUBSOURCE:%=$(SUBDIR)ft_%.o)
+OBJ =	$(FILEC:%.c=%.o)
 
 HEAD = ft_printf.h
 
@@ -39,8 +39,11 @@ AR = ar rcs
 
 all: $(NAME)
 
+test: $(OBJ)
+	@cp ./float_tech/float_tech.a ./$(NAME)
+	@$(CC) -w -o test $(OBJ) ft_main.c -L ./ -lftprintf
+
 assemble: $(OBJ)
-#	@cp ./libft/libft.a ./$(NAME)
 	@cp ./float_tech/float_tech.a ./$(NAME)
 	@$(AR) $(NAME) $(OBJ)
 	@ranlib $(NAME)
@@ -53,7 +56,7 @@ $(NAME):
 	@echo "\033[0;32m$(NAME) successfully assembled!\033[0;00m\n"
 
 %.o: %.c
-	@$(GCCC) -o $@ $< -I ./
+	@$(GCCC) -o $@ $<
 
 clean:
 	@make clean -C ./libft

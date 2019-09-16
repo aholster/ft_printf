@@ -6,13 +6,13 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/09 13:45:41 by jesmith        #+#    #+#                */
-/*   Updated: 2019/09/16 16:13:11 by aholster      ########   odam.nl         */
+/*   Updated: 2019/09/16 19:04:50 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../ft_printf.h"
 
-// static int					ft_printnum(int neg, t_print *clipb, \
+// static int					ft_printnum(int neg, t_print *const clipb, \
 // 						unsigned int nb_len)
 // {
 // 	if (neg != -1)
@@ -34,7 +34,7 @@
 // }
 
 // static int					ft_flt_padding(unsigned char *buffer, \
-// 						int neg, unsigned short nb_len, t_print *clipb)
+// 						int neg, unsigned short nb_len, t_print *const clipb)
 // {
 // 	const unsigned char	*num;
 // 	unsigned int		calc;
@@ -64,7 +64,7 @@
 // }
 
 // static int					ft_lowshrthd_prec(unsigned char *buffer, int neg, \
-// 						unsigned short nb_len, t_print *clipb)
+// 						unsigned short nb_len, t_print *const clipb)
 // {
 // 	const unsigned char	*num;
 // 	unsigned int		calc;
@@ -82,7 +82,7 @@ static void	ft_x_handler(char *buffer)
 }
 
 static int	ft_float_padding(char *buffer, \
-			int neg, t_print *clipb, size_t nb_len)
+			int neg, t_print *const clipb, size_t nb_len)
 {
 	nb_len--;
 	if (flagverif('+', clipb->flags) == -1)
@@ -109,7 +109,7 @@ static int	ft_float_padding(char *buffer, \
 	return (1);
 }
 
-int			ft_lowfltpoint(va_list args, t_print *clipb)
+int			ft_lowfltpoint(va_list args, t_print *const clipb)
 {
 	char				*buffer;
 	t_float				conversion;

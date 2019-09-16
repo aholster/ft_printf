@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/08/28 14:42:40 by jesmith        #+#    #+#                */
-/*   Updated: 2019/09/16 16:25:19 by aholster      ########   odam.nl         */
+/*   Updated: 2019/09/16 19:04:50 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static int					ft_exponbuff(char *buffer, short expon)
 	return (backup_index + 1);
 }
 
-static int					ft_end_pad(t_print *clipb, short expon, \
+static int					ft_end_pad(t_print *const clipb, short expon, \
 						unsigned short nb_len, unsigned short str_len)
 {
 	unsigned short	expon_len;
@@ -62,7 +62,7 @@ static int					ft_end_pad(t_print *clipb, short expon, \
 }
 
 static int					ft_front_pad(char *buffer, \
-					short expon, t_print *clipb, int neg)
+					short expon, t_print *const clipb, int neg)
 {
 	unsigned short	nb_len;
 	unsigned short	str_len;
@@ -91,7 +91,7 @@ static int					ft_front_pad(char *buffer, \
 }
 
 static void					ft_man_to_buffer(unsigned long long mantissa,\
-				char *buffer, t_print *clipb)
+				char *buffer, t_print *const clipb)
 {
 	char				*base;
 	unsigned short		cur_len;
@@ -120,7 +120,7 @@ static void					ft_man_to_buffer(unsigned long long mantissa,\
 	buffer[cur_len] = base[mantissa];
 }
 
-int							ft_lowhexpoint(va_list args, t_print *clipb)
+int							ft_lowhexpoint(va_list args, t_print *const clipb)
 {
 	char			buffer[20];
 	t_float			conversion;

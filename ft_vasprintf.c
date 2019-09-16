@@ -6,14 +6,14 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/13 15:19:40 by aholster       #+#    #+#                */
-/*   Updated: 2019/09/13 18:28:52 by aholster      ########   odam.nl         */
+/*   Updated: 2019/09/16 19:04:50 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
 static int	ft_lstcreator(const char *restrict mem, const size_t size,\
-							t_print *clipb)
+							t_print *const clipb)
 {
 	t_list	*cur;
 
@@ -27,7 +27,7 @@ static int	ft_lstcreator(const char *restrict mem, const size_t size,\
 }
 
 static int	ft_lst_bufmanager(const char *restrict mem, size_t size,\
-								t_print *clipb)
+								t_print *const clipb)
 {
 	size_t	block;
 
@@ -55,7 +55,7 @@ static int	ft_lst_bufmanager(const char *restrict mem, size_t size,\
 }
 
 static int	ft_vas_clipb_init(va_list args, t_list **alst, \
-							t_wrt_ptr printer, t_print *clipb)
+							t_wrt_ptr printer, t_print *const clipb)
 {
 	clipb->alst = alst;
 	va_copy(clipb->origin_args, args);

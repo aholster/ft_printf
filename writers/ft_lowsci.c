@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/05 11:15:26 by jesmith        #+#    #+#                */
-/*   Updated: 2019/09/16 16:25:19 by aholster      ########   odam.nl         */
+/*   Updated: 2019/09/16 19:04:50 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void	ft_x_handler(char *buffer)
 	}
 }
 
-static int				ft_printnum(int neg, t_print *clipb, \
+static int				ft_printnum(int neg, t_print *const clipb, \
 							char *buffer, unsigned int nb_len)
 {
 	if (ft_prefix(neg, clipb) == -1)
@@ -40,7 +40,7 @@ static int				ft_printnum(int neg, t_print *clipb, \
 }
 
 static int				ft_lowsci_neg(char *buffer, int neg, \
-					size_t nb_len, t_print *clipb)
+					size_t nb_len, t_print *const clipb)
 {
 	const char	*num;
 
@@ -68,7 +68,7 @@ static int				ft_lowsci_neg(char *buffer, int neg, \
 }
 
 static int				ft_lowsci_pos(char *buffer, int neg, \
-					size_t nb_len, t_print *clipb)
+					size_t nb_len, t_print *const clipb)
 {
 	nb_len--;
 	// nb_len = clipb->flags->precision + 4 + ft_strlen((const char *)num);
@@ -100,7 +100,7 @@ static int				ft_lowsci_pos(char *buffer, int neg, \
 	return (1);
 }
 
-static int				ft_isinfnan(long double f, t_print *clipb)
+static int				ft_isinfnan(long double f, t_print *const clipb)
 {
 	long l;
 
@@ -126,7 +126,7 @@ static int				ft_isinfnan(long double f, t_print *clipb)
 	return (0);
 }
 
-int						ft_lowsci(va_list args, t_print *clipb)
+int						ft_lowsci(va_list args, t_print *const clipb)
 {
 	char				*buffer;
 	t_float				conversion;

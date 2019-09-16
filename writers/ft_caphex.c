@@ -6,14 +6,14 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/03 18:20:19 by jesmith        #+#    #+#                */
-/*   Updated: 2019/09/16 16:25:19 by aholster      ########   odam.nl         */
+/*   Updated: 2019/09/16 21:00:18 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../ft_printf.h"
 
 static int				ft_caphex_noprec(char *buffer, \
-				unsigned long long nb, unsigned short nb_len, t_print *clipb)
+				unsigned long long nb, unsigned short nb_len, t_print *const clipb)
 {
 	int minus;
 
@@ -37,7 +37,7 @@ static int				ft_caphex_noprec(char *buffer, \
 
 static int				ft_caphex_prec(char *buffer, \
 					unsigned long long nb, unsigned short nb_len, \
-					t_print *clipb)
+					t_print *const clipb)
 {
 	int minus;
 
@@ -76,7 +76,7 @@ static unsigned short	ft_int_len(char *buffer, \
 		buffer[0] = '0';
 		return (num_len);
 	}
-	while (temp_num > 16)
+	while (cur_len > 0)
 	{
 		buffer[cur_len] = base[(temp_num % 16)];
 		temp_num /= 16;
@@ -86,7 +86,7 @@ static unsigned short	ft_int_len(char *buffer, \
 	return (num_len);
 }
 
-int						ft_caphex(va_list args, t_print *clipb)
+int						ft_caphex(va_list args, t_print *const clipb)
 {
 	char				buffer[20];
 	unsigned long long	nb;
@@ -94,8 +94,7 @@ int						ft_caphex(va_list args, t_print *clipb)
 	int					precision;
 
 	precision = flagverif('.', clipb->flags);
-	if (ft_unsignconv(args, &nb, clipb->flags) == -1)
-		return (-1);
+	ft_unsignconv(args, &nb, clipb->flags);
 	nb_len = ft_int_len(buffer, nb);
 	if (flagverif('#', clipb->flags) == 1 && nb != 0 && \
 	clipb->flags->padding >= 2)

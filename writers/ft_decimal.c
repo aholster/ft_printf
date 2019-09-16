@@ -6,14 +6,14 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/05/31 12:06:16 by jesmith        #+#    #+#                */
-/*   Updated: 2019/09/16 16:25:19 by aholster      ########   odam.nl         */
+/*   Updated: 2019/09/16 19:04:50 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../ft_printf.h"
 
 static int				ft_decimal_noprec(char *buffer, int neg, \
-					unsigned short nb_len, t_print *clipb)
+					unsigned short nb_len, t_print *const clipb)
 {
 	int minus;
 
@@ -40,7 +40,7 @@ static int				ft_decimal_noprec(char *buffer, int neg, \
 }
 
 static int				ft_decimal_prec(char *buffer, int neg, \
-					unsigned short nb_len, t_print *clipb)
+					unsigned short nb_len, t_print *const clipb)
 {
 	int minus;
 
@@ -83,7 +83,7 @@ static unsigned short	ft_int_len(char *buffer, \
 	return (num_len);
 }
 
-int						ft_decimal(va_list args, t_print *clipb)
+int						ft_decimal(va_list args, t_print *const clipb)
 {
 	char				buffer[20];
 	unsigned long long	nb;

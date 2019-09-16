@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/01 16:56:13 by aholster       #+#    #+#                */
-/*   Updated: 2019/09/16 16:16:03 by aholster      ########   odam.nl         */
+/*   Updated: 2019/09/16 21:39:51 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 
 # define MAX_INT	2147483647
 
-# define VALID_FLG "hjlz# *.-+L0123456789"
+# define VALID_FLG "hjzl# *.-+L0123456789"
 # define VALID_D_FLG "hl"
 
 /*
@@ -52,9 +52,9 @@ typedef union			u_nptrs
 struct s_print;
 
 typedef int				(*t_wrt_ptr)(const char *restrict, size_t, \
-							struct s_print*);
+							struct s_print * const);
 
-typedef	int				(*t_writer)(va_list args, struct s_print*);
+typedef	int				(*t_writer)(va_list args, struct s_print * const);
 
 typedef struct			s_print
 {
@@ -112,61 +112,63 @@ int						ft_vdprintf(const int fd, const char *restrict format,\
 // 						const char *restrict format, va_list args);
 
 int						ft_format(const char *restrict format,\
-						t_print *clipb);
+						t_print *const clipb);
 
 int						ft_dispatcher(const char *restrict specifier,\
-								t_writer *functbl, t_print *clipb);
-size_t					ft_flagharvest(const char *restrict format,\
-						t_print *clipb);
-void					ft_flinit(t_print *clipb, t_flag *flags);
+								t_writer *functbl, t_print *const clipb);
+void					ft_flagharvest(const char *restrict format, size_t *const aindex,\
+						t_print *const clipb);
+void					ft_flinit(t_print *const clipb, t_flag *flags);
 
 void					ft_functblinit(t_writer *functbl);
 
-int						ft_zero_padder(unsigned short len, t_print *clipb);
-int						ft_space_padder(unsigned short len, t_print *clipb);
-int						pad_spaces(size_t amount, t_print *clipb);
-int						pad_zero(size_t amount, t_print *clipb);
+int						ft_zero_padder(unsigned short len, t_print *const clipb);
+int						ft_space_padder(unsigned short len, t_print *const clipb);
+int						pad_spaces(size_t amount, t_print *const clipb);
+int						pad_zero(size_t amount, t_print *const clipb);
 
 int						ft_float_padder(unsigned short len, unsigned short dec,\
-						t_print *clipb);
+						t_print *const clipb);
 
 void					ft_rounder(t_float conversion, char *buffer,\
-						t_print *clipb, size_t nb_len);
+						t_print *const clipb, size_t nb_len);
 
 void					ft_shorthand_prec(char *buffer,\
-						unsigned short nb_len, t_print *clipb);
+						unsigned short nb_len, t_print *const clipb);
 unsigned short			ft_lowhexpoint_prec(char *buffer,\
-						t_print *clipb);
-int						ft_prefix(int neg, t_print *clipb);
+						t_print *const clipb);
+int						ft_prefix(int neg, t_print *const clipb);
 unsigned short			ft_ull_len(unsigned long long num, int base);
 void					ft_float_exceptions(char *buffer, long double nb, \
-						short *expon, t_print *clipb);
+						short *expon, t_print *const clipb);
 
 int						ft_signconv(va_list args,\
-						unsigned long long *holder, const t_flag *flags);
-int						ft_unsignconv(va_list args,\
-						unsigned long long *holder, const t_flag *flags);
+						unsigned long long *const holder,\
+						const t_flag *const flags);
+void					ft_unsignconv(va_list args,\
+						unsigned long long *const holder,\
+						const t_flag *const flags);
 int						ft_longdouble_conv(va_list args, long double *holder,\
 						const t_flag *flags);
 int						flagverif(const unsigned char c, const t_flag *flags);
 int						doubleverif(const unsigned char c,\
 						const t_flag *flags);
 
-int						ft_str(va_list args, t_print *clipb);
-int						ft_ptraddr(va_list args, t_print *clipb);
-int						ft_decimal(va_list args, t_print *clipb);
-int						ft_unsigned_dec(va_list args, t_print *clipb);
-int						ft_char(va_list args, t_print *clipb);
-int						ft_octal(va_list args, t_print *clipb);
-int						ft_lowhex(va_list args, t_print *clipb);
-int						ft_caphex(va_list args, t_print *clipb);
-int						ft_lowsci(va_list args, t_print *clipb);
-int						ft_capsci(va_list args, t_print *clipb);
-int						ft_lowshrthd(va_list args, t_print *clipb);
-int						ft_capshrthd(va_list args, t_print *clipb);
-int						ft_lowhexpoint(va_list args, t_print *clipb);
-int						ft_caphexpoint(va_list args, t_print *clipb);
-int						ft_lowfltpoint(va_list args, t_print *clipb);
-int						ft_n(va_list args, t_print *clipb);
+int						ft_str(va_list args, t_print *const clipb);
+int						ft_ptraddr(va_list args, t_print *const clipb);
+int						ft_decimal(va_list args, t_print *const clipb);
+int						ft_unsigned_dec(va_list args, t_print *const clipb);
+int						ft_char(va_list args, t_print *const clipb);
+int						ft_octal(va_list args, t_print *const clipb);
+int						ft_lowhex(va_list args, t_print *const clipb);
+int						ft_caphex(va_list args, t_print *const clipb);
+int						ft_lowsci(va_list args, t_print *const clipb);
+int						ft_capsci(va_list args, t_print *const clipb);
+int						ft_lowshrthd(va_list args, t_print *const clipb);
+int						ft_capshrthd(va_list args, t_print *const clipb);
+int						ft_lowhexpoint(va_list args, t_print *const clipb);
+int						ft_caphexpoint(va_list args, t_print *const clipb);
+int						ft_lowfltpoint(va_list args, t_print *const clipb);
+int						ft_n(va_list args, t_print *const clipb);
 
 #endif

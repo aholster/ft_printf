@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/04/18 16:00:54 by aholster       #+#    #+#                */
-/*   Updated: 2019/09/16 21:54:14 by aholster      ########   odam.nl         */
+/*   Updated: 2019/09/17 21:07:00 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int	ft_operator(char conversion)
 }
 
 static int	ft_conversion_exception(const char *const restrict specifier,\
-									t_print *const clipb)
+									t_print *const restrict clipb)
 {
 	int				zeroflag;
 	int				padf;
@@ -49,7 +49,7 @@ static int	ft_conversion_exception(const char *const restrict specifier,\
 }
 
 int			ft_dispatcher(const char *restrict specifier,\
-				t_writer *functbl, t_print *const clipb)
+				t_writer *functbl, t_print *const restrict clipb)
 {
 	int				index;
 

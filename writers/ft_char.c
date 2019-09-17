@@ -6,13 +6,13 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/03 14:19:45 by jesmith        #+#    #+#                */
-/*   Updated: 2019/09/16 19:04:50 by aholster      ########   odam.nl         */
+/*   Updated: 2019/09/17 21:07:00 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../ft_printf.h"
 
-static int		ft_char_pad(const char c, t_print *const clipb)
+static int		ft_char_pad(const char c, t_print *const restrict clipb)
 {
 	if (flagverif('-', clipb->flags) == -1)
 	{
@@ -39,7 +39,7 @@ static int		ft_char_pad(const char c, t_print *const clipb)
 	return (1);
 }
 
-int				ft_char(va_list args, t_print *const clipb)
+int				ft_char(va_list args, t_print *const restrict clipb)
 {
 	char	c;
 

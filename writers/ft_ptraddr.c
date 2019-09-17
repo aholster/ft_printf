@@ -6,14 +6,14 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/05/25 13:19:52 by aholster       #+#    #+#                */
-/*   Updated: 2019/09/16 19:04:50 by aholster      ########   odam.nl         */
+/*   Updated: 2019/09/17 21:18:15 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../ft_printf.h"
 
-static int				ft_ptraddr_noprec(char *buffer, \
-					unsigned short num_len, t_print *const clipb)
+static int				ft_ptraddr_noprec(char *const restrict buffer, \
+					unsigned short num_len, t_print *const restrict clipb)
 {
 	int minus;
 
@@ -34,8 +34,8 @@ static int				ft_ptraddr_noprec(char *buffer, \
 	return (1);
 }
 
-static int				ft_ptraddr_prec(char *buffer,\
-								unsigned short num_len, t_print *const clipb)
+static int				ft_ptraddr_prec(char *const restrict buffer,\
+					unsigned short num_len, t_print *const restrict clipb)
 {
 	int minus;
 
@@ -76,7 +76,7 @@ static unsigned short	unsigned_ll_toa(char *buffer,\
 	return (num_len);
 }
 
-int						ft_ptraddr(va_list args, t_print *const clipb)
+int						ft_ptraddr(va_list args, t_print *const restrict clipb)
 {
 	unsigned long long	holder;
 	unsigned short		num_len;

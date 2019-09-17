@@ -6,14 +6,14 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/04/18 17:22:09 by aholster       #+#    #+#                */
-/*   Updated: 2019/09/16 21:29:00 by aholster      ########   odam.nl         */
+/*   Updated: 2019/09/17 21:19:09 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
 static void		ft_num_extract(const char *restrict format,\
-				size_t * const index, unsigned int * const destination)
+				size_t *const index, unsigned int *const destination)
 {
 	size_t			subdex;
 	unsigned int	num;
@@ -31,8 +31,8 @@ static void		ft_num_extract(const char *restrict format,\
 	*index = subdex;
 }
 
-static int		ft_num_arg_extract(va_list args, size_t * const subdex,\
-				unsigned int * const destination)
+static int		ft_num_arg_extract(va_list args, size_t *const subdex,\
+				unsigned int *const destination)
 {
 	int				num;
 
@@ -41,7 +41,7 @@ static int		ft_num_arg_extract(va_list args, size_t * const subdex,\
 	if (num < 0)
 	{
 		*destination = (-num);
-		return (-1);	
+		return (-1);
 	}
 	else
 	{
@@ -50,7 +50,7 @@ static int		ft_num_arg_extract(va_list args, size_t * const subdex,\
 	}
 }
 
-static void		flagflip(const unsigned char c, t_flag * const flags)
+static void		flagflip(const unsigned char c, t_flag *const flags)
 {
 	unsigned short	flip;
 
@@ -72,7 +72,8 @@ static void		flagflip(const unsigned char c, t_flag * const flags)
 		flags->actiflags[flip] |= (1LLU << (c - (flip * 64)));
 }
 
-static int		ft_valiflag(const unsigned char c, const t_flag * const flags)
+static int		ft_valiflag(const unsigned char c,\
+				const t_flag *const restrict flags)
 {
 	unsigned short	flip;
 
@@ -84,7 +85,7 @@ static int		ft_valiflag(const unsigned char c, const t_flag * const flags)
 	return (-1);
 }
 
-static void		ft_flagreset(t_flag * const flags)
+static void		ft_flagreset(t_flag *const restrict flags)
 {
 	flags->actiflags[0] = 0;
 	flags->actiflags[1] = 0;
@@ -95,7 +96,7 @@ static void		ft_flagreset(t_flag * const flags)
 }
 
 void			ft_flagharvest(const char *restrict format,\
-								size_t *const aindex, t_print *const clipb)
+					size_t *const aindex, t_print *const restrict clipb)
 {
 	size_t			subdex;
 

@@ -6,13 +6,13 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/21 11:16:26 by jesmith        #+#    #+#                */
-/*   Updated: 2019/09/16 19:04:50 by aholster      ########   odam.nl         */
+/*   Updated: 2019/09/17 21:07:00 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../ft_printf.h"
 
-static int				ft_printnum(int neg, t_print *const clipb, \
+static int				ft_printnum(int neg, t_print *const restrict clipb, \
 							char *buffer, unsigned int nb_len)
 {
 	if (neg != -1)
@@ -41,7 +41,7 @@ static int				ft_printnum(int neg, t_print *const clipb, \
 }
 
 static int				ft_capsci_neg(char *buffer, int neg, \
-					unsigned short nb_len, t_print *const clipb)
+					unsigned short nb_len, t_print *const restrict clipb)
 {
 	const char			*num;
 	unsigned int		calc;
@@ -71,7 +71,7 @@ static int				ft_capsci_neg(char *buffer, int neg, \
 }
 
 static int				ft_capsci_pos(char *buffer, int neg, \
-					unsigned short nb_len, t_print *const clipb)
+					unsigned short nb_len, t_print *const restrict clipb)
 {
 	const char			*num;
 	unsigned int		calc;
@@ -121,7 +121,7 @@ static int	rounder(size_t index, char *buf)
 	return (0);
 }
 
-static unsigned long long	ft_float_buffer(long double num, char *buffer, t_print *const clipb)
+static unsigned long long	ft_float_buffer(long double num, char *buffer, t_print *const restrict clipb)
 {
 	unsigned char subnum;
 	size_t	index;
@@ -152,7 +152,7 @@ static unsigned long long	ft_float_buffer(long double num, char *buffer, t_print
 }
 
 static unsigned short	ft_int_len(char *buffer, \
-					long double nb, t_print *const clipb)
+					long double nb, t_print *const restrict clipb)
 {
 	unsigned long long	temp_num;
 	unsigned short		prec_len;
@@ -179,7 +179,7 @@ static unsigned short	ft_int_len(char *buffer, \
 	return (prec_len);
 }
 
-static int				ft_isinfnan(float f, t_print *const clipb)
+static int				ft_isinfnan(float f, t_print *const restrict clipb)
 {
 	long l;
 
@@ -205,7 +205,7 @@ static int				ft_isinfnan(float f, t_print *const clipb)
 	return (0);
 }
 
-int						ft_capsci(va_list args, t_print *const clipb)
+int						ft_capsci(va_list args, t_print *const restrict clipb)
 {
 	char				buffer[200000];
 	long double			nb;

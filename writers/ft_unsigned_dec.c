@@ -6,14 +6,14 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/05/30 19:12:27 by aholster       #+#    #+#                */
-/*   Updated: 2019/09/16 20:32:04 by aholster      ########   odam.nl         */
+/*   Updated: 2019/09/17 21:16:16 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../ft_printf.h"
 
-static int				ft_unsigned_dec_noprec(char *buffer, \
-					unsigned short nb_len, t_print *const clipb)
+static int				ft_unsigned_dec_noprec(char *const restrict buffer,\
+					unsigned short nb_len, t_print *const restrict clipb)
 {
 	int minus;
 
@@ -37,8 +37,8 @@ static int				ft_unsigned_dec_noprec(char *buffer, \
 	return (1);
 }
 
-static int				ft_unsigned_dec_prec(char *buffer, \
-					unsigned short nb_len, t_print *const clipb)
+static int				ft_unsigned_dec_prec(char *const restrict buffer,\
+					unsigned short nb_len, t_print *const restrict clipb)
 {
 	int minus;
 
@@ -57,7 +57,7 @@ static int				ft_unsigned_dec_prec(char *buffer, \
 	return (1);
 }
 
-static unsigned short	ft_int_len(char *buffer, \
+static unsigned short	ft_int_len(char *const restrict buffer,\
 					unsigned long long nb)
 {
 	unsigned long long	temp_num;
@@ -79,7 +79,8 @@ static unsigned short	ft_int_len(char *buffer, \
 	return (num_len);
 }
 
-int						ft_unsigned_dec(va_list args, t_print *const clipb)
+int						ft_unsigned_dec(va_list args,\
+						t_print *const restrict clipb)
 {
 	char				buffer[20];
 	unsigned long long	nb;

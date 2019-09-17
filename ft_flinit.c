@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/04/18 17:44:14 by aholster       #+#    #+#                */
-/*   Updated: 2019/09/16 19:04:50 by aholster      ########   odam.nl         */
+/*   Updated: 2019/09/17 21:07:00 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static void	init_dflags(t_flag *flags)
 	}
 }
 
-void		ft_flinit(t_print *const clipb, t_flag *flags)
+void		ft_flinit(t_print *const restrict clipb, t_flag *flags)
 {
 	(*clipb).flags = flags;
 	(*flags).statiflags[0] = 0;

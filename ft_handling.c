@@ -6,14 +6,14 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/06 10:44:11 by jesmith        #+#    #+#                */
-/*   Updated: 2019/09/16 19:04:50 by aholster      ########   odam.nl         */
+/*   Updated: 2019/09/17 21:19:40 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void				ft_shorthand_prec(char *buffer, \
-				unsigned short nb_len, t_print *const clipb)
+void				ft_shorthand_prec(char *const restrict buffer,\
+				unsigned short nb_len, t_print *const restrict clipb)
 {
 	size_t index;
 	size_t holder;
@@ -35,7 +35,8 @@ void				ft_shorthand_prec(char *buffer, \
 		clipb->flags->precision = index - holder;
 }
 
-unsigned short		ft_lowhexpoint_prec(char *buffer, t_print *const clipb)
+unsigned short		ft_lowhexpoint_prec(char *const restrict buffer,\
+					t_print *const restrict clipb)
 {
 	size_t			dec_len;
 	unsigned short	index;
@@ -61,7 +62,7 @@ unsigned short		ft_lowhexpoint_prec(char *buffer, t_print *const clipb)
 	return (index);
 }
 
-int					ft_prefix(int neg, t_print *const clipb)
+int					ft_prefix(int neg, t_print *const restrict clipb)
 {
 	if (neg >= 0)
 	{
@@ -96,7 +97,7 @@ unsigned short		ft_ull_len(unsigned long long num, int base)
 }
 
 void				ft_float_exceptions(char *buffer, long double nb, \
-				short *expon, t_print *const clipb)
+				short *expon, t_print *const restrict clipb)
 {
 	if (nb == 0.0)
 	{

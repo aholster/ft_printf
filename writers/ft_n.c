@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/11 19:04:14 by aholster       #+#    #+#                */
-/*   Updated: 2019/09/16 19:04:50 by aholster      ########   odam.nl         */
+/*   Updated: 2019/09/17 21:07:00 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static int	ft_single_flags(va_list args, size_t history, t_flag *flags)
 	return (-1);
 }
 
-int			ft_n(va_list args, t_print *const clipb)
+int			ft_n(va_list args, t_print *const restrict clipb)
 {
 	size_t	history;
 	t_flag	*flags;

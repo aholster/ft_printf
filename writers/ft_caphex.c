@@ -6,14 +6,14 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/03 18:20:19 by jesmith        #+#    #+#                */
-/*   Updated: 2019/09/16 21:00:18 by aholster      ########   odam.nl         */
+/*   Updated: 2019/09/17 21:28:02 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../ft_printf.h"
 
-static int				ft_caphex_noprec(char *buffer, \
-				unsigned long long nb, unsigned short nb_len, t_print *const clipb)
+static int				ft_caphex_noprec(char *const restrict buffer,\
+unsigned long long nb, unsigned short nb_len, t_print *const restrict clipb)
 {
 	int minus;
 
@@ -35,9 +35,9 @@ static int				ft_caphex_noprec(char *buffer, \
 	return (1);
 }
 
-static int				ft_caphex_prec(char *buffer, \
+static int				ft_caphex_prec(char *const restrict buffer, \
 					unsigned long long nb, unsigned short nb_len, \
-					t_print *const clipb)
+					t_print *const restrict clipb)
 {
 	int minus;
 
@@ -59,34 +59,29 @@ static int				ft_caphex_prec(char *buffer, \
 	return (1);
 }
 
-static unsigned short	ft_int_len(char *buffer, \
+static unsigned short	ull_to_hex(char *const restrict buffer,\
 					unsigned long long nb)
 {
-	unsigned long long	temp_num;
-	unsigned short		num_len;
-	unsigned short		cur_len;
+	unsigned short		index;
 	char				*base;
 
 	base = "0123456789ABCDEF";
-	temp_num = nb;
-	num_len = ft_ull_len(nb, 16);
-	cur_len = num_len - 1;
+	index = 0;
 	if (nb == 0)
 	{
 		buffer[0] = '0';
-		return (num_len);
+		return (1);
 	}
-	while (cur_len > 0)
+	while (nb > 0)
 	{
-		buffer[cur_len] = base[(temp_num % 16)];
-		temp_num /= 16;
-		cur_len--;
+		buffer[index] = base[nb & 0XFLLU];
+		nb >>= 4;
+		index++;
 	}
-	buffer[cur_len] = base[temp_num];
-	return (num_len);
+	return (index);
 }
 
-int						ft_caphex(va_list args, t_print *const clipb)
+int						ft_caphex(va_list args, t_print *const restrict clipb)
 {
 	char				buffer[20];
 	unsigned long long	nb;
@@ -95,14 +90,17 @@ int						ft_caphex(va_list args, t_print *const clipb)
 
 	precision = flagverif('.', clipb->flags);
 	ft_unsignconv(args, &nb, clipb->flags);
-	nb_len = ft_int_len(buffer, nb);
+	nb_len = ull_to_hex(buffer, nb);
 	if (flagverif('#', clipb->flags) == 1 && nb != 0 && \
-	clipb->flags->padding >= 2)
+		clipb->flags->padding >= 2)
 		clipb->flags->padding -= 2;
-	if (nb == 0 && clipb->flags->padding == 0 && precision == 1)
-		return (1);
-	if (nb == 0 && clipb->flags->precision == 0 && precision == 1)
-		ft_strcpy((char*)buffer, " ");
+	if (nb == 0 && precision == 0)
+	{
+		if (clipb->flags->padding == 0)
+			return (1);
+		if (clipb->flags->precision == 0)
+			ft_strcpy(buffer, " ");
+	}
 	if (precision == 1)
 		return (ft_caphex_prec(buffer, nb, nb_len, clipb));
 	else

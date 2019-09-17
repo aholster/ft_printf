@@ -6,14 +6,14 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/03 15:08:26 by jesmith        #+#    #+#                */
-/*   Updated: 2019/09/16 20:31:51 by aholster      ########   odam.nl         */
+/*   Updated: 2019/09/17 21:07:00 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../ft_printf.h"
 
 static int				ft_octal_noprec(char *buffer, \
-					unsigned short nb_len, t_print *const clipb)
+					unsigned short nb_len, t_print *const restrict clipb)
 {
 	int minus;
 
@@ -39,7 +39,7 @@ static int				ft_octal_noprec(char *buffer, \
 }
 
 static int				ft_octal_prec(char *buffer, \
-					unsigned short nb_len, t_print *const clipb)
+					unsigned short nb_len, t_print *const restrict clipb)
 {
 	int minus;
 
@@ -59,7 +59,7 @@ static int				ft_octal_prec(char *buffer, \
 }
 
 static unsigned short	ft_int_len(char *buffer, \
-					unsigned long long nb, t_print *const clipb)
+					unsigned long long nb, t_print *const restrict clipb)
 {
 	unsigned long long	temp_num;
 	unsigned short		num_len;
@@ -86,7 +86,7 @@ static unsigned short	ft_int_len(char *buffer, \
 	return (num_len);
 }
 
-int						ft_octal(va_list args, t_print *const clipb)
+int						ft_octal(va_list args, t_print *const restrict clipb)
 {
 	char				buffer[20];
 	unsigned long long	nb;

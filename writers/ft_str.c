@@ -6,14 +6,14 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/04/24 21:38:26 by jesmith        #+#    #+#                */
-/*   Updated: 2019/09/16 20:44:51 by aholster      ########   odam.nl         */
+/*   Updated: 2019/09/17 21:07:00 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../ft_printf.h"
 
 static int	ft_str_padding(const char *const restrict str, const size_t len,\
-			t_print *const clipb)
+			t_print *const restrict clipb)
 {
 	int		zeroflag;
 	int		padf;
@@ -42,7 +42,7 @@ static int	ft_str_padding(const char *const restrict str, const size_t len,\
 	return (1);
 }
 
-int			ft_str(va_list args, t_print *const clipb)
+int			ft_str(va_list args, t_print *const restrict clipb)
 {
 	const char *restrict	str;
 	size_t					len;

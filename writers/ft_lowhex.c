@@ -6,15 +6,14 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/03 16:34:02 by jesmith        #+#    #+#                */
-/*   Updated: 2019/09/16 20:59:44 by aholster      ########   odam.nl         */
+/*   Updated: 2019/09/17 21:26:28 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../ft_printf.h"
 
-static int				ft_lowhex_noprec(char *buffer, \
-					unsigned long long nb, unsigned short nb_len, \
-					t_print *const clipb)
+static int				ft_lowhex_noprec(char *const restrict buffer, \
+unsigned long long nb, unsigned short nb_len, t_print *const restrict clipb)
 {
 	int minus;
 
@@ -36,9 +35,8 @@ static int				ft_lowhex_noprec(char *buffer, \
 	return (1);
 }
 
-static int				ft_lowhex_prec(char *buffer, \
-					unsigned long long nb, unsigned short nb_len, \
-					t_print *const clipb)
+static int				ft_lowhex_prec(char *const restrict buffer,\
+unsigned long long nb, unsigned short nb_len, t_print *const restrict clipb)
 {
 	int minus;
 
@@ -60,34 +58,29 @@ static int				ft_lowhex_prec(char *buffer, \
 	return (1);
 }
 
-static unsigned short	ft_int_len(char *buffer, \
+static unsigned short	ull_to_hex(char *const restrict buffer,\
 					unsigned long long nb)
 {
-	unsigned long long	temp_num;
-	unsigned short		num_len;
-	unsigned short		cur_len;
+	unsigned short		index;
 	char				*base;
 
 	base = "0123456789abcdef";
-	temp_num = nb;
-	num_len = ft_ull_len(nb, 16);
-	cur_len = num_len - 1;
+	index = 0;
 	if (nb == 0)
 	{
 		buffer[0] = '0';
-		return (num_len);
+		return (1);
 	}
-	while (cur_len > 0)
+	while (nb > 0)
 	{
-		buffer[cur_len] = base[(temp_num % 16)];
-		temp_num /= 16;
-		cur_len--;
+		buffer[index] = base[nb & 0XFLLU];
+		nb >>= 4;
+		index++;
 	}
-	buffer[cur_len] = base[temp_num];
-	return (num_len);
+	return (index);
 }
 
-int						ft_lowhex(va_list args, t_print *const clipb)
+int						ft_lowhex(va_list args, t_print *const restrict clipb)
 {
 	char				buffer[20];
 	unsigned long long	nb;
@@ -96,14 +89,17 @@ int						ft_lowhex(va_list args, t_print *const clipb)
 
 	precision = flagverif('.', clipb->flags);
 	ft_unsignconv(args, &nb, clipb->flags);
-	nb_len = ft_int_len(buffer, nb);
+	nb_len = ull_to_hex(buffer, nb);
 	if (flagverif('#', clipb->flags) == 1 && nb != 0 && \
-	clipb->flags->padding >= 2)
+		clipb->flags->padding >= 2)
 		clipb->flags->padding -= 2;
-	if (nb == 0 && clipb->flags->padding == 0 && precision == 1)
-		return (1);
-	if (nb == 0 && clipb->flags->precision == 0 && precision == 1)
-		ft_strcpy((char*)buffer, " ");
+	if (nb == 0 && precision == 1)
+	{
+		if (clipb->flags->padding == 0)
+			return (1);
+		if (clipb->flags->precision == 0)
+			ft_strcpy(buffer, " ");
+	}
 	if (precision == 1)
 		return (ft_lowhex_prec(buffer, nb, nb_len, clipb));
 	else

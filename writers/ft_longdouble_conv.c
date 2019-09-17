@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/25 15:08:50 by jesmith        #+#    #+#                */
-/*   Updated: 2019/09/16 19:15:43 by aholster      ########   odam.nl         */
+/*   Updated: 2019/09/17 21:21:25 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ int			ft_longdouble_conv(va_list args, long double *holder, \
 			return (1);
 		}
 		*holder = (-num);
-
 		return (-1);
 	}
 	else

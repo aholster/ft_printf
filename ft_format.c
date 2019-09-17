@@ -6,14 +6,14 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/04/17 19:57:30 by aholster       #+#    #+#                */
-/*   Updated: 2019/09/16 21:31:00 by aholster      ########   odam.nl         */
+/*   Updated: 2019/09/17 21:22:29 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
 static int		ft_judex(const char *restrict format, size_t *index,\
-				const size_t len, t_print *const clipb)
+				const size_t len, t_print *const restrict clipb)
 {
 	size_t	judex;
 
@@ -32,18 +32,15 @@ static int		ft_charskip(const char *c)
 {
 	if (c[0] == '\0')
 		return (0);
-	// if ((c[0] & 128) == 0)
-	// 	return (1);
-	// else if (c[0] >= 240 && c[0] <= 247)
-	// 	return (4);
-	// else if (c[0] >= 224 && c[0] <= 239)
-	// 	return (3);
-	// else if (c[0] >= 192 && c[0] <= 223)
-	// 	return (2);
 	return (1);
 }
 
-int				ft_format(const char *restrict format, t_print *const clipb)
+/*
+**	possibly add W_char or utf8 support for charskip
+*/
+
+int				ft_format(const char *restrict format,\
+							t_print *const restrict clipb)
 {
 	size_t		index;
 	size_t		len;

@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/01 16:56:13 by aholster       #+#    #+#                */
-/*   Updated: 2019/09/17 21:14:46 by aholster      ########   odam.nl         */
+/*   Updated: 2019/09/17 23:43:54 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,9 @@
 # include "./libft/libft.h"
 # include "./float_tech/float_tech.h"
 
-# define BUFFSIZE	10
+# include "ft_printf_fsm.h"
+
+# define BUFFSIZE	8
 # define FUNCSIZE	58
 
 # define MAX_INT	2147483647
@@ -76,6 +78,30 @@ typedef	struct		s_flag
 	unsigned int	precision;
 	unsigned int	padding;
 }					t_flag;
+
+/*
+**	FSM experiment found below:
+*/
+
+typedef enum		e_systemstate
+{
+	plaintxt,
+	flags,
+	convspec,
+	error,
+}					t_systemstate;
+
+typedef	int			(*t_machine_state)(const char *restrict, struct s_print *const restrict);
+
+typedef struct		s_state_table
+{
+	t_systemstate	relevant_state;
+	t_machine_state	state_pointer;
+}					t_state_table;
+
+/*
+**	FSM ends here
+*/
 
 int					ft_printf(const char *restrict format, ...);
 int					ft_vprintf(const char *restrict format, va_list args);

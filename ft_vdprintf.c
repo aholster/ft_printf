@@ -6,15 +6,15 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/19 14:43:08 by jesmith        #+#    #+#                */
-/*   Updated: 2019/09/18 18:30:35 by aholster      ########   odam.nl         */
+/*   Updated: 2019/09/18 20:25:11 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include "./incl/ft_internals.h"
 
-static void	ft_write_history(const char *restrict mem, const size_t size,\
-								t_print *const restrict clipb)
+static void	ft_write_history(const char *const restrict mem, const size_t size,\
+							t_writer *const restrict clipb)
 {
 	write(clipb->fd, mem, size);
 	clipb->history += size;
@@ -22,7 +22,7 @@ static void	ft_write_history(const char *restrict mem, const size_t size,\
 }
 
 static int	ft_bufmanager(const char *restrict mem,\
-							size_t size, t_print *const restrict clipb)
+							size_t size, t_writer *const restrict clipb)
 {
 	size_t	block;
 
@@ -46,15 +46,14 @@ static int	ft_bufmanager(const char *restrict mem,\
 }
 
 static int	ft_vd_clipb_init(va_list args, const int fd, \
-							t_wrt_ptr printer, t_print *const restrict clipb)
+						t_wrt_ptr printer, t_writer *const restrict clipb)
 {
 	clipb->alst = NULL;
-	va_copy(clipb->origin_args, args);
 	va_copy(clipb->args, args);
 	clipb->history = 0;
 	clipb->current = 0;
 	clipb->fd = fd;
-	clipb->printer = printer;
+	clipb->self = printer;
 	clipb->buffer = (char *)malloc(sizeof(char) * BUFFSIZE);
 	if (clipb->buffer == NULL)
 		return (-1);
@@ -63,7 +62,7 @@ static int	ft_vd_clipb_init(va_list args, const int fd, \
 
 int			ft_vdprintf(const int fd, const char *restrict format, va_list args)
 {
-	t_print		clipb;
+	t_writer	clipb;
 
 	if (ft_vd_clipb_init(args, fd, ft_bufmanager, &clipb) == -1)
 		return (-1);
@@ -75,7 +74,6 @@ int			ft_vdprintf(const int fd, const char *restrict format, va_list args)
 	ft_bufmanager(NULL, 0, &clipb);
 	free(clipb.buffer);
 	va_copy(args, clipb.args);
-	va_end(clipb.origin_args);
 	va_end(clipb.args);
 	return (clipb.history);
 }

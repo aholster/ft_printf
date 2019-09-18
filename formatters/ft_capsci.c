@@ -1,19 +1,107 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_capshrthd.c                                     :+:    :+:            */
+/*   ft_capsci.c                                        :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2019/06/27 11:34:23 by jesmith        #+#    #+#                */
-/*   Updated: 2019/09/18 18:30:35 by aholster      ########   odam.nl         */
+/*   Created: 2019/06/21 11:16:26 by jesmith        #+#    #+#                */
+/*   Updated: 2019/09/18 20:24:57 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../ft_printf.h"
 #include "./../incl/ft_internals.h"
 
-static int						rounder(size_t index, char *buf)
+static int				ft_printnum(int neg, t_writer *const restrict clipb, \
+							char *buffer, unsigned int nb_len)
+{
+	if (neg != -1)
+	{
+		if (flagverif('+', clipb->flags) == 1)
+			if (clipb->self("+", 1, clipb) == -1)
+				return (-1);
+		if (flagverif(' ', clipb->flags) == 1 && \
+			flagverif('+', clipb->flags) == -1)
+			if (clipb->self(" ", 1, clipb) == -1)
+				return (-1);
+	}
+	else if (clipb->self("-", 1, clipb) == -1)
+		return (-1);
+	if (flagverif('0', clipb->flags) == 1 && flagverif('-', clipb->flags) == -1)
+		if (ft_zero_padder(nb_len, clipb) == -1)
+			return (-1);
+	if (clipb->self(buffer, 1, clipb) == -1)
+		return (-1);
+	if (clipb->flags->precision != 0)
+		if (clipb->self(".", 1, clipb) == -1)
+			return (-1);
+	if (clipb->self(&buffer[1], clipb->flags->precision, clipb) == -1)
+		return (-1);
+	return (1);
+}
+
+static int				ft_capsci_neg(char *buffer, int neg, \
+					unsigned short nb_len, t_writer *const restrict clipb)
+{
+	const char			*num;
+	unsigned int		calc;
+
+	num = ft_itoa(nb_len - 1);
+	calc = clipb->flags->precision + 4 + ft_strlen(num);
+	if (nb_len - 1 < 10)
+		calc++;
+	if (flagverif('-', clipb->flags) == -1 && \
+	flagverif('0', clipb->flags) == -1)
+		if (ft_space_padder(calc, clipb) == -1)
+			return (-1);
+	if (ft_printnum(neg, clipb, buffer, calc) == -1)
+		return (-1);
+	if (clipb->self("E-", 2, clipb) == -1)
+		return (-1);
+	if (nb_len - 1 < 10)
+		if (clipb->self("0", 1, clipb) == -1)
+			return (-1);
+	if (clipb->self(num, \
+	ft_strlen(num), clipb) == -1)
+		return (-1);
+	if (flagverif('-', clipb->flags) == 1 && clipb->flags->padding > calc)
+		if (ft_space_padder(calc, clipb) == -1)
+			return (-1);
+	return (1);
+}
+
+static int				ft_capsci_pos(char *buffer, int neg, \
+					unsigned short nb_len, t_writer *const restrict clipb)
+{
+	const char			*num;
+	unsigned int		calc;
+
+	num = ft_itoa(nb_len - 1);
+	calc = clipb->flags->precision + 4 + ft_strlen(num);
+	if (nb_len - 1 < 10)
+		calc++;
+	if (flagverif('-', clipb->flags) == -1 && \
+	flagverif('0', clipb->flags) == -1)
+		if (ft_space_padder(calc, clipb) == -1)
+			return (-1);
+	if (ft_printnum(neg, clipb, buffer, calc) == -1)
+		return (-1);
+	if (clipb->self("E+", 2, clipb) == -1)
+		return (-1);
+	if (nb_len - 1 < 10)
+		if (clipb->self("0", 1, clipb) == -1)
+			return (-1);
+	if (clipb->self(num, \
+	ft_strlen(num), clipb) == -1)
+		return (-1);
+	if (flagverif('-', clipb->flags) == 1 && clipb->flags->padding > calc)
+		if (ft_space_padder(calc, clipb) == -1)
+			return (-1);
+	return (1);
+}
+
+static int	rounder(size_t index, char *buf)
 {
 	if (index > 0)
 		index--;
@@ -25,13 +113,7 @@ static int						rounder(size_t index, char *buf)
 		index--;
 	}
 	if (buf[index] != '9')
-	{
-		if (buf[index + 1] > 5)
-		{
-			buf[index]++;
-			buf[index + 1] = '0';
-		}
-	}
+		buf[index]++;
 	else
 	{
 		buf[index] = '0';
@@ -40,92 +122,11 @@ static int						rounder(size_t index, char *buf)
 	return (0);
 }
 
-static int					ft_printnum(int neg, t_print *const restrict clipb, \
-						unsigned int nb_len)
+static unsigned long long	ft_float_buffer(long double num, char *buffer, t_writer *const restrict clipb)
 {
-	if (neg != -1)
-	{
-		if (flagverif('+', clipb->flags) == 1)
-			if (clipb->printer("+", 1, clipb) == -1)
-				return (-1);
-		if (flagverif(' ', clipb->flags) == 1 && \
-			flagverif('+', clipb->flags) == -1)
-			if (clipb->printer(" ", 1, clipb) == -1)
-				return (-1);
-	}
-	else if (clipb->printer("-", 1, clipb) == -1)
-		return (-1);
-	if (flagverif('0', clipb->flags) == 1 && flagverif('-', clipb->flags) == -1)
-		if (ft_zero_padder(nb_len, clipb) == -1)
-			return (-1);
-	return (1);
-}
-
-static int					ft_lowshrthd_noprec(char *buffer, \
-						int neg, unsigned short nb_len, t_print *const restrict clipb)
-{
-	const char	*num;
-	unsigned int		calc;
-
-	num = ft_itoa(nb_len - 1);
-	calc = ft_strlen(num) + clipb->flags->precision; // + 2;
-	if (flagverif('-', clipb->flags) == -1 && \
-	flagverif('0', clipb->flags) == -1)
-		if (ft_space_padder(calc, clipb) == -1)
-			return (-1);
-	if (ft_printnum(neg, clipb, nb_len) == -1)
-		return (-1);
-	if (clipb->printer(buffer, nb_len, clipb) == -1)
-		return (-1);
-	if (clipb->flags->precision != 0)
-		if (clipb->printer(".", 1, clipb) == -1)
-			return (-1);
-	rounder((size_t)clipb->flags->precision - 1, &buffer[1]);
-	ft_shorthand_prec(buffer, nb_len, clipb);
-	if (clipb->printer(&buffer[nb_len], clipb->flags->precision, clipb) == -1)
-		return (-1);
-	if (flagverif('-', clipb->flags) == 1 && clipb->flags->padding > calc)
-		if (ft_space_padder(calc, clipb) == -1)
-			return (-1);
-	return (1);
-}
-
-static int					ft_lowshrthd_prec(char *buffer, int neg, \
-						unsigned short nb_len, t_print *const restrict clipb)
-{
-	const char			*num;
-	unsigned int		calc;
-
-	num = ft_itoa(nb_len - 1);
-	calc = clipb->flags->precision + ft_strlen(num); // + 2;
-	if (flagverif('-', clipb->flags) == -1 && \
-	flagverif('0', clipb->flags) == -1)
-		if (ft_space_padder(calc, clipb) == -1)
-			return (-1);
-	rounder((size_t)clipb->flags->precision - 1, &buffer[1]);
-	ft_shorthand_prec(buffer, nb_len, clipb);
-	if (ft_printnum(neg, clipb, calc) == -1)
-		return (-1);
-	if (clipb->printer(buffer, nb_len, clipb) == -1)
-		return (-1);
-	if (clipb->flags->precision != 0)
-		if (clipb->printer(".", 1, clipb) == -1)
-			return (-1);
-	if (clipb->printer(&buffer[nb_len], \
-		 clipb->flags->precision - nb_len, clipb) == -1)
-		return (-1);
-	if (flagverif('-', clipb->flags) == 1 && clipb->flags->padding > calc)
-		if (ft_space_padder(calc, clipb) == -1)
-			return (-1);
-	return (1);
-}
-
-static unsigned long long	ft_float_buffer(long double num, \
-						char *buffer, t_print *const restrict clipb)
-{
-	unsigned char		subnum;
-	size_t				index;
-	unsigned long long	longcast;
+	unsigned char subnum;
+	size_t	index;
+	unsigned long long longcast;
 
 	index = ft_strlen(buffer);
 	longcast = (unsigned long long)num;
@@ -145,12 +146,14 @@ static unsigned long long	ft_float_buffer(long double num, \
 	{
 		if ((longcast & 1) == 1)
 			return (longcast + 1);
+		else
+			return (longcast);
 	}
 	return (longcast);
 }
 
-static unsigned short		ft_int_len(char *buffer, \
-						long double nb, t_print *const restrict clipb)
+static unsigned short	ft_int_len(char *buffer, \
+					long double nb, t_writer *const restrict clipb)
 {
 	unsigned long long	temp_num;
 	unsigned short		prec_len;
@@ -177,25 +180,53 @@ static unsigned short		ft_int_len(char *buffer, \
 	return (prec_len);
 }
 
-int							ft_capshrthd(va_list args, t_print *const restrict clipb)
+static int				ft_isinfnan(float f, t_writer *const restrict clipb)
 {
-	char				buffer[20];
+	long l;
+
+	l = *((long *)&f);
+	if (f != f)
+	{
+		if (clipb->self("NAN", 3, clipb) == -1)
+			return (-1);
+		return (1);
+	}
+	if (l == 0x7F800000)
+	{
+		if (clipb->self("INF", 3, clipb) == -1)
+			return (-1);
+		return (1);
+	}
+	if (l == 0xFF800000)
+	{
+		if (clipb->self("-INF", 4, clipb) == -1)
+			return (-1);
+		return (1);
+	}
+	return (0);
+}
+
+int						ft_capsci(va_list args, t_writer *const restrict clipb)
+{
+	char				buffer[200000];
 	long double			nb;
 	unsigned long long	nb_len;
 	int					neg;
 
-	neg = ft_longdouble_conv(args, &nb, clipb->flags);
+	neg = 1;
+	if (ft_longdouble_conv(args, &nb, clipb->flags) == -1)
+		neg = -1;
+	if (ft_isinfnan((float)nb, clipb) == -1)
+		return (-1);
 	if (flagverif('.', clipb->flags) == -1)
 		clipb->flags->precision = 6;
-	else if (clipb->flags->precision == 0)
-		clipb->flags->precision = 1;
 	nb_len = ft_int_len(buffer, nb, clipb);
 	if (clipb->flags->padding != 0 && (neg == -1 || \
 	flagverif('+', clipb->flags) == 1 || flagverif(' ', clipb->flags) == 1))
 		clipb->flags->padding -= 1;
-	if (flagverif('.', clipb->flags) == 1)
-		return (ft_lowshrthd_prec(buffer, neg, nb_len, clipb));
-	if (flagverif('.', clipb->flags) == -1)
-		return (ft_lowshrthd_noprec(buffer, neg, nb_len, clipb));
+	if (nb >= 0)
+		return (ft_capsci_pos(buffer, neg, nb_len, clipb));
+	if (nb < 0)
+		return (ft_capsci_neg(buffer, neg, nb_len, clipb));
 	return (1);
 }

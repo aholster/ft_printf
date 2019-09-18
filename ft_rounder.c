@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/13 10:14:39 by jesmith        #+#    #+#                */
-/*   Updated: 2019/09/18 18:30:35 by aholster      ########   odam.nl         */
+/*   Updated: 2019/09/18 20:24:07 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static void			ft_rounder_exception(char *const restrict buffer,\
 }
 
 void				ft_rounder(t_float conversion, char *const restrict buffer,\
-					t_print *const restrict clipb, size_t nb_len)
+				t_writer *const restrict clipb, size_t nb_len)
 {
 	unsigned int		precision;
 	unsigned int		rounding_num;

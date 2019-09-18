@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/04/18 17:22:09 by aholster       #+#    #+#                */
-/*   Updated: 2019/09/18 18:30:35 by aholster      ########   odam.nl         */
+/*   Updated: 2019/09/18 20:24:25 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ static void		ft_flagreset(t_flag *const restrict flags)
 }
 
 void			ft_flagharvest(const char *restrict format,\
-					size_t *const aindex, t_print *const restrict clipb)
+					size_t *const aindex, t_writer *const restrict clipb)
 {
 	size_t			subdex;
 

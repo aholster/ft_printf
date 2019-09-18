@@ -6,13 +6,13 @@
 #    By: jesmith <jesmith@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2019/02/16 15:46:43 by aholster       #+#    #+#                 #
-#    Updated: 2019/09/18 19:06:02 by aholster      ########   odam.nl          #
+#    Updated: 2019/09/18 20:35:16 by aholster      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
 DATE := $(shell date)
 
-SUBDIR := ./writers/
+SUBDIR := ./formatters/
 
 SUBSOURCE := ptraddr decimal char octal caphex lowhex unsigned_dec\
  signconv unsignconv str n lowsci capsci lowshrthd capshrthd \
@@ -27,7 +27,7 @@ FILEC = $(SOURCE:%=./ft_%.c) $(SUBSOURCE:%=$(SUBDIR)ft_%.c)
 
 OBJ =	$(FILEC:%.c=%.o)
 
-HEAD = ./ft_printf.h ./incl/ft_internals.h
+HEAD = ./ft_printf.h ./incl/ft_internals.h ./incl/ft_writer.h
 
 NAME = libftprintf.a
 

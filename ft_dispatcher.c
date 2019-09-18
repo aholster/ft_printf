@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/04/18 16:00:54 by aholster       #+#    #+#                */
-/*   Updated: 2019/09/18 18:25:23 by aholster      ########   odam.nl         */
+/*   Updated: 2019/09/18 20:24:57 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static int	ft_operator(char conversion)
 }
 
 static int	ft_conversion_exception(const char *const restrict specifier,\
-									t_print *const restrict clipb)
+								t_writer *const restrict clipb)
 {
 	int				zeroflag;
 	int				padf;
@@ -36,12 +36,12 @@ static int	ft_conversion_exception(const char *const restrict specifier,\
 			padf = ft_zero_padder(len, clipb);
 		else
 			padf = ft_space_padder(len, clipb);
-		if (padf == -1 || clipb->printer(specifier, len, clipb) == -1)
+		if (padf == -1 || clipb->self(specifier, len, clipb) == -1)
 			return (-1);
 	}
 	else
 	{
-		if (clipb->printer(specifier, len, clipb) == -1)
+		if (clipb->self(specifier, len, clipb) == -1)
 			return (-1);
 		padf = ft_space_padder(len, clipb);
 		if (padf == -1)
@@ -51,7 +51,7 @@ static int	ft_conversion_exception(const char *const restrict specifier,\
 }
 
 int			ft_dispatcher(const char *restrict specifier,\
-				t_writer *functbl, t_print *const restrict clipb)
+				t_formatter *functbl, t_writer *const restrict clipb)
 {
 	int				index;
 

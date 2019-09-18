@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/05/25 13:19:52 by aholster       #+#    #+#                */
-/*   Updated: 2019/09/18 18:30:35 by aholster      ########   odam.nl         */
+/*   Updated: 2019/09/18 20:24:57 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "./../incl/ft_internals.h"
 
 static int				ft_ptraddr_noprec(char *const restrict buffer, \
-					unsigned short num_len, t_print *const restrict clipb)
+					unsigned short num_len, t_writer *const restrict clipb)
 {
 	int minus;
 
@@ -22,12 +22,12 @@ static int				ft_ptraddr_noprec(char *const restrict buffer, \
 	if (minus == -1 && flagverif('0', clipb->flags) == -1)
 		if (ft_space_padder(num_len, clipb) == -1)
 			return (-1);
-	if (clipb->printer("0x", 2, clipb) == -1)
+	if (clipb->self("0x", 2, clipb) == -1)
 		return (-1);
 	if (flagverif('0', clipb->flags) == 1 && minus == -1)
 		if (ft_zero_padder(num_len, clipb) == -1)
 			return (-1);
-	if (clipb->printer(buffer, num_len, clipb) == -1)
+	if (clipb->self(buffer, num_len, clipb) == -1)
 		return (-1);
 	if (minus == 1 && clipb->flags->padding > num_len)
 		if (ft_space_padder(num_len, clipb) == -1)
@@ -36,7 +36,7 @@ static int				ft_ptraddr_noprec(char *const restrict buffer, \
 }
 
 static int				ft_ptraddr_prec(char *const restrict buffer,\
-					unsigned short num_len, t_print *const restrict clipb)
+					unsigned short num_len, t_writer *const restrict clipb)
 {
 	int minus;
 
@@ -44,12 +44,12 @@ static int				ft_ptraddr_prec(char *const restrict buffer,\
 	if (minus == -1 && clipb->flags->padding > num_len)
 		if (ft_space_padder(num_len, clipb) == -1)
 			return (-1);
-	if (clipb->printer("0x", 2, clipb) == -1)
+	if (clipb->self("0x", 2, clipb) == -1)
 		return (-1);
 	if (flagverif('.', clipb->flags) == 1 && clipb->flags->precision > num_len)
 		if (ft_zero_padder(num_len, clipb) == -1)
 			return (-1);
-	if (clipb->printer(buffer, num_len, clipb) == -1)
+	if (clipb->self(buffer, num_len, clipb) == -1)
 		return (-1);
 	if (minus == 1 && clipb->flags->padding > num_len)
 		if (ft_space_padder(num_len, clipb) == -1)
@@ -77,7 +77,7 @@ static unsigned short	unsigned_ll_toa(char *buffer,\
 	return (num_len);
 }
 
-int						ft_ptraddr(va_list args, t_print *const restrict clipb)
+int						ft_ptraddr(va_list args, t_writer *const restrict clipb)
 {
 	unsigned long long	holder;
 	unsigned short		num_len;

@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/04/17 19:57:30 by aholster       #+#    #+#                */
-/*   Updated: 2019/09/18 18:59:56 by aholster      ########   odam.nl         */
+/*   Updated: 2019/09/18 20:24:57 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "./incl/ft_internals.h"
 
 static int		ft_judex(const char *restrict format, size_t *index,\
-				const size_t len, t_print *const restrict clipb)
+				const size_t len, t_writer *const restrict clipb)
 {
 	size_t	judex;
 
@@ -23,7 +23,7 @@ static int		ft_judex(const char *restrict format, size_t *index,\
 	{
 		judex++;
 	}
-	if (clipb->printer(format + *index, judex - *index, clipb) == -1)
+	if (clipb->self(format + *index, judex - *index, clipb) == -1)
 		return (-1);
 	*index = judex;
 	return (1);
@@ -41,12 +41,12 @@ static int		ft_charskip(const char *c)
 */
 
 int				ft_format(const char *restrict format,\
-							t_print *const restrict clipb)
+						t_writer *const restrict clipb)
 {
 	size_t		index;
 	size_t		len;
 	t_flag		flags;
-	t_writer	functbl[FUNCSIZE];
+	t_formatter	functbl[FUNCSIZE];
 
 	index = 0;
 	len = ft_strlen(format);

@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/04/24 21:38:26 by jesmith        #+#    #+#                */
-/*   Updated: 2019/09/18 18:30:35 by aholster      ########   odam.nl         */
+/*   Updated: 2019/09/18 20:24:57 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "./../incl/ft_internals.h"
 
 static int	ft_str_padding(const char *const restrict str, const size_t len,\
-			t_print *const restrict clipb)
+		t_writer *const restrict clipb)
 {
 	int		zeroflag;
 	int		padf;
@@ -26,12 +26,12 @@ static int	ft_str_padding(const char *const restrict str, const size_t len,\
 			padf = ft_zero_padder(len, clipb);
 		else
 			padf = ft_space_padder(len, clipb);
-		if (padf == -1 || clipb->printer(str, len, clipb) == -1)
+		if (padf == -1 || clipb->self(str, len, clipb) == -1)
 			return (-1);
 	}
 	else
 	{
-		if (clipb->printer(str, len, clipb) == -1)
+		if (clipb->self(str, len, clipb) == -1)
 			return (-1);
 		if (zeroflag == 1)
 			padf = ft_zero_padder(len, clipb);
@@ -43,7 +43,7 @@ static int	ft_str_padding(const char *const restrict str, const size_t len,\
 	return (1);
 }
 
-int			ft_str(va_list args, t_print *const restrict clipb)
+int			ft_str(va_list args, t_writer *const restrict clipb)
 {
 	const char *restrict	str;
 	size_t					len;

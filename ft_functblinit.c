@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/04/24 19:14:05 by jesmith        #+#    #+#                */
-/*   Updated: 2019/09/18 18:30:35 by aholster      ########   odam.nl         */
+/*   Updated: 2019/09/18 19:27:32 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static unsigned short	slider(unsigned char c)
 	return (c - 'A');
 }
 
-static void				functbl_clear(t_writer *functbl)
+static void				functbl_clear(t_formatter *functbl)
 {
 	unsigned short	index;
 
@@ -30,7 +30,7 @@ static void				functbl_clear(t_writer *functbl)
 	}
 }
 
-void					ft_functblinit(t_writer *functbl)
+void					ft_functblinit(t_formatter *functbl)
 {
 	functbl_clear(functbl);
 	functbl[slider('a')] = ft_lowhexpoint;

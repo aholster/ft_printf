@@ -6,11 +6,12 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/13 10:14:39 by jesmith        #+#    #+#                */
-/*   Updated: 2019/09/17 21:28:40 by aholster      ########   odam.nl         */
+/*   Updated: 2019/09/18 18:30:35 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+#include "./incl/ft_internals.h"
 
 static size_t		ft_handling_nine(char *const restrict buffer, size_t len)
 {

@@ -6,11 +6,12 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/06 10:44:11 by jesmith        #+#    #+#                */
-/*   Updated: 2019/09/17 21:19:40 by aholster      ########   odam.nl         */
+/*   Updated: 2019/09/18 18:30:35 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+#include "./incl/ft_internals.h"
 
 void				ft_shorthand_prec(char *const restrict buffer,\
 				unsigned short nb_len, t_print *const restrict clipb)

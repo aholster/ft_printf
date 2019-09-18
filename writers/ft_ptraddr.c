@@ -6,11 +6,12 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/05/25 13:19:52 by aholster       #+#    #+#                */
-/*   Updated: 2019/09/17 21:18:15 by aholster      ########   odam.nl         */
+/*   Updated: 2019/09/18 18:30:35 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../ft_printf.h"
+#include "./../incl/ft_internals.h"
 
 static int				ft_ptraddr_noprec(char *const restrict buffer, \
 					unsigned short num_len, t_print *const restrict clipb)

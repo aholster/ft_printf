@@ -6,11 +6,12 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/25 15:08:50 by jesmith        #+#    #+#                */
-/*   Updated: 2019/09/17 21:21:25 by aholster      ########   odam.nl         */
+/*   Updated: 2019/09/18 18:30:35 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../ft_printf.h"
+#include "./../incl/ft_internals.h"
 
 static int	va_long(va_list args, long double *holder)
 {

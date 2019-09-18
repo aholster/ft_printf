@@ -6,7 +6,7 @@
 #    By: jesmith <jesmith@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2019/02/16 15:46:43 by aholster       #+#    #+#                 #
-#    Updated: 2019/09/16 21:01:56 by aholster      ########   odam.nl          #
+#    Updated: 2019/09/18 19:06:02 by aholster      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ FILEC = $(SOURCE:%=./ft_%.c) $(SUBSOURCE:%=$(SUBDIR)ft_%.c)
 
 OBJ =	$(FILEC:%.c=%.o)
 
-HEAD = ft_printf.h
+HEAD = ./ft_printf.h ./incl/ft_internals.h
 
 NAME = libftprintf.a
 
@@ -40,8 +40,9 @@ AR = ar rcs
 all: $(NAME)
 
 test: $(OBJ)
+	@rm -f testf
 	@cp ./float_tech/float_tech.a ./$(NAME)
-	@$(CC) -w -o test $(OBJ) ft_main.c -L ./ -lftprintf
+	@$(CC) -w -o testf $(OBJ) ft_main.c -L ./ -lftprintf
 
 assemble: $(OBJ)
 	@cp ./float_tech/float_tech.a ./$(NAME)

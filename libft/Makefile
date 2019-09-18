@@ -6,7 +6,7 @@
 #    By: aholster <aholster@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2019/02/16 15:46:43 by aholster       #+#    #+#                 #
-#    Updated: 2019/09/12 18:27:50 by aholster      ########   odam.nl          #
+#    Updated: 2019/09/18 18:30:35 by aholster      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,6 @@ CUSOR:= nbrlen del lstaddend itoba iswhitespace isprime power putstrarr\
  memdup strarrnew textangle stralloc bitprint putmem putmem_fd\
  putmemendl putmemendl_fd lstmemtomem lststrtostr iscapital islowercase\
  stock_read stock_write putcaret putcaret_fd
-
 
 FILEC = $(ADVOR:%=./ft_%.c) $(BONOR:%=./ft_%.c)\
 		$(CUSOR:%=./ft_%.c) $(BASICOR:%=./ft_%.c)

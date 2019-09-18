@@ -6,11 +6,12 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/19 14:43:08 by jesmith        #+#    #+#                */
-/*   Updated: 2019/09/17 21:20:52 by aholster      ########   odam.nl         */
+/*   Updated: 2019/09/18 18:30:35 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+#include "./incl/ft_internals.h"
 
 static void	ft_write_history(const char *restrict mem, const size_t size,\
 								t_print *const restrict clipb)

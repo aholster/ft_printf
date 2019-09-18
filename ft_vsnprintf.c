@@ -6,11 +6,12 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/13 15:19:36 by aholster       #+#    #+#                */
-/*   Updated: 2019/09/17 21:07:00 by aholster      ########   odam.nl         */
+/*   Updated: 2019/09/18 18:30:35 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+#include "./incl/ft_internals.h"
 
 static int	ft_write_to_str(const char *restrict mem, size_t size, t_print *const restrict clipb)
 {
@@ -39,7 +40,6 @@ int			ft_vsnprintf(char *str, size_t size, const char *restrict format, va_list 
 	if (size == 0)
 		return (0);
 	ft_vsn_clipb_init(args, str, ft_write_to_str, &clipb);
-
 
 	return (clipb.history);
 }

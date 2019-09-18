@@ -6,11 +6,13 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/04/18 16:00:54 by aholster       #+#    #+#                */
-/*   Updated: 2019/09/17 21:07:00 by aholster      ########   odam.nl         */
+/*   Updated: 2019/09/18 18:25:23 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+#include "./incl/ft_internals.h"
+
 #include <stdio.h>
 
 static int	ft_operator(char conversion)

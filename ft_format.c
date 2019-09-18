@@ -6,11 +6,12 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/04/17 19:57:30 by aholster       #+#    #+#                */
-/*   Updated: 2019/09/17 21:22:29 by aholster      ########   odam.nl         */
+/*   Updated: 2019/09/18 18:59:56 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+#include "./incl/ft_internals.h"
 
 static int		ft_judex(const char *restrict format, size_t *index,\
 				const size_t len, t_print *const restrict clipb)

@@ -6,15 +6,15 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/03 18:20:19 by jesmith        #+#    #+#                */
-/*   Updated: 2019/09/18 18:30:35 by aholster      ########   odam.nl         */
+/*   Updated: 2019/09/19 11:20:22 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../ft_printf.h"
 #include "./../incl/ft_internals.h"
 
-static int				ft_caphex_noprec(char *const restrict buffer,\
-unsigned long long nb, unsigned short nb_len, t_print *const restrict clipb)
+static int				ft_caphex_noprec(char *buffer, unsigned long long nb, \
+					unsigned short nb_len, t_print *const restrict clipb)
 {
 	int minus;
 
@@ -36,9 +36,8 @@ unsigned long long nb, unsigned short nb_len, t_print *const restrict clipb)
 	return (1);
 }
 
-static int				ft_caphex_prec(char *const restrict buffer, \
-					unsigned long long nb, unsigned short nb_len, \
-					t_print *const restrict clipb)
+static int				ft_caphex_prec(char *buffer, unsigned long long nb, \
+					unsigned short nb_len, t_print *const restrict clipb)
 {
 	int minus;
 
@@ -60,8 +59,7 @@ static int				ft_caphex_prec(char *const restrict buffer, \
 	return (1);
 }
 
-static unsigned short	ull_to_hex(char *const restrict buffer,\
-					unsigned long long nb)
+static unsigned short	ull_to_hex(char *buffer, unsigned long long nb)
 {
 	unsigned short		index;
 	char				*base;
@@ -82,7 +80,8 @@ static unsigned short	ull_to_hex(char *const restrict buffer,\
 	return (index);
 }
 
-int						ft_caphex(va_list args, t_print *const restrict clipb)
+int						ft_caphex(va_list args, \
+					t_print *const restrict clipb)
 {
 	char				buffer[20];
 	unsigned long long	nb;

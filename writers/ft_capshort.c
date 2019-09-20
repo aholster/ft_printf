@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/21 13:13:51 by jesmith        #+#    #+#                */
-/*   Updated: 2019/09/18 18:30:35 by aholster      ########   odam.nl         */
+/*   Updated: 2019/09/19 11:22:30 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ static unsigned short	ft_int_len(char *buffer, \
 }
 
 int						ft_capshort(va_list args,\
-								t_print *const restrict clipb)
+					t_print *const restrict clipb)
 {
 	char				buffer[20];
 	unsigned long long	nb;

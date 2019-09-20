@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/05/31 12:06:16 by jesmith        #+#    #+#                */
-/*   Updated: 2019/09/18 18:30:35 by aholster      ########   odam.nl         */
+/*   Updated: 2019/09/19 11:24:33 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,7 @@ static int				ft_decimal_prec(char *buffer, int neg, \
 	return (1);
 }
 
-static unsigned short	ft_int_len(char *buffer, \
-					unsigned long long nb)
+static unsigned short	ft_int_len(char *buffer, unsigned long long nb)
 {
 	unsigned long long	temp_num;
 	unsigned short		num_len;

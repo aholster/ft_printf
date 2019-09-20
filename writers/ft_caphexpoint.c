@@ -6,14 +6,14 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/10 12:13:37 by jesmith        #+#    #+#                */
-/*   Updated: 2019/09/18 18:30:35 by aholster      ########   odam.nl         */
+/*   Updated: 2019/09/20 13:14:49 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../ft_printf.h"
 #include "./../incl/ft_internals.h"
 
-static int					ft_exponbuff(char *buffer, short expon)
+static int					ft_expon_buff(char *buffer, short expon)
 {
 	unsigned short	index;
 	int				neg;
@@ -40,7 +40,7 @@ static int					ft_exponbuff(char *buffer, short expon)
 	return (backup_index + 1);
 }
 
-static int					ft_end_pad(t_print *const restrict clipb, short expon, \
+static int					ft_end_pad(t_print *const clipb, short expon, \
 						unsigned short nb_len, unsigned short str_len)
 {
 	unsigned short	expon_len;
@@ -50,35 +50,34 @@ static int					ft_end_pad(t_print *const restrict clipb, short expon, \
 	clipb->flags->precision != (str_len - 2))
 		if (pad_zero(clipb->flags->precision, clipb) == -1)
 			return (-1);
-	expon_len = ft_exponbuff(buffer, expon);
+	expon_len = ft_expon_buff(buffer, expon);
 	if (clipb->printer(buffer, expon_len, clipb) == -1)
 		return (-1);
 	if (clipb->flags->precision == 0)
 		str_len--;
 	if (flagverif('-', clipb->flags) == 1 \
 	&& clipb->flags->padding > clipb->flags->precision)
-		if (ft_float_padder(nb_len + str_len, str_len, clipb) == -1)
+		if (ft_float_padder(nb_len + str_len, str_len - 2, clipb) == -1)
 			return (-1);
 	return (1);
 }
 
 static int					ft_front_pad(char *buffer, \
-					short expon, t_print *const restrict clipb, int neg)
+					short expon, t_print *const clipb, int neg)
 {
-	unsigned short	nb_len;
+	unsigned short	expon_len;
 	unsigned short	str_len;
 
 	str_len = ft_lowhexpoint_prec(buffer, clipb);
-	nb_len = ft_nbrlen((long long)expon, 10) + 3;
+	expon_len = ft_nbrlen((long long)expon, 10) + 3;
 	if (expon >= 0)
-		nb_len++;
-	if (neg < 0)
-		nb_len++;
+		expon_len++;
+	expon_len += ft_negpos_handler(clipb, neg);
 	if (flagverif('.', clipb->flags) == 1 && clipb->flags->precision == 0)
-		nb_len--;
+		expon_len--;
 	if (flagverif('-', clipb->flags) == -1 && \
 	clipb->flags->padding > clipb->flags->precision)
-		if (ft_float_padder(nb_len + str_len, str_len, clipb) == -1)
+		if (ft_float_padder(expon_len + str_len, str_len - 2, clipb) == -1)
 			return (-1);
 	if (ft_prefix(neg, clipb) == -1)
 		return (-1);
@@ -86,19 +85,19 @@ static int					ft_front_pad(char *buffer, \
 		return (-1);
 	if (clipb->printer(buffer, str_len, clipb) == -1)
 		return (-1);
-	if (ft_end_pad(clipb, expon, nb_len, str_len) == -1)
+	if (ft_end_pad(clipb, expon, expon_len, str_len) == -1)
 		return (-1);
 	return (1);
 }
 
-static void					ft_man_to_buffer(unsigned long long mantissa, \
-						char *buffer, t_print *const restrict clipb)
+static void					ft_man_to_buffer(unsigned long long mantissa,\
+						char *buffer, t_print *const clipb, short expon)
 {
 	char				*base;
 	unsigned short		cur_len;
 	size_t				buffer_trim;
 
-	base = "0123456789abcdef";
+	base = "0123456789ABCDEF";
 	buffer_trim = 0;
 	cur_len = ft_ull_len(mantissa, 16);
 	while (mantissa > 16)
@@ -109,11 +108,10 @@ static void					ft_man_to_buffer(unsigned long long mantissa, \
 			buffer[cur_len] = base[(mantissa % 16)];
 			buffer_trim++;
 		}
-		if (cur_len == 2 && \
-		(clipb->flags->precision != 0 || buffer[cur_len + 1] == 'f'))
+		if (cur_len == 2 && (clipb->flags->precision != 0 || expon == 1020))
 		{
-			cur_len--;
-			buffer[cur_len] = '.';
+				cur_len--;
+				buffer[cur_len] = '.';
 		}
 		mantissa /= 16;
 		cur_len--;
@@ -123,11 +121,11 @@ static void					ft_man_to_buffer(unsigned long long mantissa, \
 
 int							ft_caphexpoint(va_list args, t_print *const restrict clipb)
 {
-	char				buffer[20];
-	t_float				conversion;
-	long double			nb;
-	int					neg;
-	short				expon;
+	char			buffer[18];
+	t_float			conversion;
+	long double		nb;
+	int				neg;
+	short			expon;
 
 	neg = ft_longdouble_conv(args, &nb, clipb->flags);
 	conversion.ld = nb;
@@ -136,8 +134,9 @@ int							ft_caphexpoint(va_list args, t_print *const restrict clipb)
 	else
 	{
 		expon = (conversion.byte[4] & 0x7FFF) - 16386;
-		ft_man_to_buffer(conversion.llu, buffer, clipb);
+		ft_man_to_buffer(conversion.llu, buffer, clipb, expon);
 	}
+	ft_hexpoint_rounder(buffer, clipb, &expon);
 	if (ft_front_pad(buffer, expon, clipb, neg) == -1)
 		return (-1);
 	return (1);

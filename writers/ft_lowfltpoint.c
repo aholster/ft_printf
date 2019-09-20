@@ -6,126 +6,83 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/09 13:45:41 by jesmith        #+#    #+#                */
-/*   Updated: 2019/09/18 18:30:35 by aholster      ########   odam.nl         */
+/*   Updated: 2019/09/20 13:16:00 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../ft_printf.h"
 #include "./../incl/ft_internals.h"
 
-// static int					ft_printnum(int neg, t_print *const restrict clipb, \
-// 						unsigned int nb_len)
-// {
-// 	if (neg != -1)
-// 	{
-// 		if (flagverif('+', clipb->flags) == 1)
-// 			if (clipb->printer("+", 1, clipb) == -1)
-// 				return (-1);
-// 		if (flagverif(' ', clipb->flags) == 1 && \
-// 			flagverif('+', clipb->flags) == -1)
-// 			if (clipb->printer(" ", 1, clipb) == -1)
-// 				return (-1);
-// 	}
-// 	else if (clipb->printer("-", 1, clipb) == -1)
-// 		return (-1);
-// 	if (flagverif('0', clipb->flags) == 1 && flagverif('-', clipb->flags) == -1)
-// 		if (ft_zero_padder(nb_len, clipb) == -1)
-// 			return (-1);
-// 	return (1);
-// }
-
-// static int					ft_flt_padding(unsigned char *buffer, \
-// 						int neg, unsigned short nb_len, t_print *const restrict clipb)
-// {
-// 	const unsigned char	*num;
-// 	unsigned int		calc;
-
-// 	num = (const unsigned char *)ft_itoa(nb_len - 1);
-// 	calc = ft_strlen((const char *)num) + clipb->flags->precision;// + 2;
-// 	if (flagverif('-', clipb->flags) == -1 && \
-// 	flagverif('0', clipb->flags) == -1)
-// 		if (ft_space_padder(calc, clipb) == -1)
-// 			return (-1);
-// 	if (ft_printnum(neg, clipb, calc) == -1)
-// 		return (-1);
-// 	if (clipb->printer(buffer, nb_len, clipb) == -1)
-// 		return (-1);
-// 	if (clipb->flags->precision != 0)
-// 		if (clipb->printer((const unsigned char *)".", 1, clipb) == -1)
-// 			return (-1);
-// 	rounder((size_t)clipb->flags->precision - 1, &buffer[1]);
-// 	ft_shorthand_prec(buffer, calc, clipb);
-// 	if (clipb->printer(&buffer[nb_len], \
-// 		clipb->flags->precision - nb_len, clipb) == -1)
-// 		return (-1);
-// 	if (flagverif('-', clipb->flags) == 1 && clipb->flags->padding > calc)
-// 		if (ft_space_padder(calc, clipb) == -1)
-// 			return (-1);
-// 	return (1);
-// }
-
-// static int					ft_lowshrthd_prec(unsigned char *buffer, int neg, \
-// 						unsigned short nb_len, t_print *const restrict clipb)
-// {
-// 	const unsigned char	*num;
-// 	unsigned int		calc;
-
-static void	ft_x_handler(char *buffer)
+static size_t 	ft_x_offset(char *buffer, size_t *nb_len, \
+			t_print *const restrict clipb, int neg)
 {
-	size_t index;
+	size_t offset;
 
-	index = 0;
-	while (buffer[index] != '\0')
+	offset = 0;
+	if (buffer[0] == 'X')
 	{
-		buffer[index] = buffer[index + 1];
-		index++;
+		if (neg == 1)
+		{
+			if (flagverif('+', clipb->flags) == 1)
+				buffer[0] = '+';
+			else if (flagverif(' ', clipb->flags) == 1 && \
+			flagverif('+', clipb->flags) == -1)
+				buffer[0] = ' ';
+			else if (flagverif('+', clipb->flags) == -1 \
+			&& flagverif(' ', clipb->flags) == -1)
+			{
+				offset++;
+				nb_len -= 1;
+			}
+		}
+		else
+			buffer[0] = '-';
 	}
+	return (offset);
 }
 
-static int	ft_float_padding(char *buffer, \
-			int neg, t_print *const restrict clipb, size_t nb_len)
+static int		ft_float_padding(char * buffer, t_print *const clipb, \
+			size_t nb_len, int neg)
 {
-	nb_len--;
-	if (flagverif('+', clipb->flags) == -1)
-		nb_len--;
+	size_t offset;
+
+	offset = ft_x_offset(buffer, &nb_len, clipb, neg);
+	nb_len -= offset;
 	if (flagverif('-', clipb->flags) == -1 && \
 	flagverif('0', clipb->flags) == -1)
 		if (ft_space_padder(nb_len, clipb) == -1)
 			return (-1);
-	if (ft_prefix(neg, clipb) == -1)
-		return (-1);
-	ft_x_handler(buffer);
-	if (flagverif('+', clipb->flags) == 1)
-		nb_len--;
-	if (flagverif('0', clipb->flags) == 1 && flagverif('-', clipb->flags) == -1)
+	if (flagverif('-', clipb->flags) == -1 && \
+	flagverif('0', clipb->flags) == 1)
 		if (ft_zero_padder(nb_len, clipb) == -1)
 			return (-1);
-	if (clipb->printer(buffer, nb_len, clipb) == -1)
+	if (clipb->printer(buffer + offset, nb_len, clipb) == -1)
 		return (-1);
-	if (neg == -1)
-		nb_len++;
 	if (flagverif('-', clipb->flags) == 1)
 		if (ft_space_padder(nb_len, clipb) == -1)
 			return (-1);
 	return (1);
 }
 
-int			ft_lowfltpoint(va_list args, t_print *const restrict clipb)
+int				ft_lowfltpoint(va_list args, t_print *const clipb)
 {
 	char				*buffer;
-	t_float				conversion;
 	long double			nb;
 	size_t				nb_len;
 	int					neg;
+	int					ret_hold;
 
 	neg = ft_longdouble_conv(args, &nb, clipb->flags);
-	conversion.ld = nb;
-	nb_len = (size_t)ft_ull_len(conversion.llu, 10);
 	if (flagverif('.', clipb->flags) == -1)
 		clipb->flags->precision = 6;
 	if (ft_custom_ld_to_text(nb, \
 	clipb->flags->precision, &buffer, &nb_len) == -1)
 		return (-1);
-	ft_rounder(conversion, buffer, clipb, nb_len);
-	return (ft_float_padding(buffer, neg, clipb, nb_len));
+	if (clipb->flags->precision == 0)
+		nb_len--;
+	ft_buffer_rounder(buffer, clipb, nb_len);
+	nb_len--;
+	ret_hold = ft_float_padding(buffer, clipb, nb_len, neg);
+	free(buffer);
+	return (ret_hold);
 }

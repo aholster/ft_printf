@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/18 18:17:05 by aholster       #+#    #+#                */
-/*   Updated: 2019/09/20 13:17:25 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/09/24 11:16:22 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,8 @@ int					ft_float_padder(unsigned short len, unsigned short dec, \
 
 void				ft_buffer_rounder(char *buffer, \
 						t_print *const restrict clipb, size_t nb_len);
+void				ft_shrthd_rounder(char *buffer, \
+						t_print *const restrict clipb, size_t nb_len);
 
 // long double			ft_hexpoint_rounder(long double nb, \
 // 						t_print *const restrict clipb);
@@ -146,6 +148,7 @@ int					ft_caphex(va_list args, t_print *const restrict clipb);
 int					ft_lowsci(va_list args, t_print *const restrict clipb);
 int					ft_capsci(va_list args, t_print *const restrict clipb);
 int					ft_lowshrthd(va_list args, t_print *const restrict clipb);
+int					ft_shrthd_lowsci(char *buffer, t_print *const restrict clipb, long double nb, short nb_len);
 int					ft_capshrthd(va_list args, t_print *const restrict clipb);
 int					ft_lowhexpoint(va_list args,\
 							t_print *const restrict clipb);

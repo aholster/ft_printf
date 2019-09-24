@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/19 16:00:34 by jesmith        #+#    #+#                */
-/*   Updated: 2019/09/20 13:11:35 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/09/23 09:24:07 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ void		ft_hexpoint_rounder(char *buffer, \
 			if (*expon == 1020 && flagverif('.', clipb->flags) == 1)
 				ft_dlbmax_case(buffer, expon, clipb);
 			else if (*expon != 1020)
-			ft_rounding_up(buffer, index, base_ref);
+				ft_rounding_up(buffer, index, base_ref);
 			else if ((buffer[index] - '0') <= (base_ref[0] - '0') \
 			&& (buffer[index] - '0') < (base_ref[9] - '0'))
 				ft_add_one(buffer, index);

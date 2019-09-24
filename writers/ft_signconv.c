@@ -6,13 +6,13 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/05 17:03:23 by aholster       #+#    #+#                */
-/*   Updated: 2019/09/18 18:30:35 by aholster      ########   odam.nl         */
+/*   Updated: 2019/09/23 10:38:05 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../ft_printf.h"
 #include "./../incl/ft_internals.h"
-
+#include <stdio.h>
 static int	va_short(va_list args, unsigned long long *holder)
 {
 	short	num;
@@ -52,6 +52,7 @@ static int	va_long(va_list args, unsigned long long *holder)
 	long	num;
 
 	num = (long)va_arg(args, long);
+	printf("num %ld\n", num);
 	if (num < 0)
 	{
 		*holder = ((-num) & 0xFFFFFFFF);

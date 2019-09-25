@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/18 18:17:05 by aholster       #+#    #+#                */
-/*   Updated: 2019/09/18 20:25:30 by aholster      ########   odam.nl         */
+/*   Updated: 2019/09/25 13:51:49 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 # include "./../float_tech/float_tech.h"
 # include "./ft_writer.h"
 
-# define BUFFSIZE	8
 # define FUNCSIZE	58
 
 # define MAX_INT	2147483647
@@ -54,27 +53,14 @@ typedef	struct		s_flag
 	unsigned int	padding;
 }					t_flag;
 
-typedef	int			(*t_formatter)(va_list args, struct s_print *const restrict);
-
-// typedef struct		s_print
-// {
-// //	char			*buffer;
-// //	t_list			**alst;
-// 	size_t			history;
-// 	size_t			current;
-// //	int				fd;
-// //	va_list			args;
-// t_wrt_ptr		printer;
-// 	s_flag			*flags;
-// }				t_writer;
-
+typedef	int			(*t_formatter)(va_list args, struct s_writer *const restrict);
 
 /*
 ** history should be unsigned long long bc of %lln
 */
 
 int					ft_format(const char *restrict format,\
-					t_writer *const restrict clipb);
+						t_writer *const restrict clipb);
 
 int					ft_dispatcher(const char *restrict specifier,\
 						t_formatter *functbl, t_writer *const restrict clipb);
@@ -85,23 +71,23 @@ void				ft_flinit(t_writer *const restrict clipb, t_flag *flags);
 void				ft_functblinit(t_formatter *functbl);
 
 int					ft_zero_padder(unsigned short len,\
-					t_writer *const restrict clipb);
+						t_writer *const restrict clipb);
 int					ft_space_padder(unsigned short len,\
-					t_writer *const restrict clipb);
+						t_writer *const restrict clipb);
 int					pad_spaces(size_t amount,\
-					t_writer *const restrict clipb);
+						t_writer *const restrict clipb);
 int					pad_zero(size_t amount, t_writer *const restrict clipb);
 
 int					ft_float_padder(unsigned short len,\
 						unsigned short dec, t_writer *const restrict clipb);
 
 void				ft_rounder(t_float conversion, char *buffer,\
-					t_writer *const restrict clipb, size_t nb_len);
+						t_writer *const restrict clipb, size_t nb_len);
 
 void				ft_shorthand_prec(char *buffer,\
 						unsigned short nb_len, t_writer *const restrict clipb);
 unsigned short		ft_lowhexpoint_prec(char *buffer,\
-					t_writer *const restrict clipb);
+						t_writer *const restrict clipb);
 int					ft_prefix(int neg, t_writer *const restrict clipb);
 unsigned short		ft_ull_len(unsigned long long num, int base);
 void				ft_float_exceptions(char *buffer, long double nb, \
@@ -133,11 +119,11 @@ int					ft_capsci(va_list args, t_writer *const restrict clipb);
 int					ft_lowshrthd(va_list args, t_writer *const restrict clipb);
 int					ft_capshrthd(va_list args, t_writer *const restrict clipb);
 int					ft_lowhexpoint(va_list args,\
-					t_writer *const restrict clipb);
+						t_writer *const restrict clipb);
 int					ft_caphexpoint(va_list args,\
-					t_writer *const restrict clipb);
+						t_writer *const restrict clipb);
 int					ft_lowfltpoint(va_list args,\
-					t_writer *const restrict clipb);
+						t_writer *const restrict clipb);
 int					ft_n(va_list args, t_writer *const restrict clipb);
 
 #endif

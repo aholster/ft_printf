@@ -6,14 +6,14 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/05 18:35:52 by aholster       #+#    #+#                */
-/*   Updated: 2019/09/18 18:30:35 by aholster      ########   odam.nl         */
+/*   Updated: 2019/09/24 09:28:30 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include "./incl/ft_internals.h"
 
-int		flagverif(const unsigned char c, const t_flag *flags)
+inline int		flagverif(const unsigned char c, const t_flag *flags)
 {
 	unsigned short	flip;
 
@@ -23,7 +23,7 @@ int		flagverif(const unsigned char c, const t_flag *flags)
 	return (-1);
 }
 
-int		doubleverif(const unsigned char c, const t_flag *flags)
+inline int		doubleverif(const unsigned char c, const t_flag *flags)
 {
 	unsigned short	flip;
 

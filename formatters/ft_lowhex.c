@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/03 16:34:02 by jesmith        #+#    #+#                */
-/*   Updated: 2019/09/18 20:24:57 by aholster      ########   odam.nl         */
+/*   Updated: 2019/09/19 20:38:30 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,22 +63,30 @@ static unsigned short	ull_to_hex(char *const restrict buffer,\
 					unsigned long long nb)
 {
 	unsigned short		index;
-	char				*base;
+	unsigned short		len;
+	const char			*base = "0123456789abcdef";
+	unsigned long long	tempnum;
 
-	base = "0123456789abcdef";
-	index = 0;
 	if (nb == 0)
 	{
 		buffer[0] = '0';
 		return (1);
 	}
-	while (nb > 0)
+	tempnum = nb;
+	len = 0;
+	while (tempnum > 0)
 	{
+		tempnum >>= 4;
+		len++;
+	}
+	index = len;
+	while (index > 0)
+	{
+		index--;
 		buffer[index] = base[nb & 0XFLLU];
 		nb >>= 4;
-		index++;
 	}
-	return (index);
+	return (len);
 }
 
 int						ft_lowhex(va_list args, t_writer *const restrict clipb)

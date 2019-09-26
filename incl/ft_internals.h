@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/18 18:17:05 by aholster       #+#    #+#                */
-/*   Updated: 2019/09/24 11:16:22 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/09/26 15:18:43 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,13 +99,11 @@ int					pad_zero(size_t amount, t_print *const restrict clipb);
 int					ft_float_padder(unsigned short len, unsigned short dec, \
 						t_print *const restrict clipb);
 
-void				ft_buffer_rounder(char *buffer, \
+void				ft_float_rounder(char *buffer, \
 						t_print *const restrict clipb, size_t nb_len);
 void				ft_shrthd_rounder(char *buffer, \
 						t_print *const restrict clipb, size_t nb_len);
 
-// long double			ft_hexpoint_rounder(long double nb, \
-// 						t_print *const restrict clipb);
 void				ft_hexpoint_rounder(char *buffer, \
 						t_print *const restrict clipb, short *expon);
 
@@ -120,9 +118,16 @@ int					ft_prefix(int neg, t_print *const restrict clipb);
 unsigned short		ft_ull_len(unsigned long long num, int base);
 unsigned short		ft_negpos_handler(t_print *const clipb, int neg);
 
-int					ft_float_expon_math(long double *nb);
+size_t				ft_x_offset(char *buffer, size_t *nb_len, \
+						t_print *const restrict clipb, int neg);
+int					ft_expon_finder(char *buffer, size_t nb_len);
 void				ft_float_exceptions(char *buffer, long double nb, \
 						short *expon, t_print *const restrict clipb);
+void				ft_expon_len(char *buffer, size_t *new_len, \
+						t_print *const restrict clipb);
+
+int					ft_shrthd_print(char *buffer, \
+						size_t offset, t_print *const clipb, size_t new_len);
 
 int					ft_signconv(va_list args,\
 						unsigned long long *const holder,\
@@ -148,8 +153,13 @@ int					ft_caphex(va_list args, t_print *const restrict clipb);
 int					ft_lowsci(va_list args, t_print *const restrict clipb);
 int					ft_capsci(va_list args, t_print *const restrict clipb);
 int					ft_lowshrthd(va_list args, t_print *const restrict clipb);
-int					ft_shrthd_lowsci(char *buffer, t_print *const restrict clipb, long double nb, short nb_len);
 int					ft_capshrthd(va_list args, t_print *const restrict clipb);
+int					ft_lowsci_print(char *buffer, \
+						size_t nb_len, t_print *const clipb, int expon);
+int					ft_shrthd_lowsci_print(char *buffer, \
+						size_t nb_len, t_print *const clipb, int expon);
+int					ft_capsci_print(char *buffer, \
+						size_t nb_len, t_print *const clipb, int expon);
 int					ft_lowhexpoint(va_list args,\
 							t_print *const restrict clipb);
 int					ft_caphexpoint(va_list args,\

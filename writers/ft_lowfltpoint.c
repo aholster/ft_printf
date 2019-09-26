@@ -6,61 +6,64 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/09 13:45:41 by jesmith        #+#    #+#                */
-/*   Updated: 2019/09/20 13:16:00 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/09/26 19:10:27 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../ft_printf.h"
 #include "./../incl/ft_internals.h"
 
-static size_t 	ft_x_offset(char *buffer, size_t *nb_len, \
-			t_print *const restrict clipb, int neg)
+static int		ft_offset_handler(char **buffer, t_print *const clipb, \
+			size_t offset)
 {
-	size_t offset;
-
-	offset = 0;
-	if (buffer[0] == 'X')
+	if (offset == 0)
 	{
-		if (neg == 1)
-		{
-			if (flagverif('+', clipb->flags) == 1)
-				buffer[0] = '+';
-			else if (flagverif(' ', clipb->flags) == 1 && \
-			flagverif('+', clipb->flags) == -1)
-				buffer[0] = ' ';
-			else if (flagverif('+', clipb->flags) == -1 \
-			&& flagverif(' ', clipb->flags) == -1)
-			{
-				offset++;
-				nb_len -= 1;
-			}
-		}
-		else
-			buffer[0] = '-';
+		if (clipb->printer(*buffer, 1, clipb) == -1)
+			return (-1);
+		*buffer += 1;
 	}
-	return (offset);
+	else
+		*buffer += offset;
+	return (1);
 }
 
-static int		ft_float_padding(char * buffer, t_print *const clipb, \
+static int			ft_float_print(char *buffer, t_print *const clipb, \
+				size_t nb_len, size_t offset)
+{
+	if (offset == 0)
+		nb_len--;
+	if (clipb->printer(buffer, nb_len, clipb) == -1)
+		return (-1);
+	if (offset == 0)
+		nb_len++;
+	if (flagverif('-', clipb->flags) == 1)
+		if (ft_space_padder(nb_len, clipb) == -1)
+			return (-1);
+	return (1);
+}
+
+static int		ft_float_padding(char *buffer, t_print *const clipb, \
 			size_t nb_len, int neg)
 {
 	size_t offset;
 
 	offset = ft_x_offset(buffer, &nb_len, clipb, neg);
-	nb_len -= offset;
 	if (flagverif('-', clipb->flags) == -1 && \
 	flagverif('0', clipb->flags) == -1)
 		if (ft_space_padder(nb_len, clipb) == -1)
 			return (-1);
+	if (ft_offset_handler(&buffer, clipb, offset) == -1)
+		return (-1);
 	if (flagverif('-', clipb->flags) == -1 && \
 	flagverif('0', clipb->flags) == 1)
+	{
+		if (clipb->flags->precision == 6)
+			clipb->flags->padding += clipb->flags->precision;
 		if (ft_zero_padder(nb_len, clipb) == -1)
 			return (-1);
-	if (clipb->printer(buffer + offset, nb_len, clipb) == -1)
+	}
+	if (ft_float_print(buffer, clipb, nb_len, offset) == -1)
 		return (-1);
-	if (flagverif('-', clipb->flags) == 1)
-		if (ft_space_padder(nb_len, clipb) == -1)
-			return (-1);
 	return (1);
 }
 
@@ -80,7 +83,7 @@ int				ft_lowfltpoint(va_list args, t_print *const clipb)
 		return (-1);
 	if (clipb->flags->precision == 0)
 		nb_len--;
-	ft_buffer_rounder(buffer, clipb, nb_len);
+	ft_float_rounder(buffer, clipb, nb_len);
 	nb_len--;
 	ret_hold = ft_float_padding(buffer, clipb, nb_len, neg);
 	free(buffer);

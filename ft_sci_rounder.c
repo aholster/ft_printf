@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/18 17:42:52 by jesmith        #+#    #+#                */
-/*   Updated: 2019/09/23 14:29:28 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/09/26 19:00:52 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ static void			ft_sci_exception(char *buffer, size_t len)
 		buffer[len] = (buffer[len] - '0') + '1';
 }
 
-void				ft_sci_rounder(char *buffer, t_print *const restrict clipb, \
-				size_t nb_len)
+void				ft_sci_rounder(char *buffer, \
+				t_print *const restrict clipb, size_t nb_len)
 {
 	unsigned int		precision;
 	unsigned int		rounding_num;
@@ -63,17 +63,17 @@ void				ft_sci_rounder(char *buffer, t_print *const restrict clipb, \
 	while (buffer[len] != '.')
 		len++;
 	len += precision + 1;
-	if (rounding_num > 5)
+	if (rounding_num >= 5)
 	{
+		len--;
 		if (buffer[len] == '9')
-		{
 			ft_sci_exception(buffer, len);
-		}
-		else if (buffer[len] >= '0' && buffer[len] < '9' && buffer[len] != '.')
+		else if ((buffer[len] >= '0' && buffer[len] < '9') \
+		|| buffer[len] == '.')
 		{
-			len--;
 			if (buffer[len] == '.')
 				len--;
+			if (buffer[len] != '2')
 			buffer[len] = (buffer[len] - '0') + '1';
 		}
 	}

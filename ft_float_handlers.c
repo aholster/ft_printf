@@ -6,40 +6,50 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/17 12:34:56 by jesmith        #+#    #+#                */
-/*   Updated: 2019/09/19 11:09:55 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/09/26 12:23:39 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include "./incl/ft_internals.h"
-
-int				ft_float_expon_math(long double *nb)
+#include <stdio.h>
+size_t			ft_x_offset(char *buffer, size_t *nb_len, \
+			t_print *const restrict clipb, int neg)
 {
-	int decimal;
+	size_t offset;
 
-	decimal = 0;
-	if (*nb == 0.0)
-		return (decimal);
-	if (*nb >= 10)
+	offset = 0;
+	if (neg == 1)
 	{
-		while (*nb >= 10)
-		{
-			*nb /= 10;
-			decimal++;
-		}
+		if (flagverif('+', clipb->flags) == 1)
+			buffer[0] = '+';
+		else if (flagverif(' ', clipb->flags) == 1)
+			buffer[0] = ' ';
+		else if (flagverif('+', clipb->flags) == -1 \
+		&& flagverif(' ', clipb->flags) == -1)
+			offset++;
 	}
-	else if (*nb < 1)
-	{
-		while (*nb < 1.0)
-		{
-			*nb *= 10;
-			decimal++;
-		}
-		decimal *= -1;
-	}
-	return (decimal);
+	else
+		buffer[0] = '-';
+	*nb_len -= offset;
+	return (offset);
 }
 
+int				ft_expon_finder(char *buffer, size_t nb_len)
+{
+	int			index;
+	size_t		one_dex;
+
+	index = 0;
+	while (buffer[index] != '.')
+		index++;
+	one_dex = index + 1;
+	ft_memmove(buffer + index, buffer + one_dex, nb_len);
+	ft_memmove(buffer + 3, buffer + 2, nb_len);
+	buffer[2] = '.';
+	index -= 2;
+	return (index);
+}
 
 void		ft_float_exceptions(char *buffer, long double nb, \
 		short *expon, t_print *const clipb)
@@ -54,4 +64,28 @@ void		ft_float_exceptions(char *buffer, long double nb, \
 			buffer[2] = '0';
 		}
 	}
+}
+
+void		ft_expon_len(char *buffer, size_t *new_len, \
+		t_print *const restrict clipb)
+{
+	size_t			index;
+	size_t			holder;
+	unsigned int	precision;
+
+	index = 0;
+	precision = clipb->flags->precision;
+	while (buffer[index] != '.')
+		index++;
+	if (precision > index)
+	{
+		holder = precision - index;
+		*new_len = index + holder + 2;
+	}
+	else if (precision == index)
+		*new_len = index + 1;
+	else if (precision < index && precision != 0)
+		*new_len = precision + 1;
+	else if (precision == 0)
+		*new_len = 7;
 }

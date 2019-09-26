@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/04/24 19:14:05 by jesmith        #+#    #+#                */
-/*   Updated: 2019/09/18 18:30:35 by aholster      ########   odam.nl         */
+/*   Updated: 2019/09/26 16:50:10 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void					ft_functblinit(t_writer *functbl)
 	functbl[slider('e')] = ft_lowsci;
 	functbl[slider('E')] = ft_capsci;
 	functbl[slider('f')] = ft_lowfltpoint;
-	// functbl[slider('F')] = ft_upprfltpoint;
+	functbl[slider('F')] = ft_capfltpoint;
 	functbl[slider('g')] = ft_lowshrthd;
 	functbl[slider('G')] = ft_capshrthd;
 	functbl[slider('i')] = ft_decimal;

@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/04/18 17:22:09 by aholster       #+#    #+#                */
-/*   Updated: 2019/09/18 18:30:35 by aholster      ########   odam.nl         */
+/*   Updated: 2019/09/26 17:05:57 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void		ft_num_extract(const char *restrict format,\
 }
 
 static int		ft_num_arg_extract(va_list args, size_t *const subdex,\
-				unsigned int *const destination)
+				unsigned int *const destination, t_flag *const flags)
 {
 	int				num;
 
@@ -41,7 +41,10 @@ static int		ft_num_arg_extract(va_list args, size_t *const subdex,\
 	*subdex += 1;
 	if (num < 0)
 	{
-		*destination = (-num);
+		if (flagverif('.', flags) == 1)
+			*destination = 0;
+		else
+			*destination = (-num);
 		return (-1);
 	}
 	else
@@ -112,13 +115,13 @@ void			ft_flagharvest(const char *restrict format,\
 		{
 			subdex++;
 			if (format[subdex] == '*')
-				ft_num_arg_extract(clipb->args, &subdex, &clipb->flags->precision);
+				ft_num_arg_extract(clipb->args, &subdex, &clipb->flags->precision, clipb->flags);
 			else
 				ft_num_extract(format, &subdex, &clipb->flags->precision);
 		}
 		else if (format[subdex] == '*')
 		{
-			if (ft_num_arg_extract(clipb->args, &subdex, &clipb->flags->padding) == -1)
+			if (ft_num_arg_extract(clipb->args, &subdex, &clipb->flags->padding, clipb->flags) == -1)
 				flagflip('-', clipb->flags);
 		}
 		else

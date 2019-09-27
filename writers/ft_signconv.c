@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/05 17:03:23 by aholster       #+#    #+#                */
-/*   Updated: 2019/09/23 10:38:05 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/09/27 13:11:08 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,11 @@ static int	va_long(va_list args, unsigned long long *holder)
 	long	num;
 
 	num = (long)va_arg(args, long);
-	printf("num %ld\n", num);
+	printf("\nnum %ld\n", num);
 	if (num < 0)
 	{
-		*holder = ((-num) & 0xFFFFFFFF);
+		*holder = ((-num) & LONG_MAX);
+		printf("holder: %llu\n", *holder);
 		return (-1);
 	}
 	else
@@ -72,7 +73,7 @@ static int	va_int(va_list args, unsigned long long *holder)
 	num = va_arg(args, int);
 	if (num < 0)
 	{
-		*holder = ((-num) & 0xFFFFFFFF);
+		*holder = ((-num) & INT_MAX);
 		return (-1);
 	}
 	else
@@ -96,13 +97,18 @@ int			ft_signconv(va_list args,
 	else if (doubleverif('l', flags) == 1 || flagverif('L', flags) == 1)
 	{
 		num = va_arg(args, long long);
+		printf("\nnum: %llu\n", num);
 		if (num < 0)
 		{
 			*holder = ((-num) & 0xFFFFFFFFFFFFFFFF);
+			printf("holder: %llu\n", num);
 			return (-1);
 		}
-		*holder = num;
-		return (0);
+		else
+		{
+			*holder = num;
+			return (0);
+		}
 	}
 	else
 		return (va_int(args, holder));

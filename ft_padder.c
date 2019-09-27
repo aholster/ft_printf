@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/05/25 16:10:49 by aholster       #+#    #+#                */
-/*   Updated: 2019/09/26 15:25:07 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/09/27 10:09:04 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,9 @@ int	ft_space_padder(unsigned short len, t_print *const clipb)
 	padding = clipb->flags->padding;
 	precision = clipb->flags->precision;
 	temp = padding - precision;
+	// printf("temp: %zu\n", temp);
+	// printf("precision: %u\n", precision);
+	// printf("padding: %u\n", padding);
 	if (padding < 1 && precision < 1)
 		return (1);
 	if (padding > precision && precision > len)
@@ -73,6 +76,7 @@ int	ft_space_padder(unsigned short len, t_print *const clipb)
 		diff = padding - len;
 	else
 		return (1);
+	// printf("differ: %zu\n", diff);
 	if (pad_spaces(diff, clipb) == -1)
 		return (-1);
 	return (1);

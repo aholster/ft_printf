@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/04/18 17:22:09 by aholster       #+#    #+#                */
-/*   Updated: 2019/09/26 17:05:57 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/09/27 18:39:44 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static int		ft_num_arg_extract(va_list args, size_t *const subdex,\
 	if (num < 0)
 	{
 		if (flagverif('.', flags) == 1)
-			*destination = 0;
+			*destination = 0; // talk about this
 		else
 			*destination = (-num);
 		return (-1);

@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/18 18:17:05 by aholster       #+#    #+#                */
-/*   Updated: 2019/09/26 15:18:43 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/09/27 18:47:58 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 # include "./../libft/libft.h"
 # include "./../float_tech/float_tech.h"
+
+# include <limits.h>
 
 # define BUFFSIZE	8
 # define FUNCSIZE	58
@@ -118,16 +120,14 @@ int					ft_prefix(int neg, t_print *const restrict clipb);
 unsigned short		ft_ull_len(unsigned long long num, int base);
 unsigned short		ft_negpos_handler(t_print *const clipb, int neg);
 
-size_t				ft_x_offset(char *buffer, size_t *nb_len, \
+size_t				ft_x_offset(char **buffer, size_t *nb_len, \
 						t_print *const restrict clipb, int neg);
 int					ft_expon_finder(char *buffer, size_t nb_len);
 void				ft_float_exceptions(char *buffer, long double nb, \
 						short *expon, t_print *const restrict clipb);
 void				ft_expon_len(char *buffer, size_t *new_len, \
-						t_print *const restrict clipb);
+						t_print *const restrict clipb, int neg);
 
-int					ft_shrthd_print(char *buffer, \
-						size_t offset, t_print *const clipb, size_t new_len);
 
 int					ft_signconv(va_list args,\
 						unsigned long long *const holder,\
@@ -154,9 +154,11 @@ int					ft_lowsci(va_list args, t_print *const restrict clipb);
 int					ft_capsci(va_list args, t_print *const restrict clipb);
 int					ft_lowshrthd(va_list args, t_print *const restrict clipb);
 int					ft_capshrthd(va_list args, t_print *const restrict clipb);
+int					ft_shrthd_print(char *buffer, \
+						size_t offset, t_print *const clipb, size_t new_len);
+size_t				ft_shrthd_offset(char **buffer, size_t *nb_len, \
+						t_print *const restrict clipb, int neg);
 int					ft_lowsci_print(char *buffer, \
-						size_t nb_len, t_print *const clipb, int expon);
-int					ft_shrthd_lowsci_print(char *buffer, \
 						size_t nb_len, t_print *const clipb, int expon);
 int					ft_capsci_print(char *buffer, \
 						size_t nb_len, t_print *const clipb, int expon);

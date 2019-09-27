@@ -6,13 +6,13 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/09 13:45:51 by jesmith        #+#    #+#                */
-/*   Updated: 2019/09/26 19:11:36 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/09/27 14:41:30 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../ft_printf.h"
 #include "./../incl/ft_internals.h"
-
+#include <stdio.h>
 static int		ft_offset_handler(char **buffer, t_print *const clipb, \
 			size_t offset)
 {
@@ -22,8 +22,6 @@ static int		ft_offset_handler(char **buffer, t_print *const clipb, \
 			return (-1);
 		*buffer += 1;
 	}
-	else
-		*buffer += offset;
 	return (1);
 }
 
@@ -47,7 +45,9 @@ static int		ft_float_padding(char *buffer, t_print *const clipb, \
 {
 	size_t offset;
 
-	offset = ft_x_offset(buffer, &nb_len, clipb, neg);
+	printf("len: %zu\n", nb_len);
+	offset = ft_x_offset(&buffer, &nb_len, clipb, neg);
+	printf("2len: %zu\n", nb_len);
 	if (flagverif('-', clipb->flags) == -1 && \
 	flagverif('0', clipb->flags) == -1)
 		if (ft_space_padder(nb_len, clipb) == -1)

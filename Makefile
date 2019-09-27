@@ -6,7 +6,7 @@
 #    By: jesmith <jesmith@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2019/02/16 15:46:43 by aholster       #+#    #+#                 #
-#    Updated: 2019/09/26 15:20:39 by jesmith       ########   odam.nl          #
+#    Updated: 2019/09/27 08:43:09 by jesmith       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,12 +17,13 @@ SUBDIR := ./writers/
 SUBSOURCE := ptraddr decimal char octal caphex lowhex unsigned_dec\
  signconv unsignconv str n lowsci capsci lowshrthd capshrthd \
  longdouble_conv lowhexpoint caphexpoint lowfltpoint capfltpoint \
- shrthd_lowsci_print shrthd_capsci_print
+ shrthd_lowsci_print shrthd_capsci_print  shrthd_handlers float_handlers \
+ handling hexpoint_rounder sci_rounder float_rounder
 
 SOURCE := printf vprintf dprintf vdprintf asprintf vasprintf\
-dispatcher format flinit flagharvest functblinit padder\
-flag_verificators handling float_rounder sci_rounder hexpoint_rounder \
-float_handlers shrthd_handlers
+dispatcher format flinit flagharvest functblinit padder \
+flag_verificators    \
+
 #sprintf vsprintf snprintf vsnprintf\
 
 FILEC = $(SOURCE:%=./ft_%.c) $(SUBSOURCE:%=$(SUBDIR)ft_%.c)

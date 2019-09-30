@@ -6,13 +6,13 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/05/25 16:10:49 by aholster       #+#    #+#                */
-/*   Updated: 2019/09/27 10:09:04 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/09/30 12:26:28 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include "./incl/ft_internals.h"
-#include <stdio.h>
+
 int	pad_spaces(size_t amount, t_print *const clipb)
 {
 	size_t		index;
@@ -63,9 +63,6 @@ int	ft_space_padder(unsigned short len, t_print *const clipb)
 	padding = clipb->flags->padding;
 	precision = clipb->flags->precision;
 	temp = padding - precision;
-	// printf("temp: %zu\n", temp);
-	// printf("precision: %u\n", precision);
-	// printf("padding: %u\n", padding);
 	if (padding < 1 && precision < 1)
 		return (1);
 	if (padding > precision && precision > len)
@@ -76,7 +73,6 @@ int	ft_space_padder(unsigned short len, t_print *const clipb)
 		diff = padding - len;
 	else
 		return (1);
-	// printf("differ: %zu\n", diff);
 	if (pad_spaces(diff, clipb) == -1)
 		return (-1);
 	return (1);

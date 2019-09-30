@@ -6,19 +6,19 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/19 16:00:34 by jesmith        #+#    #+#                */
-/*   Updated: 2019/09/27 08:41:56 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/09/30 12:16:58 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../ft_printf.h"
 #include "./../incl/ft_internals.h"
 
-static void	ft_add_one(char *buffer, size_t index)
+static void		ft_add_one(char *buffer, size_t index)
 {
-			index--;
-			if (buffer[index] == '.')
-				index--;
-			buffer[index] = (buffer[index] - '0') + '1';
+	index--;
+	if (buffer[index] == '.')
+		index--;
+	buffer[index] = (buffer[index] - '0') + '1';
 }
 
 static size_t	ft_rounding_handler(char *buffer, size_t index, char *base_ref)
@@ -66,7 +66,7 @@ static void		ft_dlbmax_case(char *buffer, \
 }
 
 static void		ft_rounding_up(char *buffer, size_t index, \
-			char* base_ref)
+			char *base_ref)
 {
 	char	holder;
 	size_t	judex;
@@ -92,8 +92,8 @@ static void		ft_rounding_up(char *buffer, size_t index, \
 	}
 }
 
-void		ft_hexpoint_rounder(char *buffer, \
-		t_print *const restrict clipb, short *expon)
+void			ft_hexpoint_rounder(char *buffer, \
+			t_print *const restrict clipb, short *expon)
 {
 	unsigned int	precision;
 	char			*base_ref;

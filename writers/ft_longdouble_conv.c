@@ -6,13 +6,13 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/25 15:08:50 by jesmith        #+#    #+#                */
-/*   Updated: 2019/09/23 10:24:03 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/09/30 10:37:15 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../ft_printf.h"
 #include "./../incl/ft_internals.h"
-#include <stdio.h>
+
 static int	va_double(va_list args, long double *holder)
 {
 	double	num;

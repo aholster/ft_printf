@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/18 17:42:52 by jesmith        #+#    #+#                */
-/*   Updated: 2019/09/27 10:19:37 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/09/30 12:13:28 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void				ft_sci_rounder(char *buffer, \
 			if (buffer[len] == '.')
 				len--;
 			if (buffer[len] != '2')
-			buffer[len] = (buffer[len] - '0') + '1';
+				buffer[len] = (buffer[len] - '0') + '1';
 		}
 	}
 }

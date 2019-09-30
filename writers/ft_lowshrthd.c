@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/21 12:57:35 by jesmith        #+#    #+#                */
-/*   Updated: 2019/09/27 18:46:07 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/09/30 12:13:49 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static int			ft_print_prep(char *buffer, \
 		if (clipb->flags->precision > 0)
 			clipb->flags->precision -= 1;
 		if (clipb->flags->padding > 0)
-			clipb->flags->padding -= 1;	
+			clipb->flags->padding -= 1;
 	}
 	if (buffer[new_len] == '.' && clipb->flags->precision < new_len)
 		new_len--;

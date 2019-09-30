@@ -6,15 +6,15 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/17 12:34:56 by jesmith        #+#    #+#                */
-/*   Updated: 2019/09/27 17:14:09 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/09/30 12:21:52 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../ft_printf.h"
 #include "./../incl/ft_internals.h"
-#include <stdio.h>
-size_t			ft_x_offset(char **buffer, size_t *nb_len, \
-			t_print *const restrict clipb, int neg)
+
+size_t		ft_x_offset(char **buffer, size_t *nb_len, \
+		t_print *const restrict clipb, int neg)
 {
 	size_t	offset;
 
@@ -38,7 +38,7 @@ size_t			ft_x_offset(char **buffer, size_t *nb_len, \
 	return (offset);
 }
 
-int				ft_expon_finder(char *buffer, size_t nb_len)
+int			ft_expon_finder(char *buffer, size_t nb_len)
 {
 	int			index;
 	size_t		one_dex;

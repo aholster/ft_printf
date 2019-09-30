@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/18 18:17:05 by aholster       #+#    #+#                */
-/*   Updated: 2019/09/27 18:47:58 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/09/30 12:29:38 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,9 @@ void				ft_float_exceptions(char *buffer, long double nb, \
 void				ft_expon_len(char *buffer, size_t *new_len, \
 						t_print *const restrict clipb, int neg);
 
+int					ft_naninf_padding(char *buffer, t_print *const clipb, \
+						size_t nb_len);
+void				ft_captolow(char *buffer);
 
 int					ft_signconv(va_list args,\
 						unsigned long long *const holder,\

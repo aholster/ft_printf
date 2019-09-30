@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/06 10:44:11 by jesmith        #+#    #+#                */
-/*   Updated: 2019/09/27 08:40:23 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/09/30 12:20:20 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ unsigned short		ft_lowhexpoint_prec(char *buffer, t_print *const clipb)
 	size_t			dec_len;
 	unsigned short	len;
 
-	len = (unsigned short)ft_strlen((const char*) buffer) - 1;
+	len = (unsigned short)ft_strlen((const char*)buffer) - 1;
 	if (len == 1 && buffer[1] == '.')
 		len++;
 	if (flagverif('.', clipb->flags) == -1)
@@ -55,7 +55,7 @@ int					ft_prefix(int neg, t_print *const clipb)
 	}
 	else if (neg < 0 || flagverif('-', clipb->flags) == 1)
 		if (clipb->printer("-", 1, clipb) == -1)
-		return (-1);
+			return (-1);
 	return (1);
 }
 
@@ -82,7 +82,8 @@ unsigned short		ft_negpos_handler(t_print *const restrict clipb, \
 	sign = 0;
 	if (neg == 1)
 	{
-		if (flagverif('+', clipb->flags) == 1 || flagverif(' ', clipb->flags) == 1)
+		if (flagverif('+', clipb->flags) == 1 || \
+		flagverif(' ', clipb->flags) == 1)
 			sign++;
 	}
 	else if (neg == -1)

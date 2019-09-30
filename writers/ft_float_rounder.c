@@ -6,13 +6,13 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/13 10:14:39 by jesmith        #+#    #+#                */
-/*   Updated: 2019/09/27 17:14:19 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/09/30 12:19:09 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../ft_printf.h"
 #include "./../incl/ft_internals.h"
-#include <stdio.h>
+
 static size_t		ft_handling_nine(char *buffer, size_t len)
 {
 	if (buffer[len] == '9' && buffer[len - 1] != '.' && len > 1)
@@ -98,9 +98,6 @@ void				ft_shrthd_rounder(char *buffer, \
 	if (buffer[len] == '.')
 		len++;
 	rounding_num = buffer[len] - '0';
-	// printf("rounding_num %u\n", rounding_num);
-	// printf("len: %zu\n", len);
-	// printf("buffer: %s\n", buffer);
 	if (rounding_num >= 5)
 	{
 		if (buffer[len] == '9')

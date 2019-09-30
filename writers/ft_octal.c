@@ -6,13 +6,13 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/03 15:08:26 by jesmith        #+#    #+#                */
-/*   Updated: 2019/09/27 18:32:46 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/09/30 10:36:51 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../ft_printf.h"
 #include "./../incl/ft_internals.h"
-#include <stdio.h>
+
 static int				ft_octal_noprec(char *buffer, \
 					unsigned short nb_len, t_print *const restrict clipb)
 {

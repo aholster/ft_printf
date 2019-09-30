@@ -6,13 +6,13 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/09 13:45:51 by jesmith        #+#    #+#                */
-/*   Updated: 2019/09/27 14:41:30 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/09/30 12:28:00 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../ft_printf.h"
 #include "./../incl/ft_internals.h"
-#include <stdio.h>
+
 static int		ft_offset_handler(char **buffer, t_print *const clipb, \
 			size_t offset)
 {
@@ -25,8 +25,8 @@ static int		ft_offset_handler(char **buffer, t_print *const clipb, \
 	return (1);
 }
 
-static int			ft_float_print(char *buffer, t_print *const clipb, \
-				size_t nb_len, size_t offset)
+static int		ft_float_print(char *buffer, t_print *const clipb, \
+			size_t nb_len, size_t offset)
 {
 	if (offset == 0)
 		nb_len--;
@@ -45,9 +45,7 @@ static int		ft_float_padding(char *buffer, t_print *const clipb, \
 {
 	size_t offset;
 
-	printf("len: %zu\n", nb_len);
 	offset = ft_x_offset(&buffer, &nb_len, clipb, neg);
-	printf("2len: %zu\n", nb_len);
 	if (flagverif('-', clipb->flags) == -1 && \
 	flagverif('0', clipb->flags) == -1)
 		if (ft_space_padder(nb_len, clipb) == -1)
@@ -67,6 +65,19 @@ static int		ft_float_padding(char *buffer, t_print *const clipb, \
 	return (1);
 }
 
+static int		ft_float_prep(char *buffer, size_t nb_len, \
+			t_print *const clipb, int neg)
+{
+	int ret_hold;
+
+	if (clipb->flags->precision == 0)
+		nb_len--;
+	ft_float_rounder(buffer, clipb, nb_len);
+	nb_len--;
+	ret_hold = ft_float_padding(buffer, clipb, nb_len, neg);
+	return (ret_hold);
+}
+
 int				ft_capfltpoint(va_list args, t_print *const clipb)
 {
 	char				*buffer;
@@ -81,11 +92,13 @@ int				ft_capfltpoint(va_list args, t_print *const clipb)
 	if (ft_custom_ld_to_text(nb, \
 	clipb->flags->precision, &buffer, &nb_len) == -1)
 		return (-1);
-	if (clipb->flags->precision == 0)
-		nb_len--;
-	ft_float_rounder(buffer, clipb, nb_len);
-	nb_len--;
-	ret_hold = ft_float_padding(buffer, clipb, nb_len, neg);
+	if (ft_strcmp(buffer, "nan") == 0 || ft_strcmp(buffer, "inf") == 0)
+	{
+		ft_captolow(buffer);
+		ret_hold = ft_naninf_padding(buffer, clipb, nb_len);
+	}
+	else
+		ret_hold = ft_float_prep(buffer, nb_len, clipb, neg);
 	free(buffer);
 	return (ret_hold);
 }

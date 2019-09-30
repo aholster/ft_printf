@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/09 13:45:41 by jesmith        #+#    #+#                */
-/*   Updated: 2019/09/27 12:11:17 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/09/30 12:29:20 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ static int		ft_offset_handler(char **buffer, t_print *const clipb, \
 	return (1);
 }
 
-static int			ft_float_print(char *buffer, t_print *const clipb, \
-				size_t nb_len, size_t offset)
+static int		ft_float_print(char *buffer, t_print *const clipb, \
+			size_t nb_len, size_t offset)
 {
 	if (offset == 0)
 		nb_len--;
@@ -79,11 +79,16 @@ int				ft_lowfltpoint(va_list args, t_print *const clipb)
 	if (ft_custom_ld_to_text(nb, \
 	clipb->flags->precision, &buffer, &nb_len) == -1)
 		return (-1);
-	if (clipb->flags->precision == 0)
+	if (ft_strcmp(buffer, "nan") == 0 || ft_strcmp(buffer, "inf") == 0)
+		ret_hold = ft_naninf_padding(buffer, clipb, nb_len);
+	else
+	{
+		if (clipb->flags->precision == 0)
+			nb_len--;
+		ft_float_rounder(buffer, clipb, nb_len);
 		nb_len--;
-	ft_float_rounder(buffer, clipb, nb_len);
-	nb_len--;
-	ret_hold = ft_float_padding(buffer, clipb, nb_len, neg);
+		ret_hold = ft_float_padding(buffer, clipb, nb_len, neg);
+	}
 	free(buffer);
 	return (ret_hold);
 }

@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/27 11:34:23 by jesmith        #+#    #+#                */
-/*   Updated: 2019/09/27 18:45:54 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/09/30 12:21:22 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static int			ft_print_prep(char *buffer, \
 		if (clipb->flags->precision > 0)
 			clipb->flags->precision -= 1;
 		if (clipb->flags->padding > 0)
-			clipb->flags->padding -= 1;	
+			clipb->flags->padding -= 1;
 	}
 	if (buffer[new_len] == '.' && clipb->flags->precision < new_len)
 		new_len--;
@@ -131,9 +131,17 @@ int					ft_capshrthd(va_list args, t_print *const restrict clipb)
 	if (ft_custom_ld_to_text(nb, \
 	clipb->flags->precision, &buffer, &nb_len) == -1)
 		return (-1);
-	if (neg == -1)
-		buffer[0] = '-';
-	ret_val = ft_which_one(buffer, clipb, nb_len);
+	if (ft_strcmp(buffer, "nan") == 0 || ft_strcmp(buffer, "inf") == 0)
+	{
+		ft_captolow(buffer);
+		ret_val = ft_naninf_padding(buffer, clipb, nb_len);
+	}
+	else
+	{
+		if (neg == -1)
+			buffer[0] = '-';
+		ret_val = ft_which_one(buffer, clipb, nb_len);
+	}
 	free(buffer);
 	return (ret_val);
 }

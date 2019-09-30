@@ -6,14 +6,14 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/10 12:13:37 by jesmith        #+#    #+#                */
-/*   Updated: 2019/09/20 13:14:49 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/09/30 12:22:52 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../ft_printf.h"
 #include "./../incl/ft_internals.h"
 
-static int					ft_expon_buff(char *buffer, short expon)
+static int		ft_expon_buff(char *buffer, short expon)
 {
 	unsigned short	index;
 	int				neg;
@@ -40,8 +40,8 @@ static int					ft_expon_buff(char *buffer, short expon)
 	return (backup_index + 1);
 }
 
-static int					ft_end_pad(t_print *const clipb, short expon, \
-						unsigned short nb_len, unsigned short str_len)
+static int		ft_end_pad(t_print *const clipb, short expon, \
+			unsigned short nb_len, unsigned short str_len)
 {
 	unsigned short	expon_len;
 	char			buffer[8];
@@ -62,8 +62,8 @@ static int					ft_end_pad(t_print *const clipb, short expon, \
 	return (1);
 }
 
-static int					ft_front_pad(char *buffer, \
-					short expon, t_print *const clipb, int neg)
+static int		ft_front_pad(char *buffer, \
+			short expon, t_print *const clipb, int neg)
 {
 	unsigned short	expon_len;
 	unsigned short	str_len;
@@ -90,8 +90,8 @@ static int					ft_front_pad(char *buffer, \
 	return (1);
 }
 
-static void					ft_man_to_buffer(unsigned long long mantissa,\
-						char *buffer, t_print *const clipb, short expon)
+static void		ft_man_to_buffer(unsigned long long mantissa,\
+			char *buffer, t_print *const clipb, short expon)
 {
 	char				*base;
 	unsigned short		cur_len;
@@ -110,8 +110,8 @@ static void					ft_man_to_buffer(unsigned long long mantissa,\
 		}
 		if (cur_len == 2 && (clipb->flags->precision != 0 || expon == 1020))
 		{
-				cur_len--;
-				buffer[cur_len] = '.';
+			cur_len--;
+			buffer[cur_len] = '.';
 		}
 		mantissa /= 16;
 		cur_len--;
@@ -119,7 +119,7 @@ static void					ft_man_to_buffer(unsigned long long mantissa,\
 	buffer[cur_len] = base[mantissa];
 }
 
-int							ft_caphexpoint(va_list args, t_print *const restrict clipb)
+int				ft_caphexpoint(va_list args, t_print *const restrict clipb)
 {
 	char			buffer[18];
 	t_float			conversion;

@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/04/24 21:38:26 by jesmith        #+#    #+#                */
-/*   Updated: 2019/09/18 18:30:35 by aholster      ########   odam.nl         */
+/*   Updated: 2019/09/30 10:26:35 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ int			ft_str(va_list args, t_print *const restrict clipb)
 	if (str == NULL)
 		str = "(null)";
 	len = ft_strlen(str);
+	if (flagverif('l', clipb->flags) == 1)
+		return (-1);
 	if (flagverif('.', clipb->flags) == 1)
 	{
 		if (len > clipb->flags->precision)

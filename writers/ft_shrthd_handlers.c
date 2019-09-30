@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/25 12:01:20 by jesmith        #+#    #+#                */
-/*   Updated: 2019/09/27 18:48:22 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/09/30 12:12:24 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,13 @@ static int		ft_offset_handler(char **buffer, \
 	return (1);
 }
 
-static int			ft_end_pad(t_print *const clipb, \
-				size_t new_len, size_t offset)
+static int		ft_end_pad(t_print *const clipb, \
+			size_t new_len, size_t offset)
 {
 	(void)offset;
 	if (flagverif('#', clipb->flags) == 1 && new_len < 7)
-	{	if (pad_zero(7 - new_len, clipb) == -1)
+	{	
+		if (pad_zero(7 - new_len, clipb) == -1)
 			return (-1);
 		new_len += (7 - new_len);
 	}
@@ -80,8 +81,8 @@ int				ft_shrthd_print(char *buffer, \
 	return (1);
 }
 
-size_t		ft_shrthd_offset(char **buffer, size_t *nb_len, \
-		t_print *const restrict clipb, int neg)
+size_t			ft_shrthd_offset(char **buffer, size_t *nb_len, \
+			t_print *const restrict clipb, int neg)
 {
 	size_t	offset;
 

@@ -6,46 +6,40 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/19 14:43:08 by jesmith        #+#    #+#                */
-/*   Updated: 2019/09/25 14:37:25 by aholster      ########   odam.nl         */
+/*   Updated: 2019/09/30 17:31:20 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include "./incl/ft_internals.h"
 
-static void	ft_write_history(const int fd, const char *const restrict mem,\
-						const size_t size, t_writer *const restrict clipb)
-{
-	write(fd, mem, size);
-	clipb->history += size;
-	clipb->current = 0;
-}
-
 static int	ft_bufmanager(const char *restrict mem,\
-							size_t size, t_writer *const restrict clipb)
+						size_t size, t_writer *const restrict clipb)
 {
-	size_t		block;
-	t_d_write	*info;
-	int			fd;
+	size_t					used_space;
+	size_t					free_space;
+	char *const restrict	dest_mem = (clipb->info.d)->buffer;
 
-	info = clipb->info.d;
-	fd = info->fd;
-	if (mem == NULL)
-		ft_write_history(fd, info->buffer, clipb->current, clipb);
-	else
-		while (size > 0)
+	while (1)
+	{
+		used_space = clipb->current;
+		free_space = BUFFSIZE - used_space;
+		if (size < free_space)
 		{
-			if (size + clipb->current <= BUFFSIZE)
-				block = size;
-			else
-				block = (BUFFSIZE - clipb->current);
-			ft_memcpy(info->buffer + clipb->current, mem, block);
-			clipb->current += block;
-			mem += block;
-			size -= block;
-			if (clipb->current == BUFFSIZE)
-				ft_write_history(fd, info->buffer, BUFFSIZE, clipb);
+			ft_memcpy(dest_mem + used_space, mem, size);
+			clipb->current += size;
+			break ;
 		}
+		else
+		{
+			ft_memcpy(dest_mem + used_space, mem, free_space);
+			write((clipb->info.d)->fd, dest_mem, BUFFSIZE);
+			used_space = 0;
+			size -= free_space;
+			clipb->history += BUFFSIZE;
+		}
+		clipb->current = used_space;
+	}
 	return (0);
 }
 
@@ -75,7 +69,11 @@ int			ft_vdprintf(const int fd, const char *restrict format, va_list args)
 	{
 		return (-1);
 	}
-	ft_bufmanager(NULL, 0, &clipb);
+	if (clipb.current != 0)
+	{
+		write(fd, info.buffer, clipb.current);
+		clipb.history += clipb.current;
+	}
 	va_copy(args, clipb.args);
 	va_end(clipb.args);
 	return (clipb.history);

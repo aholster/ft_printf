@@ -6,31 +6,19 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/18 19:29:47 by aholster       #+#    #+#                */
-/*   Updated: 2019/09/25 14:43:30 by aholster      ########   odam.nl         */
+/*   Updated: 2019/09/30 18:49:19 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_WRITER_H
 # define FT_WRITER_H
 
-# define BUFFSIZE	8
+# define BUFFSIZE	1024
 
 struct s_writer;
 
 typedef int			(*t_wrt_ptr)(const char *restrict, size_t,\
 						struct s_writer *const restrict);
-
-// typedef struct		s_writer
-// {
-// 	char			*buffer;
-// 	t_list			**alst;
-// 	size_t			history;
-// 	size_t			current;
-// 	int				fd;
-// 	va_list			args;
-// 	t_wrt_ptr		self;
-// 	struct s_flag	*flags;
-// }					t_writer;
 
 typedef struct		s_d_write
 {
@@ -60,7 +48,7 @@ typedef union		u_info_s
 typedef struct		s_writer
 {
 	size_t			history;
-	int				current;
+	size_t			current;
 	va_list			args;
 	t_wrt_ptr		self;
 	t_info_s		info;

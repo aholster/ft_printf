@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/07/26 17:50:52 by aholster       #+#    #+#                */
-/*   Updated: 2019/09/06 10:42:21 by aholster      ########   odam.nl         */
+/*   Updated: 2019/09/30 18:44:05 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,13 +69,13 @@ static int	exception_catch(t_float num, char **amem, size_t *asize)
 	}
 	else if ((num.byte[4] & 0x1) == 1)
 	{
-		*amem = (char *)ft_memdup("-inf", 4);
-		*asize = 4;
+		*amem = (char *)ft_memdup("inf", 3);
+		*asize = 3;
 	}
 	else
 	{
-		*amem = (char *)ft_memdup("+inf", 4);
-		*asize = 4;
+		*amem = (char *)ft_memdup("inf", 3);
+		*asize = 3;
 	}
 	if (*amem == NULL)
 		return (-1);

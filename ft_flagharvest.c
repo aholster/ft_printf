@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/04/18 17:22:09 by aholster       #+#    #+#                */
-/*   Updated: 2019/09/27 18:39:44 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/09/30 17:13:07 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ static int		ft_num_arg_extract(va_list args, size_t *const subdex,\
 {
 	int				num;
 
+	(void)flags;
 	num = va_arg(args, int);
 	*subdex += 1;
 	if (num < 0)

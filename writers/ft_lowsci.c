@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/05 11:15:26 by jesmith        #+#    #+#                */
-/*   Updated: 2019/09/30 12:17:38 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/09/30 13:49:10 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,11 @@ static int		ft_lowsci_buffer(char *buffer, t_print *const restrict clipb, \
 }
 
 static int		ft_naninf_print(char *buffer, t_print *const clipb, \
-			size_t nb_len)
+			size_t nb_len, int neg)
 {
 	size_t ret_val;
 
-	ret_val = ft_naninf_padding(buffer, clipb, nb_len);
+	ret_val = ft_naninf_padding(buffer, clipb, nb_len, neg);;
 	return (ret_val);
 }
 
@@ -53,7 +53,7 @@ int				ft_lowsci(va_list args, t_print *const clipb)
 	clipb->flags->precision, &buffer, &nb_len) == -1)
 		return (-1);
 	if (ft_strcmp(buffer, "nan") == 0 || ft_strcmp(buffer, "inf") == 0)
-		return (ft_naninf_print(buffer, clipb, nb_len));
+		return (ft_naninf_print(buffer, clipb, nb_len, neg));
 	expon = ft_expon_finder(buffer, nb_len);
 	if (neg == -1)
 		buffer[0] = '-';

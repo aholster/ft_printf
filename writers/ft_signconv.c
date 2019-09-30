@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/05 17:03:23 by aholster       #+#    #+#                */
-/*   Updated: 2019/09/30 10:10:54 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/09/30 13:31:19 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ int			ft_signconv(va_list args,
 		return (va_char(args, holder));
 	else if (flagverif('l', flags) == 1)
 		return (va_long(args, holder));
-	else if (doubleverif('l', flags) == 1)// || flagverif('L', flags) == 1)
+	else if (doubleverif('l', flags) == 1)
 	{
 		num = va_arg(args, long long);
 		if (num < 0)

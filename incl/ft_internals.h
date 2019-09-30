@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/18 18:17:05 by aholster       #+#    #+#                */
-/*   Updated: 2019/09/30 12:29:38 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/09/30 18:32:38 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,12 @@ typedef union		u_nptrs
 	long			*l;
 	long long		*ll;
 }					t_nptrs;
+
+typedef union		u_floatneg
+{
+	long double		ld;
+	unsigned char	byte[10];
+}					t_floatneg;
 
 struct s_print;
 
@@ -114,22 +120,23 @@ void				ft_sci_rounder(char *buffer, t_print *const restrict clipb, \
 size_t				ft_expon_rounding(char *buffer, size_t nb_len, \
 						t_print *const restrict clipb);
 
-unsigned short		ft_lowhexpoint_prec(char *buffer, \
-						t_print *const restrict clipb);
+unsigned short		ft_hexpoint_prec(char *buffer, \
+						t_print *const restrict clipb, size_t nb_len, short expon);
 int					ft_prefix(int neg, t_print *const restrict clipb);
 unsigned short		ft_ull_len(unsigned long long num, int base);
-unsigned short		ft_negpos_handler(t_print *const clipb, int neg);
+unsigned short 		ft_reversed(unsigned long long mantissa);
+unsigned short		ft_negpos_handler(t_print *const clipb, int neg, short expon);
 
 size_t				ft_x_offset(char **buffer, size_t *nb_len, \
 						t_print *const restrict clipb, int neg);
 int					ft_expon_finder(char *buffer, size_t nb_len);
-void				ft_float_exceptions(char *buffer, long double nb, \
+size_t				ft_float_exceptions(char *buffer, long double nb, \
 						short *expon, t_print *const restrict clipb);
 void				ft_expon_len(char *buffer, size_t *new_len, \
 						t_print *const restrict clipb, int neg);
 
 int					ft_naninf_padding(char *buffer, t_print *const clipb, \
-						size_t nb_len);
+						size_t nb_len, int neg);
 void				ft_captolow(char *buffer);
 
 int					ft_signconv(va_list args,\

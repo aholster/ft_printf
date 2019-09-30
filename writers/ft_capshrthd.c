@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/27 11:34:23 by jesmith        #+#    #+#                */
-/*   Updated: 2019/09/30 12:21:22 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/09/30 13:48:16 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,7 @@ int					ft_capshrthd(va_list args, t_print *const restrict clipb)
 	if (ft_strcmp(buffer, "nan") == 0 || ft_strcmp(buffer, "inf") == 0)
 	{
 		ft_captolow(buffer);
-		ret_val = ft_naninf_padding(buffer, clipb, nb_len);
+		ret_val = ft_naninf_padding(buffer, clipb, nb_len, neg);;
 	}
 	else
 	{

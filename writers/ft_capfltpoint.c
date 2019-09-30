@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/09 13:45:51 by jesmith        #+#    #+#                */
-/*   Updated: 2019/09/30 12:28:00 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/09/30 17:59:21 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ int				ft_capfltpoint(va_list args, t_print *const clipb)
 	if (ft_strcmp(buffer, "nan") == 0 || ft_strcmp(buffer, "inf") == 0)
 	{
 		ft_captolow(buffer);
-		ret_hold = ft_naninf_padding(buffer, clipb, nb_len);
+		ret_hold = ft_naninf_padding(buffer, clipb, nb_len, neg);
 	}
 	else
 		ret_hold = ft_float_prep(buffer, nb_len, clipb, neg);

@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/17 12:34:56 by jesmith        #+#    #+#                */
-/*   Updated: 2019/09/30 12:21:52 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/09/30 18:04:53 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ size_t		ft_x_offset(char **buffer, size_t *nb_len, \
 	size_t	offset;
 
 	offset = 0;
-	(void)nb_len;
 	if (neg == 1)
 	{
 		if (flagverif('+', clipb->flags) == 1)
@@ -30,7 +29,7 @@ size_t		ft_x_offset(char **buffer, size_t *nb_len, \
 		&& flagverif(' ', clipb->flags) == -1)
 			offset++;
 	}
-	else
+	else if (neg == -1)
 		*buffer[0] = '-';
 	*buffer += offset;
 	if (offset == 1)
@@ -54,19 +53,18 @@ int			ft_expon_finder(char *buffer, size_t nb_len)
 	return (index);
 }
 
-void		ft_float_exceptions(char *buffer, long double nb, \
+size_t		ft_float_exceptions(char *buffer, long double nb, \
 		short *expon, t_print *const clipb)
 {
-	if (nb == 0.0)
+	expon = 0;
+	(void)nb;
+	buffer[0] = '0';
+	if (clipb->flags->precision != 0)
 	{
-		expon = 0;
-		buffer[0] = '0';
-		if (clipb->flags->precision != 0)
-		{
-			buffer[1] = '.';
-			buffer[2] = '0';
-		}
+		buffer[1] = '.';
+		buffer[2] = '0';
 	}
+	return (3);
 }
 
 void		ft_expon_len(char *buffer, size_t *new_len, \

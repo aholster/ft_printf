@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/25 15:08:50 by jesmith        #+#    #+#                */
-/*   Updated: 2019/09/18 18:30:35 by aholster      ########   odam.nl         */
+/*   Updated: 2019/10/01 14:52:55 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 static int	va_long(va_list args, long double *holder)
 {
-	long	num;
+	long		num;
 
 	num = (long)va_arg(args, long);
 	if (num >= 0)
@@ -29,7 +29,7 @@ static int	va_long(va_list args, long double *holder)
 
 static int	va_double(va_list args, long double *holder)
 {
-	double	num;
+	double		num;
 
 	num = va_arg(args, double);
 	if (num >= 0)
@@ -41,8 +41,9 @@ static int	va_double(va_list args, long double *holder)
 	return (-1);
 }
 
-int			ft_longdouble_conv(va_list args, long double *holder, \
-						const t_flag *flags)
+int			ft_longdouble_conv(va_list args,\
+				long double *holder,\
+				const t_flag *const restrict flags)
 {
 	long double	num;
 

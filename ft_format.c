@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/04/17 19:57:30 by aholster       #+#    #+#                */
-/*   Updated: 2019/09/30 16:48:07 by aholster      ########   odam.nl         */
+/*   Updated: 2019/09/30 20:01:14 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,22 +43,20 @@ static int		ft_charskip(const char *c)
 int				ft_format(const char *restrict format,\
 						t_writer *const restrict clipb)
 {
-	size_t		index;
-	size_t		len;
-	t_flag		flags;
-	t_formatter	functbl[FUNCSIZE];
+	size_t				index;
+	size_t				len;
+	t_flag				flags;
 
 	index = 0;
 	len = ft_strlen(format);
 	ft_flinit(clipb, &flags);
-	ft_functblinit(functbl);
 	while (index < len)
 	{
 		if (format[index] == '%')
 		{
 			index++;
 			ft_flagharvest(format, &index, clipb);
-			if (ft_dispatcher(&format[index], functbl, clipb) == -1)
+			if (ft_dispatcher(&format[index], clipb) == -1)
 				return (-1);
 			index += ft_charskip(format + index);
 		}

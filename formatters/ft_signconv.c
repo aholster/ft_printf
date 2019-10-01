@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/05 17:03:23 by aholster       #+#    #+#                */
-/*   Updated: 2019/09/18 18:30:35 by aholster      ########   odam.nl         */
+/*   Updated: 2019/10/01 14:51:49 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,9 @@ static int	va_int(va_list args, unsigned long long *holder)
 	}
 }
 
-int			ft_signconv(va_list args,
-		unsigned long long *const holder, const t_flag *const flags)
+int			ft_signconv(va_list args,\
+				unsigned long long *const holder,\
+				const t_flag *const restrict flags)
 {
 	long long	num;
 

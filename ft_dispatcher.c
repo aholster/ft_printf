@@ -6,12 +6,12 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/04/18 16:00:54 by aholster       #+#    #+#                */
-/*   Updated: 2019/10/01 17:00:00 by aholster      ########   odam.nl         */
+/*   Updated: 2019/10/01 19:17:46 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
 #include "./incl/ft_internals.h"
+#include "./incl/ft_formatters.h"
 
 static int			ft_conversion_exception(\
 						const char *const restrict specifier,\

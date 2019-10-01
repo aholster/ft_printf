@@ -6,15 +6,15 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/06 10:44:11 by jesmith        #+#    #+#                */
-/*   Updated: 2019/09/18 20:24:57 by aholster      ########   odam.nl         */
+/*   Updated: 2019/10/01 19:36:41 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
 #include "./incl/ft_internals.h"
 
-void				ft_shorthand_prec(char *const restrict buffer,\
-				unsigned short nb_len, t_writer *const restrict clipb)
+void				ft_shorthand_prec(const char *const restrict buffer,\
+						const unsigned short nb_len,\
+						const t_writer *const restrict clipb)
 {
 	size_t index;
 	size_t holder;
@@ -36,8 +36,8 @@ void				ft_shorthand_prec(char *const restrict buffer,\
 		clipb->flags->precision = index - holder;
 }
 
-unsigned short		ft_lowhexpoint_prec(char *const restrict buffer,\
-				t_writer *const restrict clipb)
+unsigned short		ft_lowhexpoint_prec(const char *const restrict buffer,\
+						const t_writer *const restrict clipb)
 {
 	size_t			dec_len;
 	unsigned short	index;
@@ -63,7 +63,7 @@ unsigned short		ft_lowhexpoint_prec(char *const restrict buffer,\
 	return (index);
 }
 
-int					ft_prefix(int neg, t_writer *const restrict clipb)
+int					ft_prefix(const int neg, t_writer *const restrict clipb)
 {
 	if (neg >= 0)
 	{
@@ -82,7 +82,7 @@ int					ft_prefix(int neg, t_writer *const restrict clipb)
 	return (1);
 }
 
-unsigned short		ft_ull_len(unsigned long long num, int base)
+unsigned short		ft_ull_len(unsigned long long num, const int base)
 {
 	unsigned short length;
 
@@ -97,12 +97,14 @@ unsigned short		ft_ull_len(unsigned long long num, int base)
 	return (length);
 }
 
-void				ft_float_exceptions(char *buffer, long double nb, \
-				short *expon, t_writer *const restrict clipb)
+void				ft_float_exceptions(char *const restrict buffer,\
+					const long double nb,\
+					short *const restrict expon,\
+					const t_writer *const restrict clipb)
 {
 	if (nb == 0.0)
 	{
-		expon = 0;
+		*expon = 0;
 		buffer[0] = '0';
 		if (clipb->flags->precision != 0)
 		{

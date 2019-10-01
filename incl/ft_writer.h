@@ -6,12 +6,14 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/18 19:29:47 by aholster       #+#    #+#                */
-/*   Updated: 2019/09/30 20:21:59 by aholster      ########   odam.nl         */
+/*   Updated: 2019/10/01 19:16:03 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_WRITER_H
 # define FT_WRITER_H
+
+# include <stdarg.h>
 
 # define BUFFSIZE	1024
 

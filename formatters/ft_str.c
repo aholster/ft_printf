@@ -6,12 +6,11 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/04/24 21:38:26 by jesmith        #+#    #+#                */
-/*   Updated: 2019/09/18 20:24:57 by aholster      ########   odam.nl         */
+/*   Updated: 2019/10/01 19:22:51 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./../ft_printf.h"
-#include "./../incl/ft_internals.h"
+#include "./../incl/ft_formatters.h"
 
 static int	ft_str_padding(const char *const restrict str, const size_t len,\
 		t_writer *const restrict clipb)

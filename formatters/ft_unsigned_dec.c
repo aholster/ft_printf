@@ -6,15 +6,16 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/05/30 19:12:27 by aholster       #+#    #+#                */
-/*   Updated: 2019/09/18 20:24:57 by aholster      ########   odam.nl         */
+/*   Updated: 2019/10/01 20:01:19 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./../ft_printf.h"
-#include "./../incl/ft_internals.h"
+#include "./../incl/ft_formatters.h"
 
-static int				ft_unsigned_dec_noprec(char *const restrict buffer,\
-					unsigned short nb_len, t_writer *const restrict clipb)
+static int				ft_unsigned_dec_noprec(\
+							const char *const restrict buffer,\
+							const unsigned short nb_len,\
+							t_writer *const restrict clipb)
 {
 	int minus;
 
@@ -38,8 +39,10 @@ static int				ft_unsigned_dec_noprec(char *const restrict buffer,\
 	return (1);
 }
 
-static int				ft_unsigned_dec_prec(char *const restrict buffer,\
-					unsigned short nb_len, t_writer *const restrict clipb)
+static int				ft_unsigned_dec_prec(\
+							const char *const restrict buffer,\
+							const unsigned short nb_len,\
+							t_writer *const restrict clipb)
 {
 	int minus;
 
@@ -59,7 +62,7 @@ static int				ft_unsigned_dec_prec(char *const restrict buffer,\
 }
 
 static unsigned short	ft_int_len(char *const restrict buffer,\
-					unsigned long long nb)
+							const unsigned long long nb)
 {
 	unsigned long long	temp_num;
 	unsigned short		num_len;
@@ -81,7 +84,7 @@ static unsigned short	ft_int_len(char *const restrict buffer,\
 }
 
 int						ft_unsigned_dec(va_list args,\
-					t_writer *const restrict clipb)
+							t_writer *const restrict clipb)
 {
 	char				buffer[20];
 	unsigned long long	nb;

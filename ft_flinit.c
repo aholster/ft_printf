@@ -6,11 +6,10 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/04/18 17:44:14 by aholster       #+#    #+#                */
-/*   Updated: 2019/10/01 17:24:15 by aholster      ########   odam.nl         */
+/*   Updated: 2019/10/01 19:08:27 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
 #include "./incl/ft_internals.h"
 
 static void	init_flags(t_flag *const restrict flags)

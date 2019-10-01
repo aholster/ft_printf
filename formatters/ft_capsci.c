@@ -6,14 +6,13 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/21 11:16:26 by jesmith        #+#    #+#                */
-/*   Updated: 2019/09/18 20:24:57 by aholster      ########   odam.nl         */
+/*   Updated: 2019/10/01 19:22:51 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./../ft_printf.h"
-#include "./../incl/ft_internals.h"
+#include "./../incl/ft_formatters.h"
 
-static int				ft_printnum(int neg, t_writer *const restrict clipb, \
+static int			ft_printnum(int neg, t_writer *const restrict clipb, \
 							char *buffer, unsigned int nb_len)
 {
 	if (neg != -1)
@@ -41,7 +40,7 @@ static int				ft_printnum(int neg, t_writer *const restrict clipb, \
 	return (1);
 }
 
-static int				ft_capsci_neg(char *buffer, int neg, \
+static int			ft_capsci_neg(char *buffer, int neg, \
 					unsigned short nb_len, t_writer *const restrict clipb)
 {
 	const char			*num;
@@ -71,7 +70,7 @@ static int				ft_capsci_neg(char *buffer, int neg, \
 	return (1);
 }
 
-static int				ft_capsci_pos(char *buffer, int neg, \
+static int			ft_capsci_pos(char *buffer, int neg, \
 					unsigned short nb_len, t_writer *const restrict clipb)
 {
 	const char			*num;
@@ -180,7 +179,7 @@ static unsigned short	ft_int_len(char *buffer, \
 	return (prec_len);
 }
 
-static int				ft_isinfnan(float f, t_writer *const restrict clipb)
+static int			ft_isinfnan(float f, t_writer *const restrict clipb)
 {
 	long l;
 

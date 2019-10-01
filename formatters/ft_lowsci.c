@@ -6,12 +6,11 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/05 11:15:26 by jesmith        #+#    #+#                */
-/*   Updated: 2019/09/18 20:24:57 by aholster      ########   odam.nl         */
+/*   Updated: 2019/10/01 19:22:51 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./../ft_printf.h"
-#include "./../incl/ft_internals.h"
+#include "./../incl/ft_formatters.h"
 
 #include <stdio.h>
 static void	ft_x_handler(char *buffer)
@@ -26,7 +25,7 @@ static void	ft_x_handler(char *buffer)
 	}
 }
 
-static int				ft_printnum(int neg, t_writer *const restrict clipb, \
+static int			ft_printnum(int neg, t_writer *const restrict clipb, \
 							char *buffer, unsigned int nb_len)
 {
 	if (ft_prefix(neg, clipb) == -1)
@@ -41,7 +40,7 @@ static int				ft_printnum(int neg, t_writer *const restrict clipb, \
 	return (1);
 }
 
-static int				ft_lowsci_neg(char *buffer, int neg, \
+static int			ft_lowsci_neg(char *buffer, int neg, \
 					size_t nb_len, t_writer *const restrict clipb)
 {
 	const char	*num;
@@ -69,7 +68,7 @@ static int				ft_lowsci_neg(char *buffer, int neg, \
 	return (1);
 }
 
-static int				ft_lowsci_pos(char *buffer, int neg, \
+static int			ft_lowsci_pos(char *buffer, int neg, \
 					size_t nb_len, t_writer *const restrict clipb)
 {
 	nb_len--;
@@ -102,7 +101,7 @@ static int				ft_lowsci_pos(char *buffer, int neg, \
 	return (1);
 }
 
-static int				ft_isinfnan(long double f, t_writer *const restrict clipb)
+static int			ft_isinfnan(long double f, t_writer *const restrict clipb)
 {
 	long l;
 

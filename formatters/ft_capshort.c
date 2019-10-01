@@ -6,14 +6,13 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/21 13:13:51 by jesmith        #+#    #+#                */
-/*   Updated: 2019/09/18 20:24:57 by aholster      ########   odam.nl         */
+/*   Updated: 2019/10/01 19:22:51 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./../ft_printf.h"
-#include "./../incl/ft_internals.h"
+#include "./../incl/ft_formatters.h"
 
-static int				ft_capshort_noprec(char *buffer, int neg, \
+static int			ft_capshort_noprec(char *buffer, int neg, \
 					unsigned short nb_len, t_writer *const restrict clipb)
 {
 	int minus;
@@ -40,7 +39,7 @@ static int				ft_capshort_noprec(char *buffer, int neg, \
 	return (1);
 }
 
-static int				ft_capshort_prec(char *buffer, int neg, \
+static int			ft_capshort_prec(char *buffer, int neg, \
 					unsigned short nb_len, t_writer *const restrict clipb)
 {
 	int minus;

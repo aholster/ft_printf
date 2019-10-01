@@ -6,7 +6,7 @@
 #    By: jesmith <jesmith@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2019/02/16 15:46:43 by aholster       #+#    #+#                 #
-#    Updated: 2019/09/30 19:42:01 by aholster      ########   odam.nl          #
+#    Updated: 2019/10/01 19:16:28 by aholster      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,19 +15,24 @@ DATE := $(shell date)
 SUBDIR := ./formatters/
 
 SUBSOURCE := ptraddr decimal char octal caphex lowhex unsigned_dec\
- signconv unsignconv str n lowsci capsci lowshrthd capshrthd \
+ signconv unsignconv str n lowsci capsci lowshrthd capshrthd\
  longdouble_conv lowhexpoint caphexpoint capshort lowfltpoint
+
+#PARSEDIR := ./flag_parser/
+
+#PARSESOURCE := flag_verificators flagharvest flinit
 
 SOURCE := printf vprintf dprintf vdprintf asprintf vasprintf\
 sprintf vsprintf snprintf vsnprintf\
-dispatcher format flinit flagharvest padder\
-flag_verificators handling rounder
+flag_verificators flagharvest flinit\
+dispatcher format padder handling rounder
 
 FILEC = $(SOURCE:%=./ft_%.c) $(SUBSOURCE:%=$(SUBDIR)ft_%.c)
 
 OBJ =	$(FILEC:%.c=%.o)
 
-HEAD = ./ft_printf.h ./incl/ft_internals.h ./incl/ft_writer.h
+HEAD = ./ft_printf.h ./incl/ft_internals.h ./incl/ft_writer.h\
+./incl/ft_flag_parser.h ./incl/ft_formatters.h
 
 NAME = libftprintf.a
 

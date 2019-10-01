@@ -6,14 +6,13 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/27 11:34:23 by jesmith        #+#    #+#                */
-/*   Updated: 2019/09/18 20:24:57 by aholster      ########   odam.nl         */
+/*   Updated: 2019/10/01 19:22:51 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./../ft_printf.h"
-#include "./../incl/ft_internals.h"
+#include "./../incl/ft_formatters.h"
 
-static int						rounder(size_t index, char *buf)
+static int					rounder(size_t index, char *buf)
 {
 	if (index > 0)
 		index--;
@@ -40,7 +39,7 @@ static int						rounder(size_t index, char *buf)
 	return (0);
 }
 
-static int					ft_printnum(int neg, t_writer *const restrict clipb, \
+static int				ft_printnum(int neg, t_writer *const restrict clipb, \
 						unsigned int nb_len)
 {
 	if (neg != -1)
@@ -61,7 +60,7 @@ static int					ft_printnum(int neg, t_writer *const restrict clipb, \
 	return (1);
 }
 
-static int					ft_lowshrthd_noprec(char *buffer, \
+static int				ft_lowshrthd_noprec(char *buffer, \
 						int neg, unsigned short nb_len, t_writer *const restrict clipb)
 {
 	const char	*num;
@@ -90,7 +89,7 @@ static int					ft_lowshrthd_noprec(char *buffer, \
 	return (1);
 }
 
-static int					ft_lowshrthd_prec(char *buffer, int neg, \
+static int				ft_lowshrthd_prec(char *buffer, int neg, \
 						unsigned short nb_len, t_writer *const restrict clipb)
 {
 	const char			*num;

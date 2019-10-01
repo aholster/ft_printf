@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/10 12:13:37 by jesmith        #+#    #+#                */
-/*   Updated: 2019/09/30 16:48:00 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/10/01 12:10:14 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,6 @@ static int		ft_front_pad(char *buffer, \
 	return (1);
 }
 
-
 static short	ft_ull_to_hex(unsigned long long mantissa,\
 			char *buffer, t_print *const clipb, short expon)
 {
@@ -141,4 +140,3 @@ int				ft_caphexpoint(va_list args, \
 		return (-1);
 	return (1);
 }
-

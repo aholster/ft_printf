@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_handling.c                                      :+:    :+:            */
+/*   ft_hexpoint_handlers.c                             :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/06 10:44:11 by jesmith        #+#    #+#                */
-/*   Updated: 2019/09/30 16:47:54 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/10/01 12:11:41 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ unsigned short		ft_ull_len(unsigned long long num, int base)
 	return (length);
 }
 
-unsigned short ft_reversed(unsigned long long mantissa)
+unsigned short		ft_reversed(unsigned long long mantissa)
 {
 	unsigned short		len;
 	unsigned long long	tempnum;

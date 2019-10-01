@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/09 13:45:51 by jesmith        #+#    #+#                */
-/*   Updated: 2019/09/30 17:59:21 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/10/01 08:42:03 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ static int		ft_float_prep(char *buffer, size_t nb_len, \
 
 	if (clipb->flags->precision == 0)
 		nb_len--;
-	ft_float_rounder(buffer, clipb, nb_len);
+	ft_float_rounder(buffer, clipb, &nb_len);
 	nb_len--;
 	ret_hold = ft_float_padding(buffer, clipb, nb_len, neg);
 	return (ret_hold);

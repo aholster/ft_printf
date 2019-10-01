@@ -6,7 +6,7 @@
 #    By: jesmith <jesmith@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2019/02/16 15:46:43 by aholster       #+#    #+#                 #
-#    Updated: 2019/09/30 16:48:55 by jesmith       ########   odam.nl          #
+#    Updated: 2019/10/01 10:54:05 by jesmith       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,8 @@ SUBSOURCE := ptraddr decimal char octal caphex lowhex unsigned_dec\
  signconv unsignconv str n lowsci capsci lowshrthd capshrthd \
  longdouble_conv lowhexpoint caphexpoint lowfltpoint capfltpoint \
  shrthd_lowsci_print shrthd_capsci_print  shrthd_handlers float_handlers \
- hexpoint_handlers hexpoint_rounder sci_rounder float_rounder naninf_handlers
+ hexpoint_handlers hexpoint_rounder sci_rounder float_rounder naninf_handlers \
+ expon_handlers
 
 SOURCE := printf vprintf dprintf vdprintf asprintf vasprintf\
 dispatcher format flinit flagharvest functblinit padder \

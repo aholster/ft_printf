@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/09 13:45:41 by jesmith        #+#    #+#                */
-/*   Updated: 2019/09/30 18:14:15 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/10/01 11:52:45 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int				ft_lowfltpoint(va_list args, t_print *const clipb)
 	{
 		if (clipb->flags->precision == 0)
 			nb_len--;
-		ft_float_rounder(buffer, clipb, nb_len);
+		ft_float_rounder(buffer, clipb, &nb_len);
 		nb_len--;
 		ret_hold = ft_float_padding(buffer, clipb, nb_len, neg);
 	}

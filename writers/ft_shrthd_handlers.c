@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/25 12:01:20 by jesmith        #+#    #+#                */
-/*   Updated: 2019/09/30 12:12:24 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/10/01 12:16:49 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static int		ft_end_pad(t_print *const clipb, \
 {
 	(void)offset;
 	if (flagverif('#', clipb->flags) == 1 && new_len < 7)
-	{	
+	{
 		if (pad_zero(7 - new_len, clipb) == -1)
 			return (-1);
 		new_len += (7 - new_len);

@@ -6,14 +6,14 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/18 17:42:52 by jesmith        #+#    #+#                */
-/*   Updated: 2019/09/30 12:13:28 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/10/01 12:15:49 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../ft_printf.h"
 #include "./../incl/ft_internals.h"
 
-static size_t		ft_handle_nine(char *buffer, size_t len)
+static size_t		ft_handle_nine(char *buffer, size_t len, size_t *nb_len)
 {
 	if (buffer[len] < '9' && buffer[len] >= '0' && buffer[len] != '.')
 	{
@@ -29,17 +29,18 @@ static size_t		ft_handle_nine(char *buffer, size_t len)
 	{
 		buffer[len] = '1';
 		len--;
+		nb_len++;
 	}
 	if (buffer[len] == '.')
 		len--;
 	return (len);
 }
 
-static void			ft_sci_exception(char *buffer, size_t len)
+static void			ft_sci_exception(char *buffer, size_t len, size_t *nb_len)
 {
 	while (buffer[len] == '9')
 	{
-		len = ft_handle_nine(buffer, len);
+		len = ft_handle_nine(buffer, len, nb_len);
 	}
 	if (buffer[len] == '.' && len > 1)
 	{
@@ -50,32 +51,39 @@ static void			ft_sci_exception(char *buffer, size_t len)
 		buffer[len] = (buffer[len] - '0') + '1';
 }
 
+static void			ft_add_one(char *buffer, size_t len)
+{
+	if (buffer[len] == '.')
+		len--;
+	if (buffer[len] != '2')
+		buffer[len] = (buffer[len] - '0') + '1';
+}
+
 void				ft_sci_rounder(char *buffer, \
-				t_print *const restrict clipb, size_t nb_len)
+				t_print *const restrict clipb, size_t *nb_len)
 {
 	unsigned int		precision;
 	unsigned int		rounding_num;
 	size_t				len;
+	size_t				roundex;
 
 	len = 0;
+	roundex = *nb_len - 1;
 	precision = clipb->flags->precision;
-	rounding_num = buffer[nb_len - 1] - '0';
+	if (buffer[roundex] == '.')
+		roundex++;
+	rounding_num = buffer[roundex] - '0';
 	while (buffer[len] != '.')
 		len++;
 	len += precision + 1;
-	if (rounding_num >= 5)
+	if (rounding_num >= 5 && rounding_num < 10)
 	{
 		len--;
 		if (buffer[len] == '9')
-			ft_sci_exception(buffer, len);
+			ft_sci_exception(buffer, len, nb_len);
 		else if ((buffer[len] >= '0' && buffer[len] < '9') \
 		|| buffer[len] == '.')
-		{
-			if (buffer[len] == '.')
-				len--;
-			if (buffer[len] != '2')
-				buffer[len] = (buffer[len] - '0') + '1';
-		}
+			ft_add_one(buffer, len);
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/18 18:17:05 by aholster       #+#    #+#                */
-/*   Updated: 2019/09/30 18:32:38 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/10/01 12:01:14 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,11 @@ typedef union		u_nptrs
 	long long		*ll;
 }					t_nptrs;
 
-typedef union		u_floatneg
-{
-	long double		ld;
-	unsigned char	byte[10];
-}					t_floatneg;
+// typedef union		u_floatneg
+// {
+// 	long double		ld;
+// 	unsigned char	byte[10];
+// }					t_floatneg;
 
 struct s_print;
 
@@ -108,15 +108,15 @@ int					ft_float_padder(unsigned short len, unsigned short dec, \
 						t_print *const restrict clipb);
 
 void				ft_float_rounder(char *buffer, \
-						t_print *const restrict clipb, size_t nb_len);
+						t_print *const restrict clipb, size_t *nb_len);
 void				ft_shrthd_rounder(char *buffer, \
-						t_print *const restrict clipb, size_t nb_len);
+						t_print *const restrict clipb, size_t *nb_len);
 
 void				ft_hexpoint_rounder(char *buffer, \
 						t_print *const restrict clipb, short *expon);
 
 void				ft_sci_rounder(char *buffer, t_print *const restrict clipb, \
-						size_t nb_len);
+						size_t *nb_len);
 size_t				ft_expon_rounding(char *buffer, size_t nb_len, \
 						t_print *const restrict clipb);
 
@@ -127,13 +127,14 @@ unsigned short		ft_ull_len(unsigned long long num, int base);
 unsigned short 		ft_reversed(unsigned long long mantissa);
 unsigned short		ft_negpos_handler(t_print *const clipb, int neg, short expon);
 
+int					ft_expon_finder(char *buffer, size_t nb_len);
+void				ft_expon_len(char *buffer, size_t *new_len, \
+						t_print *const restrict clipb);
+
 size_t				ft_x_offset(char **buffer, size_t *nb_len, \
 						t_print *const restrict clipb, int neg);
-int					ft_expon_finder(char *buffer, size_t nb_len);
 size_t				ft_float_exceptions(char *buffer, long double nb, \
 						short *expon, t_print *const restrict clipb);
-void				ft_expon_len(char *buffer, size_t *new_len, \
-						t_print *const restrict clipb, int neg);
 
 int					ft_naninf_padding(char *buffer, t_print *const clipb, \
 						size_t nb_len, int neg);

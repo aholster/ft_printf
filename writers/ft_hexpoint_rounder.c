@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/19 16:00:34 by jesmith        #+#    #+#                */
-/*   Updated: 2019/09/30 15:53:30 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/10/01 12:17:28 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ static void		ft_rounding_up(char *buffer, size_t index, \
 			judex++;
 			buffer[index] = base_ref[judex];
 		}
-	if ((buffer[index] - '0') >= 0 && (buffer[index] - '0') < 9)
+		if ((buffer[index] - '0') >= 0 && (buffer[index] - '0') < 9)
 			ft_add_one(buffer, index);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/25 11:19:27 by jesmith        #+#    #+#                */
-/*   Updated: 2019/09/26 11:16:25 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/10/01 12:16:30 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@ static size_t		ft_offset(char *buffer, size_t *nb_len, \
 		&& flagverif(' ', clipb->flags) == -1)
 			offset++;
 	}
+	else if (buffer[0] == '-')
+		buffer[0] = '-';
 	*nb_len -= offset;
 	return (offset);
 }
@@ -86,7 +88,7 @@ int					ft_capsci_print(char *buffer, \
 
 	offset = ft_offset(buffer, &nb_len, clipb);
 	len_extension = ft_nbrlen((long long)expon, 10) + nb_len + 2;
-	if (expon < 10)
+	if (expon < 10 && expon >= 0)
 		len_extension++;
 	if (flagverif('-', clipb->flags) == -1 && \
 	flagverif('0', clipb->flags) == -1)

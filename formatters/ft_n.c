@@ -6,12 +6,11 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/11 19:04:14 by aholster       #+#    #+#                */
-/*   Updated: 2019/10/01 14:48:52 by aholster      ########   odam.nl         */
+/*   Updated: 2019/10/01 19:22:51 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./../ft_printf.h"
-#include "./../incl/ft_internals.h"
+#include "./../incl/ft_formatters.h"
 
 static int	ft_double_flags(va_list args, const size_t history,\
 							const t_flag *const restrict flags)

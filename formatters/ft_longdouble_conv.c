@@ -6,14 +6,13 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/25 15:08:50 by jesmith        #+#    #+#                */
-/*   Updated: 2019/10/01 14:52:55 by aholster      ########   odam.nl         */
+/*   Updated: 2019/10/01 19:26:31 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./../ft_printf.h"
-#include "./../incl/ft_internals.h"
+#include "./../incl/ft_formatters.h"
 
-static int	va_long(va_list args, long double *holder)
+static int	va_long(va_list args, long double *const restrict holder)
 {
 	long		num;
 
@@ -27,7 +26,7 @@ static int	va_long(va_list args, long double *holder)
 	return (-1);
 }
 
-static int	va_double(va_list args, long double *holder)
+static int	va_double(va_list args, long double *const restrict holder)
 {
 	double		num;
 
@@ -42,7 +41,7 @@ static int	va_double(va_list args, long double *holder)
 }
 
 int			ft_longdouble_conv(va_list args,\
-				long double *holder,\
+				long double *const restrict holder,\
 				const t_flag *const restrict flags)
 {
 	long double	num;

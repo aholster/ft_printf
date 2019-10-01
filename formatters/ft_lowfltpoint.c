@@ -6,14 +6,13 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/09 13:45:41 by jesmith        #+#    #+#                */
-/*   Updated: 2019/09/18 20:24:57 by aholster      ########   odam.nl         */
+/*   Updated: 2019/10/01 19:22:51 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./../ft_printf.h"
-#include "./../incl/ft_internals.h"
+#include "./../incl/ft_formatters.h"
 
-// static int					ft_printnum(int neg, t_writer *const restrict clipb, \
+// static int				ft_printnum(int neg, t_writer *const restrict clipb, \
 // 						unsigned int nb_len)
 // {
 // 	if (neg != -1)
@@ -34,7 +33,7 @@
 // 	return (1);
 // }
 
-// static int					ft_flt_padding(unsigned char *buffer, \
+// static int				ft_flt_padding(unsigned char *buffer, \
 // 						int neg, unsigned short nb_len, t_writer *const restrict clipb)
 // {
 // 	const unsigned char	*num;
@@ -64,7 +63,7 @@
 // 	return (1);
 // }
 
-// static int					ft_lowshrthd_prec(unsigned char *buffer, int neg, \
+// static int				ft_lowshrthd_prec(unsigned char *buffer, int neg, \
 // 						unsigned short nb_len, t_writer *const restrict clipb)
 // {
 // 	const unsigned char	*num;

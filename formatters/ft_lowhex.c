@@ -6,15 +6,16 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/03 16:34:02 by jesmith        #+#    #+#                */
-/*   Updated: 2019/09/19 20:38:30 by aholster      ########   odam.nl         */
+/*   Updated: 2019/10/01 20:00:10 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./../ft_printf.h"
-#include "./../incl/ft_internals.h"
+#include "./../incl/ft_formatters.h"
 
-static int				ft_lowhex_noprec(char *const restrict buffer, \
-unsigned long long nb, unsigned short nb_len, t_writer *const restrict clipb)
+static int				ft_lowhex_noprec(const char *const restrict buffer,\
+							const unsigned long long nb,\
+							const unsigned short nb_len,\
+							t_writer *const restrict clipb)
 {
 	int minus;
 
@@ -36,8 +37,10 @@ unsigned long long nb, unsigned short nb_len, t_writer *const restrict clipb)
 	return (1);
 }
 
-static int				ft_lowhex_prec(char *const restrict buffer,\
-unsigned long long nb, unsigned short nb_len, t_writer *const restrict clipb)
+static int				ft_lowhex_prec(const char *const restrict buffer,\
+							const unsigned long long nb,\
+							const unsigned short nb_len,\
+							t_writer *const restrict clipb)
 {
 	int minus;
 
@@ -60,7 +63,7 @@ unsigned long long nb, unsigned short nb_len, t_writer *const restrict clipb)
 }
 
 static unsigned short	ull_to_hex(char *const restrict buffer,\
-					unsigned long long nb)
+							unsigned long long nb)
 {
 	unsigned short		index;
 	unsigned short		len;

@@ -6,15 +6,14 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/07 18:48:26 by jesmith        #+#    #+#                */
-/*   Updated: 2019/10/01 14:51:36 by aholster      ########   odam.nl         */
+/*   Updated: 2019/10/01 19:26:52 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./../ft_printf.h"
-#include "./../incl/ft_internals.h"
+#include "./../incl/ft_formatters.h"
 
 void	ft_unsignconv(va_list args,\
-			unsigned long long *const holder,\
+			unsigned long long *const restrict holder,\
 			const t_flag *const restrict flags)
 {
 	if (flagverif('h', flags) == 1)

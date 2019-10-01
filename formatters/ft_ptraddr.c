@@ -6,15 +6,15 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/05/25 13:19:52 by aholster       #+#    #+#                */
-/*   Updated: 2019/09/18 20:24:57 by aholster      ########   odam.nl         */
+/*   Updated: 2019/10/01 19:55:24 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./../ft_printf.h"
-#include "./../incl/ft_internals.h"
+#include "./../incl/ft_formatters.h"
 
-static int				ft_ptraddr_noprec(char *const restrict buffer, \
-					unsigned short num_len, t_writer *const restrict clipb)
+static int				ft_ptraddr_noprec(const char *const restrict buffer,\
+							const unsigned short num_len,\
+							t_writer *const restrict clipb)
 {
 	int minus;
 
@@ -35,8 +35,9 @@ static int				ft_ptraddr_noprec(char *const restrict buffer, \
 	return (1);
 }
 
-static int				ft_ptraddr_prec(char *const restrict buffer,\
-					unsigned short num_len, t_writer *const restrict clipb)
+static int				ft_ptraddr_prec(const char *const restrict buffer,\
+							const unsigned short num_len,\
+							t_writer *const restrict clipb)
 {
 	int minus;
 
@@ -57,8 +58,8 @@ static int				ft_ptraddr_prec(char *const restrict buffer,\
 	return (1);
 }
 
-static unsigned short	unsigned_ll_toa(char *buffer,\
-									unsigned long long holder)
+static unsigned short	unsigned_ll_toa(char *const restrict buffer,\
+							unsigned long long holder)
 {
 	unsigned short	num_len;
 	unsigned short	curlen;

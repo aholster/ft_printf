@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/04/18 16:00:54 by aholster       #+#    #+#                */
-/*   Updated: 2019/09/30 20:27:00 by aholster      ########   odam.nl         */
+/*   Updated: 2019/10/01 17:00:00 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static int			ft_conversion_exception(\
 
 static t_formatter	ft_lookup_tbl(const int index)
 {
-	const t_formatter	dispatch_tbl[128] = {
+	static const t_formatter	dispatch_tbl[128] = {
 	['a'] = &ft_lowhexpoint,
 	['A'] = &ft_caphexpoint,
 	['c'] = &ft_char,
@@ -69,7 +69,7 @@ static t_formatter	ft_lookup_tbl(const int index)
 }
 
 int					ft_dispatcher(const char *restrict specifier,\
-				t_writer *const restrict clipb)
+						t_writer *const restrict clipb)
 {
 	const int		index = *specifier;
 	t_formatter		function;

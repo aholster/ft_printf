@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/04/18 17:44:14 by aholster       #+#    #+#                */
-/*   Updated: 2019/10/01 15:31:38 by aholster      ########   odam.nl         */
+/*   Updated: 2019/10/01 17:24:15 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ static void	init_flags(t_flag *const restrict flags)
 	index = 0;
 	while (VALID_FLG[index] != '\0')
 	{
-		flip = VALID_FLG[index] / 32;
-		flags->statiflags[flip] |= (1 << ((VALID_FLG[index]) - 32));
+		flip = VALID_FLG[index] / FLG_UNS;
+		flags->statiflags[flip] |= (1LLU << (VALID_FLG[index] - (FLG_UNS * flip)));
 		index++;
 	}
 }
@@ -35,8 +35,8 @@ static void	init_dflags(t_flag *const restrict flags)
 	index = 0;
 	while (VALID_D_FLG[index] != '\0')
 	{
-		flip = VALID_D_FLG[index] / 32;
-		flags->statidoubles[flip] |= (1 << ((VALID_D_FLG[index]) - 32));
+		flip = VALID_D_FLG[index] / FLG_UNS;
+		flags->statidoubles[flip] |= (1LLU << ((VALID_D_FLG[index]) - (FLG_UNS * flip)));
 		index++;
 	}
 }

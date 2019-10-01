@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/18 18:17:05 by aholster       #+#    #+#                */
-/*   Updated: 2019/10/01 14:55:42 by aholster      ########   odam.nl         */
+/*   Updated: 2019/10/01 17:33:11 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,15 +37,20 @@ typedef union	u_nptrs
 	long long	*ll;
 }				t_nptrs;
 
+//	0X00FF00FF 00FF00FF 00FF00FF 00FF00FF
+# define FLG_UNS	8
+
 typedef	struct	s_flag
 {
-	uint32_t	statiflags[4];
-	uint32_t	statidoubles[4];
-	uint32_t	actiflags[4];
-	uint32_t	actidoubles[4];
+	uint8_t		statiflags[16];
+	uint8_t		statidoubles[16];
+	uint8_t		actiflags[16];
+	uint8_t		actidoubles[16];
 	uint		precision;
 	uint		padding;
 }				t_flag;
+
+// typedef struct	
 
 typedef	int		(*t_formatter)(va_list args, struct s_writer *const restrict);
 

@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/04/18 17:22:09 by aholster       #+#    #+#                */
-/*   Updated: 2019/10/01 15:33:21 by aholster      ########   odam.nl         */
+/*   Updated: 2019/10/01 17:31:01 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,47 +55,49 @@ static int		ft_num_arg_extract(va_list args,\
 
 static void		flagflip(const unsigned char c, t_flag *const restrict flags)
 {
-	const unsigned short	flip = c / 32;
+	const unsigned short	flip = c / FLG_UNS;
 
-	if ((((1LLU << (c - (flip * 32))) & flags->statidoubles[flip]) > 0))
+	if ((((1LLU << (c - (flip * FLG_UNS))) & flags->statidoubles[flip]) > 0))
 	{
-		if (((1LLU << (c - (flip * 32))) & flags->actiflags[flip]) > 0)
+		if (((1LLU << (c - (flip * FLG_UNS))) & flags->actiflags[flip]) > 0)
 		{
-			flags->actidoubles[flip] |= (1LLU << (c - (flip * 32)));
-			flags->actiflags[flip] ^= (1LLU << (c - (flip * 32)));
+			flags->actidoubles[flip] |= (1LLU << (c - (flip * FLG_UNS)));
+			flags->actiflags[flip] ^= (1LLU << (c - (flip * FLG_UNS)));
 		}
 		else
 		{
-			flags->actiflags[flip] |= (1LLU << (c - (flip * 32)));
-			flags->actidoubles[flip] ^= (1LLU << (c - (flip * 32)));
+			flags->actiflags[flip] |= (1LLU << (c - (flip * FLG_UNS)));
+			flags->actidoubles[flip] ^= (1LLU << (c - (flip * FLG_UNS)));
 		}
 	}
 	else
-		flags->actiflags[flip] |= (1LLU << (c - (flip * 32)));
+		flags->actiflags[flip] |= (1LLU << (c - (flip * FLG_UNS)));
 }
 
 static int		ft_valiflag(const unsigned char c,\
 					const t_flag *const restrict flags)
 {
-	const unsigned short	flip = c / 32;
+	const unsigned short	flip = c / FLG_UNS;
 
 	if (c >= 128)
 		return (-1);
-	if (((1LLU << (c - (flip * 32))) & flags->statiflags[flip]) > 0)
+	if (((1LLU << (c - (flip * FLG_UNS))) & flags->statiflags[flip]) > 0)
 		return (1);
 	return (-1);
 }
 
 static void		ft_flagreset(t_flag *const restrict flags)
 {
-	flags->actiflags[0] = 0;
-	flags->actiflags[1] = 0;
-	flags->actiflags[2] = 0;
-	flags->actiflags[3] = 0;
-	flags->actidoubles[0] = 0;
-	flags->actidoubles[1] = 0;
-	flags->actidoubles[2] = 0;
-	flags->actidoubles[3] = 0;
+	// flags->actiflags[0] = 0;
+	// flags->actiflags[1] = 0;
+	// flags->actiflags[2] = 0;
+	// flags->actiflags[3] = 0;
+	// flags->actidoubles[0] = 0;
+	// flags->actidoubles[1] = 0;
+	// flags->actidoubles[2] = 0;
+	// flags->actidoubles[3] = 0;
+	ft_bzero(flags->actiflags, 16);
+	ft_bzero(flags->actidoubles, 16);
 	flags->precision = 0;
 	flags->padding = 0;
 }

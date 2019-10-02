@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/08/28 14:42:40 by jesmith        #+#    #+#                */
-/*   Updated: 2019/10/01 19:22:51 by aholster      ########   odam.nl         */
+/*   Updated: 2019/10/02 19:05:35 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,10 @@ static int	ft_exponbuff(char *buffer, short expon)
 	return (backup_index + 1);
 }
 
-static int	ft_end_pad(t_writer *const restrict clipb, short expon, \
-						unsigned short nb_len, unsigned short str_len)
+static int	ft_end_pad(t_writer *const restrict clipb,\
+						short expon,\
+						unsigned short nb_len,\
+						unsigned short str_len)
 {
 	unsigned short	expon_len;
 	char			buffer[8];
@@ -56,88 +58,88 @@ static int	ft_end_pad(t_writer *const restrict clipb, short expon, \
 		str_len--;
 	if (flagverif('-', clipb->flags) == 1 \
 	&& clipb->flags->padding > clipb->flags->precision)
-		if (ft_float_padder(nb_len + str_len, str_len, clipb) == -1)
+		if (ft_float_padder(nb_len + str_len, str_len - 2, clipb) == -1)
 			return (-1);
 	return (1);
 }
 
 static int	ft_front_pad(char *buffer, \
-					short expon, t_writer *const restrict clipb, int neg)
+				short expon,\
+				t_writer *const restrict clipb,\
+				int neg)
 {
-	unsigned short	nb_len;
+	unsigned short	expon_len;
 	unsigned short	str_len;
+	short			nb_len;
 
-	str_len = ft_lowhexpoint_prec(buffer, clipb);
-	nb_len = ft_nbrlen((long long)expon, 10) + 3;
-	if (expon >= 0)
-		nb_len++;
-	if (neg < 0)
-		nb_len++;
+	nb_len = neg;
+	if (nb_len < 0)
+		nb_len *= -1;
+	str_len = ft_hexpoint_prec(buffer, clipb, nb_len, expon);
+	expon_len = ft_nbrlen((long long)expon, 10) + 3;
+	expon_len += ft_negpos_handler(clipb, neg, expon);
 	if (flagverif('.', clipb->flags) == 1 && clipb->flags->precision == 0)
-		nb_len--;
+		expon_len--;
 	if (flagverif('-', clipb->flags) == -1 && \
 	clipb->flags->padding > clipb->flags->precision)
-		if (ft_float_padder(nb_len + str_len, str_len, clipb) == -1)
+		if (ft_float_padder(expon_len + str_len, str_len - 2, clipb) == -1)
 			return (-1);
 	if (ft_prefix(neg, clipb) == -1)
 		return (-1);
-	if (clipb->self("0x", 2, clipb) == -1)
+	if (clipb->self(buffer, (size_t)str_len, clipb) == -1)
 		return (-1);
-	if (clipb->self(buffer, str_len, clipb) == -1)
-		return (-1);
-	if (ft_end_pad(clipb, expon, nb_len, str_len) == -1)
+	if (ft_end_pad(clipb, expon, expon_len, str_len) == -1)
 		return (-1);
 	return (1);
 }
 
-static void		ft_man_to_buffer(unsigned long long mantissa,\
-				char *buffer, t_writer *const restrict clipb)
+static short	ft_ull_to_hex(unsigned long long mantissa,\
+					char *buffer,\
+					t_writer *const restrict clipb,\
+					short expon)
 {
-	char				*base;
-	unsigned short		cur_len;
-	size_t				buffer_trim;
+	unsigned short		index;
+	unsigned short		len;
+	const char			*base = "0123456789abcdef";
 
-	base = "0123456789ABCDEF";
-	buffer_trim = 0;
-	cur_len = ft_ull_len(mantissa, 16);
-	while (mantissa > 16)
+	if (mantissa == 0)
+		buffer[0] = '0';
+	index = ft_reversed(mantissa);
+	len = index;
+	if ((clipb->flags->precision != 0 || expon == 1020))
+		index++;
+	while (index > 0)
 	{
-		if ((base[(mantissa % 16)] == '0' && buffer_trim != 0) \
-		|| base[(mantissa % 16)] != '0')
+		index--;
+		if (index == 1 && (clipb->flags->precision != 0 || expon == 1020))
 		{
-			buffer[cur_len] = base[(mantissa % 16)];
-			buffer_trim++;
+			buffer[index] = '.';
+			index--;
 		}
-		if (cur_len == 2 && \
-		(clipb->flags->precision != 0 || buffer[cur_len + 1] == 'f'))
-		{
-			cur_len--;
-			buffer[cur_len] = '.';
-		}
-		mantissa /= 16;
-		cur_len--;
+		buffer[index] = base[mantissa & 0XFLLU];
+		mantissa >>= 4;
 	}
-	buffer[cur_len] = base[mantissa];
+	return (len);
 }
 
 int				ft_lowhexpoint(va_list args, t_writer *const restrict clipb)
 {
-	char			buffer[20];
+	char			buffer[16];
 	t_float			conversion;
-
-	long double			nb;
-	int					neg;
-	short				expon;
+	long double		nb;
+	int				neg;
+	short			expon;
 
 	neg = ft_longdouble_conv(args, &nb, clipb->flags);
 	conversion.ld = nb;
 	if (nb == 0.0)
-		ft_float_exceptions(buffer, nb, &expon, clipb);
+		neg *= ft_float_exceptions(buffer, &expon, clipb->flags);
 	else
 	{
 		expon = (conversion.byte[4] & 0x7FFF) - 16386;
-		ft_man_to_buffer(conversion.llu, buffer, clipb);
+		neg *= ft_ull_to_hex(conversion.llu, buffer, clipb, expon);
 	}
+	ft_hexpoint_rounder(buffer, clipb, &expon);
 	if (ft_front_pad(buffer, expon, clipb, neg) == -1)
 		return (-1);
 	return (1);

@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/04/18 16:00:54 by aholster       #+#    #+#                */
-/*   Updated: 2019/10/01 19:17:46 by aholster      ########   odam.nl         */
+/*   Updated: 2019/10/02 17:42:28 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static t_formatter	ft_lookup_tbl(const int index)
 	['e'] = &ft_lowsci,
 	['E'] = &ft_capsci,
 	['f'] = &ft_lowfltpoint,
-//	['F'] = &ft_capfltpoint,
+	['F'] = &ft_capfltpoint,
 	['g'] = &ft_lowshrthd,
 	['G'] = &ft_capshrthd,
 	['i'] = &ft_decimal,

@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/10/01 18:55:03 by aholster       #+#    #+#                */
-/*   Updated: 2019/10/01 19:25:07 by aholster      ########   odam.nl         */
+/*   Updated: 2019/10/02 19:25:01 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ int				ft_capshrthd(va_list args, t_writer *const restrict clipb);
 int				ft_lowhexpoint(va_list args, t_writer *const restrict clipb);
 int				ft_caphexpoint(va_list args, t_writer *const restrict clipb);
 int				ft_lowfltpoint(va_list args, t_writer *const restrict clipb);
+int				ft_capfltpoint(va_list args, t_writer *const restrict clipb);
 int				ft_n(va_list args, t_writer *const restrict clipb);
 
 #endif

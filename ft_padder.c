@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/05/25 16:10:49 by aholster       #+#    #+#                */
-/*   Updated: 2019/10/01 19:07:42 by aholster      ########   odam.nl         */
+/*   Updated: 2019/10/02 17:36:47 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ int	ft_space_padder(unsigned short len, t_writer *const restrict clipb)
 		diff = temp;
 	else if (padding > precision && padding > len)
 		diff = padding - len;
+	else if (padding == precision && padding > len)
+		diff = padding - len;
 	else
 		return (1);
 	if (pad_spaces(diff, clipb) == -1)
@@ -102,8 +104,9 @@ int	ft_zero_padder(unsigned short len, t_writer *const restrict clipb)
 	return (1);
 }
 
-int	ft_float_padder(unsigned short len, unsigned short dec, \
-t_writer *const restrict clipb)
+int	ft_float_padder(unsigned short len,\
+		const unsigned short dec,\
+		t_writer *const restrict clipb)
 {
 	if (clipb->flags->precision > len)
 	{
@@ -118,7 +121,7 @@ t_writer *const restrict clipb)
 	}
 	if (clipb->flags->padding > len)
 	{
-		if (len + dec <= len + clipb->flags->precision)
+		if (clipb->flags->precision != dec)
 			len += clipb->flags->precision;
 		if (flagverif('0', clipb->flags) == 1)
 		{

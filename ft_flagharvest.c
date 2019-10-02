@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/04/18 17:22:09 by aholster       #+#    #+#                */
-/*   Updated: 2019/10/01 19:08:30 by aholster      ########   odam.nl         */
+/*   Updated: 2019/10/02 18:59:47 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,25 +32,28 @@ static void		ft_num_extract(const char *const restrict format,\
 	*index = subdex;
 }
 
-static int		ft_num_arg_extract(va_list args,\
-					size_t *const restrict subdex,\
-					unsigned int *const restrict destination)
-{
-	int				num;
+// static int		ft_num_arg_extract(va_list args,\
+// 					size_t *const restrict subdex,\
+// 					unsigned int *const restrict destination)
+// {
+// 	int				num;
 
-	num = va_arg(args, int);
-	*subdex += 1;
-	if (num < 0)
-	{
-		*destination = (-num);
-		return (-1);
-	}
-	else
-	{
-		*destination = num;
-		return (1);
-	}
-}
+// 	num = va_arg(args, int);
+// 	*subdex += 1;
+// 	if (num < 0)
+// 	{
+// 		if (flagverif('.', flags) == 1)
+// 			*destination = 0; // talk about this
+// 		else
+// 			*destination = (-num);
+// 		return (-1);
+// 	}
+// 	else
+// 	{
+// 		*destination = num;
+// 		return (1);
+// 	}
+// }
 
 static void		flagflip(const unsigned char c, t_flag *const restrict flags)
 {
@@ -117,16 +120,16 @@ void			ft_flagharvest(const char *restrict format,\
 		else if (format[subdex] == '.')
 		{
 			subdex++;
-			if (format[subdex] == '*')
-				ft_num_arg_extract(clipb->args, &subdex, &clipb->flags->precision);
-			else
+			// if (format[subdex] == '*')
+			// 	ft_num_arg_extract(clipb->args, &subdex, &clipb->flags->precision, clipb->flags);
+			// else
 				ft_num_extract(format, &subdex, &clipb->flags->precision);
 		}
-		else if (format[subdex] == '*')
-		{
-			if (ft_num_arg_extract(clipb->args, &subdex, &clipb->flags->padding) == -1)
-				flagflip('-', clipb->flags);
-		}
+		// else if (format[subdex] == '*')
+		// {
+		// 	if (ft_num_arg_extract(clipb->args, &subdex, &clipb->flags->padding, clipb->flags) == -1)
+		// 		flagflip('-', clipb->flags);
+		// }
 		else
 			subdex++;
 	}

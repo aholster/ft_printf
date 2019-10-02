@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/07 18:48:26 by jesmith        #+#    #+#                */
-/*   Updated: 2019/10/01 19:26:52 by aholster      ########   odam.nl         */
+/*   Updated: 2019/10/02 18:28:10 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	ft_unsignconv(va_list args,\
 		*holder = (unsigned char)va_arg(args, unsigned int);
 	else if (flagverif('l', flags) == 1)
 		*holder = (unsigned long)va_arg(args, unsigned long);
-	else if (doubleverif('l', flags) == 1 || flagverif('L', flags) == 1)
+	else if (doubleverif('l', flags) == 1)
 		*holder = va_arg(args, unsigned long long);
 	else
 		*holder = (unsigned int)va_arg(args, unsigned int);

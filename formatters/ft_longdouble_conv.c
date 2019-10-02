@@ -6,59 +6,34 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/25 15:08:50 by jesmith        #+#    #+#                */
-/*   Updated: 2019/10/01 19:26:31 by aholster      ########   odam.nl         */
+/*   Updated: 2019/10/02 18:17:57 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../incl/ft_formatters.h"
 
-static int	va_long(va_list args, long double *const restrict holder)
-{
-	long		num;
-
-	num = (long)va_arg(args, long);
-	if (num >= 0)
-	{
-		*holder = (long double)num;
-		return (1);
-	}
-	*holder = (long double)(-num);
-	return (-1);
-}
-
-static int	va_double(va_list args, long double *const restrict holder)
-{
-	double		num;
-
-	num = va_arg(args, double);
-	if (num >= 0)
-	{
-		*holder = (long double)num;
-		return (1);
-	}
-	*holder = (long double)(-num);
-	return (-1);
-}
-
 int			ft_longdouble_conv(va_list args,\
 				long double *const restrict holder,\
 				const t_flag *const restrict flags)
 {
-	long double	num;
-
-	if (flagverif('l', flags) == 1)
-		return (va_long(args, holder));
-	if (doubleverif('l', flags) == 1 || flagverif('L', flags) == 1)
+	union				u_longdouble
 	{
-		num = va_arg(args, long double);
-		if (num >= 0)
-		{
-			*holder = num;
-			return (1);
-		}
-		*holder = (-num);
-		return (-1);
+		long double		ld;
+		unsigned char	byte[10];
+	}					t_longdouble;
+//	t_floatneg	num;
+	if (flagverif('L', flags) == 1)
+	{
+		t_longdouble.ld = va_arg(args, long double);
 	}
 	else
-		return (va_double(args, holder));
+	{
+		t_longdouble.ld = (long double)va_arg(args, double);
+	}
+	*holder = t_longdouble.ld;
+	if ((t_longdouble.byte[9] & 0x80) != 0)
+	{
+		return (-1);
+	}
+	return (1);
 }

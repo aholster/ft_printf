@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/03 16:34:02 by jesmith        #+#    #+#                */
-/*   Updated: 2019/10/01 20:00:10 by aholster      ########   odam.nl         */
+/*   Updated: 2019/10/02 18:20:29 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,10 +65,10 @@ static int				ft_lowhex_prec(const char *const restrict buffer,\
 static unsigned short	ull_to_hex(char *const restrict buffer,\
 							unsigned long long nb)
 {
-	unsigned short		index;
-	unsigned short		len;
-	const char			*base = "0123456789abcdef";
-	unsigned long long	tempnum;
+	unsigned short			index;
+	unsigned short			len;
+	const char *restrict	base = "0123456789abcdef";
+	unsigned long long		tempnum;
 
 	if (nb == 0)
 	{

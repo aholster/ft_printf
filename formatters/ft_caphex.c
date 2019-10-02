@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/03 18:20:19 by jesmith        #+#    #+#                */
-/*   Updated: 2019/10/01 19:59:09 by aholster      ########   odam.nl         */
+/*   Updated: 2019/10/02 17:55:38 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,10 +65,10 @@ static int				ft_caphex_prec(const char *const restrict buffer,\
 static unsigned short	ull_to_hex(char *const restrict buffer,\
 							unsigned long long nb)
 {
-	unsigned short		index;
-	unsigned short		len;
-	const char			*base = "0123456789ABCDEF";
-	unsigned long long	tempnum;
+	unsigned short			index;
+	unsigned short			len;
+	const char *restrict	base = "0123456789ABCDEF";
+	unsigned long long		tempnum;
 
 	if (nb == 0)
 	{
@@ -105,7 +105,7 @@ int						ft_caphex(va_list args, t_writer *const restrict clipb)
 	if (flagverif('#', clipb->flags) == 1 && nb != 0 && \
 		clipb->flags->padding >= 2)
 		clipb->flags->padding -= 2;
-	if (nb == 0 && precision == 0)
+	if (nb == 0 && precision == 1)
 	{
 		if (clipb->flags->padding == 0)
 			return (1);

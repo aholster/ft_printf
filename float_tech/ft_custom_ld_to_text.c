@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/07/26 17:50:52 by aholster       #+#    #+#                */
-/*   Updated: 2019/09/06 10:42:21 by aholster      ########   odam.nl         */
+/*   Updated: 2019/10/02 19:12:25 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,9 @@ static int	exponent_calculation(t_numlst **alst, short exponent)
 	return (1);
 }
 
-static int	exception_catch(t_float num, char **amem, size_t *asize)
+static int	exception_catch(t_float num,\
+				char **const amem,\
+				size_t *asize)
 {
 	if (!(num.ld == num.ld))
 	{
@@ -69,13 +71,13 @@ static int	exception_catch(t_float num, char **amem, size_t *asize)
 	}
 	else if ((num.byte[4] & 0x1) == 1)
 	{
-		*amem = (char *)ft_memdup("-inf", 4);
-		*asize = 4;
+		*amem = (char *)ft_memdup("inf", 3);
+		*asize = 3;
 	}
 	else
 	{
-		*amem = (char *)ft_memdup("+inf", 4);
-		*asize = 4;
+		*amem = (char *)ft_memdup("inf", 3);
+		*asize = 3;
 	}
 	if (*amem == NULL)
 		return (-1);
@@ -84,7 +86,9 @@ static int	exception_catch(t_float num, char **amem, size_t *asize)
 }
 
 int			ft_custom_ld_to_text(const long double input,\
-			const unsigned int precision, char **amem, size_t *asize)
+				const unsigned int precision,\
+				char **const amem,\
+				size_t *asize)
 {
 	t_float				num;
 	short				exponent;
@@ -101,7 +105,7 @@ int			ft_custom_ld_to_text(const long double input,\
 			return (-1);
 		if (exponent_calculation(&lst, exponent) == -1)
 			return (-1);
-		if (ft_numlst_to_txt(lst, precision, amem, asize) == -1)
+		if (ft_numlst_to_txt(lst, precision, &(*amem), asize) == -1)
 		{
 			ft_numlst_del(&lst);
 			return (-1);

@@ -6,158 +6,71 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/05 11:15:26 by jesmith        #+#    #+#                */
-/*   Updated: 2019/10/01 19:22:51 by aholster      ########   odam.nl         */
+/*   Updated: 2019/10/02 18:23:45 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../incl/ft_formatters.h"
 
-#include <stdio.h>
-static void	ft_x_handler(char *buffer)
+static int		ft_lowsci_buffer(char *buffer,\
+					t_writer *const restrict clipb,\
+					size_t nb_len,\
+					int expon)
 {
-	size_t index;
+	int					ret_val;
+	int					temp;
+	size_t				round_len;
 
-	index = 0;
-	while (buffer[index] != '\0')
-	{
-		buffer[index] = buffer[index + 1];
-		index++;
-	}
-}
-
-static int			ft_printnum(int neg, t_writer *const restrict clipb, \
-							char *buffer, unsigned int nb_len)
-{
-	if (ft_prefix(neg, clipb) == -1)
-		return (-1);
-	if (flagverif('0', clipb->flags) == 1 && flagverif('-', clipb->flags) == -1)
-		if (ft_zero_padder(nb_len, clipb) == -1)
-			return (-1);
-	if (clipb->self(buffer, 1, clipb) == -1)
-		return (-1);
-	if (clipb->self(&buffer[1], clipb->flags->precision, clipb) == -1)
-		return (-1);
-	return (1);
-}
-
-static int			ft_lowsci_neg(char *buffer, int neg, \
-					size_t nb_len, t_writer *const restrict clipb)
-{
-	const char	*num;
-
-	num = ft_itoa(nb_len - 1);
-	// if (nb_len - 1 < 10)
-	// 	nb_len++;
-	if (flagverif('-', clipb->flags) == -1 && \
-	flagverif('0', clipb->flags) == -1)
-		if (ft_space_padder(nb_len, clipb) == -1)
-			return (-1);
-	if (ft_printnum(neg, clipb, buffer, nb_len) == -1)
-		return (-1);
-	if (clipb->self("e-", 2, clipb) == -1)
-		return (-1);
-	if (nb_len - 1 < 10)
-		if (clipb->self("0", 1, clipb) == -1)
-			return (-1);
-	if (clipb->self(num, \
-	ft_strlen(num), clipb) == -1)
-		return (-1);
-	if (flagverif('-', clipb->flags) == 1 && clipb->flags->padding > nb_len)
-		if (ft_space_padder(nb_len, clipb) == -1)
-			return (-1);
-	return (1);
-}
-
-static int			ft_lowsci_pos(char *buffer, int neg, \
-					size_t nb_len, t_writer *const restrict clipb)
-{
-	nb_len--;
-	// nb_len = clipb->flags->precision + 4 + ft_strlen((const char *)num);
-	// if (nb_len - 1 < 10)
-	// 	nb_len++;
-	if (flagverif('+', clipb->flags) == -1)
+	temp = expon;
+	nb_len = clipb->flags->precision + 3;
+	if (buffer[nb_len] == '.')
 		nb_len--;
-	if (flagverif('-', clipb->flags) == -1 && \
-	flagverif('0', clipb->flags) == -1)
-		if (ft_space_padder(nb_len, clipb) == -1)
-			return (-1);
-	// ft_x_handler(buffer);
-	if (flagverif('+', clipb->flags) == 1)
+	round_len = nb_len + 1;
+	ft_sci_rounder(buffer, clipb, &round_len);
+	if (clipb->flags->precision == 0)
 		nb_len--;
-	if (ft_printnum(neg, clipb, buffer, nb_len) == -1)
-		return (-1);
-	if (clipb->self("e+", 2, clipb) == -1)
-		return (-1);
-	if (nb_len - 1 < 10)
-		if (clipb->self("0", 1, clipb) == -1)
-			return (-1);
-	if (clipb->self(buffer, nb_len, clipb) == -1) // don't want to print this buffer just need something for now to print
-		return (-1);
-	if (neg == -1)
-		nb_len++;
-	if (flagverif('-', clipb->flags) == 1 && clipb->flags->padding > nb_len)
-		if (ft_space_padder(nb_len, clipb) == -1)
-			return (-1);
-	return (1);
+	ret_val = ft_lowsci_print(buffer, nb_len, clipb, expon);
+	return (ret_val);
 }
 
-static int			ft_isinfnan(long double f, t_writer *const restrict clipb)
+static int		ft_naninf_print(char *buffer,\
+					t_writer *const clipb,\
+					size_t nb_len)
 {
-	long l;
+	int ret_val;
+	int neg;
 
-	l = *((long double *)&f);
-	if (f != f)
-	{
-		if (clipb->self("nan", 3, clipb) == -1)
-			return (-1);
-		return (1);
-	}
-	if (l == 0x7F800000)
-	{
-		if (clipb->self("inf", 3, clipb) == -1)
-			return (-1);
-		return (1);
-	}
-	if (l == 0xFF800000)
-	{
-		if (clipb->self("-inf", 4, clipb) == -1)
-			return (-1);
-		return (1);
-	}
-	return (0);
+	neg = 1;
+	if (buffer[0] == '-')
+		neg = -1;
+	ret_val = ft_naninf_padding(buffer, clipb, nb_len, neg);
+	return (ret_val);
 }
 
-int						ft_lowsci(va_list args, t_writer *const restrict clipb)
+int				ft_lowsci(va_list args, t_writer *const clipb)
 {
 	char				*buffer;
-	t_float				conversion;
 	long double			nb;
 	size_t				nb_len;
-	int					neg;
-//	unsigned long long	expon;
+	int					expon;
+	int					ret_val;
 
-	neg = ft_longdouble_conv(args, &nb, clipb->flags);
-	if (ft_isinfnan(nb, clipb) == -1)
-		return (-1);
-		// need to move decimal point
-	conversion.ld = nb;
-	nb_len = (size_t)ft_ull_len(conversion.llu, 10);
+	ret_val = ft_longdouble_conv(args, &nb, clipb->flags);
 	if (flagverif('.', clipb->flags) == -1)
 		clipb->flags->precision = 6;
 	if (ft_custom_ld_to_text(nb, \
 	clipb->flags->precision, &buffer, &nb_len) == -1)
 		return (-1);
-	ft_rounder(conversion, buffer, clipb, nb_len);
-	ft_x_handler(buffer);
-
-	/* 
-	nb_len = ft_int_len(buffer, nb, clipb);
-	if (clipb->flags->padding != 0 && (neg == -1 || \
-	flagverif('+', clipb->flags) == 1 || flagverif(' ', clipb->flags) == 1))
-		clipb->flags->padding -= 1;*/
-	if (nb >= 0)
-		return (ft_lowsci_pos(buffer, neg, nb_len, clipb));
-	if (nb < 0)
-		return (ft_lowsci_neg(buffer, neg, nb_len, clipb));
-	return (1);
+	if (ret_val == -1)
+		buffer[0] = '-';
+	if (ft_strcmp(buffer, "nan") == 0 || ft_strcmp(buffer, "inf") == 0)
+		ret_val = ft_naninf_print(buffer, clipb, nb_len);
+	else
+	{
+		expon = ft_expon_finder(buffer, nb_len);
+		expon += ft_expon_rounding(buffer, nb_len, clipb);
+		ret_val = ft_lowsci_buffer(buffer, clipb, nb_len, expon);
+	}
+	free(buffer);
+	return (ret_val);
 }

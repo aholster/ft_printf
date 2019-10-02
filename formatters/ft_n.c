@@ -6,14 +6,15 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/11 19:04:14 by aholster       #+#    #+#                */
-/*   Updated: 2019/10/01 19:22:51 by aholster      ########   odam.nl         */
+/*   Updated: 2019/10/02 18:26:03 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../incl/ft_formatters.h"
 
-static int	ft_double_flags(va_list args, const size_t history,\
-							const t_flag *const restrict flags)
+static int	ft_double_flags(va_list args,\
+				const size_t history,\
+				const t_flag *const restrict flags)
 {
 	t_nptrs ptr;
 
@@ -32,8 +33,9 @@ static int	ft_double_flags(va_list args, const size_t history,\
 	return (0);
 }
 
-static int	ft_single_flags(va_list args, const size_t history,\
-							const t_flag *const restrict flags)
+static int	ft_single_flags(va_list args,\
+				const size_t history,\
+				const t_flag *const restrict flags)
 {
 	t_nptrs ptr;
 

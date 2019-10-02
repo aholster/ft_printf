@@ -6,14 +6,13 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/05/25 16:10:49 by aholster       #+#    #+#                */
-/*   Updated: 2019/10/01 12:08:54 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/10/02 17:36:47 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
 #include "./incl/ft_internals.h"
 
-int	pad_spaces(size_t amount, t_print *const clipb)
+int	pad_spaces(size_t amount, t_writer *const restrict clipb)
 {
 	size_t		index;
 	size_t		calc;
@@ -26,14 +25,14 @@ int	pad_spaces(size_t amount, t_print *const clipb)
 			calc = amount - index;
 		else
 			calc = sizeof(spaces);
-		if (clipb->printer(spaces, calc, clipb) == -1)
+		if (clipb->self(spaces, calc, clipb) == -1)
 			return (-1);
 		index += calc;
 	}
 	return (amount);
 }
 
-int	pad_zero(size_t amount, t_print *const clipb)
+int	pad_zero(size_t amount, t_writer *const restrict clipb)
 {
 	size_t		index;
 	size_t		calc;
@@ -46,14 +45,14 @@ int	pad_zero(size_t amount, t_print *const clipb)
 			calc = amount - index;
 		else
 			calc = sizeof(zeroes);
-		if (clipb->printer(zeroes, calc, clipb) == -1)
+		if (clipb->self(zeroes, calc, clipb) == -1)
 			return (-1);
 		index += calc;
 	}
 	return (amount);
 }
 
-int	ft_space_padder(unsigned short len, t_print *const clipb)
+int	ft_space_padder(unsigned short len, t_writer *const restrict clipb)
 {
 	size_t			diff;
 	size_t			temp;
@@ -78,7 +77,7 @@ int	ft_space_padder(unsigned short len, t_print *const clipb)
 	return (1);
 }
 
-int	ft_zero_padder(unsigned short len, t_print *const clipb)
+int	ft_zero_padder(unsigned short len, t_writer *const restrict clipb)
 {
 	size_t			diff;
 	size_t			temp;
@@ -105,7 +104,9 @@ int	ft_zero_padder(unsigned short len, t_print *const clipb)
 	return (1);
 }
 
-int	ft_float_padder(unsigned short len, unsigned short dec, t_print *const restrict clipb)
+int	ft_float_padder(unsigned short len,\
+		const unsigned short dec,\
+		t_writer *const restrict clipb)
 {
 	if (clipb->flags->precision > len)
 	{

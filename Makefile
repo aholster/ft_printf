@@ -6,32 +6,37 @@
 #    By: jesmith <jesmith@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2019/02/16 15:46:43 by aholster       #+#    #+#                 #
-#    Updated: 2019/10/01 10:54:05 by jesmith       ########   odam.nl          #
+#    Updated: 2019/10/02 18:45:37 by aholster      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
 DATE := $(shell date)
 
-SUBDIR := ./writers/
+SUBDIR := ./formatters/
 
 SUBSOURCE := ptraddr decimal char octal caphex lowhex unsigned_dec\
  signconv unsignconv str n lowsci capsci lowshrthd capshrthd \
  longdouble_conv lowhexpoint caphexpoint lowfltpoint capfltpoint \
- shrthd_lowsci_print shrthd_capsci_print  shrthd_handlers float_handlers \
+ shrthd_lowsci_print shrthd_capsci_print shrthd_handlers float_handlers \
  hexpoint_handlers hexpoint_rounder sci_rounder float_rounder naninf_handlers \
  expon_handlers
 
-SOURCE := printf vprintf dprintf vdprintf asprintf vasprintf\
-dispatcher format flinit flagharvest functblinit padder \
-flag_verificators    \
+#PARSEDIR := ./flag_parser/
 
-#sprintf vsprintf snprintf vsnprintf\
+#PARSESOURCE := flag_verificators flagharvest flinit
+
+SOURCE := printf vprintf dprintf vdprintf asprintf vasprintf\
+sprintf vsprintf snprintf vsnprintf\
+dispatcher format flinit flagharvest padder\
+flag_verificators
+
 
 FILEC = $(SOURCE:%=./ft_%.c) $(SUBSOURCE:%=$(SUBDIR)ft_%.c)
 
 OBJ =	$(FILEC:%.c=%.o)
 
-HEAD = ./ft_printf.h ./incl/ft_internals.h
+HEAD = ./ft_printf.h ./incl/ft_internals.h ./incl/ft_writer.h\
+./incl/ft_flag_parser.h ./incl/ft_formatters.h
 
 NAME = libftprintf.a
 
@@ -85,7 +90,7 @@ re: fclean all
 norm:
 	@echo "**+++=====*=====*=====*=====*{\033[0;31mOUT\033[0;00m}\
 	*=====*=====*=====*=====+++**\033[0;33m"
-	@$(NORM) || TRUE 
+	@time $(NORM) || TRUE
 	@echo "\033[0;00m**+++=====*=====*=====*=====*\
 =====*=====*===*=====*=====+++**"
 

@@ -6,50 +6,45 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/04/18 17:44:14 by aholster       #+#    #+#                */
-/*   Updated: 2019/09/18 18:25:57 by aholster      ########   odam.nl         */
+/*   Updated: 2019/10/02 17:37:50 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
 #include "./incl/ft_internals.h"
 
-static void	init_flags(t_flag *flags)
+static void	init_flags(t_flag *const restrict flags)
 {
 	size_t	index;
+	short	flip;
 
 	index = 0;
 	while (VALID_FLG[index] != '\0')
 	{
-		if (VALID_FLG[index] >= 64)
-			(*flags).statiflags[1] |= (1LLU << (VALID_FLG[index] - 64));
-		else
-			(*flags).statiflags[0] |= (1LLU << VALID_FLG[index]);
+		flip = VALID_FLG[index] / FLG_UNS;
+		flags->statiflags[flip] |= (1LLU << (VALID_FLG[index] - (FLG_UNS * flip)));
 		index++;
 	}
 }
 
-static void	init_dflags(t_flag *flags)
+static void	init_dflags(t_flag *const restrict flags)
 {
 	size_t	index;
+	short	flip;
 
 	index = 0;
 	while (VALID_D_FLG[index] != '\0')
 	{
-		if (VALID_D_FLG[index] >= 64)
-			(*flags).statidoubles[1] |= (1LLU << (VALID_D_FLG[index] - 64));
-		else
-			(*flags).statidoubles[0] |= (1LLU << VALID_D_FLG[index]);
+		flip = VALID_D_FLG[index] / FLG_UNS;
+		flags->statidoubles[flip] |= (1LLU << ((VALID_D_FLG[index]) - (FLG_UNS * flip)));
 		index++;
 	}
 }
 
-void		ft_flinit(t_print *const restrict clipb, t_flag *flags)
+void		ft_flinit(t_writer *const restrict clipb,\
+				t_flag *const restrict flags)
 {
 	(*clipb).flags = flags;
-	(*flags).statiflags[0] = 0;
-	(*flags).statiflags[1] = 0;
-	(*flags).statidoubles[0] = 0;
-	(*flags).statidoubles[1] = 0;
+	ft_bzero(flags, sizeof(t_flag));
 	init_dflags(flags);
 	init_flags(flags);
 }

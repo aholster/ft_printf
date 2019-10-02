@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/18 18:17:05 by aholster       #+#    #+#                */
-/*   Updated: 2019/10/01 12:01:14 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/10/02 19:24:34 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,10 @@
 
 # include "./../libft/libft.h"
 # include "./../float_tech/float_tech.h"
+# include "./ft_writer.h"
 
 # include <limits.h>
-
-# define BUFFSIZE	8
-# define FUNCSIZE	58
-
-# define MAX_INT	2147483647
+# include <sys/types.h>
 
 # define VALID_FLG "hjzl# *.-+L0123456789"
 # define VALID_D_FLG "hl"
@@ -32,155 +29,136 @@
 **	to add new conversions, add them into the dispatcher array.
 */
 
-typedef union		u_nptrs
+# define FLG_UNS	8
+
+typedef	struct	s_flag
 {
-	char			*hh;
-	short			*h;
-	int				*i;
-	long			*l;
-	long long		*ll;
-}					t_nptrs;
+	uint8_t		statiflags[16];
+	uint8_t		statidoubles[16];
+	uint8_t		actiflags[16];
+	uint8_t		actidoubles[16];
+	uint		precision;
+	uint		padding;
+}				t_flag;
 
-// typedef union		u_floatneg
-// {
-// 	long double		ld;
-// 	unsigned char	byte[10];
-// }					t_floatneg;
-
-struct s_print;
-
-typedef int			(*t_wrt_ptr)(const char *restrict, size_t, \
-						struct s_print * const);
-
-typedef	int			(*t_writer)(va_list args, struct s_print * const);
-
-typedef struct		s_print
-{
-	char			*buffer;
-	t_list			**alst;
-	size_t			history;
-	size_t			current;
-	int				fd;
-	va_list			origin_args;
-	va_list			args;
-	t_wrt_ptr		printer;
-	struct s_flag	*flags;
-}					t_print;
+typedef	int		(*t_formatter)(va_list args, struct s_writer *const restrict);
 
 /*
 ** history should be unsigned long long bc of %lln
 */
 
-typedef	struct		s_flag
-{
-	unsigned\
-	long long		statiflags[2];
-	unsigned\
-	long long		statidoubles[2];
-	unsigned\
-	long long		actiflags[2];
-	unsigned\
-	long long		actidoubles[2];
-	unsigned int	precision;
-	unsigned int	padding;
-}					t_flag;
+int				ft_format(const char *restrict format,\
+					t_writer *const restrict clipb);
 
-int					ft_format(const char *restrict format,\
-						t_print *const restrict clipb);
+int				ft_dispatcher(const char *restrict specifier,\
+					t_writer *const restrict clipb);
+void			ft_flagharvest(const char *restrict format,\
+					size_t *const aindex, t_writer *const restrict clipb);
+void			ft_flinit(t_writer *const restrict clipb,\
+					t_flag *const restrict flags);
 
-int					ft_dispatcher(const char *restrict specifier,\
-							t_writer *functbl, t_print *const restrict clipb);
-void				ft_flagharvest(const char *restrict format,\
-						size_t *const aindex, t_print *const restrict clipb);
-void				ft_flinit(t_print *const restrict clipb, t_flag *flags);
+int				ft_float_padder(unsigned short len,\
+					const unsigned short dec,\
+					t_writer *const restrict clipb);
 
-void				ft_functblinit(t_writer *functbl);
+void			ft_rounder(t_float conversion,\
+					char *buffer,\
+					t_writer *const restrict clipb,\
+					size_t nb_len);
 
-int					ft_zero_padder(unsigned short len,\
-								t_print *const restrict clipb);
-int					ft_space_padder(unsigned short len,\
-								t_print *const restrict clipb);
-int					pad_spaces(size_t amount,\
-								t_print *const restrict clipb);
-int					pad_zero(size_t amount, t_print *const restrict clipb);
+unsigned short	ft_lowhexpoint_prec(const char *const restrict buffer,\
+					const t_writer *const restrict clipb);
+int				ft_prefix(const int neg, t_writer *const restrict clipb);
+unsigned short	ft_ull_len(unsigned long long num, const int base);
 
-int					ft_float_padder(unsigned short len, unsigned short dec, \
-						t_print *const restrict clipb);
 
-void				ft_float_rounder(char *buffer, \
-						t_print *const restrict clipb, size_t *nb_len);
-void				ft_shrthd_rounder(char *buffer, \
-						t_print *const restrict clipb, size_t *nb_len);
 
-void				ft_hexpoint_rounder(char *buffer, \
-						t_print *const restrict clipb, short *expon);
+size_t			ft_x_offset(char *restrict *const restrict buffer,\
+					size_t *const restrict nb_len,\
+					const t_flag *const restrict flags,\
+					const int neg);
+size_t			ft_float_exceptions(char *const restrict buffer,\
+					short *const restrict expon,\
+					const t_flag *const restrict clipb);
 
-void				ft_sci_rounder(char *buffer, t_print *const restrict clipb, \
+void			ft_sci_rounder(char *buffer,\
+						t_writer *const restrict clipb,\
 						size_t *nb_len);
-size_t				ft_expon_rounding(char *buffer, size_t nb_len, \
-						t_print *const restrict clipb);
+size_t			ft_expon_rounding(char *buffer,\
+					size_t nb_len,\
+					t_writer *const restrict clipb);
 
-unsigned short		ft_hexpoint_prec(char *buffer, \
-						t_print *const restrict clipb, size_t nb_len, short expon);
-int					ft_prefix(int neg, t_print *const restrict clipb);
-unsigned short		ft_ull_len(unsigned long long num, int base);
-unsigned short 		ft_reversed(unsigned long long mantissa);
-unsigned short		ft_negpos_handler(t_print *const clipb, int neg, short expon);
+int				ft_expon_finder(char *buffer, size_t nb_len);
+void			ft_expon_len(char *buffer,\
+					size_t *new_len, \
+					t_writer *const restrict clipb);
 
-int					ft_expon_finder(char *buffer, size_t nb_len);
-void				ft_expon_len(char *buffer, size_t *new_len, \
-						t_print *const restrict clipb);
+void			ft_float_rounder(char *buffer,\
+					t_writer *const restrict clipb,\
+					size_t *nb_len);
+void			ft_shrthd_rounder(char *buffer,\
+					t_writer *const restrict clipb,\
+					size_t *nb_len);
 
-size_t				ft_x_offset(char **buffer, size_t *nb_len, \
-						t_print *const restrict clipb, int neg);
-size_t				ft_float_exceptions(char *buffer, long double nb, \
-						short *expon, t_print *const restrict clipb);
+unsigned short	ft_hexpoint_prec(const char *const restrict buffer,\
+					t_writer *const clipb,\
+					size_t nb_len,\
+					short expon);
+int				ft_prefix(int neg, t_writer *const clipb);
+unsigned short	ft_ull_len(unsigned long long num, int base);
+unsigned short	ft_reversed(unsigned long long mantissa);
+unsigned short	ft_negpos_handler(t_writer *const restrict clipb,\
+					int neg,\
+					short expon);
 
-int					ft_naninf_padding(char *buffer, t_print *const clipb, \
-						size_t nb_len, int neg);
-void				ft_captolow(char *buffer);
+void			ft_hexpoint_rounder(char *buffer,\
+					t_writer *const restrict clipb,\
+					short *expon);
 
-int					ft_signconv(va_list args,\
-						unsigned long long *const holder,\
-						const t_flag *const flags);
-void				ft_unsignconv(va_list args,\
-						unsigned long long *const holder,\
-						const t_flag *const flags);
-int					ft_longdouble_conv(va_list args, long double *holder,\
-						const t_flag *flags);
-int					flagverif(const unsigned char c, const t_flag *flags);
-int					doubleverif(const unsigned char c,\
-						const t_flag *flags);
+void			ft_captolow(char *const restrict buffer);
+int				ft_naninf_padding(const char *const restrict buffer,\
+					t_writer *const restrict clipb,\
+					size_t nb_len,\
+					int neg);
 
-int					ft_str(va_list args, t_print *const restrict clipb);
-int					ft_ptraddr(va_list args, t_print *const restrict clipb);
-int					ft_decimal(va_list args, t_print *const restrict clipb);
-int					ft_unsigned_dec(va_list args,\
-							t_print *const restrict clipb);
-int					ft_char(va_list args, t_print *const restrict clipb);
-int					ft_octal(va_list args, t_print *const restrict clipb);
-int					ft_lowhex(va_list args, t_print *const restrict clipb);
-int					ft_caphex(va_list args, t_print *const restrict clipb);
-int					ft_lowsci(va_list args, t_print *const restrict clipb);
-int					ft_capsci(va_list args, t_print *const restrict clipb);
-int					ft_lowshrthd(va_list args, t_print *const restrict clipb);
-int					ft_capshrthd(va_list args, t_print *const restrict clipb);
-int					ft_shrthd_print(char *buffer, \
-						size_t offset, t_print *const clipb, size_t new_len);
-size_t				ft_shrthd_offset(char **buffer, size_t *nb_len, \
-						t_print *const restrict clipb, int neg);
-int					ft_lowsci_print(char *buffer, \
-						size_t nb_len, t_print *const clipb, int expon);
-int					ft_capsci_print(char *buffer, \
-						size_t nb_len, t_print *const clipb, int expon);
-int					ft_lowhexpoint(va_list args,\
-							t_print *const restrict clipb);
-int					ft_caphexpoint(va_list args,\
-							t_print *const restrict clipb);
-int					ft_lowfltpoint(va_list args,\
-							t_print *const restrict clipb);
-int					ft_capfltpoint(va_list args,\
-							t_print *const restrict clipb);
-int					ft_n(va_list args, t_print *const restrict clipb);
+int				ft_capsci_print(char *buffer,\
+					size_t nb_len,\
+					t_writer *const clipb,\
+					int expon);
+
+int				ft_shrthd_print(char *buffer, \
+					size_t offset,\
+					t_writer *const clipb,\
+					size_t new_len);
+size_t			ft_shrthd_offset(char *restrict *const restrict buffer,\
+					t_writer *const restrict clipb,\
+					int neg);
+
+int				ft_lowsci_print(char *buffer,\
+					size_t nb_len,\
+					t_writer *const clipb,\
+					int expon);
+
+int				ft_zero_padder(unsigned short len,\
+					t_writer *const restrict clipb);
+int				ft_space_padder(unsigned short len,\
+					t_writer *const restrict clipb);
+int				pad_spaces(size_t amount, t_writer *const restrict clipb);
+int				pad_zero(size_t amount, t_writer *const restrict clipb);
+
+int				ft_signconv(va_list args,\
+					unsigned long long *const restrict holder,\
+					const t_flag *const restrict flags);
+void			ft_unsignconv(va_list args,\
+					unsigned long long *const restrict holder,\
+					const t_flag *const restrict flags);
+int				ft_longdouble_conv(va_list args,\
+					long double *const restrict holder,\
+					const t_flag *const restrict flags);
+
+int				flagverif(const unsigned char c,\
+					const t_flag *const restrict flags);
+int				doubleverif(const unsigned char c,\
+					const t_flag *const restrict flags);
 
 #endif

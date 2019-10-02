@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/13 15:19:34 by aholster       #+#    #+#                */
-/*   Updated: 2019/09/18 18:30:35 by aholster      ########   odam.nl         */
+/*   Updated: 2019/10/02 17:32:36 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,6 @@ int		ft_vsprintf(char *str, const char *restrict format, va_list args)
 {
 	int	holder;
 
-	holder = ft_vsnprintf(str, MAX_INT + 1, format, args);
+	holder = ft_vsnprintf(str, INT_MAX + 1, format, args);
 	return (holder);
 }

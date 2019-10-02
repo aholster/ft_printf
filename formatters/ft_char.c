@@ -1,0 +1,59 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        ::::::::            */
+/*   ft_char.c                                          :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2019/06/03 14:19:45 by jesmith        #+#    #+#                */
+/*   Updated: 2019/10/02 18:14:39 by aholster      ########   odam.nl         */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "./../incl/ft_formatters.h"
+
+static int	ft_char_pad(const char c,\
+				t_writer *const restrict clipb,\
+				const t_flag *const restrict flags)
+{
+	if (flagverif('-', flags) == -1)
+	{
+		if (flagverif('0', flags) == 1)
+		{
+			if (pad_zero(flags->padding - 1, clipb) == -1)
+				return (-1);
+		}
+		else if (pad_spaces((flags->padding - 1), clipb) == -1)
+			return (-1);
+	}
+	if (clipb->self(&c, 1, clipb) == -1)
+		return (-1);
+	if (flagverif('-', flags) == 1)
+	{
+		if (flagverif('0', flags) == 1)
+		{
+			if (pad_zero(flags->padding - 1, clipb) == -1)
+				return (-1);
+		}
+		else if (pad_spaces((flags->padding - 1), clipb) == -1)
+			return (-1);
+	}
+	return (1);
+}
+
+int			ft_char(va_list args, t_writer *const restrict clipb)
+{
+	char	c;
+
+	c = (char)va_arg(args, int);
+	if (clipb->flags->padding > 1)
+	{
+		if (flagverif('-', clipb->flags) == -1)
+			return (ft_char_pad(c, clipb, clipb->flags));
+		if (flagverif('-', clipb->flags) == 1)
+			return (ft_char_pad(c, clipb, clipb->flags));
+	}
+	if (clipb->self(&c, 1, clipb) == -1)
+		return (-1);
+	return (1);
+}

@@ -6,24 +6,25 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/04/17 19:57:30 by aholster       #+#    #+#                */
-/*   Updated: 2019/09/18 18:59:56 by aholster      ########   odam.nl         */
+/*   Updated: 2019/10/02 17:37:37 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
 #include "./incl/ft_internals.h"
 
-static int		ft_judex(const char *restrict format, size_t *index,\
-				const size_t len, t_print *const restrict clipb)
+static int		ft_judex(const char *restrict format,\
+					size_t *index,\
+					const size_t len,\
+					t_writer *const restrict clipb)
 {
-	size_t	judex;
+	size_t		judex;
 
 	judex = *index;
 	while (judex < len && format[judex] != '%')
 	{
 		judex++;
 	}
-	if (clipb->printer(format + *index, judex - *index, clipb) == -1)
+	if (clipb->self(format + *index, judex - *index, clipb) == -1)
 		return (-1);
 	*index = judex;
 	return (1);
@@ -41,24 +42,22 @@ static int		ft_charskip(const char *c)
 */
 
 int				ft_format(const char *restrict format,\
-							t_print *const restrict clipb)
+						t_writer *const restrict clipb)
 {
-	size_t		index;
-	size_t		len;
-	t_flag		flags;
-	t_writer	functbl[FUNCSIZE];
+	size_t				index;
+	size_t				len;
+	t_flag				flags;
 
 	index = 0;
 	len = ft_strlen(format);
 	ft_flinit(clipb, &flags);
-	ft_functblinit(functbl);
 	while (index < len)
 	{
 		if (format[index] == '%')
 		{
 			index++;
 			ft_flagharvest(format, &index, clipb);
-			if (ft_dispatcher(&format[index], functbl, clipb) == -1)
+			if (ft_dispatcher(&format[index], clipb) == -1)
 				return (-1);
 			index += ft_charskip(format + index);
 		}

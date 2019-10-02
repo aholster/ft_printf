@@ -6,21 +6,21 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/17 12:34:56 by jesmith        #+#    #+#                */
-/*   Updated: 2019/10/02 19:14:01 by aholster      ########   odam.nl         */
+/*   Updated: 2019/10/02 21:27:56 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./../incl/ft_formatters.h"
+#include "./../../incl/ft_formatters.h"
 
 size_t		ft_x_offset(char *restrict *const restrict buffer,\
 				size_t *const restrict nb_len,\
 				const t_flag *const restrict flags,\
-				const int neg)
+				const int is_neg)
 {
 	size_t	offset;
 
 	offset = 0;
-	if (neg == 1)
+	if (is_neg == 1)
 	{
 		if (flagverif('+', flags) == 1)
 			*buffer[0] = '+';
@@ -30,7 +30,7 @@ size_t		ft_x_offset(char *restrict *const restrict buffer,\
 		&& flagverif(' ', flags) == -1)
 			offset++;
 	}
-	else if (neg == -1)
+	else if (is_neg == -1)
 		*buffer[0] = '-';
 	*buffer += offset;
 	if (offset == 1)

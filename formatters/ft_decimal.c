@@ -6,35 +6,38 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/05/31 12:06:16 by jesmith        #+#    #+#                */
-/*   Updated: 2019/10/02 18:16:41 by aholster      ########   odam.nl         */
+/*   Updated: 2019/10/02 23:40:03 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../incl/ft_formatters.h"
 
-static int				ft_preprint(const int neg,\
+static int				ft_preprint(const int is_neg,\
 							t_writer *const restrict clipb)
 {
-	if (neg >= 0)
+	if (is_neg >= 0)
 	{
 		if (flagverif('+', clipb->flags) == 1)
+		{
 			if (clipb->self("+", 1, clipb) == -1)
 				return (-1);
-		if (flagverif(' ', clipb->flags) == 1 && \
-		flagverif('+', clipb->flags) == -1)
+		}
+		else if (flagverif(' ', clipb->flags) == 1)
 		{
 			if (clipb->self(" ", 1, clipb) == -1)
 				return (-1);
 		}
 	}
-	else if (neg < 0)
+	else if (is_neg < 0)
+	{
 		if (clipb->self("-", 1, clipb) == -1)
 			return (-1);
+	}
 	return (1);
 }
 
 static int				ft_decimal_noprec(const char *const restrict buffer,\
-							const int neg,\
+							const int is_neg,\
 							const unsigned short nb_len,\
 							t_writer *const restrict clipb)
 {
@@ -44,7 +47,7 @@ static int				ft_decimal_noprec(const char *const restrict buffer,\
 	if (minus == -1 && flagverif('0', clipb->flags) == -1)
 		if (ft_space_padder(nb_len, clipb) == -1)
 			return (-1);
-	if (ft_preprint(neg, clipb) == -1)
+	if (ft_preprint(is_neg, clipb) == -1)
 		return (-1);
 	if (flagverif('0', clipb->flags) == 1 && minus == -1)
 	{
@@ -63,17 +66,19 @@ static int				ft_decimal_noprec(const char *const restrict buffer,\
 }
 
 static int				ft_decimal_prec(const char *const restrict buffer,\
-							const int neg,\
+							const int is_neg,\
 							unsigned short nb_len,\
 							t_writer *const restrict clipb)
 {
 	int minus;
+	int	holder;
 
 	minus = flagverif('-', clipb->flags);
 	if (minus == -1 && clipb->flags->padding > nb_len)
 		if (ft_space_padder(nb_len, clipb) == -1)
 			return (-1);
-	if (ft_preprint(neg, clipb) == -1)
+	holder = ft_preprint(is_neg, clipb);
+	if (holder == -1)
 		return (-1);
 	if (clipb->flags->precision > nb_len)
 		if (ft_zero_padder(nb_len, clipb) == -1)
@@ -89,12 +94,11 @@ static int				ft_decimal_prec(const char *const restrict buffer,\
 static unsigned short	ft_int_len(char *const restrict buffer,\
 								const unsigned long long nb)
 {
-	unsigned long long	temp_num;
-	unsigned short		num_len;
-	unsigned short		cur_len;
-	char				*base;
+	unsigned long long			temp_num;
+	unsigned short				num_len;
+	unsigned short				cur_len;
+	const char *const restrict	base = "0123456789";
 
-	base = "0123456789";
 	temp_num = nb;
 	num_len = ft_ull_len(nb, 10);
 	cur_len = num_len - 1;
@@ -113,22 +117,22 @@ int						ft_decimal(va_list args, t_writer *const restrict clipb)
 	char				buffer[20];
 	unsigned long long	nb;
 	unsigned short		nb_len;
-	int					neg;
+	int					is_neg;
 	int					precision;
 
 	precision = flagverif('.', clipb->flags);
-	neg = ft_signconv(args, &nb, clipb->flags);
+	is_neg = ft_signconv(args, &nb, clipb->flags);
 	nb_len = ft_int_len(buffer, nb);
 	if (nb == 0 && precision == 1 && clipb->flags->padding == 0)
 		return (1);
 	if (nb == 0 && precision == 1 && clipb->flags->precision < nb_len)
 		ft_strcpy((char*)buffer, " ");
-	if (clipb->flags->padding != 0 && (neg == -1 || \
+	if (clipb->flags->padding != 0 && (is_neg == -1 || \
 	flagverif('+', clipb->flags) == 1 || flagverif(' ', clipb->flags) == 1))
 		clipb->flags->padding -= 1;
 	if (precision == 1)
-		return (ft_decimal_prec(buffer, neg, nb_len, clipb));
+		return (ft_decimal_prec(buffer, is_neg, nb_len, clipb));
 	if (precision == -1)
-		return (ft_decimal_noprec(buffer, neg, nb_len, clipb));
+		return (ft_decimal_noprec(buffer, is_neg, nb_len, clipb));
 	return (1);
 }

@@ -6,11 +6,11 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/06 10:44:11 by jesmith        #+#    #+#                */
-/*   Updated: 2019/10/02 19:16:26 by aholster      ########   odam.nl         */
+/*   Updated: 2019/10/02 21:27:56 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./../incl/ft_formatters.h"
+#include "./../../incl/ft_formatters.h"
 
 unsigned short		ft_hexpoint_prec(const char *const restrict buffer,\
 						t_writer *const clipb,\
@@ -43,9 +43,9 @@ unsigned short		ft_hexpoint_prec(const char *const restrict buffer,\
 	return (len);
 }
 
-int					ft_prefix(int neg, t_writer *const clipb)
+int					ft_prefix(int is_neg, t_writer *const clipb)
 {
-	if (neg >= 0)
+	if (is_neg >= 0)
 	{
 		if (flagverif('+', clipb->flags) == 1)
 			if (clipb->self("+", 1, clipb) == -1)
@@ -57,7 +57,7 @@ int					ft_prefix(int neg, t_writer *const clipb)
 				return (-1);
 		}
 	}
-	else if (neg < 0)
+	else if (is_neg < 0)
 		if (clipb->self("-", 1, clipb) == -1)
 			return (-1);
 	if (clipb->self("0x", 2, clipb) == -1)
@@ -96,19 +96,19 @@ unsigned short		ft_reversed(unsigned long long mantissa)
 }
 
 unsigned short		ft_negpos_handler(t_writer *const restrict clipb,\
-						int neg,\
+						int is_neg,\
 						short expon)
 {
 	unsigned short	sign;
 
 	sign = 0;
-	if (neg > 0)
+	if (is_neg > 0)
 	{
 		if (flagverif('+', clipb->flags) == 1 || \
 		flagverif(' ', clipb->flags) == 1)
 			sign++;
 	}
-	else if (neg < 0)
+	else if (is_neg < 0)
 		sign++;
 	if (expon >= 0)
 		sign++;

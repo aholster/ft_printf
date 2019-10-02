@@ -6,11 +6,11 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/10/01 10:52:39 by jesmith        #+#    #+#                */
-/*   Updated: 2019/10/02 19:17:21 by aholster      ########   odam.nl         */
+/*   Updated: 2019/10/02 20:48:10 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./../incl/ft_formatters.h"
+#include "./../../incl/ft_formatters.h"
 
 static int	ft_nonzero(char *buffer, size_t nb_len)
 {

@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/05 11:15:26 by jesmith        #+#    #+#                */
-/*   Updated: 2019/10/02 18:23:45 by aholster      ########   odam.nl         */
+/*   Updated: 2019/10/02 21:24:10 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,12 @@ static int		ft_naninf_print(char *buffer,\
 					size_t nb_len)
 {
 	int ret_val;
-	int neg;
+	int is_neg;
 
-	neg = 1;
+	is_neg = 1;
 	if (buffer[0] == '-')
-		neg = -1;
-	ret_val = ft_naninf_padding(buffer, clipb, nb_len, neg);
+		is_neg = -1;
+	ret_val = ft_naninf_padding(buffer, clipb, nb_len, is_neg);
 	return (ret_val);
 }
 

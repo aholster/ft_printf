@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/21 12:57:35 by jesmith        #+#    #+#                */
-/*   Updated: 2019/10/02 19:03:57 by aholster      ########   odam.nl         */
+/*   Updated: 2019/10/02 21:27:56 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 static int			ft_print_prep(char *restrict buffer,\
 						t_writer *const restrict clipb,\
-						int neg,\
+						int is_neg,\
 						size_t new_len)
 {
 	size_t				offset;
 	int					ret_val;
 
-	offset = ft_shrthd_offset(&buffer, clipb, neg);
+	offset = ft_shrthd_offset(&buffer, clipb, is_neg);
 	if (new_len > clipb->flags->precision)
 		clipb->flags->precision = new_len - clipb->flags->precision;
 	else
@@ -98,13 +98,13 @@ static int			ft_which_one(char *buffer,\
 	size_t	expon_len;
 	size_t	new_len;
 	int		ret_val;
-	int		neg;
+	int		is_neg;
 
-	neg = 1;
+	is_neg = 1;
 	sci_note = clipb->flags->precision + 2;
 	expon_len = 0;
 	if (buffer[0] == '-')
-		neg = -1;
+		is_neg = -1;
 	while (buffer[expon_len] != '.')
 		expon_len++;
 	if (sci_note < expon_len)
@@ -116,7 +116,7 @@ static int			ft_which_one(char *buffer,\
 		return (ret_val);
 	}
 	new_len = ft_shorthand_prec(buffer, nb_len, clipb);
-	ret_val = ft_print_prep(buffer, clipb, neg, new_len);
+	ret_val = ft_print_prep(buffer, clipb, is_neg, new_len);
 	return (ret_val);
 }
 
@@ -125,16 +125,16 @@ int					ft_lowshrthd(va_list args, t_writer *const restrict clipb)
 	char				*buffer;
 	long double			nb;
 	size_t				nb_len;
-	int					neg;
+	int					is_neg;
 	int					ret_val;
 
-	neg = ft_longdouble_conv(args, &nb, clipb->flags);
+	is_neg = ft_longdouble_conv(args, &nb, clipb->flags);
 	if (flagverif('.', clipb->flags) == -1)
 		clipb->flags->precision = 6;
 	if (ft_custom_ld_to_text(nb, \
 	clipb->flags->precision, &buffer, &nb_len) == -1)
 		return (-1);
-	if (neg == -1)
+	if (is_neg == -1)
 		buffer[0] = '-';
 	ret_val = ft_which_one(buffer, clipb, nb_len);
 	free(buffer);

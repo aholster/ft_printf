@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/10 12:13:37 by jesmith        #+#    #+#                */
-/*   Updated: 2019/10/02 18:35:18 by aholster      ########   odam.nl         */
+/*   Updated: 2019/10/02 21:27:56 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 static int				ft_exponbuff(char *const restrict buffer, short expon)
 {
 	unsigned short	index;
-	int				neg;
+	int				is_neg;
 	unsigned short	backup_index;
 
-	neg = expon;
+	is_neg = expon;
 	index = ft_nbrlen((long long)expon, 10);
 	if (expon < 0)
 		expon *= -1;
@@ -31,7 +31,7 @@ static int				ft_exponbuff(char *const restrict buffer, short expon)
 		index--;
 		expon /= 10;
 	}
-	if (neg < 0)
+	if (is_neg < 0)
 		buffer[1] = '-';
 	else
 		buffer[1] = '+';
@@ -66,25 +66,25 @@ static int				ft_end_pad(t_writer *const restrict clipb,\
 static int				ft_front_pad(const char *const restrict buffer,\
 							const short expon,\
 							t_writer *const restrict clipb,\
-							const int neg)
+							const int is_neg)
 {
 	unsigned short	expon_len;
 	unsigned short	str_len;
 	short			nb_len;
 
-	nb_len = neg;
+	nb_len = is_neg;
 	if (nb_len < 0)
 		nb_len *= -1;
 	str_len = ft_hexpoint_prec(buffer, clipb, nb_len, expon);
 	expon_len = ft_nbrlen((long long)expon, 10) + 3;
-	expon_len += ft_negpos_handler(clipb, neg, expon);
+	expon_len += ft_negpos_handler(clipb, is_neg, expon);
 	if (flagverif('.', clipb->flags) == 1 && clipb->flags->precision == 0)
 		expon_len--;
 	if (flagverif('-', clipb->flags) == -1 &&\
 		clipb->flags->padding > clipb->flags->precision)
 		if (ft_float_padder(expon_len + str_len, str_len - 2, clipb) == -1)
 			return (-1);
-	if (ft_prefix(neg, clipb) == -1)
+	if (ft_prefix(is_neg, clipb) == -1)
 		return (-1);
 	if (clipb->self(buffer, str_len, clipb) == -1)
 		return (-1);
@@ -128,20 +128,20 @@ int						ft_caphexpoint(va_list args,\
 	char			buffer[16];
 	t_float			conversion;
 	long double		nb;
-	int				neg;
+	int				is_neg;
 	short			expon;
 
-	neg = ft_longdouble_conv(args, &nb, clipb->flags);
+	is_neg = ft_longdouble_conv(args, &nb, clipb->flags);
 	conversion.ld = nb;
 	if (nb == 0.0)
-		neg *= ft_float_exceptions(buffer, &expon, clipb->flags);
+		is_neg *= ft_float_exceptions(buffer, &expon, clipb->flags);
 	else
 	{
 		expon = (conversion.byte[4] & 0x7FFF) - 16386;
-		neg *= ft_ull_to_hex(conversion.llu, buffer, clipb, expon);
+		is_neg *= ft_ull_to_hex(conversion.llu, buffer, clipb, expon);
 	}
 	ft_hexpoint_rounder(buffer, clipb, &expon);
-	if (ft_front_pad(buffer, expon, clipb, neg) == -1)
+	if (ft_front_pad(buffer, expon, clipb, is_neg) == -1)
 		return (-1);
 	return (1);
 }

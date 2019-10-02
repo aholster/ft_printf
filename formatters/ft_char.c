@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/03 14:19:45 by jesmith        #+#    #+#                */
-/*   Updated: 2019/10/02 18:14:39 by aholster      ########   odam.nl         */
+/*   Updated: 2019/10/02 22:55:38 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,17 +43,18 @@ static int	ft_char_pad(const char c,\
 
 int			ft_char(va_list args, t_writer *const restrict clipb)
 {
-	char	c;
+	const t_flag *const restrict	flags = clipb->flags;
+	char							c;
 
 	c = (char)va_arg(args, int);
-	if (clipb->flags->padding > 1)
+	if (flags->padding > 1)
 	{
-		if (flagverif('-', clipb->flags) == -1)
-			return (ft_char_pad(c, clipb, clipb->flags));
-		if (flagverif('-', clipb->flags) == 1)
-			return (ft_char_pad(c, clipb, clipb->flags));
+		if (flagverif('-', flags) == -1)
+			return (ft_char_pad(c, clipb, flags));
+		else if (flagverif('-', flags) == 1)
+			return (ft_char_pad(c, clipb, flags));
 	}
-	if (clipb->self(&c, 1, clipb) == -1)
+	else if (clipb->self(&c, 1, clipb) == -1)
 		return (-1);
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/09 13:45:51 by jesmith        #+#    #+#                */
-/*   Updated: 2019/10/02 19:17:11 by aholster      ########   odam.nl         */
+/*   Updated: 2019/10/02 21:24:10 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,11 @@ static int		ft_float_print(const char *const restrict buffer,\
 static int		ft_float_padding(char *restrict buffer,\
 					t_writer *const restrict clipb,\
 					size_t nb_len,\
-					const int neg)
+					const int is_neg)
 {
 	size_t offset;
 
-	offset = ft_x_offset(&buffer, &nb_len, clipb->flags, neg);
+	offset = ft_x_offset(&buffer, &nb_len, clipb->flags, is_neg);
 	if (flagverif('-', clipb->flags) == -1 && \
 		flagverif('0', clipb->flags) == -1)
 		if (ft_space_padder(nb_len, clipb) == -1)
@@ -72,7 +72,7 @@ static int		ft_float_padding(char *restrict buffer,\
 static int		ft_float_prep(char *const restrict buffer,\
 					size_t nb_len,\
 					t_writer *const restrict clipb,\
-					int neg)
+					int is_neg)
 {
 	int ret_hold;
 
@@ -80,7 +80,7 @@ static int		ft_float_prep(char *const restrict buffer,\
 		nb_len--;
 	ft_float_rounder(buffer, clipb, &nb_len);
 	nb_len--;
-	ret_hold = ft_float_padding(buffer, clipb, nb_len, neg);
+	ret_hold = ft_float_padding(buffer, clipb, nb_len, is_neg);
 	return (ret_hold);
 }
 
@@ -89,10 +89,10 @@ int				ft_capfltpoint(va_list args, t_writer *const restrict clipb)
 	char *			buffer;
 	long double		nb;
 	size_t			nb_len;
-	int				neg;
+	int				is_neg;
 	int				ret_hold;
 
-	neg = ft_longdouble_conv(args, &nb, clipb->flags);
+	is_neg = ft_longdouble_conv(args, &nb, clipb->flags);
 	if (flagverif('.', clipb->flags) == -1)
 		clipb->flags->precision = 6;
 	if (ft_custom_ld_to_text(nb, \
@@ -101,10 +101,10 @@ int				ft_capfltpoint(va_list args, t_writer *const restrict clipb)
 	if (ft_strcmp(buffer, "nan") == 0 || ft_strcmp(buffer, "inf") == 0)
 	{
 		ft_captolow(buffer);
-		ret_hold = ft_naninf_padding(buffer, clipb, nb_len, neg);
+		ret_hold = ft_naninf_padding(buffer, clipb, nb_len, is_neg);
 	}
 	else
-		ret_hold = ft_float_prep(buffer, nb_len, clipb, neg);
+		ret_hold = ft_float_prep(buffer, nb_len, clipb, is_neg);
 	free(buffer);
 	return (ret_hold);
 }

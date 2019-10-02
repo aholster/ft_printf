@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/09 13:45:41 by jesmith        #+#    #+#                */
-/*   Updated: 2019/10/02 18:32:38 by aholster      ########   odam.nl         */
+/*   Updated: 2019/10/02 21:24:10 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,11 @@ static int		ft_float_print(char *buffer,\
 static int		ft_float_padding(char *buffer,\
 				t_writer *const clipb, \
 				size_t nb_len,\
-				int neg)
+				int is_neg)
 {
 	size_t offset;
 
-	offset = ft_x_offset(&buffer, &nb_len, clipb->flags, neg);
+	offset = ft_x_offset(&buffer, &nb_len, clipb->flags, is_neg);
 	if (flagverif('-', clipb->flags) == -1 && \
 	flagverif('0', clipb->flags) == -1)
 		if (ft_space_padder(nb_len, clipb) == -1)
@@ -74,24 +74,24 @@ int				ft_lowfltpoint(va_list args, t_writer *const restrict clipb)
 	char				*buffer;
 	long double			nb;
 	size_t				nb_len;
-	int					neg;
+	int					is_neg;
 	int					ret_hold;
 
-	neg = ft_longdouble_conv(args, &nb, clipb->flags);
+	is_neg = ft_longdouble_conv(args, &nb, clipb->flags);
 	if (flagverif('.', clipb->flags) == -1)
 		clipb->flags->precision = 6;
 	if (ft_custom_ld_to_text(nb, \
 	clipb->flags->precision, &buffer, &nb_len) == -1)
 		return (-1);
 	if (ft_strcmp(buffer, "nan") == 0 || ft_strcmp(buffer, "inf") == 0)
-		ret_hold = ft_naninf_padding(buffer, clipb, nb_len, neg);
+		ret_hold = ft_naninf_padding(buffer, clipb, nb_len, is_neg);
 	else
 	{
 		if (clipb->flags->precision == 0)
 			nb_len--;
 		ft_float_rounder(buffer, clipb, &nb_len);
 		nb_len--;
-		ret_hold = ft_float_padding(buffer, clipb, nb_len, neg);
+		ret_hold = ft_float_padding(buffer, clipb, nb_len, is_neg);
 	}
 	free(buffer);
 	return (ret_hold);

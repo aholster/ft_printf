@@ -6,11 +6,11 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/19 16:00:34 by jesmith        #+#    #+#                */
-/*   Updated: 2019/10/02 19:01:07 by aholster      ########   odam.nl         */
+/*   Updated: 2019/10/02 20:48:10 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./../incl/ft_formatters.h"
+#include "./../../incl/ft_formatters.h"
 
 static void		ft_add_one(char *buffer, size_t index)
 {

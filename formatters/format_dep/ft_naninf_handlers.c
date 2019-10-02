@@ -6,11 +6,11 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/30 11:23:32 by jesmith        #+#    #+#                */
-/*   Updated: 2019/10/02 18:53:55 by aholster      ########   odam.nl         */
+/*   Updated: 2019/10/02 21:19:52 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./../incl/ft_formatters.h"
+#include "./../../incl/ft_formatters.h"
 
 void	ft_captolow(char *const restrict buffer)
 {
@@ -25,25 +25,25 @@ void	ft_captolow(char *const restrict buffer)
 int		ft_naninf_padding(const char *const restrict buffer,\
 			t_writer *const restrict clipb,\
 			size_t nb_len,\
-			int neg)
+			const int is_neg)
 {
-	size_t hold_len;
+	const size_t					hold_len = nb_len;
+	const t_flag *const restrict	flags = clipb->flags;
+	const size_t					padd = flags->padding;
 
-	if (neg == -1)
+	if (is_neg == -1)
 		nb_len++;
-	hold_len = nb_len;
-	if (clipb->flags->padding > 0 && clipb->flags->padding > nb_len)
-		nb_len = clipb->flags->padding - nb_len;
-	if (flagverif('-', clipb->flags) == -1 && \
-	clipb->flags->padding != 0)
+	if (padd > 0 && padd > nb_len)
+		nb_len = padd - nb_len;
+	if (flagverif('-', flags) == -1 && padd != 0)
 		if (pad_spaces(nb_len, clipb) == -1)
 			return (-1);
-	if (neg == -1)
+	if (is_neg == -1)
 		if (clipb->self("-", 1, clipb) == -1)
 			return (-1);
 	if (clipb->self(buffer, hold_len, clipb) == -1)
 		return (-1);
-	if (flagverif('-', clipb->flags) == 1)
+	if (flagverif('-', flags) == 1)
 		if (pad_spaces(nb_len, clipb) == -1)
 			return (-1);
 	return (1);

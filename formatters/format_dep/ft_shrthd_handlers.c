@@ -6,11 +6,11 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/25 12:01:20 by jesmith        #+#    #+#                */
-/*   Updated: 2019/10/02 19:15:45 by aholster      ########   odam.nl         */
+/*   Updated: 2019/10/02 21:27:56 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./../incl/ft_formatters.h"
+#include "./../../incl/ft_formatters.h"
 
 static int		ft_buffer_print(char *buffer, t_writer *const clipb,\
 			size_t *new_len, size_t diff)
@@ -80,12 +80,12 @@ int				ft_shrthd_print(char *buffer, \
 }
 
 size_t			ft_shrthd_offset(char *restrict *const restrict buffer,\
-			t_writer *const restrict clipb, int neg)
+			t_writer *const restrict clipb, int is_neg)
 {
 	size_t	offset;
 
 	offset = 0;
-	if (neg == 1)
+	if (is_neg == 1)
 	{
 		if (flagverif('+', clipb->flags) == 1)
 			*buffer[0] = '+';

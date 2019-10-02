@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/05/25 16:10:49 by aholster       #+#    #+#                */
-/*   Updated: 2019/10/02 17:36:47 by aholster      ########   odam.nl         */
+/*   Updated: 2019/10/02 23:12:30 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,54 +14,49 @@
 
 int	pad_spaces(size_t amount, t_writer *const restrict clipb)
 {
-	size_t		index;
-	size_t		calc;
-	const char	*spaces = "                                                                ";
+	uint16_t					calc;
+	const char *const restrict	spaces[1] = {
+	"                                                                "};
 
-	index = 0;
-	while (index < amount)
+	while (amount != 0)
 	{
-		if (amount - index < sizeof(spaces))
-			calc = amount - index;
+		if (amount < 64)
+			calc = amount;
 		else
-			calc = sizeof(spaces);
-		if (clipb->self(spaces, calc, clipb) == -1)
+			calc = 64;
+		if (clipb->self(*spaces, calc, clipb) == -1)
 			return (-1);
-		index += calc;
+		amount -= calc;
 	}
-	return (amount);
+	return (1);
 }
 
 int	pad_zero(size_t amount, t_writer *const restrict clipb)
 {
-	size_t		index;
-	size_t		calc;
-	const char	*zeroes = "0000000000000000000000000000000000000000000000000000000000000000";
+	uint16_t					calc;
+	const char *const restrict	zeroes[1] = {
+	"0000000000000000000000000000000000000000000000000000000000000000"};
 
-	index = 0;
-	while (index < amount)
+	while (amount != 0)
 	{
-		if (amount - index < sizeof(zeroes))
-			calc = amount - index;
+		if (amount < 64)
+			calc = amount;
 		else
-			calc = sizeof(zeroes);
-		if (clipb->self(zeroes, calc, clipb) == -1)
+			calc = 64;
+		if (clipb->self(*zeroes, calc, clipb) == -1)
 			return (-1);
-		index += calc;
+		amount -= calc;
 	}
-	return (amount);
+	return (1);
 }
 
-int	ft_space_padder(unsigned short len, t_writer *const restrict clipb)
+int	ft_space_padder(const unsigned short len, t_writer *const restrict clipb)
 {
-	size_t			diff;
-	size_t			temp;
-	unsigned int	padding;
-	unsigned int	precision;
+	const unsigned int	padding = clipb->flags->padding;
+	const unsigned int	precision = clipb->flags->precision;
+	const size_t		temp = padding - precision;
+	size_t				diff;
 
-	padding = clipb->flags->padding;
-	precision = clipb->flags->precision;
-	temp = padding - precision;
 	if (padding < 1 && precision < 1)
 		return (1);
 	if (padding > precision && precision > len)
@@ -77,16 +72,13 @@ int	ft_space_padder(unsigned short len, t_writer *const restrict clipb)
 	return (1);
 }
 
-int	ft_zero_padder(unsigned short len, t_writer *const restrict clipb)
+int	ft_zero_padder(const unsigned short len, t_writer *const restrict clipb)
 {
-	size_t			diff;
-	size_t			temp;
-	unsigned int	padding;
-	unsigned int	precision;
+	const unsigned int	padding = clipb->flags->padding;
+	const unsigned int	precision = clipb->flags->precision;
+	const size_t		temp = padding - precision;
+	size_t				diff;
 
-	padding = clipb->flags->padding;
-	precision = clipb->flags->precision;
-	temp = padding - precision;
 	if (padding < 1 && precision < 1)
 		return (1);
 	else if (temp > len && flagverif('.', clipb->flags) == -1)

@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_shrthd_lowsci_print.c                           :+:    :+:            */
+/*   ft_lowsci_print.c                                  :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/23 14:15:42 by jesmith        #+#    #+#                */
-/*   Updated: 2019/10/02 18:58:09 by aholster      ########   odam.nl         */
+/*   Updated: 2019/10/02 21:04:17 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./../incl/ft_formatters.h"
+#include "./../../incl/ft_formatters.h"
 
 static size_t		ft_expon_prefix(char *buffer, int expon)
 {

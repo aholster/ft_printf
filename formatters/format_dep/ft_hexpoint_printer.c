@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/10/03 17:57:29 by jesmith        #+#    #+#                */
-/*   Updated: 2019/10/03 18:02:40 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/10/03 19:47:41 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int				ft_caphexpoint_print(t_writer *const restrict clipb,\
 	unsigned short	expon_len;
 	char			new_buf[8];
 
-	if (flagverif('.', clipb->flags) == 1 && \
+	if (flg_verif('.', clipb->flags) == 1 && \
 	clipb->flags->precision != (str_len - 2))
 		if (pad_zero(clipb->flags->precision, clipb) == -1)
 			return (-1);
@@ -56,7 +56,7 @@ int				ft_caphexpoint_print(t_writer *const restrict clipb,\
 		return (-1);
 	if (clipb->flags->precision == 0)
 		str_len--;
-	if (flagverif('-', clipb->flags) == 1 \
+	if (flg_verif('-', clipb->flags) == 1 \
 	&& clipb->flags->padding > clipb->flags->precision)
 		if (ft_float_padder(nb_len + str_len, str_len - 2, clipb) == -1)
 			return (-1);
@@ -98,7 +98,7 @@ int				ft_lowhexpoint_print(t_writer *const restrict clipb,\
 	unsigned short	expon_len;
 	char			new_buf[8];
 
-	if (flagverif('.', clipb->flags) == 1 && \
+	if (flg_verif('.', clipb->flags) == 1 && \
 	clipb->flags->precision != (str_len - 2))
 		if (pad_zero(clipb->flags->precision, clipb) == -1)
 			return (-1);
@@ -107,7 +107,7 @@ int				ft_lowhexpoint_print(t_writer *const restrict clipb,\
 		return (-1);
 	if (clipb->flags->precision == 0)
 		str_len--;
-	if (flagverif('-', clipb->flags) == 1 \
+	if (flg_verif('-', clipb->flags) == 1 \
 	&& clipb->flags->padding > clipb->flags->precision)
 		if (ft_float_padder(nb_len + str_len, str_len - 2, clipb) == -1)
 			return (-1);

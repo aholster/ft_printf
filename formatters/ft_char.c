@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/03 14:19:45 by jesmith        #+#    #+#                */
-/*   Updated: 2019/10/02 22:55:38 by aholster      ########   odam.nl         */
+/*   Updated: 2019/10/03 19:47:41 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@ static int	ft_char_pad(const char c,\
 				t_writer *const restrict clipb,\
 				const t_flag *const restrict flags)
 {
-	if (flagverif('-', flags) == -1)
+	if (flg_verif('-', flags) == -1)
 	{
-		if (flagverif('0', flags) == 1)
+		if (flg_verif('0', flags) == 1)
 		{
 			if (pad_zero(flags->padding - 1, clipb) == -1)
 				return (-1);
@@ -28,9 +28,9 @@ static int	ft_char_pad(const char c,\
 	}
 	if (clipb->self(&c, 1, clipb) == -1)
 		return (-1);
-	if (flagverif('-', flags) == 1)
+	if (flg_verif('-', flags) == 1)
 	{
-		if (flagverif('0', flags) == 1)
+		if (flg_verif('0', flags) == 1)
 		{
 			if (pad_zero(flags->padding - 1, clipb) == -1)
 				return (-1);
@@ -49,9 +49,9 @@ int			ft_char(va_list args, t_writer *const restrict clipb)
 	c = (char)va_arg(args, int);
 	if (flags->padding > 1)
 	{
-		if (flagverif('-', flags) == -1)
+		if (flg_verif('-', flags) == -1)
 			return (ft_char_pad(c, clipb, flags));
-		else if (flagverif('-', flags) == 1)
+		else if (flg_verif('-', flags) == 1)
 			return (ft_char_pad(c, clipb, flags));
 	}
 	else if (clipb->self(&c, 1, clipb) == -1)

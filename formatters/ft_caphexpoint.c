@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/10 12:13:37 by jesmith        #+#    #+#                */
-/*   Updated: 2019/10/03 18:01:25 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/10/03 19:47:41 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,13 @@ static unsigned short		ft_hexpoint_prec(const char *const restrict buffer,\
 		len++;
 	if (expon == -1025)
 		len = 0;
-	if (flagverif('.', clipb->flags) == -1)
+	if (flg_verif('.', clipb->flags) == -1)
 		len++;
 	if (len > 2)
 		dec_len = len - 2;
 	else
 		dec_len = 2;
-	if (flagverif('.', clipb->flags) == 1)
+	if (flg_verif('.', clipb->flags) == 1)
 	{
 		if (dec_len > clipb->flags->precision && dec_len < len)
 			len = (len - dec_len) + clipb->flags->precision;
@@ -54,8 +54,8 @@ static unsigned short		ft_negpos_handler(t_writer *const restrict clipb,\
 	sign = 0;
 	if (is_neg > 0)
 	{
-		if (flagverif('+', clipb->flags) == 1 || \
-		flagverif(' ', clipb->flags) == 1)
+		if (flg_verif('+', clipb->flags) == 1 || \
+		flg_verif(' ', clipb->flags) == 1)
 			sign++;
 	}
 	else if (is_neg < 0)
@@ -79,9 +79,9 @@ static int					ft_front_pad(char *buffer, \
 		nb_len *= -1;
 	str_len = ft_hexpoint_prec(buffer, clipb, nb_len, expon);
 	expon_len = ft_negpos_handler(clipb, is_neg, expon);
-	if (flagverif('.', clipb->flags) == 1 && clipb->flags->precision == 0)
+	if (flg_verif('.', clipb->flags) == 1 && clipb->flags->precision == 0)
 		expon_len--;
-	if (flagverif('-', clipb->flags) == -1 && \
+	if (flg_verif('-', clipb->flags) == -1 && \
 	clipb->flags->padding > clipb->flags->precision)
 		if (ft_float_padder(expon_len + str_len, str_len - 2, clipb) == -1)
 			return (-1);

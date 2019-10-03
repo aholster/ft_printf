@@ -6,15 +6,35 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/10/01 18:41:58 by aholster       #+#    #+#                */
-/*   Updated: 2019/10/01 19:16:36 by aholster      ########   odam.nl         */
+/*   Updated: 2019/10/03 22:15:13 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_FLAG_PARSER_H
 # define FT_FLAG_PARSER_H
 
-# include "./ft_internals.h"
+# include "./../incl/ft_internals.h"
 
+# define VALID_FLG "hjzl# *.-+L0123456789"
+# define VALID_D_FLG "hl"
 
+typedef void	(*t_flag_handler)(const char *const restrict,\
+					size_t *const restrict,\
+					t_writer *const restrict);
+
+void			ft_turn_on_flag(const char c, t_flag *const restrict flags);
+
+void			ft_flag_flip(const char *const restrict format,\
+					size_t *const restrict aindex,\
+					t_writer *const restrict clipb);
+void			ft_flag_num_parse(const char *const restrict format,\
+					size_t *const restrict aindex,\
+					t_writer *const restrict clipb);
+void			ft_flag_arg_extract(const char *const restrict format,\
+					size_t *const restrict aindex,\
+					t_writer *const restrict clipb);
+void			ft_flag_precision(const char *const restrict format,\
+					size_t *const restrict aindex,\
+					t_writer *const restrict clipb);
 
 #endif

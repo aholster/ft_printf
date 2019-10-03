@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/05/25 16:10:49 by aholster       #+#    #+#                */
-/*   Updated: 2019/10/02 23:12:30 by aholster      ########   odam.nl         */
+/*   Updated: 2019/10/03 19:47:41 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,9 +81,9 @@ int	ft_zero_padder(const unsigned short len, t_writer *const restrict clipb)
 
 	if (padding < 1 && precision < 1)
 		return (1);
-	else if (temp > len && flagverif('.', clipb->flags) == -1)
+	else if (temp > len && flg_verif('.', clipb->flags) == -1)
 		diff = temp - len;
-	else if (precision > len && flagverif('.', clipb->flags) == 1)
+	else if (precision > len && flg_verif('.', clipb->flags) == 1)
 		diff = precision - len;
 	else if (padding > precision && precision > len)
 		diff = temp;
@@ -107,7 +107,7 @@ int	ft_float_padder(unsigned short len,\
 			if (pad_zero(clipb->flags->precision, clipb) == -1)
 				return (-1);
 		}
-		else if (flagverif(' ', clipb->flags) == 1)
+		else if (flg_verif(' ', clipb->flags) == 1)
 			if (pad_spaces(clipb->flags->precision, clipb) == -1)
 				return (-1);
 	}
@@ -115,7 +115,7 @@ int	ft_float_padder(unsigned short len,\
 	{
 		if (clipb->flags->precision != dec)
 			len += clipb->flags->precision;
-		if (flagverif('0', clipb->flags) == 1)
+		if (flg_verif('0', clipb->flags) == 1)
 		{
 			if (pad_zero(clipb->flags->padding - len, clipb) == -1)
 				return (-1);

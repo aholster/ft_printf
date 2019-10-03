@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/03 15:08:26 by jesmith        #+#    #+#                */
-/*   Updated: 2019/10/02 18:26:50 by aholster      ########   odam.nl         */
+/*   Updated: 2019/10/03 19:47:41 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,13 @@ static int				ft_octal_noprec(const char *const restrict buffer,\
 							const unsigned short nb_len,\
 							t_writer *const restrict clipb)
 {
-	const int minus = flagverif('-', clipb->flags);
+	const int minus = flg_verif('-', clipb->flags);
 
-	if (minus == -1 && flagverif('0', clipb->flags) == -1 \
+	if (minus == -1 && flg_verif('0', clipb->flags) == -1 \
 	&& clipb->flags->padding > 0)
 		if (ft_space_padder(nb_len, clipb) == -1)
 			return (-1);
-	if (flagverif('0', clipb->flags) == 1 && minus == -1)
+	if (flg_verif('0', clipb->flags) == 1 && minus == -1)
 	{
 		if ((clipb->flags->padding - clipb->flags->precision) > nb_len)
 		{
@@ -42,7 +42,7 @@ static int				ft_octal_prec(const char *const restrict buffer,\
 							const unsigned short nb_len,\
 							t_writer *const restrict clipb)
 {
-	const int	minus = flagverif('-', clipb->flags);
+	const int	minus = flg_verif('-', clipb->flags);
 
 	if (minus == -1 && clipb->flags->padding > nb_len)
 		if (ft_space_padder(nb_len, clipb) == -1)
@@ -71,7 +71,7 @@ static unsigned short	ft_int_len(char *const restrict buffer,\
 	temp_num = nb;
 	num_len = ft_ull_len(nb, 8);
 	cur_len = num_len - 1;
-	if (flagverif('#', clipb->flags) == 1 && nb != 0)
+	if (flg_verif('#', clipb->flags) == 1 && nb != 0)
 	{
 		cur_len++;
 		buffer[0] = '0';
@@ -95,8 +95,8 @@ int						ft_octal(va_list args, t_writer *const restrict clipb)
 	int					prec;
 	int					exten;
 
-	prec = flagverif('.', clipb->flags);
-	exten = flagverif('#', clipb->flags);
+	prec = flg_verif('.', clipb->flags);
+	exten = flg_verif('#', clipb->flags);
 	ft_unsignconv(args, &nb, clipb->flags);
 	nb_len = ft_int_len(buffer, nb, clipb);
 	if (exten == -1 && prec == 1 && nb == 0 && clipb->flags->padding == 0)

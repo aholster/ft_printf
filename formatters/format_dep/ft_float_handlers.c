@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/17 12:34:56 by jesmith        #+#    #+#                */
-/*   Updated: 2019/10/03 18:00:21 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/10/03 19:47:41 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,12 @@ size_t				ft_x_offset(char *restrict *const restrict buffer,\
 	offset = 0;
 	if (is_neg == 1)
 	{
-		if (flagverif('+', flags) == 1)
+		if (flg_verif('+', flags) == 1)
 			*buffer[0] = '+';
-		else if (flagverif(' ', flags) == 1)
+		else if (flg_verif(' ', flags) == 1)
 			*buffer[0] = ' ';
-		else if (flagverif('+', flags) == -1 \
-		&& flagverif(' ', flags) == -1)
+		else if (flg_verif('+', flags) == -1 \
+		&& flg_verif(' ', flags) == -1)
 			offset++;
 	}
 	else if (is_neg == -1)
@@ -52,7 +52,7 @@ size_t				ft_float_exceptions(char *const restrict buffer,\
 	return (3);
 }
 
-unsigned short		ft_ull_len(unsigned long long num, int base)
+unsigned short		ft_ull_len(unsigned long long num, const int base)
 {
 	unsigned short length;
 

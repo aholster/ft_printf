@@ -6,13 +6,13 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/06 10:44:11 by jesmith        #+#    #+#                */
-/*   Updated: 2019/10/03 18:00:56 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/10/03 19:47:41 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../../incl/ft_formatters.h"
 
-unsigned short		norft_reversed(unsigned long long mantissa)
+unsigned short		ft_reversed(unsigned long long mantissa)
 {
 	unsigned short		len;
 	unsigned long long	tempnum;
@@ -31,11 +31,11 @@ int					ft_prefix(int is_neg, t_writer *const clipb)
 {
 	if (is_neg >= 0)
 	{
-		if (flagverif('+', clipb->flags) == 1)
+		if (flg_verif('+', clipb->flags) == 1)
 			if (clipb->self("+", 1, clipb) == -1)
 				return (-1);
-		if (flagverif(' ', clipb->flags) == 1 && \
-		flagverif('+', clipb->flags) == -1)
+		if (flg_verif(' ', clipb->flags) == 1 && \
+		flg_verif('+', clipb->flags) == -1)
 		{
 			if (clipb->self(" ", 1, clipb) == -1)
 				return (-1);

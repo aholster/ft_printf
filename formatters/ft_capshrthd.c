@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/27 11:34:23 by jesmith        #+#    #+#                */
-/*   Updated: 2019/10/03 15:59:34 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/10/03 19:47:41 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,12 +77,12 @@ static int			ft_shrthd_capsci(char *const restrict buffer,\
 
 	expon = ft_expon_finder(buffer, nb_len);
 	ft_sci_rounder(buffer, clipb, &nb_len);
-	if (flagverif('.', clipb->flags) == -1)
+	if (flg_verif('.', clipb->flags) == -1)
 		nb_len -= 1;
 	if (buffer[nb_len] == '.')
 		nb_len--;
 	expon += ft_expon_rounding(buffer, nb_len, clipb, expon);
-	if (flagverif('.', clipb->flags) == 1)
+	if (flg_verif('.', clipb->flags) == 1)
 		nb_len -= 1;
 	if (buffer[nb_len - 1] == '.')
 		nb_len--;
@@ -129,7 +129,7 @@ int					ft_capshrthd(va_list args, t_writer *const restrict clipb)
 	int					ret_val;
 
 	is_neg = ft_longdouble_conv(args, &nb, clipb->flags);
-	if (flagverif('.', clipb->flags) == -1)
+	if (flg_verif('.', clipb->flags) == -1)
 		clipb->flags->precision = 6;
 	if (ft_custom_ld_to_text(nb, \
 	clipb->flags->precision, &buffer, &nb_len) == -1)

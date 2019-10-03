@@ -6,7 +6,7 @@
 #    By: jesmith <jesmith@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2019/02/16 15:46:43 by aholster       #+#    #+#                 #
-#    Updated: 2019/10/03 17:57:59 by jesmith       ########   odam.nl          #
+#    Updated: 2019/10/03 22:28:15 by aholster      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,26 +16,25 @@ SUBDIR := ./formatters/
 
 SUBSOURCE := ptraddr decimal char octal caphex lowhex unsigned_dec\
  str n lowsci capsci lowshrthd capshrthd\
- lowhexpoint caphexpoint lowfltpoint capfltpoint\
-
+ lowhexpoint caphexpoint lowfltpoint capfltpoint
 
 FMT_DEP := naninf_handlers expon_handlers\
  float_handlers shrthd_handlers hexpoint_handlers\
  float_rounder sci_rounder hexpoint_rounder\
  lowsci_print capsci_print hexpoint_printer\
  longdouble_conv unsignconv signconv
-#PARSEDIR := ./flag_parser/
 
-#PARSESOURCE := flag_verificators flagharvest flinit
+PARSESOURCE := flg_verif flgdbl_verif flagharvest\
+ flag_flip flag_num_parse flag_arg_extract flag_precision\
+ turn_on_flag
 
 SOURCE := printf vprintf dprintf vdprintf asprintf vasprintf\
-sprintf vsprintf snprintf vsnprintf\
-dispatcher format flinit flagharvest padder\
-flag_verificators
+ sprintf vsprintf snprintf vsnprintf\
+ dispatcher format padder
 
 
 FILEC = $(SOURCE:%=./ft_%.c) $(SUBSOURCE:%=$(SUBDIR)ft_%.c)\
-	$(FMT_DEP:%=$(SUBDIR)format_dep/ft_%.c)
+$(FMT_DEP:%=$(SUBDIR)format_dep/ft_%.c) $(PARSESOURCE:%=./flag_parser/ft_%.c)
 
 OBJ =	$(FILEC:%.c=%.o)
 

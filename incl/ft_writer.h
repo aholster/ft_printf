@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/18 19:29:47 by aholster       #+#    #+#                */
-/*   Updated: 2019/10/01 19:16:03 by aholster      ########   odam.nl         */
+/*   Updated: 2019/10/03 17:41:35 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@
 
 struct s_writer;
 
-typedef int			(*t_wrt_ptr)(const char *restrict, size_t,\
+typedef int			(*t_wrt_ptr)(const char *restrict,\
+						size_t,\
 						struct s_writer *const restrict);
 
 typedef struct		s_d_write

@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/30 11:23:32 by jesmith        #+#    #+#                */
-/*   Updated: 2019/10/03 17:47:51 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/10/03 19:47:41 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int		ft_naninf_padding(const char *const restrict buffer,\
 		nb_len++;
 	if (padd > 0 && padd > nb_len)
 		nb_len = padd - nb_len;
-	if (flagverif('-', flags) == -1 && padd != 0)
+	if (flg_verif('-', flags) == -1 && padd != 0)
 		if (pad_spaces(nb_len, clipb) == -1)
 			return (-1);
 	if (is_neg == -1)
@@ -43,7 +43,7 @@ int		ft_naninf_padding(const char *const restrict buffer,\
 			return (-1);
 	if (clipb->self(buffer, hold_len, clipb) == -1)
 		return (-1);
-	if (flagverif('-', flags) == 1)
+	if (flg_verif('-', flags) == 1)
 		if (pad_spaces(nb_len, clipb) == -1)
 			return (-1);
 	return (1);

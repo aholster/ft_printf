@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/04/18 16:00:54 by aholster       #+#    #+#                */
-/*   Updated: 2019/10/02 21:25:19 by aholster      ########   odam.nl         */
+/*   Updated: 2019/10/03 22:38:10 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ static int			ft_conversion_exception(\
 {
 	int				zeroflag;
 	int				padf;
-	const size_t	len = 1; //upgrade DISSSS maybe?
+	const size_t	len = 1;
 
-	zeroflag = flagverif('0', clipb->flags);
-	if (flagverif('-', clipb->flags) == -1)
+	zeroflag = flg_verif('0', clipb->flags);
+	if (flg_verif('-', clipb->flags) == -1)
 	{
 		if (zeroflag == 1)
 			padf = ft_zero_padder(len, clipb);

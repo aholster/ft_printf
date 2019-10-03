@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/10/01 18:55:03 by aholster       #+#    #+#                */
-/*   Updated: 2019/10/03 17:58:35 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/10/03 22:37:59 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,12 @@ typedef union	u_nptrs
 	long		*l;
 	long long	*ll;
 }				t_nptrs;
+
+typedef union	u_floatneg
+{
+	long double	ld;
+	uint8_t		byte[10];
+}				t_floatneg;
 
 int				ft_str(va_list args, t_writer *const restrict clipb);
 int				ft_ptraddr(va_list args, t_writer *const restrict clipb);

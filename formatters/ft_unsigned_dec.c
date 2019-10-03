@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/05/30 19:12:27 by aholster       #+#    #+#                */
-/*   Updated: 2019/10/02 18:28:00 by aholster      ########   odam.nl         */
+/*   Updated: 2019/10/03 19:47:41 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@ static int				ft_unsigned_dec_noprec(\
 {
 	int minus;
 
-	minus = flagverif('-', clipb->flags);
-	if (minus == -1 && flagverif('0', clipb->flags) == -1)
+	minus = flg_verif('-', clipb->flags);
+	if (minus == -1 && flg_verif('0', clipb->flags) == -1)
 		if (ft_space_padder(nb_len, clipb) == -1)
 			return (-1);
-	if (flagverif('0', clipb->flags) == 1 && minus == -1)
+	if (flg_verif('0', clipb->flags) == 1 && minus == -1)
 	{
 		if ((clipb->flags->padding - clipb->flags->precision) > nb_len)
 		{
@@ -46,7 +46,7 @@ static int				ft_unsigned_dec_prec(\
 {
 	int minus;
 
-	minus = flagverif('-', clipb->flags);
+	minus = flg_verif('-', clipb->flags);
 	if (minus == -1 && clipb->flags->padding > nb_len)
 		if (ft_space_padder(nb_len, clipb) == -1)
 			return (-1);
@@ -91,7 +91,7 @@ int						ft_unsigned_dec(va_list args,\
 	unsigned short		nb_len;
 	int					precision;
 
-	precision = flagverif('.', clipb->flags);
+	precision = flg_verif('.', clipb->flags);
 	ft_unsignconv(args, &nb, clipb->flags);
 	nb_len = ft_int_len(buffer, nb);
 	if (nb == 0 && clipb->flags->padding == 0 && precision == 1)

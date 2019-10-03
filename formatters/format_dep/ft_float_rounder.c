@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/13 10:14:39 by jesmith        #+#    #+#                */
-/*   Updated: 2019/10/02 20:48:10 by aholster      ########   odam.nl         */
+/*   Updated: 2019/10/03 19:47:41 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static void			ft_round_even(char *buffer,\
 
 	len_hold = len;
 	len--;
-	if (buffer[len] == '.' && flagverif('.', clipb->flags) == -1)
+	if (buffer[len] == '.' && flg_verif('.', clipb->flags) == -1)
 		len--;
 	if (buffer[len] == '9')
 		ft_rounder_exception(buffer, len, &len_hold);

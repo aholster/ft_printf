@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/19 14:43:08 by jesmith        #+#    #+#                */
-/*   Updated: 2019/10/02 17:34:56 by aholster      ########   odam.nl         */
+/*   Updated: 2019/10/03 17:45:50 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 #include "./incl/ft_internals.h"
 
 static int	ft_bufmanager(const char *restrict mem,\
-						size_t size, t_writer *const restrict clipb)
+				size_t size,\
+				t_writer *const restrict clipb)
 {
 	size_t					used_space;
 	size_t					free_space;
@@ -43,8 +44,10 @@ static int	ft_bufmanager(const char *restrict mem,\
 	return (0);
 }
 
-static int	ft_vd_clipb_init(va_list args, const int fd,\
-				t_wrt_ptr printer, t_writer *const restrict clipb)
+static int	ft_vd_clipb_init(va_list args,\
+				const int fd,\
+				t_wrt_ptr printer,\
+				t_writer *const restrict clipb)
 {
 	t_d_write	*info;
 

@@ -1,23 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_vsprintf.c                                      :+:    :+:            */
+/*   ft_flag_arg_extract.c                              :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2019/09/13 15:19:34 by aholster       #+#    #+#                */
-/*   Updated: 2019/10/03 18:29:25 by aholster      ########   odam.nl         */
+/*   Created: 2019/10/03 21:32:51 by aholster       #+#    #+#                */
+/*   Updated: 2019/10/03 22:29:00 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
-#include "./incl/ft_internals.h"
+#include "./../incl/ft_flag_parser.h"
 #include <limits.h>
 
-int		ft_vsprintf(char *str, const char *restrict format, va_list args)
+void	ft_flag_arg_extract(const char *const restrict format,\
+			size_t *const restrict aindex,\
+			t_writer *const restrict clipb)
 {
-	int	holder;
+	t_flag *const restrict	flags = clipb->flags;
+	int						num;
 
-	holder = ft_vsnprintf(str, INT_MAX + 1, format, args);
-	return (holder);
+	(void)format;
+	num = va_arg(clipb->args, int);
+	if (num < 0)
+	{
+		flags->padding = ((-num) & UINT_MAX);
+		ft_turn_on_flag('-', flags);
+	}
+	else
+	{
+		flags->padding = num;
+	}
+	*aindex += 1;
 }

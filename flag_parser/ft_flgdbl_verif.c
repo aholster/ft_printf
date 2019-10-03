@@ -1,23 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_vsprintf.c                                      :+:    :+:            */
+/*   ft_flgdbl_verif.c                                  :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2019/09/13 15:19:34 by aholster       #+#    #+#                */
-/*   Updated: 2019/10/03 18:29:25 by aholster      ########   odam.nl         */
+/*   Created: 2019/10/03 19:43:47 by aholster       #+#    #+#                */
+/*   Updated: 2019/10/03 20:10:36 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
-#include "./incl/ft_internals.h"
-#include <limits.h>
+#include "./../incl/ft_internals.h"
 
-int		ft_vsprintf(char *str, const char *restrict format, va_list args)
+int		flgdbl_verif(const unsigned char c, const t_flag *const restrict flags)
 {
-	int	holder;
+	const unsigned short	flip = c / FLG_UNS;
 
-	holder = ft_vsnprintf(str, INT_MAX + 1, format, args);
-	return (holder);
+	if (((1LLU << (c - (flip * FLG_UNS))) & flags->actidoubles[flip]) > 0)
+		return (1);
+	return (-1);
 }

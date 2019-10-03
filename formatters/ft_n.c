@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/11 19:04:14 by aholster       #+#    #+#                */
-/*   Updated: 2019/10/02 18:26:03 by aholster      ########   odam.nl         */
+/*   Updated: 2019/10/03 19:52:56 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,13 @@ static int	ft_double_flags(va_list args,\
 {
 	t_nptrs ptr;
 
-	if (doubleverif('h', flags) == 1)
+	if (flgdbl_verif('h', flags) == 1)
 	{
 		ptr.hh = (char *)va_arg(args, int *);
 		*ptr.hh = (char)history;
 		return (1);
 	}
-	if (doubleverif('l', flags) == 1)
+	if (flgdbl_verif('l', flags) == 1)
 	{
 		ptr.ll = (long long *)va_arg(args, long long *);
 		*ptr.ll = (long long)history;
@@ -39,13 +39,13 @@ static int	ft_single_flags(va_list args,\
 {
 	t_nptrs ptr;
 
-	if (flagverif('h', flags) == 1)
+	if (flg_verif('h', flags) == 1)
 	{
 		ptr.h = (short *)va_arg(args, int *);
 		*ptr.h = (short)history;
 		return (1);
 	}
-	if (flagverif('l', flags) == 1)
+	if (flg_verif('l', flags) == 1)
 	{
 		ptr.l = (long *)va_arg(args, long *);
 		*ptr.l = (long)history;

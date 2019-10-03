@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/04/17 19:57:30 by aholster       #+#    #+#                */
-/*   Updated: 2019/10/02 17:37:37 by aholster      ########   odam.nl         */
+/*   Updated: 2019/10/03 20:52:00 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int				ft_format(const char *restrict format,\
 
 	index = 0;
 	len = ft_strlen(format);
-	ft_flinit(clipb, &flags);
+	clipb->flags = &flags;
 	while (index < len)
 	{
 		if (format[index] == '%')

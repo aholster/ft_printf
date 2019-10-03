@@ -6,7 +6,7 @@
 #    By: jesmith <jesmith@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2019/02/16 15:46:43 by aholster       #+#    #+#                 #
-#    Updated: 2019/10/02 20:53:01 by aholster      ########   odam.nl          #
+#    Updated: 2019/10/03 17:57:59 by jesmith       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ SUBSOURCE := ptraddr decimal char octal caphex lowhex unsigned_dec\
 FMT_DEP := naninf_handlers expon_handlers\
  float_handlers shrthd_handlers hexpoint_handlers\
  float_rounder sci_rounder hexpoint_rounder\
- lowsci_print capsci_print\
+ lowsci_print capsci_print hexpoint_printer\
  longdouble_conv unsignconv signconv
 #PARSEDIR := ./flag_parser/
 

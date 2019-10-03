@@ -6,16 +6,16 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/17 12:34:56 by jesmith        #+#    #+#                */
-/*   Updated: 2019/10/03 14:23:59 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/10/03 18:00:21 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../../incl/ft_formatters.h"
 
-size_t		ft_x_offset(char *restrict *const restrict buffer,\
-				size_t *const restrict nb_len,\
-				const t_flag *const restrict flags,\
-				const int is_neg)
+size_t				ft_x_offset(char *restrict *const restrict buffer,\
+						size_t *const restrict nb_len,\
+						const t_flag *const restrict flags,\
+						const int is_neg)
 {
 	size_t	offset;
 
@@ -38,9 +38,9 @@ size_t		ft_x_offset(char *restrict *const restrict buffer,\
 	return (offset);
 }
 
-size_t		ft_float_exceptions(char *const restrict buffer,\
-				short *expon,\
-				const t_flag *const restrict flags)
+size_t				ft_float_exceptions(char *const restrict buffer,\
+						short *expon,\
+						const t_flag *const restrict flags)
 {
 	*expon = 0;
 	buffer[0] = '0';

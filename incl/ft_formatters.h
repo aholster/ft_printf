@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/10/01 18:55:03 by aholster       #+#    #+#                */
-/*   Updated: 2019/10/03 17:42:41 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/10/03 17:58:35 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,8 @@ void			ft_expon_len(char *buffer,\
 					t_writer *const restrict clipb);
 
 int				ft_prefix(const int is_neg, t_writer *const restrict clipb);
+unsigned short	ft_reversed(unsigned long long mantissa);
+
 int				ft_lowhexpoint_print(t_writer *const restrict clipb,\
 					short expon,\
 					unsigned short nb_len,

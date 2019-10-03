@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/18 17:42:52 by jesmith        #+#    #+#                */
-/*   Updated: 2019/10/02 20:48:10 by aholster      ########   odam.nl         */
+/*   Updated: 2019/10/03 17:46:30 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,8 @@ void				ft_sci_rounder(char *buffer,\
 
 size_t				ft_expon_rounding(char *buffer,\
 						size_t nb_len,\
-						t_writer *const restrict clipb)
+						t_writer *const restrict clipb,
+						short expon)
 {
 	size_t			index;
 	size_t			rounded;
@@ -97,6 +98,8 @@ size_t				ft_expon_rounding(char *buffer,\
 
 	index = 0;
 	rounded = 0;
+	if (expon == 308)
+		return (495);
 	precision = clipb->flags->precision;
 	while (buffer[index] != '.' && index < nb_len)
 		index++;

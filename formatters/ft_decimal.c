@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/05/31 12:06:16 by jesmith        #+#    #+#                */
-/*   Updated: 2019/10/02 23:40:03 by aholster      ########   odam.nl         */
+/*   Updated: 2019/10/03 17:48:31 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static int				ft_decimal_noprec(const char *const restrict buffer,\
 							t_writer *const restrict clipb)
 {
 	int minus;
-
+	
 	minus = flagverif('-', clipb->flags);
 	if (minus == -1 && flagverif('0', clipb->flags) == -1)
 		if (ft_space_padder(nb_len, clipb) == -1)
@@ -70,11 +70,16 @@ static int				ft_decimal_prec(const char *const restrict buffer,\
 							unsigned short nb_len,\
 							t_writer *const restrict clipb)
 {
-	int minus;
-	int	holder;
+	int		minus;
+	int		holder;
+	uint	tru_len;
 
+
+	tru_len = clipb->flags->precision;
+	if (is_neg < 0)
+		tru_len++;
 	minus = flagverif('-', clipb->flags);
-	if (minus == -1 && clipb->flags->padding > nb_len)
+	if (minus == -1 && clipb->flags->padding > tru_len)
 		if (ft_space_padder(nb_len, clipb) == -1)
 			return (-1);
 	holder = ft_preprint(is_neg, clipb);

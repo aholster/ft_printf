@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/21 12:57:35 by jesmith        #+#    #+#                */
-/*   Updated: 2019/10/02 21:27:56 by aholster      ########   odam.nl         */
+/*   Updated: 2019/10/03 15:59:48 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ static int			ft_shrthd_lowsci(char *buffer, \
 		nb_len -= 1;
 	if (buffer[nb_len] == '.')
 		nb_len--;
-	expon += ft_expon_rounding(buffer, nb_len, clipb);
+	expon += ft_expon_rounding(buffer, nb_len, clipb, expon);
 	if (flagverif('.', clipb->flags) == 1)
 		nb_len -= 1;
 	if (buffer[nb_len - 1] == '.')

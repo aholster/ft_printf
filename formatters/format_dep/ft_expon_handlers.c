@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/10/01 10:52:39 by jesmith        #+#    #+#                */
-/*   Updated: 2019/10/02 20:48:10 by aholster      ########   odam.nl         */
+/*   Updated: 2019/10/03 17:48:13 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static int	ft_moveback(char *buffer, size_t nb_len)
 	while (buffer[index] != '.')
 		index++;
 	one_dex = index + 1;
-	ft_memmove(buffer + index, buffer + one_dex, nb_len);
+	ft_memmove(buffer + index, buffer + one_dex, nb_len - index);
 	ft_memmove(buffer + 3, buffer + 2, nb_len);
 	index -= 2;
 	return (index);

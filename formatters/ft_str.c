@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/04/24 21:38:26 by jesmith        #+#    #+#                */
-/*   Updated: 2019/10/02 18:27:39 by aholster      ########   odam.nl         */
+/*   Updated: 2019/10/03 11:55:57 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,6 @@ static int	ft_str_padding(const char *const restrict str, const size_t len,\
 	{
 		if (clipb->self(str, len, clipb) == -1)
 			return (-1);
-		if (zeroflag == 1)
-			padf = ft_zero_padder(len, clipb);
 		else
 			padf = ft_space_padder(len, clipb);
 		if (padf == -1)

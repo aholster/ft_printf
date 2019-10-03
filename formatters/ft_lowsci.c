@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/05 11:15:26 by jesmith        #+#    #+#                */
-/*   Updated: 2019/10/02 21:24:10 by aholster      ########   odam.nl         */
+/*   Updated: 2019/10/03 17:43:08 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static int		ft_lowsci_buffer(char *buffer,\
 					t_writer *const restrict clipb,\
 					size_t nb_len,\
-					int expon)
+					short expon)
 {
 	int					ret_val;
 	int					temp;
@@ -52,7 +52,7 @@ int				ft_lowsci(va_list args, t_writer *const clipb)
 	char				*buffer;
 	long double			nb;
 	size_t				nb_len;
-	int					expon;
+	short				expon;
 	int					ret_val;
 
 	ret_val = ft_longdouble_conv(args, &nb, clipb->flags);
@@ -68,7 +68,7 @@ int				ft_lowsci(va_list args, t_writer *const clipb)
 	else
 	{
 		expon = ft_expon_finder(buffer, nb_len);
-		expon += ft_expon_rounding(buffer, nb_len, clipb);
+		expon += ft_expon_rounding(buffer, nb_len, clipb, expon);
 		ret_val = ft_lowsci_buffer(buffer, clipb, nb_len, expon);
 	}
 	free(buffer);

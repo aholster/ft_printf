@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/05 17:03:23 by aholster       #+#    #+#                */
-/*   Updated: 2019/10/02 20:48:10 by aholster      ########   odam.nl         */
+/*   Updated: 2019/10/03 12:18:00 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ static int	va_short(va_list args, unsigned long long *const restrict holder)
 	}
 }
 
-static int	va_char(va_list args, unsigned long long *const restrict holder)
+static int	va_char(va_list args, unsigned long long *const restrict holder,\
+				const t_flag *const restrict flags)
 {
 	char	num;
 
@@ -37,6 +38,8 @@ static int	va_char(va_list args, unsigned long long *const restrict holder)
 	if (num < 0)
 	{
 		*holder = ((-num) & UCHAR_MAX);
+		if (num == -128 && flagverif('l', flags) == 1)
+			return (1);
 		return (-1);
 	}
 	else
@@ -89,7 +92,7 @@ int			ft_signconv(va_list args,\
 	if (flagverif('h', flags) == 1)
 		return (va_short(args, holder));
 	else if (doubleverif('h', flags) == 1)
-		return (va_char(args, holder));
+		return (va_char(args, holder, flags));
 	else if (flagverif('l', flags) == 1)
 		return (va_long(args, holder));
 	else if (doubleverif('l', flags) == 1)

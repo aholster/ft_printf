@@ -6,42 +6,11 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/06 10:44:11 by jesmith        #+#    #+#                */
-/*   Updated: 2019/10/02 21:27:56 by aholster      ########   odam.nl         */
+/*   Updated: 2019/10/03 14:48:15 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../../incl/ft_formatters.h"
-
-unsigned short		ft_hexpoint_prec(const char *const restrict buffer,\
-						t_writer *const clipb,\
-						size_t nb_len,\
-						short expon)
-{
-	size_t			dec_len;
-	unsigned short	len;
-
-	len = nb_len;
-	if (len == 1 && buffer[1] == '.')
-		len++;
-	if (expon == -1025)
-		len = 0;
-	if (flagverif('.', clipb->flags) == -1)
-		len++;
-	if (len > 2)
-		dec_len = len - 2;
-	else
-		dec_len = 2;
-	if (flagverif('.', clipb->flags) == 1)
-	{
-		if (dec_len > clipb->flags->precision && dec_len < len)
-			len = (len - dec_len) + clipb->flags->precision;
-		else if (dec_len < clipb->flags->precision && len > 2)
-			clipb->flags->precision -= dec_len;
-		if (clipb->flags->precision == 0 && len == 2)
-			len--;
-	}
-	return (len);
-}
 
 int					ft_prefix(int is_neg, t_writer *const clipb)
 {
@@ -60,57 +29,107 @@ int					ft_prefix(int is_neg, t_writer *const clipb)
 	else if (is_neg < 0)
 		if (clipb->self("-", 1, clipb) == -1)
 			return (-1);
-	if (clipb->self("0x", 2, clipb) == -1)
-		return (-1);
 	return (1);
 }
 
-unsigned short		ft_ull_len(unsigned long long num, int base)
+static int	ft_caphexponbuff(char *buffer, short expon)
 {
-	unsigned short length;
+	unsigned short	index;
+	int				is_neg;
+	unsigned short	backup_index;
 
-	length = 0;
-	if (num == 0)
-		return (1);
-	while (num != 0)
+	is_neg = expon;
+	index = ft_nbrlen((long long)expon, 10);
+	if (expon < 0)
+		expon *= -1;
+	else
+		index++;
+	backup_index = index;
+	while (index > 1)
 	{
-		num /= base;
-		length++;
+		buffer[index] = (expon % 10) + '0';
+		index--;
+		expon /= 10;
 	}
-	return (length);
+	if (is_neg < 0)
+		buffer[1] = '-';
+	else
+		buffer[1] = '+';
+	buffer[0] = 'P';
+	return (backup_index + 1);
 }
 
-unsigned short		ft_reversed(unsigned long long mantissa)
+int				ft_caphexpoint_print(t_writer *const restrict clipb,\
+						short expon,\
+						unsigned short nb_len,
+						unsigned short str_len)
 {
-	unsigned short		len;
-	unsigned long long	tempnum;
+	unsigned short	expon_len;
+	char			new_buf[8];
 
-	tempnum = mantissa;
-	len = 0;
-	while (tempnum > 0)
-	{
-		tempnum >>= 4;
-		len++;
-	}
-	return (len);
+	if (flagverif('.', clipb->flags) == 1 && \
+	clipb->flags->precision != (str_len - 2))
+		if (pad_zero(clipb->flags->precision, clipb) == -1)
+			return (-1);
+	expon_len = ft_caphexponbuff(new_buf, expon);
+	if (clipb->self(new_buf, expon_len, clipb) == -1)
+		return (-1);
+	if (clipb->flags->precision == 0)
+		str_len--;
+	if (flagverif('-', clipb->flags) == 1 \
+	&& clipb->flags->padding > clipb->flags->precision)
+		if (ft_float_padder(nb_len + str_len, str_len - 2, clipb) == -1)
+			return (-1);
+	return (1);
 }
 
-unsigned short		ft_negpos_handler(t_writer *const restrict clipb,\
-						int is_neg,\
-						short expon)
+static int	ft_lowhexponbuff(char *buffer, short expon)
 {
-	unsigned short	sign;
+	unsigned short	index;
+	int				is_neg;
+	unsigned short	backup_index;
 
-	sign = 0;
-	if (is_neg > 0)
+	is_neg = expon;
+	index = ft_nbrlen((long long)expon, 10);
+	if (expon < 0)
+		expon *= -1;
+	else
+		index++;
+	backup_index = index;
+	while (index > 1)
 	{
-		if (flagverif('+', clipb->flags) == 1 || \
-		flagverif(' ', clipb->flags) == 1)
-			sign++;
+		buffer[index] = (expon % 10) + '0';
+		index--;
+		expon /= 10;
 	}
-	else if (is_neg < 0)
-		sign++;
-	if (expon >= 0)
-		sign++;
-	return (sign);
+	if (is_neg < 0)
+		buffer[1] = '-';
+	else
+		buffer[1] = '+';
+	buffer[0] = 'p';
+	return (backup_index + 1);
+}
+
+int				ft_lowhexpoint_print(t_writer *const restrict clipb,\
+						short expon,\
+						unsigned short nb_len,
+						unsigned short str_len)
+{
+	unsigned short	expon_len;
+	char			new_buf[8];
+
+	if (flagverif('.', clipb->flags) == 1 && \
+	clipb->flags->precision != (str_len - 2))
+		if (pad_zero(clipb->flags->precision, clipb) == -1)
+			return (-1);
+	expon_len = ft_lowhexponbuff(new_buf, expon);
+	if (clipb->self(new_buf, expon_len, clipb) == -1)
+		return (-1);
+	if (clipb->flags->precision == 0)
+		str_len--;
+	if (flagverif('-', clipb->flags) == 1 \
+	&& clipb->flags->padding > clipb->flags->precision)
+		if (ft_float_padder(nb_len + str_len, str_len - 2, clipb) == -1)
+			return (-1);
+	return (1);
 }

@@ -6,13 +6,13 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/25 11:19:27 by jesmith        #+#    #+#                */
-/*   Updated: 2019/10/02 21:04:22 by aholster      ########   odam.nl         */
+/*   Updated: 2019/10/03 17:46:55 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../../incl/ft_formatters.h"
 
-static size_t		ft_expon_prefix(char *buffer, int expon)
+static size_t		ft_expon_prefix(char *buffer, short expon)
 {
 	size_t index;
 
@@ -37,7 +37,7 @@ static size_t		ft_expon_prefix(char *buffer, int expon)
 	return (index);
 }
 
-static int			ft_expon_to_buf(int expon, t_writer *const clipb)
+static int			ft_expon_to_buf(short expon, t_writer *const clipb)
 {
 	char	buffer[10];
 	size_t	index;
@@ -82,7 +82,7 @@ static size_t		ft_offset(char *buffer, size_t *nb_len, \
 int					ft_capsci_print(char *buffer,\
 						size_t nb_len,\
 						t_writer *const clipb,\
-						int expon)
+						short expon)
 {
 	size_t	len_extension;
 	size_t	offset;

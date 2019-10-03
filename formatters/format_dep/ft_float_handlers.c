@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/17 12:34:56 by jesmith        #+#    #+#                */
-/*   Updated: 2019/10/02 21:27:56 by aholster      ########   odam.nl         */
+/*   Updated: 2019/10/03 14:23:59 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ size_t		ft_float_exceptions(char *const restrict buffer,\
 				short *expon,\
 				const t_flag *const restrict flags)
 {
-	expon = 0;
+	*expon = 0;
 	buffer[0] = '0';
 	if (flags->precision != 0)
 	{
@@ -50,4 +50,19 @@ size_t		ft_float_exceptions(char *const restrict buffer,\
 		buffer[2] = '0';
 	}
 	return (3);
+}
+
+unsigned short		ft_ull_len(unsigned long long num, int base)
+{
+	unsigned short length;
+
+	length = 0;
+	if (num == 0)
+		return (1);
+	while (num != 0)
+	{
+		num /= base;
+		length++;
+	}
+	return (length);
 }

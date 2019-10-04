@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/10/03 21:32:49 by aholster       #+#    #+#                */
-/*   Updated: 2019/10/04 12:02:03 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/10/04 14:31:16 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,5 +74,7 @@ void			ft_flag_precision(const char *const restrict format,\
 	{
 		subdex = precision_num_parse(format, subdex, flags);
 	}
+	else
+		flags->precision = 0;
 	*aindex = subdex;
 }

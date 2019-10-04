@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/03 15:08:26 by jesmith        #+#    #+#                */
-/*   Updated: 2019/10/03 19:47:41 by aholster      ########   odam.nl         */
+/*   Updated: 2019/10/04 17:57:14 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,16 @@ static int				ft_octal_noprec(const char *const restrict buffer,\
 							const unsigned short nb_len,\
 							t_writer *const restrict clipb)
 {
-	const int minus = flg_verif('-', clipb->flags);
+	t_flag *const restrict	flags = clipb->flags;
+	const int				minus = flg_verif('-', flags);
 
-	if (minus == -1 && flg_verif('0', clipb->flags) == -1 \
-	&& clipb->flags->padding > 0)
+	if (minus == -1 && flg_verif('0', flags) == -1 \
+	&& flags->padding > 0)
 		if (ft_space_padder(nb_len, clipb) == -1)
 			return (-1);
-	if (flg_verif('0', clipb->flags) == 1 && minus == -1)
+	if (flg_verif('0', flags) == 1 && minus == -1)
 	{
-		if ((clipb->flags->padding - clipb->flags->precision) > nb_len)
+		if ((flags->padding - flags->precision) > nb_len)
 		{
 			if (ft_zero_padder(nb_len, clipb) == -1)
 				return (-1);
@@ -32,7 +33,7 @@ static int				ft_octal_noprec(const char *const restrict buffer,\
 	}
 	if (clipb->self(buffer, (size_t)nb_len, clipb) == -1)
 		return (-1);
-	if (minus == 1 && clipb->flags->padding > nb_len)
+	if (minus == 1 && flags->padding > nb_len)
 		if (ft_space_padder(nb_len, clipb) == -1)
 			return (-1);
 	return (1);
@@ -42,17 +43,18 @@ static int				ft_octal_prec(const char *const restrict buffer,\
 							const unsigned short nb_len,\
 							t_writer *const restrict clipb)
 {
-	const int	minus = flg_verif('-', clipb->flags);
+	t_flag *const restrict	flags = clipb->flags;
+	const int				minus = flg_verif('-', flags);
 
-	if (minus == -1 && clipb->flags->padding > nb_len)
+	if (minus == -1 && flags->padding > nb_len)
 		if (ft_space_padder(nb_len, clipb) == -1)
 			return (-1);
-	if (clipb->flags->precision > nb_len)
+	if (flags->precision > nb_len)
 		if (ft_zero_padder(nb_len, clipb) == -1)
 			return (-1);
 	if (clipb->self(buffer, (size_t)nb_len, clipb) == -1)
 		return (-1);
-	if (minus == 1 && clipb->flags->padding > nb_len)
+	if (minus == 1 && flags->padding > nb_len)
 		if (ft_space_padder(nb_len, clipb) == -1)
 			return (-1);
 	return (1);

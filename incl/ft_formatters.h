@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/10/01 18:55:03 by aholster       #+#    #+#                */
-/*   Updated: 2019/10/03 22:37:59 by aholster      ########   odam.nl         */
+/*   Updated: 2019/10/04 17:44:02 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,12 +64,12 @@ int				ft_longdouble_conv(va_list args,\
 
 int				ft_lowsci_print(char *buffer,\
 					size_t nb_len,\
-					t_writer *const clipb,\
+					t_writer *const restrict clipb,\
 					short expon);
 
 int				ft_capsci_print(char *buffer,\
 					size_t nb_len,\
-					t_writer *const clipb,\
+					t_writer *const restrict clipb,\
 					short expon);
 
 void			ft_captolow(char *const restrict buffer);
@@ -80,21 +80,21 @@ int				ft_naninf_padding(const char *const restrict buffer,\
 
 int				ft_shrthd_print(char *buffer,\
 					size_t offset,\
-					t_writer *const clipb,\
+					t_writer *const restrict clipb,\
 					size_t new_len);
 size_t			ft_shrthd_offset(char *restrict *const restrict buffer,\
 					t_writer *const restrict clipb,\
 					int is_neg);
 
 void			ft_hexpoint_rounder(char *buffer,\
-					t_writer *const restrict clipb,\
+					const t_flag *const restrict flags,\
 					short *expon);
 
 void			ft_float_rounder(char *buffer,\
-					t_writer *const restrict clipb,\
+					const t_flag *const restrict flags,\
 					size_t *nb_len);
 void			ft_shrthd_rounder(char *buffer,\
-					t_writer *const restrict clipb,\
+					const t_flag *const restrict flags,\
 					size_t *nb_len);
 
 size_t			ft_x_offset(char *restrict *const restrict buffer,\
@@ -107,11 +107,11 @@ size_t			ft_float_exceptions(char *const restrict buffer,\
 unsigned short	ft_ull_len(unsigned long long num, const int base);
 
 void			ft_sci_rounder(char *buffer,\
-						t_writer *const restrict clipb,\
-						size_t *nb_len);
+					const t_flag *const restrict flags,\
+					size_t *nb_len);
 size_t			ft_expon_rounding(char *buffer,\
 					size_t nb_len,\
-					t_writer *const restrict clipb,
+					const t_flag *const restrict flags,
 					short expon);
 
 int				ft_expon_finder(char *buffer, size_t nb_len);

@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/18 17:42:52 by jesmith        #+#    #+#                */
-/*   Updated: 2019/10/03 17:46:30 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/10/04 17:27:18 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static void			ft_add_one(char *buffer, size_t len)
 }
 
 void				ft_sci_rounder(char *buffer,\
-						t_writer *const restrict clipb,\
+						const t_flag *const restrict flags,\
 						size_t *nb_len)
 {
 	unsigned int		precision;
@@ -69,7 +69,7 @@ void				ft_sci_rounder(char *buffer,\
 
 	len = 0;
 	roundex = *nb_len - 1;
-	precision = clipb->flags->precision;
+	precision = flags->precision;
 	if (buffer[roundex] == '.')
 		roundex++;
 	rounding_num = buffer[roundex] - '0';
@@ -89,7 +89,7 @@ void				ft_sci_rounder(char *buffer,\
 
 size_t				ft_expon_rounding(char *buffer,\
 						size_t nb_len,\
-						t_writer *const restrict clipb,
+						const t_flag *const restrict flags,
 						short expon)
 {
 	size_t			index;
@@ -100,7 +100,7 @@ size_t				ft_expon_rounding(char *buffer,\
 	rounded = 0;
 	if (expon == 308)
 		return (495);
-	precision = clipb->flags->precision;
+	precision = flags->precision;
 	while (buffer[index] != '.' && index < nb_len)
 		index++;
 	if (buffer[index] == '.')

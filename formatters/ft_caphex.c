@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/03 18:20:19 by jesmith        #+#    #+#                */
-/*   Updated: 2019/10/03 19:47:41 by aholster      ########   odam.nl         */
+/*   Updated: 2019/10/04 17:59:11 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,21 +17,21 @@ static int				ft_caphex_noprec(const char *const restrict buffer,\
 							const unsigned short nb_len,\
 							t_writer *const restrict clipb)
 {
-	int minus;
+	t_flag *const restrict	flags = clipb->flags;
+	const int				minus = flg_verif('-', flags);
 
-	minus = flg_verif('-', clipb->flags);
-	if (minus == -1 && flg_verif('0', clipb->flags) == -1)
+	if (minus == -1 && flg_verif('0', flags) == -1)
 		if (ft_space_padder(nb_len, clipb) == -1)
 			return (-1);
-	if (flg_verif('#', clipb->flags) == 1 && nb != 0)
+	if (flg_verif('#', flags) == 1 && nb != 0)
 		if (clipb->self("0X", 2, clipb) == -1)
 			return (-1);
-	if (flg_verif('0', clipb->flags) == 1 && minus == -1)
+	if (flg_verif('0', flags) == 1 && minus == -1)
 		if (ft_zero_padder(nb_len, clipb) == -1)
 			return (-1);
 	if (clipb->self(buffer, ((size_t)nb_len), clipb) == -1)
 		return (-1);
-	if (minus == 1 && clipb->flags->padding > nb_len)
+	if (minus == 1 && flags->padding > nb_len)
 		if (ft_space_padder(nb_len, clipb) == -1)
 			return (-1);
 	return (1);
@@ -42,21 +42,21 @@ static int				ft_caphex_prec(const char *const restrict buffer,\
 							const unsigned short nb_len,\
 							t_writer *const restrict clipb)
 {
-	int minus;
+	t_flag *const restrict	flags = clipb->flags;
+	const int				minus = flg_verif('-', clipb->flags);
 
-	minus = flg_verif('-', clipb->flags);
-	if (minus == -1 && clipb->flags->padding > nb_len)
+	if (minus == -1 && flags->padding > nb_len)
 		if (ft_space_padder(nb_len, clipb) == -1)
 			return (-1);
-	if (flg_verif('#', clipb->flags) == 1 && nb != 0)
+	if (flg_verif('#', flags) == 1 && nb != 0)
 		if (clipb->self("0X", 2, clipb) == -1)
 			return (-1);
-	if (clipb->flags->precision > nb_len)
+	if (flags->precision > nb_len)
 		if (ft_zero_padder(nb_len, clipb) == -1)
 			return (-1);
 	if (clipb->self(buffer, (size_t)nb_len, clipb) == -1)
 		return (-1);
-	if (minus == 1 && clipb->flags->padding > nb_len)
+	if (minus == 1 && flags->padding > nb_len)
 		if (ft_space_padder(nb_len, clipb) == -1)
 			return (-1);
 	return (1);
@@ -65,10 +65,10 @@ static int				ft_caphex_prec(const char *const restrict buffer,\
 static unsigned short	ull_to_hex(char *const restrict buffer,\
 							unsigned long long nb)
 {
-	unsigned short			index;
-	unsigned short			len;
-	const char *restrict	base = "0123456789ABCDEF";
-	unsigned long long		tempnum;
+	unsigned short				index;
+	unsigned short				len;
+	const char *const restrict	base = "0123456789ABCDEF";
+	unsigned long long			tempnum;
 
 	if (nb == 0)
 	{
@@ -94,22 +94,22 @@ static unsigned short	ull_to_hex(char *const restrict buffer,\
 
 int						ft_caphex(va_list args, t_writer *const restrict clipb)
 {
-	char				buffer[20];
-	unsigned long long	nb;
-	unsigned short		nb_len;
-	int					precision;
+	char					buffer[20];
+	unsigned long long		nb;
+	unsigned short			nb_len;
+	int						precision;
+	t_flag *const restrict	flags = clipb->flags;
 
-	precision = flg_verif('.', clipb->flags);
-	ft_unsignconv(args, &nb, clipb->flags);
+	precision = flg_verif('.', flags);
+	ft_unsignconv(args, &nb, flags);
 	nb_len = ull_to_hex(buffer, nb);
-	if (flg_verif('#', clipb->flags) == 1 && nb != 0 && \
-		clipb->flags->padding >= 2)
-		clipb->flags->padding -= 2;
+	if (flg_verif('#', clipb->flags) == 1 && nb != 0 && flags->padding >= 2)
+		flags->padding -= 2;
 	if (nb == 0 && precision == 1)
 	{
-		if (clipb->flags->padding == 0)
+		if (flags->padding == 0)
 			return (1);
-		if (clipb->flags->precision == 0)
+		if (flags->precision == 0)
 			ft_strcpy(buffer, " ");
 	}
 	if (precision == 1)

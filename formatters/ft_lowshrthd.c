@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/21 12:57:35 by jesmith        #+#    #+#                */
-/*   Updated: 2019/10/03 19:47:41 by aholster      ########   odam.nl         */
+/*   Updated: 2019/10/04 17:26:30 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,26 @@
 
 static int			ft_print_prep(char *restrict buffer,\
 						t_writer *const restrict clipb,\
-						int is_neg,\
+						const int is_neg,\
 						size_t new_len)
 {
-	size_t				offset;
-	int					ret_val;
+	t_flag *const restrict	flags = clipb->flags;
+	size_t					offset;
+	int						ret_val;
 
 	offset = ft_shrthd_offset(&buffer, clipb, is_neg);
-	if (new_len > clipb->flags->precision)
-		clipb->flags->precision = new_len - clipb->flags->precision;
+	if (new_len > flags->precision)
+		flags->precision = new_len - flags->precision;
 	else
-		clipb->flags->precision = new_len;
+		flags->precision = new_len;
 	if (offset == 0)
 	{
-		if (clipb->flags->precision > 0)
-			clipb->flags->precision -= 1;
-		if (clipb->flags->padding > 0)
-			clipb->flags->padding -= 1;
+		if (flags->precision > 0)
+			flags->precision -= 1;
+		if (flags->padding > 0)
+			flags->padding -= 1;
 	}
-	if (buffer[new_len] == '.' && clipb->flags->precision < new_len)
+	if (buffer[new_len] == '.' && flags->precision < new_len)
 		new_len--;
 	ret_val = ft_shrthd_print(buffer, offset, clipb, new_len);
 	return (ret_val);
@@ -52,7 +53,7 @@ static size_t		ft_shorthand_prec(char *buffer,\
 	decimal = 0;
 	precision = clipb->flags->precision;
 	ft_expon_len(buffer, &new_len, clipb);
-	ft_shrthd_rounder(buffer, clipb, &new_len);
+	ft_shrthd_rounder(buffer, clipb->flags, &new_len);
 	index = new_len;
 	if (buffer[index] == '.')
 		index--;
@@ -76,12 +77,12 @@ static int			ft_shrthd_lowsci(char *buffer, \
 	int					ret_val;
 
 	expon = ft_expon_finder(buffer, nb_len);
-	ft_sci_rounder(buffer, clipb, &nb_len);
+	ft_sci_rounder(buffer, clipb->flags, &nb_len);
 	if (flg_verif('.', clipb->flags) == -1)
 		nb_len -= 1;
 	if (buffer[nb_len] == '.')
 		nb_len--;
-	expon += ft_expon_rounding(buffer, nb_len, clipb, expon);
+	expon += ft_expon_rounding(buffer, nb_len, clipb->flags, expon);
 	if (flg_verif('.', clipb->flags) == 1)
 		nb_len -= 1;
 	if (buffer[nb_len - 1] == '.')

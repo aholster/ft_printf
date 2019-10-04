@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/10/03 17:57:29 by jesmith        #+#    #+#                */
-/*   Updated: 2019/10/03 19:47:41 by aholster      ########   odam.nl         */
+/*   Updated: 2019/10/04 17:18:00 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,20 +44,19 @@ int				ft_caphexpoint_print(t_writer *const restrict clipb,\
 						unsigned short nb_len,
 						unsigned short str_len)
 {
-	unsigned short	expon_len;
-	char			new_buf[8];
+	t_flag *const restrict	flags = clipb->flags;
+	unsigned short			expon_len;
+	char					new_buf[8];
 
-	if (flg_verif('.', clipb->flags) == 1 && \
-	clipb->flags->precision != (str_len - 2))
-		if (pad_zero(clipb->flags->precision, clipb) == -1)
+	if (flg_verif('.', flags) == 1 && flags->precision != (str_len - 2))
+		if (pad_zero(flags->precision, clipb) == -1)
 			return (-1);
 	expon_len = ft_caphexponbuff(new_buf, expon);
 	if (clipb->self(new_buf, expon_len, clipb) == -1)
 		return (-1);
-	if (clipb->flags->precision == 0)
+	if (flags->precision == 0)
 		str_len--;
-	if (flg_verif('-', clipb->flags) == 1 \
-	&& clipb->flags->padding > clipb->flags->precision)
+	if (flg_verif('-', flags) == 1 && flags->padding > flags->precision)
 		if (ft_float_padder(nb_len + str_len, str_len - 2, clipb) == -1)
 			return (-1);
 	return (1);
@@ -91,24 +90,24 @@ static int		ft_lowhexponbuff(char *buffer, short expon)
 }
 
 int				ft_lowhexpoint_print(t_writer *const restrict clipb,\
-						short expon,\
+						const short expon,\
 						unsigned short nb_len,
 						unsigned short str_len)
 {
-	unsigned short	expon_len;
-	char			new_buf[8];
+	t_flag *const restrict	flags = clipb->flags;
+	unsigned short			expon_len;
+	char					new_buf[8];
 
-	if (flg_verif('.', clipb->flags) == 1 && \
-	clipb->flags->precision != (str_len - 2))
-		if (pad_zero(clipb->flags->precision, clipb) == -1)
+	if (flg_verif('.', flags) == 1 && \
+	flags->precision != (str_len - 2))
+		if (pad_zero(flags->precision, clipb) == -1)
 			return (-1);
 	expon_len = ft_lowhexponbuff(new_buf, expon);
 	if (clipb->self(new_buf, expon_len, clipb) == -1)
 		return (-1);
-	if (clipb->flags->precision == 0)
+	if (flags->precision == 0)
 		str_len--;
-	if (flg_verif('-', clipb->flags) == 1 \
-	&& clipb->flags->padding > clipb->flags->precision)
+	if (flg_verif('-', flags) == 1 && flags->padding > flags->precision)
 		if (ft_float_padder(nb_len + str_len, str_len - 2, clipb) == -1)
 			return (-1);
 	return (1);

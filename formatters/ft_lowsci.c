@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/05 11:15:26 by jesmith        #+#    #+#                */
-/*   Updated: 2019/10/03 19:47:41 by aholster      ########   odam.nl         */
+/*   Updated: 2019/10/04 17:52:29 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,20 @@
 static int		ft_lowsci_buffer(char *buffer,\
 					t_writer *const restrict clipb,\
 					size_t nb_len,\
-					short expon)
+					const short expon)
 {
-	int					ret_val;
-	int					temp;
-	size_t				round_len;
+	t_flag *const restrict	flags = clipb->flags;
+	int						ret_val;
+	int						temp;
+	size_t					round_len;
 
 	temp = expon;
-	nb_len = clipb->flags->precision + 3;
+	nb_len = flags->precision + 3;
 	if (buffer[nb_len] == '.')
 		nb_len--;
 	round_len = nb_len + 1;
-	ft_sci_rounder(buffer, clipb, &round_len);
-	if (clipb->flags->precision == 0)
+	ft_sci_rounder(buffer, clipb->flags, &round_len);
+	if (flags->precision == 0)
 		nb_len--;
 	ret_val = ft_lowsci_print(buffer, nb_len, clipb, expon);
 	return (ret_val);
@@ -63,12 +64,13 @@ int				ft_lowsci(va_list args, t_writer *const clipb)
 		return (-1);
 	if (ret_val == -1)
 		buffer[0] = '-';
-	if (ft_strcmp(buffer, "nan") == 0 || ft_strcmp(buffer, "inf") == 0)
+	if (ft_memcmp(buffer, "nan", nb_len) == 0\
+	|| ft_memcmp(buffer, "inf", nb_len) == 0)
 		ret_val = ft_naninf_print(buffer, clipb, nb_len);
 	else
 	{
 		expon = ft_expon_finder(buffer, nb_len);
-		expon += ft_expon_rounding(buffer, nb_len, clipb, expon);
+		expon += ft_expon_rounding(buffer, nb_len, clipb->flags, expon);
 		ret_val = ft_lowsci_buffer(buffer, clipb, nb_len, expon);
 	}
 	free(buffer);

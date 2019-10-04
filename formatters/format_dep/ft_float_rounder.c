@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/13 10:14:39 by jesmith        #+#    #+#                */
-/*   Updated: 2019/10/03 19:47:41 by aholster      ########   odam.nl         */
+/*   Updated: 2019/10/04 17:16:22 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,14 +54,14 @@ static void			ft_rounder_exception(char *buffer,\
 
 static void			ft_round_even(char *buffer,\
 						size_t len,\
-						t_writer *const clipb,\
+						const t_flag *const restrict flags,\
 						unsigned int rounding_num)
 {
 	size_t len_hold;
 
 	len_hold = len;
 	len--;
-	if (buffer[len] == '.' && flg_verif('.', clipb->flags) == -1)
+	if (buffer[len] == '.' && flg_verif('.', flags) == -1)
 		len--;
 	if (buffer[len] == '9')
 		ft_rounder_exception(buffer, len, &len_hold);
@@ -75,7 +75,7 @@ static void			ft_round_even(char *buffer,\
 }
 
 void				ft_float_rounder(char *buffer,\
-						t_writer *const restrict clipb,\
+						const t_flag *const restrict flags,\
 						size_t *nb_len)
 {
 	unsigned int		rounding_num;
@@ -91,12 +91,12 @@ void				ft_float_rounder(char *buffer,\
 		if (buffer[len] == '9')
 			ft_rounder_exception(buffer, len, nb_len);
 		else
-			ft_round_even(buffer, len, clipb, rounding_num);
+			ft_round_even(buffer, len, flags, rounding_num);
 	}
 }
 
 void				ft_shrthd_rounder(char *buffer,\
-						t_writer *const restrict clipb,\
+						const t_flag *const restrict flags,\
 						size_t *nb_len)
 {
 	unsigned int		rounding_num;
@@ -112,6 +112,6 @@ void				ft_shrthd_rounder(char *buffer,\
 		if (buffer[len] == '9')
 			ft_rounder_exception(buffer, len, nb_len);
 		else
-			ft_round_even(buffer, len, clipb, rounding_num);
+			ft_round_even(buffer, len, flags, rounding_num);
 	}
 }

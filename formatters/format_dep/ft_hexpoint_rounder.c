@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/19 16:00:34 by jesmith        #+#    #+#                */
-/*   Updated: 2019/10/03 19:47:41 by aholster      ########   odam.nl         */
+/*   Updated: 2019/10/04 17:21:40 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ static size_t	ft_rounding_handler(char *buffer,\
 }
 
 static void		ft_dlbmax_case(char *buffer, \
-			short *expon, t_writer *const restrict clipb)
+					short *expon,\
+					const t_flag *const restrict flags)
 {
 	size_t index;
 
@@ -54,7 +55,7 @@ static void		ft_dlbmax_case(char *buffer, \
 	*expon = 1024;
 	buffer[0] = '1';
 	buffer[1] = '.';
-	while (index < clipb->flags->precision + 2)
+	while (index < flags->precision + 2)
 	{
 		buffer[index] = '0';
 		index++;
@@ -92,7 +93,7 @@ static void		ft_rounding_up(char *buffer,\
 }
 
 void			ft_hexpoint_rounder(char *buffer,\
-					t_writer *const restrict clipb,\
+					const t_flag *const restrict flags,\
 					short *expon)
 {
 	unsigned int			precision;
@@ -101,16 +102,16 @@ void			ft_hexpoint_rounder(char *buffer,\
 	size_t					judex;
 
 	judex = 0;
-	precision = clipb->flags->precision + 2;
-	index = clipb->flags->precision + 2;
+	precision = flags->precision + 2;
+	index = flags->precision + 2;
 	if ((buffer[precision] - '0') > (base_ref[5] - '0'))
 	{
 		index--;
 		if ((buffer[index] - '0') > 8 \
 		&& (buffer[index] - '0') <= (base_ref[15] - '0'))
 		{
-			if (*expon == 1020 && flg_verif('.', clipb->flags) == 1)
-				ft_dlbmax_case(buffer, expon, clipb);
+			if (*expon == 1020 && flg_verif('.', flags) == 1)
+				ft_dlbmax_case(buffer, expon, flags);
 			else if (*expon != 1020)
 				ft_rounding_up(buffer, index, base_ref);
 		}

@@ -6,15 +6,14 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/18 18:17:05 by aholster       #+#    #+#                */
-/*   Updated: 2019/10/03 22:37:41 by aholster      ########   odam.nl         */
+/*   Updated: 2019/10/04 18:59:30 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_INTERNALS_H
 # define FT_INTERNALS_H
 
-# include "./../libft/libft.h"
-# include "./../float_tech/float_tech.h"
+# include "./../incl/ft_utilities.h"
 # include "./ft_writer.h"
 
 # include <sys/types.h>

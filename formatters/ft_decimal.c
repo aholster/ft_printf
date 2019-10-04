@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/05/31 12:06:16 by jesmith        #+#    #+#                */
-/*   Updated: 2019/10/04 18:01:07 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/10/04 22:32:14 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,21 +124,21 @@ int						ft_decimal(va_list args, t_writer *const restrict clipb)
 	unsigned long long	nb;
 	unsigned short		nb_len;
 	int					is_neg;
-	int					precision;
+	int					is_precision;
 
-	precision = flg_verif('.', clipb->flags);
+	is_precision = flg_verif('.', clipb->flags);
 	is_neg = ft_signconv(args, &nb, clipb->flags);
 	nb_len = ft_int_len(buffer, nb);
-	if (nb == 0 && precision == 1 && clipb->flags->padding == 0)
+	if (nb == 0 && is_precision == 1 && clipb->flags->padding == 0)
 		return (1);
-	if (nb == 0 && precision == 1 && clipb->flags->precision < nb_len)
+	if (nb == 0 && is_precision == 1 && clipb->flags->precision < nb_len)
 		ft_strcpy((char*)buffer, " ");
 	if (clipb->flags->padding != 0 && (is_neg == -1 || \
 	flg_verif('+', clipb->flags) == 1 || flg_verif(' ', clipb->flags) == 1))
 		clipb->flags->padding -= 1;
-	if (precision == 1)
+	if (is_precision == 1)
 		return (ft_decimal_prec(buffer, is_neg, nb_len, clipb));
-	if (precision == -1)
+	if (is_precision == -1)
 		return (ft_decimal_noprec(buffer, is_neg, nb_len, clipb));
 	return (1);
 }

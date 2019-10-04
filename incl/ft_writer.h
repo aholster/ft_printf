@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/18 19:29:47 by aholster       #+#    #+#                */
-/*   Updated: 2019/10/03 17:41:35 by aholster      ########   odam.nl         */
+/*   Updated: 2019/10/04 19:00:27 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define FT_WRITER_H
 
 # include <stdarg.h>
+# include <unistd.h>
 
 # define BUFFSIZE	1024
 

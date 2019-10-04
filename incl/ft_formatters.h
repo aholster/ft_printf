@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/10/01 18:55:03 by aholster       #+#    #+#                */
-/*   Updated: 2019/10/04 17:44:02 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/10/04 19:00:08 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define FT_FORMATTERS_H
 
 # include "./ft_internals.h"
+# include "./ft_flt_support.h"
 
 typedef union	u_nptrs
 {

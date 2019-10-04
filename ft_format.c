@@ -6,14 +6,14 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/04/17 19:57:30 by aholster       #+#    #+#                */
-/*   Updated: 2019/10/03 20:52:00 by aholster      ########   odam.nl         */
+/*   Updated: 2019/10/04 18:45:45 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./incl/ft_internals.h"
 
 static int		ft_judex(const char *restrict format,\
-					size_t *index,\
+					size_t *const restrict index,\
 					const size_t len,\
 					t_writer *const restrict clipb)
 {

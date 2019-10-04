@@ -6,22 +6,14 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/07/23 14:47:32 by aholster       #+#    #+#                */
-/*   Updated: 2019/10/02 19:12:36 by aholster      ########   odam.nl         */
+/*   Updated: 2019/10/04 21:38:04 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FLOAT_TECH_H
 # define FLOAT_TECH_H
 
-# include "./../libft/libft.h"
-
-typedef union		u_float
-{
-	long double		ld;
-	unsigned short	byte[5];
-	unsigned\
-	long long		llu;
-}					t_float;
+# include "./../incl/ft_utilities.h"
 
 # define LSTBUF_SIZE 8
 
@@ -37,13 +29,6 @@ typedef	struct		s_numlst
 	struct s_numlst	*prev;
 }					t_numlst;
 
-void				longdouble_analyse(long double input);
-
-int					ft_custom_ld_to_text(const long double input,\
-						const unsigned int precision,\
-						char **const amem,\
-						size_t *asize);
-
 int					ft_numlst_to_txt(const t_numlst *lst,\
 					const unsigned int precision, char **str, size_t *asize);
 
@@ -57,11 +42,12 @@ int					ft_numlst_prefix(t_numlst *dec_lst, unsigned short count);
 int					ft_numlst_postfix(t_numlst *dec_lst, unsigned short count);
 int					ft_numlst_minsize(t_numlst *source, const t_numlst *target);
 int					ft_numlst_inline_copy(const t_numlst *source,\
-					t_numlst *dst);
+						t_numlst *dst);
 
 t_numlst			*ft_mantissa_to_numlst(unsigned long long mantissa);
-int					ft_numlst_up_magni(const t_numlst *source, t_numlst *dst,\
-					unsigned char mag);
+int					ft_numlst_up_magni(const t_numlst *source,\
+						t_numlst *dst,\
+						unsigned char mag);
 
 int					ft_lst_math_add(t_numlst *source, t_numlst *addition);
 int					ft_lst_math_mul(t_numlst **source, const char *multiply);

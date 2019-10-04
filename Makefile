@@ -6,64 +6,74 @@
 #    By: jesmith <jesmith@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2019/02/16 15:46:43 by aholster       #+#    #+#                 #
-#    Updated: 2019/10/03 22:28:15 by aholster      ########   odam.nl          #
+#    Updated: 2019/10/04 22:37:11 by aholster      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
 DATE := $(shell date)
 
-SUBDIR := ./formatters/
-
-SUBSOURCE := ptraddr decimal char octal caphex lowhex unsigned_dec\
+FORMAT_DIR := ./formatters/
+FORMAT_SRC := ptraddr decimal char octal caphex lowhex unsigned_dec\
  str n lowsci capsci lowshrthd capshrthd\
  lowhexpoint caphexpoint lowfltpoint capfltpoint
 
+FMT_DIR := $(FORMAT_DIR)/format_dep/
 FMT_DEP := naninf_handlers expon_handlers\
  float_handlers shrthd_handlers hexpoint_handlers\
  float_rounder sci_rounder hexpoint_rounder\
  lowsci_print capsci_print hexpoint_printer\
  longdouble_conv unsignconv signconv
 
-PARSESOURCE := flg_verif flgdbl_verif flagharvest\
+PARSE_DIR := ./flag_parser/
+PARSE_SRC := flg_verif flgdbl_verif flagharvest\
  flag_flip flag_num_parse flag_arg_extract flag_precision\
  turn_on_flag
+
+UTIL_DIR := ./utilities/
+UTIL_SRC := bzero memcpy memmove memset memdup memcmp\
+ strcpy strlen nbrlen islowercase\
+ del lstdel lstnew lstaddend lstmemtomem
+
+FLT_DIR := ./float_tech/
+FLT_SRC := custom_ld_to_text numlst_del numlst_to_txt\
+ numlst_newnode  numlst_fwlen numlst_bwlen numlst_postfix numlst_prefix\
+ lst_math_halve lst_math_mul lst_math_add numlst_dec_init numlst_minsize\
+ numlst_up_magni mantissa_to_numlst numlst_inline_copy
 
 SOURCE := printf vprintf dprintf vdprintf asprintf vasprintf\
  sprintf vsprintf snprintf vsnprintf\
  dispatcher format padder
 
 
-FILEC = $(SOURCE:%=./ft_%.c) $(SUBSOURCE:%=$(SUBDIR)ft_%.c)\
-$(FMT_DEP:%=$(SUBDIR)format_dep/ft_%.c) $(PARSESOURCE:%=./flag_parser/ft_%.c)
+FILEC := $(SOURCE:%=./ft_%.c) $(FORMAT_SRC:%=$(FORMAT_DIR)ft_%.c)\
+$(FMT_DEP:%=$(FMT_DIR)ft_%.c) $(PARSE_SRC:%=$(PARSE_DIR)ft_%.c)\
+$(UTIL_SRC:%=$(UTIL_DIR)ft_%.c) $(FLT_SRC:%=$(FLT_DIR)ft_%.c)
 
-OBJ =	$(FILEC:%.c=%.o)
+OBJ :=	$(FILEC:%.c=%.o)
 
-HEAD = ./ft_printf.h ./incl/ft_internals.h ./incl/ft_writer.h\
-./incl/ft_flag_parser.h ./incl/ft_formatters.h
+HEAD := ./ft_printf.h ./incl/ft_internals.h ./incl/ft_writer.h\
+./incl/ft_flag_parser.h ./incl/ft_formatters.h ./incl/ft_utilities.h\
+./float_tech/float_tech.h
 
-NAME = libftprintf.a
+NAME := libftprintf.a
 
 NORM = norminette $(FILEC) $(HEAD) | grep -e "Error"  -e "Warning" -B 1
 
 GCCC = ${CC} -c
-CC = gcc -g -Wall -Werror -Wextra
+CC = gcc -O2 -Wall -Werror -Wextra
 AR = ar rcs
 
 all: $(NAME)
 
 test: $(OBJ)
 	@rm -f testf
-	@cp ./float_tech/float_tech.a ./$(NAME)
 	@$(CC) -w -o testf $(OBJ) ft_main.c -L ./ -lftprintf
 
 assemble: $(OBJ)
-	@cp ./float_tech/float_tech.a ./$(NAME)
 	@$(AR) $(NAME) $(OBJ)
 	@ranlib $(NAME)
 
 $(NAME):
-	@make -C ./libft -j
-	@make -C ./float_tech -j
 	@echo "\033[0;33mStarting assembly of $(NAME)…\033[0;00m"
 	@time make assemble -j
 	@echo "\033[0;32m$(NAME) successfully assembled!\033[0;00m\n"
@@ -72,8 +82,6 @@ $(NAME):
 	@$(GCCC) -o $@ $<
 
 clean:
-	@make clean -C ./libft
-	@make clean -C ./float_tech
 	@echo "\033[0;33mInitializing Summary Deletions...\033[0;00m"
 	@rm -rf $(OBJ)
 	@find "./" -type f \( -name '*~' -o -name '\#*\#' -o -name '.DS_Store' \)\
@@ -81,14 +89,11 @@ clean:
 	@echo "\033[0;31m	Executed!\033[0;00m\n"
 
 fclean: clean
-	@make fclean -C ./libft
-	@make fclean -C ./float_tech
 	@rm -rf $(NAME)
 	@echo "\033[0;31mObituary of $(NAME): Deceased on $(shell date).\
 	\033[0;00m\n"
 
 re: fclean all
-#	@make re -C ./libft
 
 norm:
 	@echo "**+++=====*=====*=====*=====*{\033[0;31mOUT\033[0;00m}\

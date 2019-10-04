@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/10/03 21:32:49 by aholster       #+#    #+#                */
-/*   Updated: 2019/10/04 14:31:16 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/10/04 14:58:48 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,24 +20,24 @@ static int		ft_isdigit_internal(const char c)
 	return (0);
 }
 
-static size_t	precision_num_parse(const char *const restrict format,\
-					size_t subdex,\
+static void		precision_num_parse(const char *const restrict format,\
+					size_t *aindex,\
 					t_flag *const restrict flags)
 {
-	size_t					index;
+	size_t					subdex;
 	unsigned int			num;
 
 	num = 0;
-	index = subdex;
-	while (ft_isdigit_internal(format[index]) == 1)
+	subdex = *aindex;
+	while (ft_isdigit_internal(format[subdex]) == 1)
 	{
-		num += (format[index] - '0');
-		if (ft_isdigit_internal(format[index + 1]) == 1)
+		num += (format[subdex] - '0');
+		if (ft_isdigit_internal(format[subdex + 1]) == 1)
 			num *= 10;
-		index++;
+		subdex++;
 	}
 	flags->precision = num;
-	return (index);
+	*aindex = subdex;
 }
 
 static void		precision_arg_extract(va_list args,\
@@ -46,11 +46,7 @@ static void		precision_arg_extract(va_list args,\
 	int						num;
 
 	num = va_arg(args, int);
-	if (num < 0)
-	{
-		flags->precision = ((-num) & UINT_MAX);
-	}
-	else
+	if (num > 0)
 	{
 		flags->precision = num;
 	}
@@ -72,7 +68,7 @@ void			ft_flag_precision(const char *const restrict format,\
 	}
 	else if (format[subdex] >= '0' && format[subdex] <= '9')
 	{
-		subdex = precision_num_parse(format, subdex, flags);
+		precision_num_parse(format, &subdex, flags);
 	}
 	else
 		flags->precision = 0;

@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/10/01 10:52:39 by jesmith        #+#    #+#                */
-/*   Updated: 2019/10/03 17:48:13 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/10/04 12:41:09 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,11 @@ static int	ft_moveback(char *buffer, size_t nb_len)
 	while (buffer[index] != '.')
 		index++;
 	one_dex = index + 1;
-	ft_memmove(buffer + index, buffer + one_dex, nb_len - index);
-	ft_memmove(buffer + 3, buffer + 2, nb_len);
+	if (nb_len > (size_t)index)
+		ft_memmove(buffer + index, buffer + one_dex, nb_len - index);
+	else
+		ft_memmove(buffer + index, buffer + one_dex, nb_len);
+	ft_memmove(buffer + 3, buffer + 2, nb_len - 3);
 	index -= 2;
 	return (index);
 }
@@ -53,8 +56,11 @@ static int	ft_moveforward(char *buffer, size_t nb_len)
 	while (buffer[index] == '0' || buffer[index] == '.')
 		index++;
 	one_dex = index + 1;
-	ft_memmove(buffer + one_dex, buffer + 3, nb_len);
-	ft_memmove(buffer + 1, buffer + index, nb_len);
+	if (nb_len > (size_t)index)
+		ft_memmove(buffer + one_dex, buffer + 3, nb_len - index);
+	else
+		ft_memmove(buffer + one_dex, buffer + 3, nb_len);
+	ft_memmove(buffer + 1, buffer + index, nb_len - 1);
 	index -= 2;
 	index *= -1;
 	return (index);

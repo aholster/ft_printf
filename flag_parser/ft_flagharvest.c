@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/04/18 17:22:09 by aholster       #+#    #+#                */
-/*   Updated: 2019/10/03 22:37:32 by aholster      ########   odam.nl         */
+/*   Updated: 2019/10/04 12:43:11 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,12 +77,12 @@ void					ft_flagharvest(const char *restrict format,\
 	{
 		submodule = lookup_tbl(format[subdex]);
 		if (submodule != NULL)
-		{
 			submodule(format, &subdex, clipb);
-		}
 		else
 		{
-			ft_turn_on_flag(format[subdex], flags);
+			if (format[subdex] != '0' \
+			|| (format[subdex] == '0' && flg_verif('.', flags) == -1))
+				ft_turn_on_flag(format[subdex], flags);
 			subdex++;
 		}
 	}

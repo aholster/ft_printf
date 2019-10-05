@@ -6,7 +6,7 @@
 #    By: jesmith <jesmith@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2019/02/16 15:46:43 by aholster       #+#    #+#                 #
-#    Updated: 2019/10/04 22:37:11 by aholster      ########   odam.nl          #
+#    Updated: 2019/10/05 12:47:42 by aholster      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,7 +53,7 @@ OBJ :=	$(FILEC:%.c=%.o)
 
 HEAD := ./ft_printf.h ./incl/ft_internals.h ./incl/ft_writer.h\
 ./incl/ft_flag_parser.h ./incl/ft_formatters.h ./incl/ft_utilities.h\
-./float_tech/float_tech.h
+./incl/ft_flt_support.h ./float_tech/float_tech.h
 
 NAME := libftprintf.a
 

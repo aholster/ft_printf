@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/05/31 12:06:16 by jesmith        #+#    #+#                */
-/*   Updated: 2019/10/04 22:32:14 by aholster      ########   odam.nl         */
+/*   Updated: 2019/10/05 13:26:27 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,24 +74,23 @@ static int				ft_decimal_prec(const char *const restrict buffer,\
 	int						minus;
 	int						holder;
 	uint					tru_len;
-	t_flag *const restrict	flags = clipb->flags;
 
-	tru_len = flags->precision;
+	tru_len = clipb->flags->precision;
 	if (is_neg < 0)
 		tru_len++;
 	minus = flg_verif('-', clipb->flags);
-	if (minus == -1 && flags->padding > tru_len)
+	if (minus == -1 && clipb->flags->padding > tru_len)
 		if (ft_space_padder(nb_len, clipb) == -1)
 			return (-1);
 	holder = ft_preprint(is_neg, clipb);
 	if (holder == -1)
 		return (-1);
-	if (flags->precision > nb_len)
+	if (clipb->flags->precision > nb_len)
 		if (ft_zero_padder(nb_len, clipb) == -1)
 			return (-1);
 	if (clipb->self(buffer, (size_t)nb_len, clipb) == -1)
 		return (-1);
-	if (minus == 1 && flags->padding > nb_len)
+	if (minus == 1 && clipb->flags->padding > nb_len)
 		if (ft_space_padder(nb_len, clipb) == -1)
 			return (-1);
 	return (1);
@@ -129,11 +128,12 @@ int						ft_decimal(va_list args, t_writer *const restrict clipb)
 	is_precision = flg_verif('.', clipb->flags);
 	is_neg = ft_signconv(args, &nb, clipb->flags);
 	nb_len = ft_int_len(buffer, nb);
-	if (nb == 0 && is_precision == 1 && clipb->flags->padding == 0)
+	if (nb == 0 && is_precision == 1 &&\
+	clipb->flags->precision == 0 && clipb->flags->padding == 0)
 		return (1);
 	if (nb == 0 && is_precision == 1 && clipb->flags->precision < nb_len)
 		ft_strcpy((char*)buffer, " ");
-	if (clipb->flags->padding != 0 && (is_neg == -1 || \
+	if (clipb->flags->padding != 0 && (is_neg == -1 ||\
 	flg_verif('+', clipb->flags) == 1 || flg_verif(' ', clipb->flags) == 1))
 		clipb->flags->padding -= 1;
 	if (is_precision == 1)

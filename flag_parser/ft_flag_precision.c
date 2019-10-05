@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/10/03 21:32:49 by aholster       #+#    #+#                */
-/*   Updated: 2019/10/04 14:58:48 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/10/05 13:15:47 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,9 @@ static void		precision_arg_extract(va_list args,\
 	int						num;
 
 	num = va_arg(args, int);
-	if (num > 0)
+	if (num >= 0)
 	{
+		ft_turn_on_flag('.', flags);
 		flags->precision = num;
 	}
 }
@@ -60,7 +61,6 @@ void			ft_flag_precision(const char *const restrict format,\
 	size_t					subdex;
 
 	subdex = (*aindex) + 1;
-	ft_turn_on_flag('.', flags);
 	if (format[subdex] == '*')
 	{
 		precision_arg_extract(clipb->args, flags);
@@ -69,8 +69,12 @@ void			ft_flag_precision(const char *const restrict format,\
 	else if (format[subdex] >= '0' && format[subdex] <= '9')
 	{
 		precision_num_parse(format, &subdex, flags);
+		ft_turn_on_flag('.', flags);
 	}
 	else
+	{
 		flags->precision = 0;
+		ft_turn_on_flag('.', flags);
+	}
 	*aindex = subdex;
 }

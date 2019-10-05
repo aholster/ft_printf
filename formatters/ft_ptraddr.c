@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/05/25 13:19:52 by aholster       #+#    #+#                */
-/*   Updated: 2019/10/04 17:57:03 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/10/05 12:41:21 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,8 @@ int						ft_ptraddr(va_list args, t_writer *const restrict clipb)
 
 	holder = (unsigned long long)va_arg(args, void*);
 	num_len = unsigned_ll_toa(buffer, holder);
+	if (holder == 0 && flg_verif('.', flags) == 1 && flags->precision == 0)
+		num_len--;
 	if (flg_verif('.', flags) == 1)
 	{
 		if (flags->padding >= 2)

@@ -6,12 +6,12 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/25 11:19:27 by jesmith        #+#    #+#                */
-/*   Updated: 2019/10/04 17:50:10 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/10/07 11:46:36 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../../incl/ft_formatters.h"
-
+#include <stdio.h>
 static size_t		ft_expon_prefix(char *buffer, short expon)
 {
 	size_t index;
@@ -91,6 +91,8 @@ int					ft_capsci_print(char *buffer,\
 	size_t					offset;
 
 	offset = ft_offset(buffer, &nb_len, clipb);
+	if (offset == 1 && buffer[nb_len] == '.')
+		nb_len--;
 	len_extension = ft_nbrlen((long long)expon, 10) + nb_len + 2;
 	if (expon < 10 && expon >= 0)
 		len_extension++;

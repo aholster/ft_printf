@@ -6,12 +6,12 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/10/01 10:52:39 by jesmith        #+#    #+#                */
-/*   Updated: 2019/10/04 17:05:00 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/10/07 14:44:41 by jesmith       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../../incl/ft_formatters.h"
-
+#include <stdio.h>
 static int	ft_nonzero(char *buffer, const size_t nb_len)
 {
 	size_t len;
@@ -50,17 +50,18 @@ static int	ft_moveback(char *buffer, size_t nb_len)
 static int	ft_moveforward(char *buffer, size_t nb_len)
 {
 	int		index;
+	size_t	len;
 	size_t	one_dex;
 
 	index = 1;
 	while (buffer[index] == '0' || buffer[index] == '.')
 		index++;
 	one_dex = index + 1;
-	if (nb_len > (size_t)index)
-		ft_memmove(buffer + one_dex, buffer + 3, nb_len - index);
-	else
-		ft_memmove(buffer + one_dex, buffer + 3, nb_len);
-	ft_memmove(buffer + 1, buffer + index, nb_len - 1);
+	ft_memmove(buffer + 1, buffer + index, nb_len - index);
+	ft_memmove(buffer + 2, buffer + index, nb_len - 2);
+	len = ft_strlen((const char *)buffer);
+	len = nb_len - ((size_t)index - 2);
+	ft_memmove(buffer + len, "00000000000000000", nb_len - len);
 	index -= 2;
 	index *= -1;
 	return (index);
@@ -73,7 +74,7 @@ int			ft_expon_finder(char *buffer, size_t nb_len)
 
 	index = 0;
 	zero_len = ft_nonzero(buffer, nb_len);
-	if (buffer[2] == '.' && buffer[1] == '0' && zero_len == 1)
+	if (buffer[2] == '.' && buffer[1] == '0' && zero_len >= 1)
 		index = ft_moveforward(buffer, nb_len);
 	else if (buffer[2] != '.' && zero_len == 1)
 		index = ft_moveback(buffer, nb_len);

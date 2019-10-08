@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/04/24 21:38:26 by jesmith        #+#    #+#                */
-/*   Updated: 2019/10/04 16:47:11 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/10/08 21:48:38 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,16 +49,14 @@ int			ft_str(va_list args, t_writer *const restrict clipb)
 	str = va_arg(args, char*);
 	if (str == NULL)
 		str = "(null)";
-	len = ft_strlen(str);
 	if (flg_verif('l', flags) == 1)
 		return (-1);
 	if (flg_verif('.', flags) == 1)
 	{
-		if (len > flags->precision)
-			len = flags->precision;
-		else
-			flags->precision = len;
+		len = ft_strnlen(str, flags->precision);
 	}
+	else
+		len = ft_strlen(str);
 	if (ft_str_padding(str, len, clipb) == -1)
 		return (-1);
 	return (1);

@@ -6,12 +6,12 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/10/01 10:52:39 by jesmith        #+#    #+#                */
-/*   Updated: 2019/10/07 14:44:41 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/10/08 22:01:40 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../../incl/ft_formatters.h"
-#include <stdio.h>
+
 static int	ft_nonzero(char *buffer, const size_t nb_len)
 {
 	size_t len;

@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/10/04 17:41:23 by aholster       #+#    #+#                */
-/*   Updated: 2019/10/04 19:08:48 by aholster      ########   odam.nl         */
+/*   Updated: 2019/10/08 21:43:02 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ int					ft_memcmp(void const *s1, void const *s2, size_t n);
 
 char				*ft_strcpy(char *dst, const char *src);
 
+size_t				ft_strnlen(char const *s, size_t maxlen);
 size_t				ft_strlen(char const *s);
 int					ft_islowercase(int c);
 

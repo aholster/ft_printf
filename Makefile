@@ -6,7 +6,7 @@
 #    By: jesmith <jesmith@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2019/02/16 15:46:43 by aholster       #+#    #+#                 #
-#    Updated: 2019/10/05 12:47:42 by aholster      ########   odam.nl          #
+#    Updated: 2019/10/08 21:52:49 by aholster      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,7 @@ PARSE_SRC := flg_verif flgdbl_verif flagharvest\
 
 UTIL_DIR := ./utilities/
 UTIL_SRC := bzero memcpy memmove memset memdup memcmp\
- strcpy strlen nbrlen islowercase\
+ strcpy strlen strnlen nbrlen islowercase\
  del lstdel lstnew lstaddend lstmemtomem
 
 FLT_DIR := ./float_tech/
@@ -60,14 +60,14 @@ NAME := libftprintf.a
 NORM = norminette $(FILEC) $(HEAD) | grep -e "Error"  -e "Warning" -B 1
 
 GCCC = ${CC} -c
-CC = gcc -O2 -Wall -Werror -Wextra
+CC = gcc -Wall -Werror -Wextra
 AR = ar rcs
 
 all: $(NAME)
 
 test: $(OBJ)
 	@rm -f testf
-	@$(CC) -w -o testf $(OBJ) ft_main.c -L ./ -lftprintf
+	@$(CC) -w -g -o testf ft_main.c $(FILEC)
 
 assemble: $(OBJ)
 	@$(AR) $(NAME) $(OBJ)

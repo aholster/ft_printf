@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/19 14:43:08 by jesmith        #+#    #+#                */
-/*   Updated: 2019/10/05 19:41:42 by jesmith       ########   odam.nl         */
+/*   Updated: 2019/10/08 19:01:05 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,11 @@ static int	ft_bufmanager(const char *restrict mem,\
 		{
 			ft_memcpy(dest_mem + used_space, mem, free_space);
 			write((clipb->info.d)->fd, dest_mem, BUFFSIZE);
-			used_space = 0;
+			clipb->current = 0;
 			size -= free_space;
 			mem += free_space;
 			clipb->history += BUFFSIZE;
 		}
-		clipb->current = used_space;
 	}
 	return (0);
 }

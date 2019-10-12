@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/18 18:17:05 by aholster       #+#    #+#                */
-/*   Updated: 2019/10/08 22:00:39 by aholster      ########   odam.nl         */
+/*   Updated: 2019/10/12 13:39:34 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 **	to add new conversions, add them into the dispatcher array.
 */
 
-# define FLG_UNS	1024
+# define FLG_UNS	8
 
 typedef	struct	s_flag
 {

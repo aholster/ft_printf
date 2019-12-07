@@ -6,7 +6,7 @@
 #    By: jesmith <jesmith@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2019/02/16 15:46:43 by aholster       #+#    #+#                 #
-#    Updated: 2019/10/08 21:52:49 by aholster      ########   odam.nl          #
+#    Updated: 2019/12/07 04:21:11 by aholster      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -73,7 +73,7 @@ assemble: $(OBJ)
 	@$(AR) $(NAME) $(OBJ)
 	@ranlib $(NAME)
 
-$(NAME):
+$(NAME): $(OBJ)
 	@echo "\033[0;33mStarting assembly of $(NAME)…\033[0;00m"
 	@time make assemble -j
 	@echo "\033[0;32m$(NAME) successfully assembled!\033[0;00m\n"

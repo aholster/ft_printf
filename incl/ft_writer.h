@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/18 19:29:47 by aholster       #+#    #+#                */
-/*   Updated: 2019/12/07 03:59:47 by aholster      ########   odam.nl         */
+/*   Updated: 2019/12/07 04:29:26 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,8 @@ typedef struct		s_d_write
 
 typedef struct		s_as_write
 {
-	// char			buffer[BUFFSIZE];
 	char			*str_vect;
 	size_t			current_size;
-	// t_list			**alst;
 }					t_as_write;
 
 typedef struct		s_sn_write

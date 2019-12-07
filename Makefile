@@ -6,7 +6,7 @@
 #    By: jesmith <jesmith@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2019/02/16 15:46:43 by aholster       #+#    #+#                 #
-#    Updated: 2019/12/07 04:21:11 by aholster      ########   odam.nl          #
+#    Updated: 2019/12/07 04:31:07 by aholster      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -65,15 +65,15 @@ AR = ar rcs
 
 all: $(NAME)
 
-test: $(OBJ)
+test: $(OBJ) $(HEAD)
 	@rm -f testf
 	@$(CC) -w -g -o testf ft_main.c $(FILEC)
 
-assemble: $(OBJ)
+assemble: $(OBJ) $(HEAD)
 	@$(AR) $(NAME) $(OBJ)
 	@ranlib $(NAME)
 
-$(NAME): $(OBJ)
+$(NAME): $(OBJ) $(HEAD)
 	@echo "\033[0;33mStarting assembly of $(NAME)…\033[0;00m"
 	@time make assemble -j
 	@echo "\033[0;32m$(NAME) successfully assembled!\033[0;00m\n"

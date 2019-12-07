@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/13 15:19:40 by aholster       #+#    #+#                */
-/*   Updated: 2019/12/07 04:26:59 by aholster      ########   odam.nl         */
+/*   Updated: 2019/12/07 04:28:50 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ int			ft_vasprintf(char **ret, const char *restrict format, va_list args)
 	clipb.info.as = &info;
 	if (ft_vas_clipb_init(args, ft_lst_bufmanager, &clipb) == -1)
 	{
+		free(info.str_vect);
 		return (-1);
 	}
 	if (ft_format(format, &clipb) == -1)

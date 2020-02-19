@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/10/03 21:31:43 by aholster       #+#    #+#                */
-/*   Updated: 2019/10/04 12:02:13 by jesmith       ########   odam.nl         */
+/*   Updated: 2020/02/19 10:29:34 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,13 @@ static int	ft_isdigit_internal(const char c)
 	return (0);
 }
 
-void		ft_flag_num_parse(const char *const restrict format,\
-				size_t *const restrict aindex,\
-				t_writer *const restrict clipb)
+void		ft_flag_num_parse(const char *const format,\
+				size_t *const aindex,\
+				t_writer *const clipb)
 {
-	size_t					subdex;
-	unsigned int			num;
-	t_flag *const restrict	flags = clipb->flags;
+	size_t			subdex;
+	unsigned int	num;
+	t_flag *const	flags = clipb->flags;
 
 	subdex = *aindex;
 	num = 0;

@@ -6,14 +6,14 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/13 15:19:40 by aholster       #+#    #+#                */
-/*   Updated: 2019/12/07 04:28:50 by aholster      ########   odam.nl         */
+/*   Updated: 2020/02/19 09:41:38 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include "./incl/ft_internals.h"
 
-static int	fvect_upscale(t_writer *const restrict clipb)
+static int	fvect_upscale(t_writer *const clipb)
 {
 	char			*new_vect;
 	const size_t	new_size = clipb->info.as->current_size * 2;
@@ -34,8 +34,8 @@ static int	fvect_upscale(t_writer *const restrict clipb)
 	}
 }
 
-static int	ft_lst_bufmanager(const char *restrict mem, size_t size,\
-							t_writer *const restrict clipb)
+static int	ft_lst_bufmanager(const char *mem, size_t size,\
+							t_writer *const clipb)
 {
 	if (size + clipb->history + 1 > clipb->info.as->current_size)
 	{
@@ -52,7 +52,7 @@ static int	ft_lst_bufmanager(const char *restrict mem, size_t size,\
 
 static int	ft_vas_clipb_init(va_list args,\
 				t_wrt_ptr printer,\
-				t_writer *const restrict clipb)
+				t_writer *const clipb)
 {
 	t_as_write	*const info = clipb->info.as;
 
@@ -73,7 +73,7 @@ static int	ft_vas_clipb_init(va_list args,\
 	}
 }
 
-int			ft_vasprintf(char **ret, const char *restrict format, va_list args)
+int			ft_vasprintf(char **ret, const char *format, va_list args)
 {
 	t_writer	clipb;
 	t_as_write	info;

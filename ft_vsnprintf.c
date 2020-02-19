@@ -6,19 +6,19 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/13 15:19:36 by aholster       #+#    #+#                */
-/*   Updated: 2019/10/02 17:34:32 by aholster      ########   odam.nl         */
+/*   Updated: 2020/02/19 10:13:54 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include "./incl/ft_internals.h"
 
-static int	ft_write_to_str(const char *restrict mem, size_t size,\
-						t_writer *const restrict clipb)
+static int	ft_write_to_str(const char *mem, size_t size,\
+						t_writer *const clipb)
 {
-	t_sn_write const *const restrict	info = clipb->info.sn;
-	const size_t						capacity = info->capacity;
-	size_t								free_space;
+	t_sn_write const *const	info = clipb->info.sn;
+	const size_t			capacity = info->capacity;
+	size_t					free_space;
 
 	if (clipb->history < capacity)
 	{
@@ -41,7 +41,7 @@ static int	ft_write_to_str(const char *restrict mem, size_t size,\
 }
 
 static void	ft_vsn_clipb_init(va_list args, t_wrt_ptr printer,\
-								t_writer *const restrict clipb)
+								t_writer *const clipb)
 {
 	va_copy(clipb->args, args);
 	clipb->history = 0;
@@ -49,7 +49,7 @@ static void	ft_vsn_clipb_init(va_list args, t_wrt_ptr printer,\
 	clipb->self = printer;
 }
 
-int			ft_vsnprintf(char *str, size_t size, const char *restrict format,\
+int			ft_vsnprintf(char *str, size_t size, const char *format,\
 						va_list args)
 {
 	t_writer	clipb;

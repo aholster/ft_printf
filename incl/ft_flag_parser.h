@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/10/01 18:41:58 by aholster       #+#    #+#                */
-/*   Updated: 2019/10/08 21:57:25 by aholster      ########   odam.nl         */
+/*   Updated: 2020/02/19 09:52:14 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,23 +17,23 @@
 
 # define VALID_FLG "hjzl# *.-+L0123456789"
 
-typedef void	(*t_flag_handler)(const char *const restrict,\
-					size_t *const restrict,\
-					t_writer *const restrict);
+typedef void	(*t_flag_handler)(const char *const,\
+					size_t *const,\
+					t_writer *const);
 
-void			ft_turn_on_flag(const char c, t_flag *const restrict flags);
+void			ft_turn_on_flag(const char c, t_flag *const flags);
 
-void			ft_flag_flip(const char *const restrict format,\
-					size_t *const restrict aindex,\
-					t_writer *const restrict clipb);
-void			ft_flag_num_parse(const char *const restrict format,\
-					size_t *const restrict aindex,\
-					t_writer *const restrict clipb);
-void			ft_flag_arg_extract(const char *const restrict format,\
-					size_t *const restrict aindex,\
-					t_writer *const restrict clipb);
-void			ft_flag_precision(const char *const restrict format,\
-					size_t *const restrict aindex,\
-					t_writer *const restrict clipb);
+void			ft_flag_flip(const char *const format,\
+					size_t *const aindex,\
+					t_writer *const clipb);
+void			ft_flag_num_parse(const char *const format,\
+					size_t *const aindex,\
+					t_writer *const clipb);
+void			ft_flag_arg_extract(const char *const format,\
+					size_t *const aindex,\
+					t_writer *const clipb);
+void			ft_flag_precision(const char *const format,\
+					size_t *const aindex,\
+					t_writer *const clipb);
 
 #endif

@@ -6,16 +6,16 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/04/17 19:57:30 by aholster       #+#    #+#                */
-/*   Updated: 2019/10/04 18:45:45 by aholster      ########   odam.nl         */
+/*   Updated: 2020/02/19 09:41:38 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./incl/ft_internals.h"
 
-static int		ft_judex(const char *restrict format,\
-					size_t *const restrict index,\
+static int		ft_judex(const char *format,\
+					size_t *const index,\
 					const size_t len,\
-					t_writer *const restrict clipb)
+					t_writer *const clipb)
 {
 	size_t		judex;
 
@@ -41,8 +41,8 @@ static int		ft_charskip(const char *c)
 **	possibly add W_char or utf8 support for charskip
 */
 
-int				ft_format(const char *restrict format,\
-						t_writer *const restrict clipb)
+int				ft_format(const char *format,\
+						t_writer *const clipb)
 {
 	size_t				index;
 	size_t				len;

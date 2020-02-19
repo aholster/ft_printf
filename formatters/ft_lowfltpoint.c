@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/09 13:45:41 by jesmith        #+#    #+#                */
-/*   Updated: 2019/10/04 17:54:26 by jesmith       ########   odam.nl         */
+/*   Updated: 2020/02/19 10:27:13 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ static int		ft_float_padding(char *buffer,\
 				size_t nb_len,\
 				const int is_neg)
 {
-	size_t					offset;
-	t_flag *const restrict	flags = clipb->flags;
+	size_t			offset;
+	t_flag *const	flags = clipb->flags;
 
 	offset = ft_x_offset(&buffer, &nb_len, flags, is_neg);
 	if (flg_verif('-', flags) == -1 && \
@@ -70,7 +70,7 @@ static int		ft_float_padding(char *buffer,\
 	return (1);
 }
 
-int				ft_lowfltpoint(va_list args, t_writer *const restrict clipb)
+int				ft_lowfltpoint(va_list args, t_writer *const clipb)
 {
 	char				*buffer;
 	long double			nb;

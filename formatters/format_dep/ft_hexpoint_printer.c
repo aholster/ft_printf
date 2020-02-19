@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/10/03 17:57:29 by jesmith        #+#    #+#                */
-/*   Updated: 2019/10/04 17:18:00 by jesmith       ########   odam.nl         */
+/*   Updated: 2020/02/19 10:29:15 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,14 @@ static int		ft_caphexponbuff(char *buffer, short expon)
 	return (backup_index + 1);
 }
 
-int				ft_caphexpoint_print(t_writer *const restrict clipb,\
+int				ft_caphexpoint_print(t_writer *const clipb,\
 						short expon,\
 						unsigned short nb_len,
 						unsigned short str_len)
 {
-	t_flag *const restrict	flags = clipb->flags;
-	unsigned short			expon_len;
-	char					new_buf[8];
+	t_flag *const	flags = clipb->flags;
+	unsigned short	expon_len;
+	char			new_buf[8];
 
 	if (flg_verif('.', flags) == 1 && flags->precision != (str_len - 2))
 		if (pad_zero(flags->precision, clipb) == -1)
@@ -89,14 +89,14 @@ static int		ft_lowhexponbuff(char *buffer, short expon)
 	return (backup_index + 1);
 }
 
-int				ft_lowhexpoint_print(t_writer *const restrict clipb,\
+int				ft_lowhexpoint_print(t_writer *const clipb,\
 						const short expon,\
 						unsigned short nb_len,
 						unsigned short str_len)
 {
-	t_flag *const restrict	flags = clipb->flags;
-	unsigned short			expon_len;
-	char					new_buf[8];
+	t_flag *const	flags = clipb->flags;
+	unsigned short	expon_len;
+	char			new_buf[8];
 
 	if (flg_verif('.', flags) == 1 && \
 	flags->precision != (str_len - 2))

@@ -6,21 +6,21 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/03 15:08:26 by jesmith        #+#    #+#                */
-/*   Updated: 2019/10/04 17:57:14 by jesmith       ########   odam.nl         */
+/*   Updated: 2020/02/19 10:17:48 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../incl/ft_formatters.h"
 
-static int				ft_octal_noprec(const char *const restrict buffer,\
+static int				ft_octal_noprec(const char *const buffer,\
 							const unsigned short nb_len,\
-							t_writer *const restrict clipb)
+							t_writer *const clipb)
 {
-	t_flag *const restrict	flags = clipb->flags;
-	const int				minus = flg_verif('-', flags);
+	t_flag *const	flags = clipb->flags;
+	const int		minus = flg_verif('-', flags);
 
 	if (minus == -1 && flg_verif('0', flags) == -1 \
-	&& flags->padding > 0)
+		&& flags->padding > 0)
 		if (ft_space_padder(nb_len, clipb) == -1)
 			return (-1);
 	if (flg_verif('0', flags) == 1 && minus == -1)
@@ -39,12 +39,12 @@ static int				ft_octal_noprec(const char *const restrict buffer,\
 	return (1);
 }
 
-static int				ft_octal_prec(const char *const restrict buffer,\
+static int				ft_octal_prec(const char *const buffer,\
 							const unsigned short nb_len,\
-							t_writer *const restrict clipb)
+							t_writer *const clipb)
 {
-	t_flag *const restrict	flags = clipb->flags;
-	const int				minus = flg_verif('-', flags);
+	t_flag *const	flags = clipb->flags;
+	const int		minus = flg_verif('-', flags);
 
 	if (minus == -1 && flags->padding > nb_len)
 		if (ft_space_padder(nb_len, clipb) == -1)
@@ -60,16 +60,15 @@ static int				ft_octal_prec(const char *const restrict buffer,\
 	return (1);
 }
 
-static unsigned short	ft_int_len(char *const restrict buffer,\
+static unsigned short	ft_int_len(char *const buffer,\
 							const unsigned long long nb,\
-							t_writer *const restrict clipb)
+							t_writer *const clipb)
 {
 	unsigned long long	temp_num;
 	unsigned short		num_len;
 	unsigned short		cur_len;
-	char				*base;
+	char const			base[] = "01234567";
 
-	base = "01234567";
 	temp_num = nb;
 	num_len = ft_ull_len(nb, 8);
 	cur_len = num_len - 1;
@@ -89,7 +88,7 @@ static unsigned short	ft_int_len(char *const restrict buffer,\
 	return (num_len);
 }
 
-int						ft_octal(va_list args, t_writer *const restrict clipb)
+int						ft_octal(va_list args, t_writer *const clipb)
 {
 	char				buffer[20];
 	unsigned long long	nb;

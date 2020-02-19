@@ -6,23 +6,21 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/05 11:15:26 by jesmith        #+#    #+#                */
-/*   Updated: 2019/10/04 17:52:29 by jesmith       ########   odam.nl         */
+/*   Updated: 2020/02/19 10:30:58 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../incl/ft_formatters.h"
 
 static int		ft_lowsci_buffer(char *buffer,\
-					t_writer *const restrict clipb,\
+					t_writer *const clipb,\
 					size_t nb_len,\
 					const short expon)
 {
-	t_flag *const restrict	flags = clipb->flags;
-	int						ret_val;
-	int						temp;
-	size_t					round_len;
+	t_flag *const	flags = clipb->flags;
+	int				ret_val;
+	size_t			round_len;
 
-	temp = expon;
 	nb_len = flags->precision + 3;
 	if (buffer[nb_len] == '.')
 		nb_len--;

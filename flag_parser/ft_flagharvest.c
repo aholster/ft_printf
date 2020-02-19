@@ -6,13 +6,13 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/04/18 17:22:09 by aholster       #+#    #+#                */
-/*   Updated: 2019/10/04 17:50:11 by jesmith       ########   odam.nl         */
+/*   Updated: 2020/02/19 10:29:47 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../incl/ft_flag_parser.h"
 
-static void				init_flags(char *const restrict f_stock)
+static void				init_flags(char *const f_stock)
 {
 	ushort	index;
 	short	flip;
@@ -27,7 +27,7 @@ static void				init_flags(char *const restrict f_stock)
 }
 
 static int				valiflag(const char c,\
-							const char *const restrict f_stock)
+							const char *const f_stock)
 {
 	const unsigned short	flip = c / FLG_UNS;
 
@@ -60,14 +60,14 @@ static t_flag_handler	lookup_tbl(const unsigned char index)
 	return (flag_table[index]);
 }
 
-void					ft_flagharvest(const char *restrict format,\
+void					ft_flagharvest(const char *format,\
 							size_t *const aindex,\
-							t_writer *const restrict clipb)
+							t_writer *const clipb)
 {
-	size_t					subdex;
-	static char				flg_stock[16] = {'a'};
-	t_flag *const restrict	flags = clipb->flags;
-	t_flag_handler			submodule;
+	size_t			subdex;
+	static char		flg_stock[16] = {'a'};
+	t_flag *const	flags = clipb->flags;
+	t_flag_handler	submodule;
 
 	if (flg_stock[0] == 'a')
 		init_flags(flg_stock);

@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/18 18:17:05 by aholster       #+#    #+#                */
-/*   Updated: 2019/10/12 13:39:34 by aholster      ########   odam.nl         */
+/*   Updated: 2020/02/19 09:52:14 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,35 +34,35 @@ typedef	struct	s_flag
 	uint		padding;
 }				t_flag;
 
-typedef	int		(*t_formatter)(va_list args, struct s_writer *const restrict);
+typedef	int		(*t_formatter)(va_list args, struct s_writer *const);
 
 /*
 ** history should be unsigned long long bc of %lln
 */
 
-int				ft_format(const char *restrict format,\
-					t_writer *const restrict clipb);
+int				ft_format(const char *format,\
+					t_writer *const clipb);
 
-int				ft_dispatcher(const char *restrict specifier,\
-					t_writer *const restrict clipb);
+int				ft_dispatcher(const char *specifier,\
+					t_writer *const clipb);
 
-void			ft_flagharvest(const char *restrict format,\
-					size_t *const aindex, t_writer *const restrict clipb);
+void			ft_flagharvest(const char *format,\
+					size_t *const aindex, t_writer *const clipb);
 
 int				flg_verif(const unsigned char c,\
-					const t_flag *const restrict flags);
+					const t_flag *const flags);
 
 int				flgdbl_verif(const unsigned char c,\
-					const t_flag *const restrict flags);
+					const t_flag *const flags);
 
 int				ft_float_padder(unsigned short len,\
 					const unsigned short dec,\
-					t_writer *const restrict clipb);
+					t_writer *const clipb);
 int				ft_zero_padder(const unsigned short len,\
-					t_writer *const restrict clipb);
+					t_writer *const clipb);
 int				ft_space_padder(const unsigned short len,\
-					t_writer *const restrict clipb);
-int				pad_spaces(size_t amount, t_writer *const restrict clipb);
-int				pad_zero(size_t amount, t_writer *const restrict clipb);
+					t_writer *const clipb);
+int				pad_spaces(size_t amount, t_writer *const clipb);
+int				pad_zero(size_t amount, t_writer *const clipb);
 
 #endif

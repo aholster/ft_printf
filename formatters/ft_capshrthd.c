@@ -6,20 +6,20 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/27 11:34:23 by jesmith        #+#    #+#                */
-/*   Updated: 2019/10/04 18:00:32 by jesmith       ########   odam.nl         */
+/*   Updated: 2020/02/19 10:23:47 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../incl/ft_formatters.h"
 
-static int			ft_print_prep(char *restrict buffer,\
-						t_writer *const restrict clipb,\
+static int			ft_print_prep(char *buffer,\
+						t_writer *const clipb,\
 						const int is_neg,\
 						size_t new_len)
 {
-	t_flag *const restrict	flags = clipb->flags;
-	size_t					offset;
-	int						ret_val;
+	t_flag *const	flags = clipb->flags;
+	size_t			offset;
+	int				ret_val;
 
 	offset = ft_shrthd_offset(&buffer, clipb, is_neg);
 	if (new_len > flags->precision)
@@ -39,9 +39,9 @@ static int			ft_print_prep(char *restrict buffer,\
 	return (ret_val);
 }
 
-static size_t		ft_shorthand_prec(char *const restrict buffer,\
+static size_t		ft_shorthand_prec(char *const buffer,\
 						const size_t nb_len,\
-						t_writer *const restrict clipb)
+						t_writer *const clipb)
 {
 	size_t			index;
 	size_t			holder;
@@ -69,8 +69,8 @@ static size_t		ft_shorthand_prec(char *const restrict buffer,\
 	return (index);
 }
 
-static int			ft_shrthd_capsci(char *const restrict buffer,\
-						t_writer *const restrict clipb,\
+static int			ft_shrthd_capsci(char *const buffer,\
+						t_writer *const clipb,\
 						size_t nb_len)
 {
 	int					expon;
@@ -91,8 +91,8 @@ static int			ft_shrthd_capsci(char *const restrict buffer,\
 	return (ret_val);
 }
 
-static int			ft_which_one(char *restrict buffer,\
-						t_writer *const restrict clipb,\
+static int			ft_which_one(char *buffer,\
+						t_writer *const clipb,\
 						size_t nb_len)
 {
 	size_t	sci_note;
@@ -121,7 +121,7 @@ static int			ft_which_one(char *restrict buffer,\
 	return (ret_val);
 }
 
-int					ft_capshrthd(va_list args, t_writer *const restrict clipb)
+int					ft_capshrthd(va_list args, t_writer *const clipb)
 {
 	char				*buffer;
 	long double			nb;

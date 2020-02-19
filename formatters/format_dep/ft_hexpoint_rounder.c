@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/19 16:00:34 by jesmith        #+#    #+#                */
-/*   Updated: 2019/10/04 17:21:40 by jesmith       ########   odam.nl         */
+/*   Updated: 2020/02/19 09:41:38 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void		ft_add_one(char *buffer, size_t index)
 
 static size_t	ft_rounding_handler(char *buffer,\
 					size_t index,\
-					const char *restrict const base_ref)
+					const char *const base_ref)
 {
 	char			holder;
 	size_t			judex;
@@ -47,7 +47,7 @@ static size_t	ft_rounding_handler(char *buffer,\
 
 static void		ft_dlbmax_case(char *buffer, \
 					short *expon,\
-					const t_flag *const restrict flags)
+					const t_flag *const flags)
 {
 	size_t index;
 
@@ -64,7 +64,7 @@ static void		ft_dlbmax_case(char *buffer, \
 
 static void		ft_rounding_up(char *buffer,\
 					size_t index,\
-					const char *const restrict base_ref)
+					const char *const base_ref)
 {
 	char	holder;
 	size_t	judex;
@@ -93,7 +93,7 @@ static void		ft_rounding_up(char *buffer,\
 }
 
 void			ft_hexpoint_rounder(char *buffer,\
-					const t_flag *const restrict flags,\
+					const t_flag *const flags,\
 					short *expon)
 {
 	unsigned int			precision;

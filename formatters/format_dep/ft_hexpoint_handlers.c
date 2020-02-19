@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/06 10:44:11 by jesmith        #+#    #+#                */
-/*   Updated: 2019/10/04 17:41:27 by jesmith       ########   odam.nl         */
+/*   Updated: 2020/02/19 09:52:14 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ unsigned short		ft_reversed(unsigned long long mantissa)
 	return (len);
 }
 
-int					ft_prefix(int is_neg, t_writer *const restrict clipb)
+int					ft_prefix(int is_neg, t_writer *const clipb)
 {
-	t_flag *const restrict	flags = clipb->flags;
+	t_flag *const	flags = clipb->flags;
 
 	if (is_neg >= 0)
 	{

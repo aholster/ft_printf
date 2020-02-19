@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/11 19:04:14 by aholster       #+#    #+#                */
-/*   Updated: 2019/10/03 19:52:56 by aholster      ########   odam.nl         */
+/*   Updated: 2020/02/19 10:21:49 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	ft_double_flags(va_list args,\
 				const size_t history,\
-				const t_flag *const restrict flags)
+				const t_flag *const flags)
 {
 	t_nptrs ptr;
 
@@ -35,7 +35,7 @@ static int	ft_double_flags(va_list args,\
 
 static int	ft_single_flags(va_list args,\
 				const size_t history,\
-				const t_flag *const restrict flags)
+				const t_flag *const flags)
 {
 	t_nptrs ptr;
 
@@ -54,11 +54,11 @@ static int	ft_single_flags(va_list args,\
 	return (0);
 }
 
-int			ft_n(va_list args, t_writer *const restrict clipb)
+int			ft_n(va_list args, t_writer *const clipb)
 {
-	const size_t					history = clipb->history + clipb->current;
-	const t_flag *const restrict	flags = clipb->flags;
-	t_nptrs							ptr;
+	const size_t		history = clipb->history + clipb->current;
+	const t_flag *const	flags = clipb->flags;
+	t_nptrs				ptr;
 
 	if (ft_single_flags(args, history, flags) == 1)
 		return (1);

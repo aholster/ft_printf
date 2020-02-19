@@ -6,20 +6,20 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/21 12:57:35 by jesmith        #+#    #+#                */
-/*   Updated: 2019/10/04 18:59:50 by aholster      ########   odam.nl         */
+/*   Updated: 2020/02/19 10:23:37 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../incl/ft_formatters.h"
 
-static int			ft_print_prep(char *restrict buffer,\
-						t_writer *const restrict clipb,\
+static int			ft_print_prep(char *buffer,\
+						t_writer *const clipb,\
 						const int is_neg,\
 						size_t new_len)
 {
-	t_flag *const restrict	flags = clipb->flags;
-	size_t					offset;
-	int						ret_val;
+	t_flag *const	flags = clipb->flags;
+	size_t			offset;
+	int				ret_val;
 
 	offset = ft_shrthd_offset(&buffer, clipb, is_neg);
 	if (new_len > flags->precision)
@@ -41,7 +41,7 @@ static int			ft_print_prep(char *restrict buffer,\
 
 static size_t		ft_shorthand_prec(char *buffer,\
 						size_t nb_len,\
-						t_writer *const restrict clipb)
+						t_writer *const clipb)
 {
 	size_t			index;
 	size_t			holder;
@@ -70,7 +70,7 @@ static size_t		ft_shorthand_prec(char *buffer,\
 }
 
 static int			ft_shrthd_lowsci(char *buffer, \
-						t_writer *const restrict clipb,\
+						t_writer *const clipb,\
 						size_t nb_len)
 {
 	int					expon;
@@ -92,7 +92,7 @@ static int			ft_shrthd_lowsci(char *buffer, \
 }
 
 static int			ft_which_one(char *buffer,\
-						t_writer *restrict clipb,\
+						t_writer *clipb,\
 						size_t nb_len)
 {
 	size_t	sci_note;
@@ -121,7 +121,7 @@ static int			ft_which_one(char *buffer,\
 	return (ret_val);
 }
 
-int					ft_lowshrthd(va_list args, t_writer *const restrict clipb)
+int					ft_lowshrthd(va_list args, t_writer *const clipb)
 {
 	char				*buffer;
 	long double			nb;

@@ -6,14 +6,14 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/09 13:45:51 by jesmith        #+#    #+#                */
-/*   Updated: 2019/10/04 17:59:00 by jesmith       ########   odam.nl         */
+/*   Updated: 2020/02/19 10:27:31 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../incl/ft_formatters.h"
 
-static int		ft_offset_handler(char *restrict *const restrict buffer,\
-					t_writer *const restrict clipb,\
+static int		ft_offset_handler(char **const buffer,\
+					t_writer *const clipb,\
 					const size_t offset)
 {
 	if (offset == 0)
@@ -25,8 +25,8 @@ static int		ft_offset_handler(char *restrict *const restrict buffer,\
 	return (1);
 }
 
-static int		ft_float_print(const char *const restrict buffer,\
-					t_writer *const restrict clipb,\
+static int		ft_float_print(const char *const buffer,\
+					t_writer *const clipb,\
 					size_t nb_len,\
 					const size_t offset)
 {
@@ -42,13 +42,13 @@ static int		ft_float_print(const char *const restrict buffer,\
 	return (1);
 }
 
-static int		ft_float_padding(char *restrict buffer,\
-					t_writer *const restrict clipb,\
+static int		ft_float_padding(char *buffer,\
+					t_writer *const clipb,\
 					size_t nb_len,\
 					const int is_neg)
 {
-	t_flag *const restrict	flags = clipb->flags;
-	size_t					offset;
+	t_flag *const	flags = clipb->flags;
+	size_t			offset;
 
 	offset = ft_x_offset(&buffer, &nb_len, flags, is_neg);
 	if (flg_verif('-', flags) == -1 && \
@@ -70,9 +70,9 @@ static int		ft_float_padding(char *restrict buffer,\
 	return (1);
 }
 
-static int		ft_float_prep(char *const restrict buffer,\
+static int		ft_float_prep(char *const buffer,\
 					size_t nb_len,\
-					t_writer *const restrict clipb,\
+					t_writer *const clipb,\
 					const int is_neg)
 {
 	int ret_hold;
@@ -85,7 +85,7 @@ static int		ft_float_prep(char *const restrict buffer,\
 	return (ret_hold);
 }
 
-int				ft_capfltpoint(va_list args, t_writer *const restrict clipb)
+int				ft_capfltpoint(va_list args, t_writer *const clipb)
 {
 	char			*buffer;
 	long double		nb;

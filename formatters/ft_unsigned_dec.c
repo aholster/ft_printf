@@ -6,19 +6,19 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/05/30 19:12:27 by aholster       #+#    #+#                */
-/*   Updated: 2019/10/04 17:57:45 by jesmith       ########   odam.nl         */
+/*   Updated: 2020/02/19 10:22:31 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../incl/ft_formatters.h"
 
 static int				ft_unsigned_dec_noprec(\
-							const char *const restrict buffer,\
+							const char *const buffer,\
 							const unsigned short nb_len,\
-							t_writer *const restrict clipb)
+							t_writer *const clipb)
 {
-	t_flag *const restrict	flags = clipb->flags;
-	const int				minus = flg_verif('-', flags);
+	t_flag *const	flags = clipb->flags;
+	const int		minus = flg_verif('-', flags);
 
 	if (minus == -1 && flg_verif('0', flags) == -1)
 		if (ft_space_padder(nb_len, clipb) == -1)
@@ -40,12 +40,12 @@ static int				ft_unsigned_dec_noprec(\
 }
 
 static int				ft_unsigned_dec_prec(\
-							const char *const restrict buffer,\
+							const char *const buffer,\
 							const unsigned short nb_len,\
-							t_writer *const restrict clipb)
+							t_writer *const clipb)
 {
-	t_flag *const restrict	flags = clipb->flags;
-	const int				minus = flg_verif('-', flags);
+	t_flag *const	flags = clipb->flags;
+	const int		minus = flg_verif('-', flags);
 
 	if (minus == -1 && flags->padding > nb_len)
 		if (ft_space_padder(nb_len, clipb) == -1)
@@ -61,13 +61,13 @@ static int				ft_unsigned_dec_prec(\
 	return (1);
 }
 
-static unsigned short	ft_int_len(char *const restrict buffer,\
+static unsigned short	ft_int_len(char *const buffer,\
 							const unsigned long long nb)
 {
-	unsigned long long			temp_num;
-	unsigned short				num_len;
-	unsigned short				cur_len;
-	const char *const restrict	base = "0123456789";
+	unsigned long long	temp_num;
+	unsigned short		num_len;
+	unsigned short		cur_len;
+	const char			base[] = "0123456789";
 
 	temp_num = nb;
 	num_len = ft_ull_len(nb, 10);
@@ -83,13 +83,13 @@ static unsigned short	ft_int_len(char *const restrict buffer,\
 }
 
 int						ft_unsigned_dec(va_list args,\
-							t_writer *const restrict clipb)
+							t_writer *const clipb)
 {
-	char					buffer[20];
-	unsigned long long		nb;
-	unsigned short			nb_len;
-	const int				precision = flg_verif('.', clipb->flags);
-	t_flag *const restrict	flags = clipb->flags;
+	char				buffer[20];
+	unsigned long long	nb;
+	unsigned short		nb_len;
+	const int			precision = flg_verif('.', clipb->flags);
+	t_flag *const		flags = clipb->flags;
 
 	ft_unsignconv(args, &nb, clipb->flags);
 	nb_len = ft_int_len(buffer, nb);

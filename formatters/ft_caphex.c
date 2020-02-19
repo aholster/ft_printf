@@ -6,19 +6,19 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/03 18:20:19 by jesmith        #+#    #+#                */
-/*   Updated: 2019/10/04 17:59:11 by jesmith       ########   odam.nl         */
+/*   Updated: 2020/02/19 10:20:51 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../incl/ft_formatters.h"
 
-static int				ft_caphex_noprec(const char *const restrict buffer,\
+static int				ft_caphex_noprec(const char *const buffer,\
 							const unsigned long long nb,\
 							const unsigned short nb_len,\
-							t_writer *const restrict clipb)
+							t_writer *const clipb)
 {
-	t_flag *const restrict	flags = clipb->flags;
-	const int				minus = flg_verif('-', flags);
+	t_flag *const	flags = clipb->flags;
+	const int		minus = flg_verif('-', flags);
 
 	if (minus == -1 && flg_verif('0', flags) == -1)
 		if (ft_space_padder(nb_len, clipb) == -1)
@@ -37,13 +37,13 @@ static int				ft_caphex_noprec(const char *const restrict buffer,\
 	return (1);
 }
 
-static int				ft_caphex_prec(const char *const restrict buffer,\
+static int				ft_caphex_prec(const char *const buffer,\
 							const unsigned long long nb,\
 							const unsigned short nb_len,\
-							t_writer *const restrict clipb)
+							t_writer *const clipb)
 {
-	t_flag *const restrict	flags = clipb->flags;
-	const int				minus = flg_verif('-', clipb->flags);
+	t_flag *const	flags = clipb->flags;
+	const int		minus = flg_verif('-', clipb->flags);
 
 	if (minus == -1 && flags->padding > nb_len)
 		if (ft_space_padder(nb_len, clipb) == -1)
@@ -62,13 +62,13 @@ static int				ft_caphex_prec(const char *const restrict buffer,\
 	return (1);
 }
 
-static unsigned short	ull_to_hex(char *const restrict buffer,\
+static unsigned short	ull_to_hex(char *const buffer,\
 							unsigned long long nb)
 {
-	unsigned short				index;
-	unsigned short				len;
-	const char *const restrict	base = "0123456789ABCDEF";
-	unsigned long long			tempnum;
+	unsigned short		index;
+	unsigned short		len;
+	unsigned long long	tempnum;
+	const char			base[] = "0123456789ABCDEF";
 
 	if (nb == 0)
 	{
@@ -92,13 +92,13 @@ static unsigned short	ull_to_hex(char *const restrict buffer,\
 	return (len);
 }
 
-int						ft_caphex(va_list args, t_writer *const restrict clipb)
+int						ft_caphex(va_list args, t_writer *const clipb)
 {
-	char					buffer[20];
-	unsigned long long		nb;
-	unsigned short			nb_len;
-	int						precision;
-	t_flag *const restrict	flags = clipb->flags;
+	char				buffer[20];
+	unsigned long long	nb;
+	unsigned short		nb_len;
+	int					precision;
+	t_flag *const		flags = clipb->flags;
 
 	precision = flg_verif('.', flags);
 	ft_unsignconv(args, &nb, flags);

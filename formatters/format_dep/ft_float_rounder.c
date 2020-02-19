@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/13 10:14:39 by jesmith        #+#    #+#                */
-/*   Updated: 2019/10/04 17:16:22 by jesmith       ########   odam.nl         */
+/*   Updated: 2020/02/19 09:41:38 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static void			ft_rounder_exception(char *buffer,\
 
 static void			ft_round_even(char *buffer,\
 						size_t len,\
-						const t_flag *const restrict flags,\
+						const t_flag *const flags,\
 						unsigned int rounding_num)
 {
 	size_t len_hold;
@@ -75,7 +75,7 @@ static void			ft_round_even(char *buffer,\
 }
 
 void				ft_float_rounder(char *buffer,\
-						const t_flag *const restrict flags,\
+						const t_flag *const flags,\
 						size_t *nb_len)
 {
 	unsigned int		rounding_num;
@@ -96,7 +96,7 @@ void				ft_float_rounder(char *buffer,\
 }
 
 void				ft_shrthd_rounder(char *buffer,\
-						const t_flag *const restrict flags,\
+						const t_flag *const flags,\
 						size_t *nb_len)
 {
 	unsigned int		rounding_num;

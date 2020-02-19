@@ -6,13 +6,13 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/30 11:23:32 by jesmith        #+#    #+#                */
-/*   Updated: 2019/10/03 19:47:41 by aholster      ########   odam.nl         */
+/*   Updated: 2020/02/19 10:27:46 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../../incl/ft_formatters.h"
 
-void	ft_captolow(char *const restrict buffer)
+void	ft_captolow(char *const buffer)
 {
 	if (ft_islowercase(buffer[0]) == 1)
 		buffer[0] = buffer[0] - 32;
@@ -22,14 +22,14 @@ void	ft_captolow(char *const restrict buffer)
 		buffer[2] = buffer[2] - 32;
 }
 
-int		ft_naninf_padding(const char *const restrict buffer,\
-			t_writer *const restrict clipb,\
+int		ft_naninf_padding(const char *const buffer,\
+			t_writer *const clipb,\
 			size_t nb_len,\
 			const int is_neg)
 {
-	const size_t					hold_len = nb_len;
-	const t_flag *const restrict	flags = clipb->flags;
-	const size_t					padd = flags->padding;
+	const size_t		hold_len = nb_len;
+	const t_flag *const	flags = clipb->flags;
+	const size_t		padd = flags->padding;
 
 	if (is_neg == -1)
 		nb_len++;

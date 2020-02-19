@@ -6,14 +6,14 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/05 17:03:23 by aholster       #+#    #+#                */
-/*   Updated: 2019/10/03 19:52:56 by aholster      ########   odam.nl         */
+/*   Updated: 2020/02/19 09:41:38 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../../incl/ft_formatters.h"
 #include <limits.h>
 
-static int	va_short(va_list args, unsigned long long *const restrict holder)
+static int	va_short(va_list args, unsigned long long *const holder)
 {
 	short	num;
 
@@ -31,8 +31,8 @@ static int	va_short(va_list args, unsigned long long *const restrict holder)
 }
 
 static int	va_char(va_list args,\
-				unsigned long long *const restrict holder,\
-				const t_flag *const restrict flags)
+				unsigned long long *const holder,\
+				const t_flag *const flags)
 {
 	char	num;
 
@@ -51,7 +51,7 @@ static int	va_char(va_list args,\
 	}
 }
 
-static int	va_long(va_list args, unsigned long long *const restrict holder)
+static int	va_long(va_list args, unsigned long long *const holder)
 {
 	long	num;
 
@@ -68,7 +68,7 @@ static int	va_long(va_list args, unsigned long long *const restrict holder)
 	}
 }
 
-static int	va_int(va_list args, unsigned long long *const restrict holder)
+static int	va_int(va_list args, unsigned long long *const holder)
 {
 	int	num;
 
@@ -86,8 +86,8 @@ static int	va_int(va_list args, unsigned long long *const restrict holder)
 }
 
 int			ft_signconv(va_list args,\
-				unsigned long long *const restrict holder,\
-				const t_flag *const restrict flags)
+				unsigned long long *const holder,\
+				const t_flag *const flags)
 {
 	long long	num;
 

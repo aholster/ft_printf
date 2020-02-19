@@ -6,18 +6,18 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/05/25 13:19:52 by aholster       #+#    #+#                */
-/*   Updated: 2019/10/05 12:41:21 by jesmith       ########   odam.nl         */
+/*   Updated: 2020/02/19 10:14:47 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../incl/ft_formatters.h"
 
-static int				ft_ptraddr_noprec(const char *const restrict buffer,\
+static int				ft_ptraddr_noprec(const char *const buffer,\
 							const unsigned short num_len,\
-							t_writer *const restrict clipb)
+							t_writer *const clipb)
 {
-	t_flag *const restrict	flags = clipb->flags;
-	const int				minus = flg_verif('-', flags);
+	t_flag *const	flags = clipb->flags;
+	const int		minus = flg_verif('-', flags);
 
 	if (minus == -1 && flg_verif('0', flags) == -1)
 		if (ft_space_padder(num_len, clipb) == -1)
@@ -35,12 +35,12 @@ static int				ft_ptraddr_noprec(const char *const restrict buffer,\
 	return (1);
 }
 
-static int				ft_ptraddr_prec(const char *const restrict buffer,\
+static int				ft_ptraddr_prec(const char *const buffer,\
 							const unsigned short num_len,\
-							t_writer *const restrict clipb)
+							t_writer *const clipb)
 {
-	t_flag *const restrict	flags = clipb->flags;
-	const int				minus = flg_verif('-', flags);
+	t_flag *const	flags = clipb->flags;
+	const int		minus = flg_verif('-', flags);
 
 	if (minus == -1 && flags->padding > num_len)
 		if (ft_space_padder(num_len, clipb) == -1)
@@ -58,14 +58,13 @@ static int				ft_ptraddr_prec(const char *const restrict buffer,\
 	return (1);
 }
 
-static unsigned short	unsigned_ll_toa(char *const restrict buffer,\
+static unsigned short	unsigned_ll_toa(char *const buffer,\
 							unsigned long long holder)
 {
 	unsigned short	num_len;
 	unsigned short	curlen;
-	char			*base;
+	char const		base[] = "0123456789abcdef";
 
-	base = "0123456789abcdef";
 	num_len = ft_ull_len(holder, 16);
 	curlen = num_len - 1;
 	while (holder >= 16)
@@ -78,12 +77,12 @@ static unsigned short	unsigned_ll_toa(char *const restrict buffer,\
 	return (num_len);
 }
 
-int						ft_ptraddr(va_list args, t_writer *const restrict clipb)
+int						ft_ptraddr(va_list args, t_writer *const clipb)
 {
-	unsigned long long		holder;
-	unsigned short			num_len;
-	char					buffer[20];
-	t_flag *const restrict	flags = clipb->flags;
+	unsigned long long	holder;
+	unsigned short		num_len;
+	char				buffer[20];
+	t_flag *const		flags = clipb->flags;
 
 	holder = (unsigned long long)va_arg(args, void*);
 	num_len = unsigned_ll_toa(buffer, holder);

@@ -6,16 +6,16 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/01/17 15:05:30 by aholster       #+#    #+#                */
-/*   Updated: 2019/10/04 19:09:20 by aholster      ########   odam.nl         */
+/*   Updated: 2020/02/19 09:41:38 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../incl/ft_utilities.h"
 
-static void	ft_bigset(void *restrict b,\
+static void	ft_bigset(void *b,\
 				const unsigned char c,\
 				const size_t len,\
-				size_t *const restrict index)
+				size_t *const index)
 {
 	unsigned long long	longword;
 	size_t				megadex;
@@ -33,7 +33,7 @@ static void	ft_bigset(void *restrict b,\
 	*index += megadex;
 }
 
-void		*ft_memset(void *restrict b, const int c, const size_t len)
+void		*ft_memset(void *b, const int c, const size_t len)
 {
 	size_t	index;
 

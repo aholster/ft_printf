@@ -6,23 +6,21 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/21 11:16:26 by jesmith        #+#    #+#                */
-/*   Updated: 2019/10/04 17:53:02 by jesmith       ########   odam.nl         */
+/*   Updated: 2020/02/19 10:31:36 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../incl/ft_formatters.h"
 
-static int		ft_capsci_buffer(char *const restrict buffer,\
-					t_writer *const restrict clipb,\
+static int		ft_capsci_buffer(char *const buffer,\
+					t_writer *const clipb,\
 					size_t nb_len,\
 					const short expon)
 {
-	t_flag *const restrict	flags = clipb->flags;
-	int						ret_val;
-	int						temp;
-	size_t					round_len;
+	t_flag *const	flags = clipb->flags;
+	int				ret_val;
+	size_t			round_len;
 
-	temp = expon;
 	nb_len = flags->precision + 3;
 	if (buffer[nb_len] == '.')
 		nb_len--;
@@ -34,8 +32,8 @@ static int		ft_capsci_buffer(char *const restrict buffer,\
 	return (ret_val);
 }
 
-static int		ft_naninf_print(char *const restrict buffer,\
-					t_writer *const restrict clipb,\
+static int		ft_naninf_print(char *const buffer,\
+					t_writer *const clipb,\
 					size_t nb_len)
 {
 	int ret_val;
@@ -49,7 +47,7 @@ static int		ft_naninf_print(char *const restrict buffer,\
 	return (ret_val);
 }
 
-int				ft_capsci(va_list args, t_writer *const restrict clipb)
+int				ft_capsci(va_list args, t_writer *const clipb)
 {
 	char			*buffer;
 	long double		nb;
@@ -61,7 +59,7 @@ int				ft_capsci(va_list args, t_writer *const restrict clipb)
 	if (flg_verif('.', clipb->flags) == -1)
 		clipb->flags->precision = 6;
 	if (ft_custom_ld_to_text(nb, \
-	clipb->flags->precision, &buffer, &nb_len) == -1)
+		clipb->flags->precision, &buffer, &nb_len) == -1)
 		return (-1);
 	if (ret_val == -1)
 		buffer[0] = '-';

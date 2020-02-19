@@ -6,15 +6,15 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/25 15:08:50 by jesmith        #+#    #+#                */
-/*   Updated: 2019/10/03 19:47:41 by aholster      ########   odam.nl         */
+/*   Updated: 2020/02/19 09:41:38 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../../incl/ft_formatters.h"
 
 int			ft_longdouble_conv(va_list args,\
-				long double *const restrict holder,\
-				const t_flag *const restrict flags)
+				long double *const holder,\
+				const t_flag *const flags)
 {
 	t_floatneg	num;
 

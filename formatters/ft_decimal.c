@@ -6,14 +6,14 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/05/31 12:06:16 by jesmith        #+#    #+#                */
-/*   Updated: 2019/10/05 13:26:27 by jesmith       ########   odam.nl         */
+/*   Updated: 2020/02/19 10:19:04 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../incl/ft_formatters.h"
 
 static int				ft_preprint(const int is_neg,\
-							t_writer *const restrict clipb)
+							t_writer *const clipb)
 {
 	if (is_neg >= 0)
 	{
@@ -36,13 +36,13 @@ static int				ft_preprint(const int is_neg,\
 	return (1);
 }
 
-static int				ft_decimal_noprec(const char *const restrict buffer,\
+static int				ft_decimal_noprec(const char *const buffer,\
 							const int is_neg,\
 							const unsigned short nb_len,\
-							t_writer *const restrict clipb)
+							t_writer *const clipb)
 {
-	int						minus;
-	t_flag *const restrict	flags = clipb->flags;
+	int				minus;
+	t_flag *const	flags = clipb->flags;
 
 	minus = flg_verif('-', flags);
 	if (minus == -1 && flg_verif('0', flags) == -1)
@@ -66,14 +66,14 @@ static int				ft_decimal_noprec(const char *const restrict buffer,\
 	return (1);
 }
 
-static int				ft_decimal_prec(const char *const restrict buffer,\
+static int				ft_decimal_prec(const char *const buffer,\
 							const int is_neg,\
 							unsigned short nb_len,\
-							t_writer *const restrict clipb)
+							t_writer *const clipb)
 {
-	int						minus;
-	int						holder;
-	uint					tru_len;
+	int		minus;
+	int		holder;
+	uint	tru_len;
 
 	tru_len = clipb->flags->precision;
 	if (is_neg < 0)
@@ -96,13 +96,13 @@ static int				ft_decimal_prec(const char *const restrict buffer,\
 	return (1);
 }
 
-static unsigned short	ft_int_len(char *const restrict buffer,\
+static unsigned short	ft_int_len(char *const buffer,\
 								const unsigned long long nb)
 {
-	unsigned long long			temp_num;
-	unsigned short				num_len;
-	unsigned short				cur_len;
-	const char *const restrict	base = "0123456789";
+	unsigned long long	temp_num;
+	unsigned short		num_len;
+	unsigned short		cur_len;
+	const char			base[] = "0123456789";
 
 	temp_num = nb;
 	num_len = ft_ull_len(nb, 10);
@@ -117,7 +117,7 @@ static unsigned short	ft_int_len(char *const restrict buffer,\
 	return (num_len);
 }
 
-int						ft_decimal(va_list args, t_writer *const restrict clipb)
+int						ft_decimal(va_list args, t_writer *const clipb)
 {
 	char				buffer[20];
 	unsigned long long	nb;

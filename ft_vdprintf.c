@@ -6,20 +6,20 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/19 14:43:08 by jesmith        #+#    #+#                */
-/*   Updated: 2019/10/08 19:01:05 by aholster      ########   odam.nl         */
+/*   Updated: 2020/02/19 10:13:37 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include "./incl/ft_internals.h"
 
-static int	ft_bufmanager(const char *restrict mem,\
+static int	ft_bufmanager(const char *mem,\
 				size_t size,\
-				t_writer *const restrict clipb)
+				t_writer *const clipb)
 {
-	size_t					used_space;
-	size_t					free_space;
-	char *const restrict	dest_mem = (clipb->info.d)->buffer;
+	size_t		used_space;
+	size_t		free_space;
+	char *const	dest_mem = (clipb->info.d)->buffer;
 
 	while (1)
 	{
@@ -47,7 +47,7 @@ static int	ft_bufmanager(const char *restrict mem,\
 static int	ft_vd_clipb_init(va_list args,\
 				const int fd,\
 				t_wrt_ptr printer,\
-				t_writer *const restrict clipb)
+				t_writer *const clipb)
 {
 	t_d_write	*info;
 
@@ -60,7 +60,7 @@ static int	ft_vd_clipb_init(va_list args,\
 	return (1);
 }
 
-int			ft_vdprintf(const int fd, const char *restrict format, va_list args)
+int			ft_vdprintf(const int fd, const char *format, va_list args)
 {
 	t_writer	clipb;
 	t_d_write	info;

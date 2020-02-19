@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/18 17:42:52 by jesmith        #+#    #+#                */
-/*   Updated: 2019/10/04 17:27:18 by jesmith       ########   odam.nl         */
+/*   Updated: 2020/02/19 09:41:38 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static void			ft_add_one(char *buffer, size_t len)
 }
 
 void				ft_sci_rounder(char *buffer,\
-						const t_flag *const restrict flags,\
+						const t_flag *const flags,\
 						size_t *nb_len)
 {
 	unsigned int		precision;
@@ -89,7 +89,7 @@ void				ft_sci_rounder(char *buffer,\
 
 size_t				ft_expon_rounding(char *buffer,\
 						size_t nb_len,\
-						const t_flag *const restrict flags,
+						const t_flag *const flags,
 						short expon)
 {
 	size_t			index;

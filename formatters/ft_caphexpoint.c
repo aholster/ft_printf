@@ -6,20 +6,20 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/10 12:13:37 by jesmith        #+#    #+#                */
-/*   Updated: 2019/10/04 17:34:08 by jesmith       ########   odam.nl         */
+/*   Updated: 2020/02/19 10:27:01 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../incl/ft_formatters.h"
 
-static unsigned short		ft_hexpoint_prec(const char *const restrict buffer,\
+static unsigned short		ft_hexpoint_prec(const char *const buffer,\
 								t_writer *const clipb,\
 								size_t nb_len,\
 								const short expon)
 {
-	t_flag *const restrict	flags = clipb->flags;
-	size_t					dec_len;
-	unsigned short			len;
+	t_flag *const	flags = clipb->flags;
+	size_t			dec_len;
+	unsigned short	len;
 
 	len = nb_len;
 	if (len == 1 && buffer[1] == '.')
@@ -44,13 +44,13 @@ static unsigned short		ft_hexpoint_prec(const char *const restrict buffer,\
 	return (len);
 }
 
-static unsigned short		ft_negpos_handler(t_writer *const restrict clipb,\
+static unsigned short		ft_negpos_handler(t_writer *const clipb,\
 								const int is_neg,\
 								const short expon)
 {
-	t_flag *const restrict	flags = clipb->flags;
-	unsigned short			sign;
-	unsigned short			expon_len;
+	t_flag *const	flags = clipb->flags;
+	unsigned short	sign;
+	unsigned short	expon_len;
 
 	expon_len = ft_nbrlen((long long)expon, 10) + 3;
 	sign = 0;
@@ -69,13 +69,13 @@ static unsigned short		ft_negpos_handler(t_writer *const restrict clipb,\
 
 static int					ft_front_pad(char *buffer, \
 								const short expon,\
-								t_writer *const restrict clipb,\
+								t_writer *const clipb,\
 								const int is_neg)
 {
-	unsigned short			expon_len;
-	unsigned short			str_len;
-	short					nb_len;
-	t_flag *const restrict	flags = clipb->flags;
+	unsigned short	expon_len;
+	unsigned short	str_len;
+	short			nb_len;
+	t_flag *const	flags = clipb->flags;
 
 	nb_len = is_neg;
 	if (nb_len < 0)
@@ -99,13 +99,13 @@ static int					ft_front_pad(char *buffer, \
 }
 
 static short				ft_ull_to_hex(unsigned long long mantissa,\
-								char *const restrict buffer,\
-								t_writer *const restrict clipb,\
+								char *const buffer,\
+								t_writer *const clipb,\
 								short expon)
 {
-	unsigned short				index;
-	unsigned short				len;
-	const char *const restrict	base = "0123456789ABCDEF";
+	unsigned short	index;
+	unsigned short	len;
+	const char		base[] = "0123456789ABCDEF";
 
 	if (mantissa == 0)
 		buffer[0] = '0';
@@ -128,7 +128,7 @@ static short				ft_ull_to_hex(unsigned long long mantissa,\
 }
 
 int							ft_caphexpoint(va_list args,\
-								t_writer *const restrict clipb)
+								t_writer *const clipb)
 {
 	char			buffer[16];
 	t_float			conversion;

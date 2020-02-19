@@ -6,13 +6,13 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/01/17 13:33:03 by aholster       #+#    #+#                */
-/*   Updated: 2019/10/04 19:05:03 by aholster      ########   odam.nl         */
+/*   Updated: 2020/02/19 09:41:38 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../incl/ft_utilities.h"
 
-void	ft_bzero(void *restrict s, size_t n)
+void	ft_bzero(void *s, size_t n)
 {
 	size_t	index;
 

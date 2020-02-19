@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/10/01 10:52:39 by jesmith        #+#    #+#                */
-/*   Updated: 2019/10/08 22:01:40 by aholster      ########   odam.nl         */
+/*   Updated: 2020/02/19 09:41:38 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ int			ft_expon_finder(char *buffer, size_t nb_len)
 
 void		ft_expon_len(char *buffer,\
 				size_t *new_len, \
-				t_writer *const restrict clipb)
+				t_writer *const clipb)
 {
 	size_t			index;
 	size_t			holder;

@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/25 11:19:27 by jesmith        #+#    #+#                */
-/*   Updated: 2019/10/08 22:01:30 by aholster      ########   odam.nl         */
+/*   Updated: 2020/02/19 10:28:59 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static size_t		ft_expon_prefix(char *buffer, short expon)
 	return (index);
 }
 
-static int			ft_expon_to_buf(short expon, t_writer *const restrict clipb)
+static int			ft_expon_to_buf(short expon, t_writer *const clipb)
 {
 	char	buffer[10];
 	size_t	index;
@@ -58,10 +58,10 @@ static int			ft_expon_to_buf(short expon, t_writer *const restrict clipb)
 
 static size_t		ft_offset(char *buffer,\
 						size_t *nb_len,\
-						t_writer *const restrict clipb)
+						t_writer *const clipb)
 {
-	t_flag *const restrict	flags = clipb->flags;
-	size_t					offset;
+	t_flag *const	flags = clipb->flags;
+	size_t			offset;
 
 	offset = 0;
 	if (buffer[0] == 'X')
@@ -83,12 +83,12 @@ static size_t		ft_offset(char *buffer,\
 
 int					ft_capsci_print(char *buffer,\
 						size_t nb_len,\
-						t_writer *const restrict clipb,\
+						t_writer *const clipb,\
 						short expon)
 {
-	t_flag *const restrict	flags = clipb->flags;
-	size_t					len_extension;
-	size_t					offset;
+	t_flag *const	flags = clipb->flags;
+	size_t			len_extension;
+	size_t			offset;
 
 	offset = ft_offset(buffer, &nb_len, clipb);
 	if (offset == 1 && buffer[nb_len] == '.')

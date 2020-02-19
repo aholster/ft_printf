@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/10/04 17:41:23 by aholster       #+#    #+#                */
-/*   Updated: 2019/10/08 21:43:02 by aholster      ########   odam.nl         */
+/*   Updated: 2020/02/19 09:41:38 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,15 @@ typedef struct		s_list
 	struct s_list	*next;
 }					t_list;
 
-void				ft_bzero(void *restrict s, size_t n);
-void				*ft_memcpy(void *const restrict dst,\
-						const void *const restrict src,\
+void				ft_bzero(void *s, size_t n);
+void				*ft_memcpy(void *const dst,\
+						const void *const src,\
 						const size_t n);
 void				*ft_memmove(void *dst, void const *src, size_t len);
-void				*ft_memset(void *restrict b,\
+void				*ft_memset(void *b,\
 						const int c,\
 						const size_t len);
-void				*ft_memdup(const void *const restrict src,\
+void				*ft_memdup(const void *const src,\
 						const size_t len);
 int					ft_memcmp(void const *s1, void const *s2, size_t n);
 

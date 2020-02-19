@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/10/03 21:32:49 by aholster       #+#    #+#                */
-/*   Updated: 2019/10/05 13:15:47 by jesmith       ########   odam.nl         */
+/*   Updated: 2020/02/19 10:29:57 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ static int		ft_isdigit_internal(const char c)
 	return (0);
 }
 
-static void		precision_num_parse(const char *const restrict format,\
+static void		precision_num_parse(const char *const format,\
 					size_t *aindex,\
-					t_flag *const restrict flags)
+					t_flag *const flags)
 {
 	size_t					subdex;
 	unsigned int			num;
@@ -41,7 +41,7 @@ static void		precision_num_parse(const char *const restrict format,\
 }
 
 static void		precision_arg_extract(va_list args,\
-					t_flag *const restrict flags)
+					t_flag *const flags)
 {
 	int						num;
 
@@ -53,12 +53,12 @@ static void		precision_arg_extract(va_list args,\
 	}
 }
 
-void			ft_flag_precision(const char *const restrict format,\
-					size_t *const restrict aindex,\
-					t_writer *const restrict clipb)
+void			ft_flag_precision(const char *const format,\
+					size_t *const aindex,\
+					t_writer *const clipb)
 {
-	t_flag *const restrict	flags = clipb->flags;
-	size_t					subdex;
+	t_flag *const	flags = clipb->flags;
+	size_t			subdex;
 
 	subdex = (*aindex) + 1;
 	if (format[subdex] == '*')

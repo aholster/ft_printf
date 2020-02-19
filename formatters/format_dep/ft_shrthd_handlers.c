@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/25 12:01:20 by jesmith        #+#    #+#                */
-/*   Updated: 2019/10/04 17:58:48 by jesmith       ########   odam.nl         */
+/*   Updated: 2020/02/19 10:28:12 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static int		ft_buffer_print(char *buffer,\
 					size_t *new_len,\
 					size_t diff)
 {
-	t_flag *const restrict	flags = clipb->flags;
+	t_flag *const	flags = clipb->flags;
 
 	if (flg_verif('#', flags) == 1 && *new_len < flags->precision)
 	{
@@ -33,7 +33,7 @@ static int		ft_buffer_print(char *buffer,\
 	return (1);
 }
 
-static int		ft_offset_handler(char *restrict *const restrict buffer,\
+static int		ft_offset_handler(char **const buffer,\
 					t_writer *const clipb,\
 					size_t offset)
 {
@@ -46,10 +46,10 @@ static int		ft_offset_handler(char *restrict *const restrict buffer,\
 	return (1);
 }
 
-static int		ft_end_pad(t_writer *const restrict clipb, \
+static int		ft_end_pad(t_writer *const clipb, \
 					size_t new_len)
 {
-	t_flag *const restrict	flags = clipb->flags;
+	t_flag *const	flags = clipb->flags;
 
 	if (flg_verif('#', flags) == 1 && new_len < 7)
 	{
@@ -65,11 +65,11 @@ static int		ft_end_pad(t_writer *const restrict clipb, \
 
 int				ft_shrthd_print(char *buffer,\
 					size_t offset,\
-					t_writer *const restrict clipb,\
+					t_writer *const clipb,\
 					size_t new_len)
 {
-	t_flag *const restrict	flags = clipb->flags;
-	size_t					diff;
+	t_flag *const	flags = clipb->flags;
+	size_t			diff;
 
 	diff = flags->precision - new_len;
 	if (flg_verif('-', flags) == -1 && \
@@ -89,12 +89,12 @@ int				ft_shrthd_print(char *buffer,\
 	return (1);
 }
 
-size_t			ft_shrthd_offset(char *restrict *const restrict buffer,\
-					t_writer *const restrict clipb,\
+size_t			ft_shrthd_offset(char **const buffer,\
+					t_writer *const clipb,\
 					int is_neg)
 {
-	t_flag *const restrict	flags = clipb->flags;
-	size_t					offset;
+	t_flag *const	flags = clipb->flags;
+	size_t			offset;
 
 	offset = 0;
 	if (is_neg == 1)

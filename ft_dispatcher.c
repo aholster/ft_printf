@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/04/18 16:00:54 by aholster       #+#    #+#                */
-/*   Updated: 2019/10/03 22:38:10 by aholster      ########   odam.nl         */
+/*   Updated: 2020/02/19 09:41:38 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 #include "./incl/ft_formatters.h"
 
 static int			ft_conversion_exception(\
-						const char *const restrict specifier,\
-						t_writer *const restrict clipb)
+						const char *const specifier,\
+						t_writer *const clipb)
 {
 	int				zeroflag;
 	int				padf;
@@ -68,8 +68,8 @@ static t_formatter	ft_lookup_tbl(const int index)
 	return (dispatch_tbl[index]);
 }
 
-int					ft_dispatcher(const char *restrict specifier,\
-						t_writer *const restrict clipb)
+int					ft_dispatcher(const char *specifier,\
+						t_writer *const clipb)
 {
 	const int		index = *specifier;
 	t_formatter		function;

@@ -6,16 +6,16 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/05/25 16:10:49 by aholster       #+#    #+#                */
-/*   Updated: 2019/10/03 19:47:41 by aholster      ########   odam.nl         */
+/*   Updated: 2020/02/19 10:16:48 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./incl/ft_internals.h"
 
-int	pad_spaces(size_t amount, t_writer *const restrict clipb)
+int	pad_spaces(size_t amount, t_writer *const clipb)
 {
-	uint16_t					calc;
-	const char *const restrict	spaces[1] = {
+	uint16_t	calc;
+	char const	spaces[] = {
 	"                                                                "};
 
 	while (amount != 0)
@@ -24,17 +24,17 @@ int	pad_spaces(size_t amount, t_writer *const restrict clipb)
 			calc = amount;
 		else
 			calc = 64;
-		if (clipb->self(*spaces, calc, clipb) == -1)
+		if (clipb->self(spaces, calc, clipb) == -1)
 			return (-1);
 		amount -= calc;
 	}
 	return (1);
 }
 
-int	pad_zero(size_t amount, t_writer *const restrict clipb)
+int	pad_zero(size_t amount, t_writer *const clipb)
 {
-	uint16_t					calc;
-	const char *const restrict	zeroes[1] = {
+	uint16_t	calc;
+	char const	zeroes[] = {
 	"0000000000000000000000000000000000000000000000000000000000000000"};
 
 	while (amount != 0)
@@ -43,14 +43,14 @@ int	pad_zero(size_t amount, t_writer *const restrict clipb)
 			calc = amount;
 		else
 			calc = 64;
-		if (clipb->self(*zeroes, calc, clipb) == -1)
+		if (clipb->self(zeroes, calc, clipb) == -1)
 			return (-1);
 		amount -= calc;
 	}
 	return (1);
 }
 
-int	ft_space_padder(const unsigned short len, t_writer *const restrict clipb)
+int	ft_space_padder(const unsigned short len, t_writer *const clipb)
 {
 	const unsigned int	padding = clipb->flags->padding;
 	const unsigned int	precision = clipb->flags->precision;
@@ -72,7 +72,7 @@ int	ft_space_padder(const unsigned short len, t_writer *const restrict clipb)
 	return (1);
 }
 
-int	ft_zero_padder(const unsigned short len, t_writer *const restrict clipb)
+int	ft_zero_padder(const unsigned short len, t_writer *const clipb)
 {
 	const unsigned int	padding = clipb->flags->padding;
 	const unsigned int	precision = clipb->flags->precision;
@@ -98,7 +98,7 @@ int	ft_zero_padder(const unsigned short len, t_writer *const restrict clipb)
 
 int	ft_float_padder(unsigned short len,\
 		const unsigned short dec,\
-		t_writer *const restrict clipb)
+		t_writer *const clipb)
 {
 	if (clipb->flags->precision > len)
 	{

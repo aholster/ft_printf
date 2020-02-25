@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/13 15:19:40 by aholster       #+#    #+#                */
-/*   Updated: 2020/02/19 09:41:38 by aholster      ########   odam.nl         */
+/*   Updated: 2020/02/19 14:38:01 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 static int	fvect_upscale(t_writer *const clipb)
 {
 	char			*new_vect;
-	const size_t	new_size = clipb->info.as->current_size * 2;
+	const size_t	new_size = clipb->info.as.current_size * 2;
 
 	new_vect = malloc(new_size + 1);
 	if (new_vect == NULL)
@@ -26,10 +26,10 @@ static int	fvect_upscale(t_writer *const clipb)
 	else
 	{
 		ft_bzero(new_vect, new_size + 1);
-		ft_memcpy(new_vect, clipb->info.as->str_vect, clipb->history + 1);
-		free(clipb->info.as->str_vect);
-		clipb->info.as->str_vect = new_vect;
-		clipb->info.as->current_size = new_size;
+		ft_memcpy(new_vect, clipb->info.as.str_vect, clipb->history + 1);
+		free(clipb->info.as.str_vect);
+		clipb->info.as.str_vect = new_vect;
+		clipb->info.as.current_size = new_size;
 		return (1);
 	}
 }
@@ -37,24 +37,22 @@ static int	fvect_upscale(t_writer *const clipb)
 static int	ft_lst_bufmanager(const char *mem, size_t size,\
 							t_writer *const clipb)
 {
-	if (size + clipb->history + 1 > clipb->info.as->current_size)
+	if (size + clipb->history + 1 > clipb->info.as.current_size)
 	{
 		if (fvect_upscale(clipb) == -1)
 		{
 			return (-1);
 		}
 	}
-	ft_memcpy(clipb->info.as->str_vect + clipb->history, mem, size);
+	ft_memcpy(clipb->info.as.str_vect + clipb->history, mem, size);
 	clipb->history += size;
-	clipb->info.as->str_vect[clipb->history] = '\0';
+	clipb->info.as.str_vect[clipb->history] = '\0';
 	return (1);
 }
 
-static int	ft_vas_clipb_init(va_list args,\
-				t_wrt_ptr printer,\
-				t_writer *const clipb)
+static int	ft_vas_clipb_init(t_writer *const clipb)
 {
-	t_as_write	*const info = clipb->info.as;
+	t_as_write	*const info = &(clipb->info.as);
 
 	info->str_vect = malloc(sizeof(char) * BUFFSIZE + 1);
 	if (info->str_vect == NULL)
@@ -65,10 +63,6 @@ static int	ft_vas_clipb_init(va_list args,\
 	{
 		ft_bzero(info->str_vect, BUFFSIZE + 1);
 		info->current_size = BUFFSIZE;
-		va_copy(clipb->args, args);
-		clipb->history = 0;
-		clipb->current = 0;
-		clipb->self = printer;
 		return (1);
 	}
 }
@@ -76,22 +70,22 @@ static int	ft_vas_clipb_init(va_list args,\
 int			ft_vasprintf(char **ret, const char *format, va_list args)
 {
 	t_writer	clipb;
-	t_as_write	info;
 
-	ft_bzero(&info, sizeof(t_as_write));
-	clipb.info.as = &info;
-	if (ft_vas_clipb_init(args, ft_lst_bufmanager, &clipb) == -1)
+	ft_bzero(&clipb, sizeof(t_writer));
+	va_copy(clipb.args, args);
+	clipb.self = &ft_lst_bufmanager;
+	if (ft_vas_clipb_init(&clipb) == -1)
 	{
-		free(info.str_vect);
+		free(clipb.info.as.str_vect);
 		return (-1);
 	}
 	if (ft_format(format, &clipb) == -1)
 	{
-		free(info.str_vect);
+		free(clipb.info.as.str_vect);
 		return (-1);
 	}
-	*ret = ft_memdup(info.str_vect, clipb.history + 1);
-	free(info.str_vect);
+	*ret = ft_memdup(clipb.info.as.str_vect, clipb.history + 1);
+	free(clipb.info.as.str_vect);
 	if (*ret == NULL)
 	{
 		return (-1);

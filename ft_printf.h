@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/01 16:56:13 by aholster       #+#    #+#                */
-/*   Updated: 2020/02/19 09:41:38 by aholster      ########   odam.nl         */
+/*   Updated: 2020/02/19 13:14:54 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ int	ft_sprintf(char *str, const char *format, ...);
 int	ft_vsprintf(char *str, const char *format, va_list arg);
 
 int	ft_snprintf(char *str, size_t size, const char *format, ...);
-int	ft_vsnprintf(char *str,\
-				size_t size,\
-				const char *format,\
+int	ft_vsnprintf(char *str,
+				size_t size,
+				const char *format,
 				va_list args);
 #endif

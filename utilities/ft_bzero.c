@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/01/17 13:33:03 by aholster       #+#    #+#                */
-/*   Updated: 2020/02/19 09:41:38 by aholster      ########   odam.nl         */
+/*   Updated: 2020/02/25 10:06:30 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,25 @@
 
 void	ft_bzero(void *s, size_t n)
 {
-	size_t	index;
+	size_t	offset;
+	char	*cs;
 
-	index = 0;
-	while (n > 0 && s + 0 % 8)
+	cs = s;
+	while (n > 0 && cs + 0 % sizeof(long long))
 	{
-		((char*)s)[index] = '\0';
-		s++;
+		*cs = '\0';
+		cs += 1;
 		n--;
 	}
-	while (n - (index * 8) >= 8)
+	offset = 0;
+	while (n - offset >= sizeof(long long))
 	{
-		((long long *)s)[index] = 0ll;
-		index++;
+		*(long long *)(cs + offset) = 0ll;
+		offset += sizeof(long long);
 	}
-	index *= 8;
-	while (index < n)
+	while (offset < n)
 	{
-		((char *)s)[index] = '\0';
-		index++;
+		(cs)[offset] = '\0';
+		offset++;
 	}
 }

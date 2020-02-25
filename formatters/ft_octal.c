@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/03 15:08:26 by jesmith        #+#    #+#                */
-/*   Updated: 2020/02/19 10:17:48 by aholster      ########   odam.nl         */
+/*   Updated: 2020/02/19 10:44:01 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ static unsigned short	ft_int_len(char *const buffer,\
 	unsigned long long	temp_num;
 	unsigned short		num_len;
 	unsigned short		cur_len;
-	char const			base[] = "01234567";
+	const char			base[] = "01234567";
 
 	temp_num = nb;
 	num_len = ft_ull_len(nb, 8);

@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/01/17 15:42:31 by aholster       #+#    #+#                */
-/*   Updated: 2020/02/19 09:41:38 by aholster      ########   odam.nl         */
+/*   Updated: 2020/02/25 09:42:40 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,20 @@ void	*ft_memcpy(void *const dst,\
 			const void *const src,\
 			const size_t n)
 {
-	size_t	index;
+	size_t				offset;
+	char *const			cdst = dst;
+	const char *const	csrc = src;
 
-	index = 0;
-	while (n - index >= 8)
+	offset = 0;
+	while (n - offset >= 8)
 	{
-		*((long long *)(dst + index)) = *((const long long *)(src + index));
-		index += 8;
+		*((long long *)(cdst + offset)) = *((const long long *)(csrc + offset));
+		offset += 8;
 	}
-	while (index < n)
+	while (offset < n)
 	{
-		((char *)dst)[index] = ((const char *)src)[index];
-		index++;
+		*(cdst + offset) = *(csrc + offset);
+		offset++;
 	}
 	return (dst);
 }

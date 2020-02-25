@@ -6,15 +6,15 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/01/17 15:05:30 by aholster       #+#    #+#                */
-/*   Updated: 2020/02/19 09:41:38 by aholster      ########   odam.nl         */
+/*   Updated: 2020/02/25 10:01:43 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../incl/ft_utilities.h"
 
-static void	ft_bigset(void *b,\
-				const unsigned char c,\
-				const size_t len,\
+static void	ft_bigset(char *b,
+				const unsigned char c,
+				const size_t len,
 				size_t *const index)
 {
 	unsigned long long	longword;
@@ -25,10 +25,10 @@ static void	ft_bigset(void *b,\
 	longword |= (longword << 8);
 	longword |= (longword << 16);
 	longword |= (longword << 32);
-	while (len - megadex >= 8)
+	while (len - megadex >= sizeof(unsigned long long))
 	{
 		*((long long *)(b + megadex)) = longword;
-		megadex += 8;
+		megadex += sizeof(unsigned long long);
 	}
 	*index += megadex;
 }
@@ -36,20 +36,22 @@ static void	ft_bigset(void *b,\
 void		*ft_memset(void *b, const int c, const size_t len)
 {
 	size_t	index;
+	char	*cb;
 
 	index = 0;
+	cb = b;
 	if (len > 16)
 	{
-		while ((int)b % 8 != 0)
+		while ((int)b % sizeof(unsigned long long) != 0)
 		{
-			*((unsigned char *)b) = (unsigned char)c;
-			b++;
+			*((char *)cb) = (char)c;
+			cb++;
 		}
-		ft_bigset(b, (unsigned char)c, len, &index);
+		ft_bigset(cb, (unsigned char)c, len, &index);
 	}
 	while (index < len)
 	{
-		((unsigned char *)b)[index] = (unsigned char)c;
+		((char *)cb)[index] = (char)c;
 		index++;
 	}
 	return (b);

@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/01/21 19:28:30 by aholster       #+#    #+#                */
-/*   Updated: 2019/10/04 18:43:00 by aholster      ########   odam.nl         */
+/*   Updated: 2020/02/25 10:11:33 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_list	*ft_lstnew(void const *content, size_t content_size)
 	}
 	else
 	{
-		head->content = (void *)malloc(sizeof(void) * content_size);
+		head->content = (void *)malloc(content_size);
 		if (head->content == NULL)
 		{
 			free(head);

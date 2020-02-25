@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/05/25 13:19:52 by aholster       #+#    #+#                */
-/*   Updated: 2020/02/19 10:14:47 by aholster      ########   odam.nl         */
+/*   Updated: 2020/02/19 10:44:01 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static unsigned short	unsigned_ll_toa(char *const buffer,\
 {
 	unsigned short	num_len;
 	unsigned short	curlen;
-	char const		base[] = "0123456789abcdef";
+	const char		base[] = "0123456789abcdef";
 
 	num_len = ft_ull_len(holder, 16);
 	curlen = num_len - 1;

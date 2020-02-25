@@ -6,17 +6,18 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/13 15:19:36 by aholster       #+#    #+#                */
-/*   Updated: 2020/02/19 10:13:54 by aholster      ########   odam.nl         */
+/*   Updated: 2020/02/19 14:52:52 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include "./incl/ft_internals.h"
 
-static int	ft_write_to_str(const char *mem, size_t size,\
-						t_writer *const clipb)
+static int	ft_write_to_str(const char *mem,
+				size_t size,
+				t_writer *const clipb)
 {
-	t_sn_write const *const	info = clipb->info.sn;
+	t_sn_write const *const	info = &(clipb->info.sn);
 	const size_t			capacity = info->capacity;
 	size_t					free_space;
 
@@ -40,27 +41,18 @@ static int	ft_write_to_str(const char *mem, size_t size,\
 	return (1);
 }
 
-static void	ft_vsn_clipb_init(va_list args, t_wrt_ptr printer,\
-								t_writer *const clipb)
-{
-	va_copy(clipb->args, args);
-	clipb->history = 0;
-	clipb->current = 0;
-	clipb->self = printer;
-}
-
-int			ft_vsnprintf(char *str, size_t size, const char *format,\
-						va_list args)
+int			ft_vsnprintf(char *str,
+				size_t size,
+				const char *format,
+				va_list args)
 {
 	t_writer	clipb;
-	t_sn_write	info;
 
-	clipb.info.sn = &info;
-	if (size == 0)
-		return (0);
-	info.str = str;
-	info.capacity = size;
-	ft_vsn_clipb_init(args, ft_write_to_str, &clipb);
+	ft_bzero(&clipb, sizeof(t_writer));
+	clipb.info.sn.str = str;
+	clipb.info.sn.capacity = size;
+	va_copy(clipb.args, args);
+	clipb.self = &ft_write_to_str;
 	if (ft_format(format, &clipb) == -1)
 	{
 		return (-1);

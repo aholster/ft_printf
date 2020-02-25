@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/10/04 18:57:11 by aholster       #+#    #+#                */
-/*   Updated: 2019/10/04 21:36:07 by aholster      ########   odam.nl         */
+/*   Updated: 2020/02/19 13:18:43 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ typedef union		u_float
 	long long		llu;
 }					t_float;
 
-int					ft_custom_ld_to_text(const long double input,\
-						const unsigned int precision,\
-						char **const amem,\
+int					ft_custom_ld_to_text(const long double input,
+						const unsigned int precision,
+						char **const amem,
 						size_t *asize);
 
 #endif

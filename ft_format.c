@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/04/17 19:57:30 by aholster       #+#    #+#                */
-/*   Updated: 2020/02/19 09:41:38 by aholster      ########   odam.nl         */
+/*   Updated: 2020/02/25 10:56:12 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,6 @@ static int		ft_judex(const char *format,\
 	return (1);
 }
 
-static int		ft_charskip(const char *c)
-{
-	if (c[0] == '\0')
-		return (0);
-	return (1);
-}
-
 /*
 **	possibly add W_char or utf8 support for charskip
 */
@@ -57,9 +50,12 @@ int				ft_format(const char *format,\
 		{
 			index++;
 			ft_flagharvest(format, &index, clipb);
-			if (ft_dispatcher(&format[index], clipb) == -1)
+			if (ft_dispatcher(format[index], clipb) == -1)
 				return (-1);
-			index += ft_charskip(format + index);
+			if (format[index] != '\0')
+			{
+				index++;
+			}
 		}
 		else if (ft_judex(format, &index, len, clipb) == -1)
 			return (-1);

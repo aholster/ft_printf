@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_strlnlen.c                                      :+:    :+:            */
+/*   ft_strnlen.c                                       :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/10/08 21:42:09 by aholster       #+#    #+#                */
-/*   Updated: 2019/10/08 21:42:27 by aholster      ########   odam.nl         */
+/*   Updated: 2020/02/19 10:44:01 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../incl/ft_utilities.h"
 
-static int		unrolled_len(char const **const asegment)
+static int		unrolled_len(const char **const asegment)
 {
 	const char *const	segment = *asegment;
 
@@ -37,7 +37,7 @@ static int		unrolled_len(char const **const asegment)
 	return (1);
 }
 
-size_t			ft_strnlen(char const *s, size_t maxlen)
+size_t			ft_strnlen(const char *s, size_t maxlen)
 {
 	const unsigned long long	*holder;
 	const uint64_t				himagic = 0x8080808080808080L;

@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/18 19:29:47 by aholster       #+#    #+#                */
-/*   Updated: 2020/02/19 09:52:14 by aholster      ########   odam.nl         */
+/*   Updated: 2020/02/25 11:55:47 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 
 struct s_writer;
 
-typedef int			(*t_wrt_ptr)(const char *restrict,\
+typedef int			(*t_wrt_ptr)(const char *,\
 						size_t,\
 						struct s_writer *const);
 
@@ -44,9 +44,9 @@ typedef struct		s_sn_write
 
 typedef union		u_info_s
 {
-	t_d_write		*d;
-	t_as_write		*as;
-	t_sn_write		*sn;
+	t_d_write		d;
+	t_as_write		as;
+	t_sn_write		sn;
 }					t_info_s;
 
 typedef struct		s_writer
@@ -56,6 +56,7 @@ typedef struct		s_writer
 	va_list			args;
 	t_wrt_ptr		self;
 	t_info_s		info;
+	int				err;
 	struct s_flag	*flags;
 }					t_writer;
 

@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/19 16:00:34 by jesmith        #+#    #+#                */
-/*   Updated: 2020/02/19 09:41:38 by aholster      ########   odam.nl         */
+/*   Updated: 2020/02/19 10:41:31 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,10 +96,10 @@ void			ft_hexpoint_rounder(char *buffer,\
 					const t_flag *const flags,\
 					short *expon)
 {
-	unsigned int			precision;
-	const char *restrict	base_ref = "0123456789abcdef";
-	size_t					index;
-	size_t					judex;
+	unsigned int	precision;
+	size_t			index;
+	size_t			judex;
+	const char		base_ref[] = "0123456789abcdef";
 
 	judex = 0;
 	precision = flags->precision + 2;

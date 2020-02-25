@@ -6,13 +6,13 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/01/14 13:39:30 by aholster       #+#    #+#                */
-/*   Updated: 2019/10/08 21:41:36 by aholster      ########   odam.nl         */
+/*   Updated: 2020/02/19 10:44:01 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../incl/ft_utilities.h"
 
-static char const	*ft_unrolledlen(const uint64_t himagic,\
+static const char	*ft_unrolledlen(const uint64_t himagic,\
 						const uint64_t lomagic,\
 						unsigned long long *longword_ptr,\
 						const char *segment)
@@ -43,7 +43,7 @@ static char const	*ft_unrolledlen(const uint64_t himagic,\
 	}
 }
 
-size_t				ft_strlen(char const *s)
+size_t				ft_strlen(const char *s)
 {
 	const uint64_t				himagic = 0x8080808080808080L;
 	const uint64_t				lomagic = 0x0101010101010101L;

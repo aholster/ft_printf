@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/05/25 16:10:49 by aholster       #+#    #+#                */
-/*   Updated: 2020/02/19 10:16:48 by aholster      ########   odam.nl         */
+/*   Updated: 2020/02/19 10:44:01 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	pad_spaces(size_t amount, t_writer *const clipb)
 {
 	uint16_t	calc;
-	char const	spaces[] = {
+	const char	spaces[] = {
 	"                                                                "};
 
 	while (amount != 0)
@@ -34,7 +34,7 @@ int	pad_spaces(size_t amount, t_writer *const clipb)
 int	pad_zero(size_t amount, t_writer *const clipb)
 {
 	uint16_t	calc;
-	char const	zeroes[] = {
+	const char	zeroes[] = {
 	"0000000000000000000000000000000000000000000000000000000000000000"};
 
 	while (amount != 0)

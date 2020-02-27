@@ -6,39 +6,33 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/04/18 16:00:54 by aholster       #+#    #+#                */
-/*   Updated: 2020/02/25 10:31:45 by aholster      ########   odam.nl         */
+/*   Updated: 2020/02/27 13:54:11 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./incl/ft_internals.h"
 #include "./incl/ft_formatters.h"
 
-static int			ft_conversion_exception(\
+static void			ft_conversion_exception(\
 						const char specifier,\
 						t_writer *const clipb)
 {
 	int				zeroflag;
-	int				padf;
 
 	zeroflag = flg_verif('0', clipb->flags);
 	if (flg_verif('-', clipb->flags) == -1)
 	{
 		if (zeroflag == 1)
-			padf = ft_zero_padder(1, clipb);
+			ft_zero_padder(1, clipb);
 		else
-			padf = ft_space_padder(1, clipb);
-		if (padf == -1 || clipb->self(&specifier, 1, clipb) == -1)
-			return (-1);
+			ft_space_padder(1, clipb);
+		ft_write_wrap(&specifier, 1, clipb);
 	}
 	else
 	{
-		if (clipb->self(&specifier, 1, clipb) == -1)
-			return (-1);
-		padf = ft_space_padder(1, clipb);
-		if (padf == -1)
-			return (-1);
+		ft_write_wrap(&specifier, 1, clipb);
+		ft_space_padder(1, clipb);
 	}
-	return (1);
 }
 
 static const t_formatter	g_dispatch_tbl[128] = {
@@ -62,7 +56,7 @@ static const t_formatter	g_dispatch_tbl[128] = {
 	['X'] = &ft_caphex,
 };
 
-int					ft_dispatcher(const char specifier,\
+void				ft_dispatcher(const char specifier,\
 						t_writer *const clipb)
 {
 	t_formatter	function;
@@ -75,14 +69,14 @@ int					ft_dispatcher(const char specifier,\
 			function = g_dispatch_tbl[specifier & 0xFF];
 		if (function == NULL)
 		{
-			if (ft_conversion_exception(specifier, clipb) == -1)
-				return (-1);
+			ft_conversion_exception(specifier, clipb);
 		}
 		else
 		{
-			if (function(clipb->args, clipb) == -1)
-				return (-1);
+			if (function(clipb->args, clipb))
+			{
+				clipb->err = 1;
+			}
 		}
 	}
-	return (1);
 }

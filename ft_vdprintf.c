@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/19 14:43:08 by jesmith        #+#    #+#                */
-/*   Updated: 2020/02/25 11:56:36 by aholster      ########   odam.nl         */
+/*   Updated: 2020/02/27 13:27:09 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,8 @@ static int	ft_bufmanager(const char *mem,
 		else
 		{
 			ft_memcpy(dest_mem + clipb->current, mem, free_space);
-			if (write(clipb->info.d.fd, dest_mem, BUFFSIZE))
-			{
-				clipb->err = 1;
+			if (write(clipb->info.d.fd, dest_mem, BUFFSIZE) == -1)
 				return (-1);
-			}
 			clipb->current = 0;
 			size -= free_space;
 			mem += free_space;
@@ -56,16 +53,20 @@ int			ft_vdprintf(const int fd, const char *format, va_list args)
 	clipb.info.d.fd = fd;
 	va_copy(clipb.args, args);
 	clipb.self = &ft_bufmanager;
-	if (ft_format(format, &clipb) == -1)
-	{
-		return (-1);
-	}
+	ft_format(format, &clipb);
 	if (clipb.current != 0)
 	{
-		write(fd, clipb.info.d.buffer, clipb.current);
+		if (write(fd, clipb.info.d.buffer, clipb.current) == -1)
+		{
+			clipb.err = 1;
+		}
 		clipb.history += clipb.current;
 	}
 	va_copy(args, clipb.args);
 	va_end(clipb.args);
-	return (clipb.history);
+	if (clipb.err == 0)
+	{
+		return (clipb.history);
+	}
+	return (-1);
 }

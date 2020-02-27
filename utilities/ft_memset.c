@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/01/17 15:05:30 by aholster       #+#    #+#                */
-/*   Updated: 2020/02/25 10:01:43 by aholster      ########   odam.nl         */
+/*   Updated: 2020/02/27 14:52:51 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void		*ft_memset(void *b, const int c, const size_t len)
 	cb = b;
 	if (len > 16)
 	{
-		while ((int)b % sizeof(unsigned long long) != 0)
+		while (((int)cb % sizeof(unsigned long long)) != 0)
 		{
 			*((char *)cb) = (char)c;
 			cb++;

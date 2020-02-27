@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/10/01 18:55:03 by aholster       #+#    #+#                */
-/*   Updated: 2020/02/19 13:18:36 by aholster      ########   odam.nl         */
+/*   Updated: 2020/02/27 11:59:23 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int				ft_longdouble_conv(va_list args,
 					long double *const holder,
 					const t_flag *const flags);
 
-int				ft_lowsci_print(char *buffer,
+void			ft_lowsci_print(char *buffer,
 					size_t nb_len,
 					t_writer *const clipb,
 					short expon);
@@ -74,12 +74,12 @@ int				ft_capsci_print(char *buffer,
 					short expon);
 
 void			ft_captolow(char *const buffer);
-int				ft_naninf_padding(const char *const buffer,
+void			ft_naninf_padding(const char *const buffer,
 					t_writer *const clipb,
 					size_t nb_len,
 					const int is_neg);
 
-int				ft_shrthd_print(char *buffer,
+void			ft_shrthd_print(char *buffer,
 					size_t offset,
 					t_writer *const clipb,
 					size_t new_len);
@@ -120,14 +120,14 @@ void			ft_expon_len(char *buffer,
 					size_t *new_len,
 					t_writer *const clipb);
 
-int				ft_prefix(const int is_neg, t_writer *const clipb);
+void			ft_prefix(const int is_neg, t_writer *const clipb);
 unsigned short	ft_reversed(unsigned long long mantissa);
 
-int				ft_lowhexpoint_print(t_writer *const clipb,
+void			ft_lowhexpoint_print(t_writer *const clipb,
 					short expon,
 					unsigned short nb_len,
 					unsigned short str_len);
-int				ft_caphexpoint_print(t_writer *const clipb,
+void			ft_caphexpoint_print(t_writer *const clipb,
 					short expon,
 					unsigned short nb_len,
 					unsigned short str_len);

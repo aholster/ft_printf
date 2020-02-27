@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/10 12:13:37 by jesmith        #+#    #+#                */
-/*   Updated: 2020/02/19 10:27:01 by aholster      ########   odam.nl         */
+/*   Updated: 2020/02/27 12:03:24 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ static unsigned short		ft_negpos_handler(t_writer *const clipb,\
 	return (expon_len + sign);
 }
 
-static int					ft_front_pad(char *buffer, \
+static void					ft_front_pad(char *buffer, \
 								const short expon,\
 								t_writer *const clipb,\
 								const int is_neg)
@@ -79,23 +79,23 @@ static int					ft_front_pad(char *buffer, \
 
 	nb_len = is_neg;
 	if (nb_len < 0)
+	{
 		nb_len *= -1;
+	}
 	str_len = ft_hexpoint_prec(buffer, clipb, nb_len, expon);
 	expon_len = ft_negpos_handler(clipb, is_neg, expon);
 	if (flg_verif('.', flags) == 1 && flags->precision == 0)
+	{
 		expon_len--;
+	}
 	if (flg_verif('-', flags) == -1 && flags->padding > flags->precision)
-		if (ft_float_padder(expon_len + str_len, str_len - 2, clipb) == -1)
-			return (-1);
-	if (ft_prefix(is_neg, clipb) == -1)
-		return (-1);
-	if (clipb->self("0X", 2, clipb) == -1)
-		return (-1);
-	if (clipb->self(buffer, (size_t)str_len, clipb) == -1)
-		return (-1);
-	if (ft_caphexpoint_print(clipb, expon, expon_len, str_len) == -1)
-		return (-1);
-	return (1);
+	{
+		ft_float_padder(expon_len + str_len, str_len - 2, clipb);
+	}
+	ft_prefix(is_neg, clipb);
+	ft_write_wrap("0X", 2, clipb);
+	ft_write_wrap(buffer, (size_t)str_len, clipb);
+	ft_caphexpoint_print(clipb, expon, expon_len, str_len);
 }
 
 static short				ft_ull_to_hex(unsigned long long mantissa,\
@@ -140,11 +140,14 @@ int							ft_caphexpoint(va_list args,\
 	conversion.ld = nb;
 	expon = (conversion.byte[4] & 0x7FFF) - 16386;
 	if (nb == 0.0 || nb == -0.0)
+	{
 		is_neg *= ft_float_exceptions(buffer, &expon, clipb->flags);
+	}
 	else
+	{
 		is_neg *= ft_ull_to_hex(conversion.llu, buffer, clipb, expon);
+	}
 	ft_hexpoint_rounder(buffer, clipb->flags, &expon);
-	if (ft_front_pad(buffer, expon, clipb, is_neg) == -1)
-		return (-1);
-	return (1);
+	ft_front_pad(buffer, expon, clipb, is_neg);
+	return (0);
 }

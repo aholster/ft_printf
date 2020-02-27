@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/23 14:15:42 by jesmith        #+#    #+#                */
-/*   Updated: 2020/02/19 10:28:35 by aholster      ########   odam.nl         */
+/*   Updated: 2020/02/27 15:35:53 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,23 +37,23 @@ static size_t		ft_expon_prefix(char *buffer, short expon)
 	return (index);
 }
 
-static int			ft_expon_to_buf(short expon, t_writer *const clipb)
+static void			ft_expon_to_buf(short expon, t_writer *const clipb)
 {
 	char	buffer[10];
 	size_t	index;
 
 	index = ft_expon_prefix(buffer, expon);
 	if (expon < 0)
+	{
 		expon *= -1;
+	}
 	while (expon > 0)
 	{
 		buffer[index] = expon % 10 + '0';
 		index++;
 		expon /= 10;
 	}
-	if (clipb->self(buffer, index, clipb) == -1)
-		return (-1);
-	return (1);
+	ft_write_wrap(buffer, index, clipb);
 }
 
 static size_t		ft_offset(char *buffer,\
@@ -68,19 +68,25 @@ static size_t		ft_offset(char *buffer,\
 		if (flg_verif('+', clipb->flags) == 1)
 			buffer[0] = '+';
 		else if (flg_verif(' ', clipb->flags) == 1 && \
-		flg_verif('+', clipb->flags) == -1)
+			flg_verif('+', clipb->flags) == -1)
+		{
 			buffer[0] = ' ';
+		}
 		else if (flg_verif('+', clipb->flags) == -1 \
-		&& flg_verif(' ', clipb->flags) == -1)
+			&& flg_verif(' ', clipb->flags) == -1)
+		{
 			offset++;
+		}
 	}
 	else if (buffer[0] == '-')
+	{
 		buffer[0] = '-';
+	}
 	*nb_len -= offset;
 	return (offset);
 }
 
-int					ft_lowsci_print(char *buffer,\
+void				ft_lowsci_print(char *buffer,\
 						size_t nb_len,\
 						t_writer *const clipb,\
 						short expon)
@@ -94,19 +100,19 @@ int					ft_lowsci_print(char *buffer,\
 	if (expon < 10 && expon >= 0)
 		len_extension++;
 	if (flg_verif('-', flags) == -1 && \
-	flg_verif('0', flags) == -1)
-		if (ft_space_padder(len_extension, clipb) == -1)
-			return (-1);
+		flg_verif('0', flags) == -1)
+	{
+		ft_space_padder(len_extension, clipb);
+	}
 	if (flg_verif('-', flags) == -1 && \
-	flg_verif('0', flags) == 1)
-		if (ft_zero_padder(len_extension, clipb) == -1)
-			return (-1);
-	if (clipb->self(buffer + offset, nb_len, clipb) == -1)
-		return (-1);
-	if (ft_expon_to_buf(expon, clipb) == -1)
-		return (-1);
+		flg_verif('0', flags) == 1)
+	{
+		ft_zero_padder(len_extension, clipb);
+	}
+	ft_write_wrap(buffer + offset, nb_len, clipb);
+	ft_expon_to_buf(expon, clipb);
 	if (flg_verif('-', flags) == 1 && flags->padding > nb_len)
-		if (ft_space_padder(len_extension, clipb) == -1)
-			return (-1);
-	return (1);
+	{
+		ft_space_padder(len_extension, clipb);
+	}
 }

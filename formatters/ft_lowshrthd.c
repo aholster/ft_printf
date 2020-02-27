@@ -6,20 +6,19 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/21 12:57:35 by jesmith        #+#    #+#                */
-/*   Updated: 2020/02/19 10:23:37 by aholster      ########   odam.nl         */
+/*   Updated: 2020/02/27 11:51:22 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../incl/ft_formatters.h"
 
-static int			ft_print_prep(char *buffer,\
+static void			ft_print_prep(char *buffer,\
 						t_writer *const clipb,\
 						const int is_neg,\
 						size_t new_len)
 {
 	t_flag *const	flags = clipb->flags;
 	size_t			offset;
-	int				ret_val;
 
 	offset = ft_shrthd_offset(&buffer, clipb, is_neg);
 	if (new_len > flags->precision)
@@ -35,8 +34,7 @@ static int			ft_print_prep(char *buffer,\
 	}
 	if (buffer[new_len] == '.' && flags->precision < new_len)
 		new_len--;
-	ret_val = ft_shrthd_print(buffer, offset, clipb, new_len);
-	return (ret_val);
+	ft_shrthd_print(buffer, offset, clipb, new_len);
 }
 
 static size_t		ft_shorthand_prec(char *buffer,\
@@ -69,12 +67,11 @@ static size_t		ft_shorthand_prec(char *buffer,\
 	return (index);
 }
 
-static int			ft_shrthd_lowsci(char *buffer, \
+static void			ft_shrthd_lowsci(char *buffer, \
 						t_writer *const clipb,\
 						size_t nb_len)
 {
 	int					expon;
-	int					ret_val;
 
 	expon = ft_expon_finder(buffer, nb_len);
 	ft_sci_rounder(buffer, clipb->flags, &nb_len);
@@ -87,18 +84,16 @@ static int			ft_shrthd_lowsci(char *buffer, \
 		nb_len -= 1;
 	if (buffer[nb_len - 1] == '.')
 		nb_len--;
-	ret_val = ft_lowsci_print(buffer, nb_len, clipb, expon);
-	return (ret_val);
+	ft_lowsci_print(buffer, nb_len, clipb, expon);
 }
 
-static int			ft_which_one(char *buffer,\
+static void			ft_which_one(char *buffer,\
 						t_writer *clipb,\
 						size_t nb_len)
 {
 	size_t	sci_note;
 	size_t	expon_len;
 	size_t	new_len;
-	int		ret_val;
 	int		is_neg;
 
 	is_neg = 1;
@@ -113,12 +108,13 @@ static int			ft_which_one(char *buffer,\
 		new_len = clipb->flags->precision + 3;
 		if (clipb->flags->precision != 0)
 			clipb->flags->precision -= 1;
-		ret_val = ft_shrthd_lowsci(buffer, clipb, new_len);
-		return (ret_val);
+		ft_shrthd_lowsci(buffer, clipb, new_len);
 	}
-	new_len = ft_shorthand_prec(buffer, nb_len, clipb);
-	ret_val = ft_print_prep(buffer, clipb, is_neg, new_len);
-	return (ret_val);
+	else
+	{
+		new_len = ft_shorthand_prec(buffer, nb_len, clipb);
+		ft_print_prep(buffer, clipb, is_neg, new_len);
+	}
 }
 
 int					ft_lowshrthd(va_list args, t_writer *const clipb)
@@ -126,18 +122,18 @@ int					ft_lowshrthd(va_list args, t_writer *const clipb)
 	char				*buffer;
 	long double			nb;
 	size_t				nb_len;
-	int					is_neg;
-	int					ret_val;
+	int const			is_neg = ft_longdouble_conv(args, &nb, clipb->flags);
 
-	is_neg = ft_longdouble_conv(args, &nb, clipb->flags);
 	if (flg_verif('.', clipb->flags) == -1)
 		clipb->flags->precision = 6;
 	if (ft_custom_ld_to_text(nb, \
-	clipb->flags->precision, &buffer, &nb_len) == -1)
+		clipb->flags->precision, &buffer, &nb_len) == -1)
+	{
 		return (-1);
+	}
 	if (is_neg == -1)
 		buffer[0] = '-';
-	ret_val = ft_which_one(buffer, clipb, nb_len);
+	ft_which_one(buffer, clipb, nb_len);
 	free(buffer);
-	return (ret_val);
+	return (0);
 }

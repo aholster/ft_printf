@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/07/26 21:33:22 by aholster       #+#    #+#                */
-/*   Updated: 2019/09/12 18:15:15 by aholster      ########   odam.nl         */
+/*   Updated: 2020/02/27 14:47:19 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int				ft_numlst_to_txt(const t_numlst *lst,\
 		}
 	}
 	leng = leng_calc(lst, precision) - index;
-	*amem = (char *)malloc(sizeof(char) * leng + 1);
+	*amem = (char *)malloc(sizeof(char) * leng + 10);
 	if (*amem == NULL)
 		return (-1);
 	(*amem)[0] = 'X';

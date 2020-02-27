@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/13 15:19:36 by aholster       #+#    #+#                */
-/*   Updated: 2020/02/19 14:52:52 by aholster      ########   odam.nl         */
+/*   Updated: 2020/02/27 11:20:58 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static int	ft_write_to_str(const char *mem,
 	}
 	else
 		clipb->history += size;
-	return (1);
+	return (0);
 }
 
 int			ft_vsnprintf(char *str,
@@ -53,11 +53,12 @@ int			ft_vsnprintf(char *str,
 	clipb.info.sn.capacity = size;
 	va_copy(clipb.args, args);
 	clipb.self = &ft_write_to_str;
-	if (ft_format(format, &clipb) == -1)
-	{
-		return (-1);
-	}
+	ft_format(format, &clipb);
 	va_copy(args, clipb.args);
 	va_end(clipb.args);
-	return (clipb.history);
+	if (clipb.err == 0)
+	{
+		return (clipb.history);
+	}
+	return (-1);
 }

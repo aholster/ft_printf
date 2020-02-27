@@ -6,13 +6,13 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/03 18:20:19 by jesmith        #+#    #+#                */
-/*   Updated: 2020/02/19 10:20:51 by aholster      ########   odam.nl         */
+/*   Updated: 2020/02/27 10:25:26 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../incl/ft_formatters.h"
 
-static int				ft_caphex_noprec(const char *const buffer,\
+static void				ft_caphex_noprec(const char *const buffer,\
 							const unsigned long long nb,\
 							const unsigned short nb_len,\
 							t_writer *const clipb)
@@ -21,23 +21,25 @@ static int				ft_caphex_noprec(const char *const buffer,\
 	const int		minus = flg_verif('-', flags);
 
 	if (minus == -1 && flg_verif('0', flags) == -1)
-		if (ft_space_padder(nb_len, clipb) == -1)
-			return (-1);
+	{
+		ft_space_padder(nb_len, clipb);
+	}
 	if (flg_verif('#', flags) == 1 && nb != 0)
-		if (clipb->self("0X", 2, clipb) == -1)
-			return (-1);
+	{
+		ft_write_wrap("0X", 2, clipb);
+	}
 	if (flg_verif('0', flags) == 1 && minus == -1)
-		if (ft_zero_padder(nb_len, clipb) == -1)
-			return (-1);
-	if (clipb->self(buffer, ((size_t)nb_len), clipb) == -1)
-		return (-1);
+	{
+		ft_zero_padder(nb_len, clipb);
+	}
+	ft_write_wrap(buffer, ((size_t)nb_len), clipb);
 	if (minus == 1 && flags->padding > nb_len)
-		if (ft_space_padder(nb_len, clipb) == -1)
-			return (-1);
-	return (1);
+	{
+		ft_space_padder(nb_len, clipb);
+	}
 }
 
-static int				ft_caphex_prec(const char *const buffer,\
+static void				ft_caphex_prec(const char *const buffer,\
 							const unsigned long long nb,\
 							const unsigned short nb_len,\
 							t_writer *const clipb)
@@ -46,20 +48,22 @@ static int				ft_caphex_prec(const char *const buffer,\
 	const int		minus = flg_verif('-', clipb->flags);
 
 	if (minus == -1 && flags->padding > nb_len)
-		if (ft_space_padder(nb_len, clipb) == -1)
-			return (-1);
+	{
+		ft_space_padder(nb_len, clipb);
+	}
 	if (flg_verif('#', flags) == 1 && nb != 0)
-		if (clipb->self("0X", 2, clipb) == -1)
-			return (-1);
+	{
+		ft_write_wrap("0X", 2, clipb);
+	}
 	if (flags->precision > nb_len)
-		if (ft_zero_padder(nb_len, clipb) == -1)
-			return (-1);
-	if (clipb->self(buffer, (size_t)nb_len, clipb) == -1)
-		return (-1);
+	{
+		ft_zero_padder(nb_len, clipb);
+	}
+	ft_write_wrap(buffer, (size_t)nb_len, clipb);
 	if (minus == 1 && flags->padding > nb_len)
-		if (ft_space_padder(nb_len, clipb) == -1)
-			return (-1);
-	return (1);
+	{
+		ft_space_padder(nb_len, clipb);
+	}
 }
 
 static unsigned short	ull_to_hex(char *const buffer,\
@@ -97,24 +101,54 @@ int						ft_caphex(va_list args, t_writer *const clipb)
 	char				buffer[20];
 	unsigned long long	nb;
 	unsigned short		nb_len;
-	int					precision;
 	t_flag *const		flags = clipb->flags;
+	int const			is_prec = flg_verif('.', flags);
 
-	precision = flg_verif('.', flags);
 	ft_unsignconv(args, &nb, flags);
 	nb_len = ull_to_hex(buffer, nb);
-	if (flg_verif('#', clipb->flags) == 1 && nb != 0 && flags->padding >= 2)
-		flags->padding -= 2;
-	if (nb == 0 && precision == 1)
+	if (!(nb == 0 && is_prec == 1 && flags->padding == 0))
 	{
-		if (flags->padding == 0)
-			return (1);
-		if (flags->precision == 0)
+		if (flg_verif('#', clipb->flags) == 1 && nb != 0 &&\
+			flags->padding >= 2)
+		{
+			flags->padding -= 2;
+		}
+		if (nb == 0 && is_prec == 1 && flags->precision == 0)
+		{
 			ft_strcpy(buffer, " ");
+		}
+		if (is_prec == 1)
+			ft_caphex_prec(buffer, nb, nb_len, clipb);
+		else
+			ft_caphex_noprec(buffer, nb, nb_len, clipb);
 	}
-	if (precision == 1)
-		return (ft_caphex_prec(buffer, nb, nb_len, clipb));
-	else
-		return (ft_caphex_noprec(buffer, nb, nb_len, clipb));
-	return (1);
+	return (0);
 }
+
+/*
+** int						ft_caphex(va_list args, t_writer *const clipb)
+** {
+** 	char				buffer[20];
+** 	unsigned long long	nb;
+** 	unsigned short		nb_len;
+** 	t_flag *const		flags = clipb->flags;
+** 	int const			is_prec = flg_verif('.', flags);
+**
+** 	ft_unsignconv(args, &nb, flags);
+** 	nb_len = ull_to_hex(buffer, nb);
+** 	if (flg_verif('#', clipb->flags) == 1 && nb != 0 && flags->padding >= 2)
+** 		flags->padding -= 2;
+** 	if (nb == 0 && is_prec == 1)
+** 	{
+** 		if (flags->padding == 0)
+** 			return (0);
+** 		if (flags->precision == 0)
+** 			ft_strcpy(buffer, " ");
+** 	}
+** 	if (is_prec == 1)
+** 		ft_caphex_prec(buffer, nb, nb_len, clipb);
+** 	else
+** 		ft_caphex_noprec(buffer, nb, nb_len, clipb);
+** 	return (0);
+** }
+*/

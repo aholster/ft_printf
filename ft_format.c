@@ -6,13 +6,31 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/04/17 19:57:30 by aholster       #+#    #+#                */
-/*   Updated: 2020/02/25 10:56:12 by aholster      ########   odam.nl         */
+/*   Updated: 2020/02/25 18:20:55 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./incl/ft_internals.h"
 
-static int		ft_judex(const char *format,\
+int				ft_write_wrap(const char *const format,
+					const size_t len,
+					struct s_writer *const clipb)
+{
+	if (clipb->err == 0)
+	{
+		if (clipb->self(format, len, clipb))
+		{
+			clipb->err = 1;
+		}
+		else
+		{
+			return (0);
+		}
+	}
+	return (-1);
+}
+
+static void		ft_judex(const char *format,\
 					size_t *const index,\
 					const size_t len,\
 					t_writer *const clipb)
@@ -24,18 +42,16 @@ static int		ft_judex(const char *format,\
 	{
 		judex++;
 	}
-	if (clipb->self(format + *index, judex - *index, clipb) == -1)
-		return (-1);
+	ft_write_wrap(format + *index, judex - *index, clipb);
 	*index = judex;
-	return (1);
 }
 
 /*
 **	possibly add W_char or utf8 support for charskip
 */
 
-int				ft_format(const char *format,\
-						t_writer *const clipb)
+void			ft_format(const char *format,\
+					t_writer *const clipb)
 {
 	size_t				index;
 	size_t				len;
@@ -50,15 +66,15 @@ int				ft_format(const char *format,\
 		{
 			index++;
 			ft_flagharvest(format, &index, clipb);
-			if (ft_dispatcher(format[index], clipb) == -1)
-				return (-1);
+			ft_dispatcher(format[index], clipb);
 			if (format[index] != '\0')
 			{
 				index++;
 			}
 		}
-		else if (ft_judex(format, &index, len, clipb) == -1)
-			return (-1);
+		else
+		{
+			ft_judex(format, &index, len, clipb);
+		}
 	}
-	return (1);
 }

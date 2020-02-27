@@ -6,13 +6,13 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/03 14:19:45 by jesmith        #+#    #+#                */
-/*   Updated: 2020/02/19 10:14:06 by aholster      ########   odam.nl         */
+/*   Updated: 2020/02/27 09:51:24 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../incl/ft_formatters.h"
 
-static int	ft_char_pad(const char c,\
+static void	ft_char_pad(const char c,\
 				t_writer *const clipb,\
 				const t_flag *const flags)
 {
@@ -20,25 +20,25 @@ static int	ft_char_pad(const char c,\
 	{
 		if (flg_verif('0', flags) == 1)
 		{
-			if (pad_zero(flags->padding - 1, clipb) == -1)
-				return (-1);
+			pad_zero(flags->padding - 1, clipb);
 		}
-		else if (pad_spaces((flags->padding - 1), clipb) == -1)
-			return (-1);
+		else
+		{
+			pad_spaces((flags->padding - 1), clipb);
+		}
 	}
-	if (clipb->self(&c, 1, clipb) == -1)
-		return (-1);
+	ft_write_wrap(&c, 1, clipb);
 	if (flg_verif('-', flags) == 1)
 	{
 		if (flg_verif('0', flags) == 1)
 		{
-			if (pad_zero(flags->padding - 1, clipb) == -1)
-				return (-1);
+			pad_zero(flags->padding - 1, clipb);
 		}
-		else if (pad_spaces((flags->padding - 1), clipb) == -1)
-			return (-1);
+		else
+		{
+			pad_spaces((flags->padding - 1), clipb);
+		}
 	}
-	return (1);
 }
 
 int			ft_char(va_list args, t_writer *const clipb)
@@ -49,12 +49,11 @@ int			ft_char(va_list args, t_writer *const clipb)
 	c = (char)va_arg(args, int);
 	if (flags->padding > 1)
 	{
-		if (flg_verif('-', flags) == -1)
-			return (ft_char_pad(c, clipb, flags));
-		else if (flg_verif('-', flags) == 1)
-			return (ft_char_pad(c, clipb, flags));
+		ft_char_pad(c, clipb, flags);
 	}
-	else if (clipb->self(&c, 1, clipb) == -1)
-		return (-1);
-	return (1);
+	else
+	{
+		ft_write_wrap(&c, 1, clipb);
+	}
+	return (0);
 }

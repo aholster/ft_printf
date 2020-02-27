@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/10/04 17:41:23 by aholster       #+#    #+#                */
-/*   Updated: 2020/02/19 13:15:14 by aholster      ########   odam.nl         */
+/*   Updated: 2020/02/27 11:11:16 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,5 @@ void				ft_del(void *data, size_t size);
 void				ft_lstdel(t_list **alst, void (*del)(void *, size_t));
 t_list				*ft_lstnew(void const *content, size_t content_size);
 t_list				*ft_lstaddend(t_list **lst, t_list *new);
-int					ft_lstmemtomem(char **feed,
-						size_t *totallen,
-						t_list *lst);
 
 #endif

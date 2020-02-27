@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/11 19:04:14 by aholster       #+#    #+#                */
-/*   Updated: 2020/02/19 10:21:49 by aholster      ########   odam.nl         */
+/*   Updated: 2020/02/27 13:38:16 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,13 +61,13 @@ int			ft_n(va_list args, t_writer *const clipb)
 	t_nptrs				ptr;
 
 	if (ft_single_flags(args, history, flags) == 1)
-		return (1);
+		return (0);
 	else if (ft_double_flags(args, history, flags) == 1)
-		return (1);
+		return (0);
 	else
 	{
 		ptr.i = va_arg(args, int *);
 		*ptr.i = (int)history;
 	}
-	return (1);
+	return (0);
 }

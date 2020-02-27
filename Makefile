@@ -6,7 +6,7 @@
 #    By: jesmith <jesmith@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2019/02/16 15:46:43 by aholster       #+#    #+#                 #
-#    Updated: 2020/02/25 10:20:58 by aholster      ########   odam.nl          #
+#    Updated: 2020/02/27 11:11:13 by aholster      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,7 @@ PARSE_SRC := flg_verif flgdbl_verif flagharvest\
 UTIL_DIR := ./utilities/
 UTIL_SRC := bzero memcpy memmove memset memdup memcmp\
  strcpy strlen strnlen nbrlen islowercase\
- del lstdel lstnew lstaddend lstmemtomem
+ del lstdel lstnew lstaddend
 
 FLT_DIR := ./float_tech/
 FLT_SRC := custom_ld_to_text numlst_del numlst_to_txt\

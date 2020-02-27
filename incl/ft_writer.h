@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/18 19:29:47 by aholster       #+#    #+#                */
-/*   Updated: 2020/02/25 11:55:47 by aholster      ########   odam.nl         */
+/*   Updated: 2020/02/25 17:48:11 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include <stdarg.h>
 # include <unistd.h>
 
-# define BUFFSIZE	1024
+# define BUFFSIZE	(2)
 
 struct s_writer;
 

@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/10/03 17:57:29 by jesmith        #+#    #+#                */
-/*   Updated: 2020/02/19 10:29:15 by aholster      ########   odam.nl         */
+/*   Updated: 2020/02/27 11:56:21 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static int		ft_caphexponbuff(char *buffer, short expon)
 	return (backup_index + 1);
 }
 
-int				ft_caphexpoint_print(t_writer *const clipb,\
+void			ft_caphexpoint_print(t_writer *const clipb,\
 						short expon,\
 						unsigned short nb_len,
 						unsigned short str_len)
@@ -49,17 +49,19 @@ int				ft_caphexpoint_print(t_writer *const clipb,\
 	char			new_buf[8];
 
 	if (flg_verif('.', flags) == 1 && flags->precision != (str_len - 2))
-		if (pad_zero(flags->precision, clipb) == -1)
-			return (-1);
+	{
+		pad_zero(flags->precision, clipb);
+	}
 	expon_len = ft_caphexponbuff(new_buf, expon);
-	if (clipb->self(new_buf, expon_len, clipb) == -1)
-		return (-1);
+	ft_write_wrap(new_buf, expon_len, clipb);
 	if (flags->precision == 0)
+	{
 		str_len--;
+	}
 	if (flg_verif('-', flags) == 1 && flags->padding > flags->precision)
-		if (ft_float_padder(nb_len + str_len, str_len - 2, clipb) == -1)
-			return (-1);
-	return (1);
+	{
+		ft_float_padder(nb_len + str_len, str_len - 2, clipb);
+	}
 }
 
 static int		ft_lowhexponbuff(char *buffer, short expon)
@@ -89,7 +91,7 @@ static int		ft_lowhexponbuff(char *buffer, short expon)
 	return (backup_index + 1);
 }
 
-int				ft_lowhexpoint_print(t_writer *const clipb,\
+void			ft_lowhexpoint_print(t_writer *const clipb,\
 						const short expon,\
 						unsigned short nb_len,
 						unsigned short str_len)
@@ -99,16 +101,18 @@ int				ft_lowhexpoint_print(t_writer *const clipb,\
 	char			new_buf[8];
 
 	if (flg_verif('.', flags) == 1 && \
-	flags->precision != (str_len - 2))
-		if (pad_zero(flags->precision, clipb) == -1)
-			return (-1);
+		flags->precision != (str_len - 2))
+	{
+		pad_zero(flags->precision, clipb);
+	}
 	expon_len = ft_lowhexponbuff(new_buf, expon);
-	if (clipb->self(new_buf, expon_len, clipb) == -1)
-		return (-1);
+	ft_write_wrap(new_buf, expon_len, clipb);
 	if (flags->precision == 0)
+	{
 		str_len--;
+	}
 	if (flg_verif('-', flags) == 1 && flags->padding > flags->precision)
-		if (ft_float_padder(nb_len + str_len, str_len - 2, clipb) == -1)
-			return (-1);
-	return (1);
+	{
+		ft_float_padder(nb_len + str_len, str_len - 2, clipb);
+	}
 }

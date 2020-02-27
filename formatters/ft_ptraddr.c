@@ -6,13 +6,13 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/05/25 13:19:52 by aholster       #+#    #+#                */
-/*   Updated: 2020/02/19 10:44:01 by aholster      ########   odam.nl         */
+/*   Updated: 2020/02/27 09:01:54 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../incl/ft_formatters.h"
 
-static int				ft_ptraddr_noprec(const char *const buffer,\
+static void				ft_ptraddr_noprec(const char *const buffer,\
 							const unsigned short num_len,\
 							t_writer *const clipb)
 {
@@ -20,22 +20,22 @@ static int				ft_ptraddr_noprec(const char *const buffer,\
 	const int		minus = flg_verif('-', flags);
 
 	if (minus == -1 && flg_verif('0', flags) == -1)
-		if (ft_space_padder(num_len, clipb) == -1)
-			return (-1);
-	if (clipb->self("0x", 2, clipb) == -1)
-		return (-1);
+	{
+		ft_space_padder(num_len, clipb);
+	}
+	ft_write_wrap("0x", 2, clipb);
 	if (flg_verif('0', flags) == 1 && minus == -1)
-		if (ft_zero_padder(num_len, clipb) == -1)
-			return (-1);
-	if (clipb->self(buffer, num_len, clipb) == -1)
-		return (-1);
+	{
+		ft_zero_padder(num_len, clipb);
+	}
+	ft_write_wrap(buffer, num_len, clipb);
 	if (minus == 1 && flags->padding > num_len)
-		if (ft_space_padder(num_len, clipb) == -1)
-			return (-1);
-	return (1);
+	{
+		ft_space_padder(num_len, clipb);
+	}
 }
 
-static int				ft_ptraddr_prec(const char *const buffer,\
+static void				ft_ptraddr_prec(const char *const buffer,\
 							const unsigned short num_len,\
 							t_writer *const clipb)
 {
@@ -43,19 +43,19 @@ static int				ft_ptraddr_prec(const char *const buffer,\
 	const int		minus = flg_verif('-', flags);
 
 	if (minus == -1 && flags->padding > num_len)
-		if (ft_space_padder(num_len, clipb) == -1)
-			return (-1);
-	if (clipb->self("0x", 2, clipb) == -1)
-		return (-1);
+	{
+		ft_space_padder(num_len, clipb);
+	}
+	ft_write_wrap("0x", 2, clipb);
 	if (flg_verif('.', flags) == 1 && flags->precision > num_len)
-		if (ft_zero_padder(num_len, clipb) == -1)
-			return (-1);
-	if (clipb->self(buffer, num_len, clipb) == -1)
-		return (-1);
+	{
+		ft_zero_padder(num_len, clipb);
+	}
+	ft_write_wrap(buffer, num_len, clipb);
 	if (minus == 1 && flags->padding > num_len)
-		if (ft_space_padder(num_len, clipb) == -1)
-			return (-1);
-	return (1);
+	{
+		ft_space_padder(num_len, clipb);
+	}
 }
 
 static unsigned short	unsigned_ll_toa(char *const buffer,\
@@ -87,18 +87,20 @@ int						ft_ptraddr(va_list args, t_writer *const clipb)
 	holder = (unsigned long long)va_arg(args, void*);
 	num_len = unsigned_ll_toa(buffer, holder);
 	if (holder == 0 && flg_verif('.', flags) == 1 && flags->precision == 0)
+	{
 		num_len--;
+	}
 	if (flg_verif('.', flags) == 1)
 	{
 		if (flags->padding >= 2)
 			flags->padding -= 2;
-		return (ft_ptraddr_prec(buffer, num_len, clipb));
+		ft_ptraddr_prec(buffer, num_len, clipb);
 	}
-	if (flg_verif('.', clipb->flags) == -1)
+	else
 	{
 		if (flags->padding >= 2)
 			flags->padding -= 2;
-		return (ft_ptraddr_noprec(buffer, num_len, clipb));
+		ft_ptraddr_noprec(buffer, num_len, clipb);
 	}
-	return (1);
+	return (0);
 }

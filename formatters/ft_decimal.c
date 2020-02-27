@@ -6,37 +6,33 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/05/31 12:06:16 by jesmith        #+#    #+#                */
-/*   Updated: 2020/02/19 10:19:04 by aholster      ########   odam.nl         */
+/*   Updated: 2020/02/27 09:44:19 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../incl/ft_formatters.h"
 
-static int				ft_preprint(const int is_neg,\
+static void				ft_preprint(const int is_neg,\
 							t_writer *const clipb)
 {
 	if (is_neg >= 0)
 	{
 		if (flg_verif('+', clipb->flags) == 1)
 		{
-			if (clipb->self("+", 1, clipb) == -1)
-				return (-1);
+			ft_write_wrap("+", 1, clipb);
 		}
 		else if (flg_verif(' ', clipb->flags) == 1)
 		{
-			if (clipb->self(" ", 1, clipb) == -1)
-				return (-1);
+			ft_write_wrap(" ", 1, clipb);
 		}
 	}
 	else if (is_neg < 0)
 	{
-		if (clipb->self("-", 1, clipb) == -1)
-			return (-1);
+		ft_write_wrap("-", 1, clipb);
 	}
-	return (1);
 }
 
-static int				ft_decimal_noprec(const char *const buffer,\
+static void				ft_decimal_noprec(const char *const buffer,\
 							const int is_neg,\
 							const unsigned short nb_len,\
 							t_writer *const clipb)
@@ -46,54 +42,52 @@ static int				ft_decimal_noprec(const char *const buffer,\
 
 	minus = flg_verif('-', flags);
 	if (minus == -1 && flg_verif('0', flags) == -1)
-		if (ft_space_padder(nb_len, clipb) == -1)
-			return (-1);
-	if (ft_preprint(is_neg, clipb) == -1)
-		return (-1);
+	{
+		ft_space_padder(nb_len, clipb);
+	}
+	ft_preprint(is_neg, clipb);
 	if (flg_verif('0', flags) == 1 && minus == -1)
 	{
 		if ((flags->padding - flags->precision) > nb_len)
 		{
-			if (ft_zero_padder(nb_len, clipb) == -1)
-				return (-1);
+			ft_zero_padder(nb_len, clipb);
 		}
 	}
-	if (clipb->self(buffer, (size_t)nb_len, clipb) == -1)
-		return (-1);
+	ft_write_wrap(buffer, (size_t)nb_len, clipb);
 	if (minus == 1 && flags->padding > nb_len)
-		if (ft_space_padder(nb_len, clipb) == -1)
-			return (-1);
-	return (1);
+	{
+		ft_space_padder(nb_len, clipb);
+	}
 }
 
-static int				ft_decimal_prec(const char *const buffer,\
+static void				ft_decimal_prec(const char *const buffer,\
 							const int is_neg,\
 							unsigned short nb_len,\
 							t_writer *const clipb)
 {
 	int		minus;
-	int		holder;
 	uint	tru_len;
 
 	tru_len = clipb->flags->precision;
 	if (is_neg < 0)
+	{
 		tru_len++;
+	}
 	minus = flg_verif('-', clipb->flags);
 	if (minus == -1 && clipb->flags->padding > tru_len)
-		if (ft_space_padder(nb_len, clipb) == -1)
-			return (-1);
-	holder = ft_preprint(is_neg, clipb);
-	if (holder == -1)
-		return (-1);
+	{
+		ft_space_padder(nb_len, clipb);
+	}
+	ft_preprint(is_neg, clipb);
 	if (clipb->flags->precision > nb_len)
-		if (ft_zero_padder(nb_len, clipb) == -1)
-			return (-1);
-	if (clipb->self(buffer, (size_t)nb_len, clipb) == -1)
-		return (-1);
+	{
+		ft_zero_padder(nb_len, clipb);
+	}
+	ft_write_wrap(buffer, (size_t)nb_len, clipb);
 	if (minus == 1 && clipb->flags->padding > nb_len)
-		if (ft_space_padder(nb_len, clipb) == -1)
-			return (-1);
-	return (1);
+	{
+		ft_space_padder(nb_len, clipb);
+	}
 }
 
 static unsigned short	ft_int_len(char *const buffer,\
@@ -122,23 +116,26 @@ int						ft_decimal(va_list args, t_writer *const clipb)
 	char				buffer[20];
 	unsigned long long	nb;
 	unsigned short		nb_len;
-	int					is_neg;
-	int					is_precision;
+	int const			is_neg = ft_signconv(args, &nb, clipb->flags);
+	int const			is_precision = flg_verif('.', clipb->flags);
 
-	is_precision = flg_verif('.', clipb->flags);
-	is_neg = ft_signconv(args, &nb, clipb->flags);
 	nb_len = ft_int_len(buffer, nb);
-	if (nb == 0 && is_precision == 1 &&\
-	clipb->flags->precision == 0 && clipb->flags->padding == 0)
-		return (1);
-	if (nb == 0 && is_precision == 1 && clipb->flags->precision < nb_len)
-		ft_strcpy((char*)buffer, " ");
-	if (clipb->flags->padding != 0 && (is_neg == -1 ||\
+	if (!(nb == 0 && is_precision == 1 &&\
+		clipb->flags->precision == 0 && clipb->flags->padding == 0))
+	{
+		if (nb == 0 && is_precision == 1 && clipb->flags->precision < nb_len)
+		{
+			ft_strcpy((char*)buffer, " ");
+		}
+		if (clipb->flags->padding != 0 && (is_neg == -1 ||\
 	flg_verif('+', clipb->flags) == 1 || flg_verif(' ', clipb->flags) == 1))
-		clipb->flags->padding -= 1;
-	if (is_precision == 1)
-		return (ft_decimal_prec(buffer, is_neg, nb_len, clipb));
-	if (is_precision == -1)
-		return (ft_decimal_noprec(buffer, is_neg, nb_len, clipb));
-	return (1);
+		{
+			clipb->flags->padding -= 1;
+		}
+		if (is_precision == 1)
+			ft_decimal_prec(buffer, is_neg, nb_len, clipb);
+		else
+			ft_decimal_noprec(buffer, is_neg, nb_len, clipb);
+	}
+	return (0);
 }

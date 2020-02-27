@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/13 15:19:40 by aholster       #+#    #+#                */
-/*   Updated: 2020/02/27 15:36:52 by aholster      ########   odam.nl         */
+/*   Updated: 2020/02/27 15:41:41 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static int	ft_lst_bufmanager(const char *mem,
 	return (0);
 }
 
-static int	ft_vas_clipb_init(t_writer *const clipb)
+static void	ft_vas_clipb_init(t_writer *const clipb)
 {
 	t_as_write	*const info = &(clipb->info.as);
 
